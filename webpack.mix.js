@@ -20,7 +20,7 @@ mix.options({
     processCssUrls: false
 });
 
-mix.sass('./sass/main.scss', '/css/main.css');
+mix.sass('resources/sass/main.scss', '/css/main.css');
 
-mix.js('./javascript/main.js', './dist/js/bundle.js');
-mix.js('./javascript/maps.js', './dist/js/maps.js');
+// mix.js('/resources/js/app.js', './dist/js/bundle.js');
+// mix.js('/resources/js/maps.js', './dist/js/maps.js');
