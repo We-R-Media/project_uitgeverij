@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('full_name')->nullable()->unique();
         });
 
-        DB::unprepared('
+        DB::statement('
             CREATE TRIGGER full_name_trigger 
             BEFORE INSERT ON contacts
             FOR EACH ROW
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::unprepared('DROP TRIGGER IF EXISTS full_name_trigger');
+        DB::statement('DROP TRIGGER IF EXISTS full_name_trigger');
     }
 };

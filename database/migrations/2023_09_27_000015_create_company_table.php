@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id('company_id');
-            $table->string('contact_id');
-            $table->foreign('contact_id')->references('full_name')->on('contacts')->onDelete('cascade');
+            $table->unsignedBigInteger('contact_id');
+            $table->foreign('contact_id')->references('contact_id')->on('contacts')->onDelete('cascade');
             $table->string('company_name')->unique();
             $table->enum('company_isactive', ['yes', 'no'])->default('yes');
             $table->string('mailbox');

@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::unprepared('
+        DB::statement('
         CREATE TRIGGER total_pages_trigger 
         BEFORE INSERT ON projects
         FOR EACH ROW
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::unprepared('DROP TRIGGER IF EXISTS total_pages_trigger');
+        DB::statement('DROP TRIGGER IF EXISTS total_pages_trigger');
     }
 };

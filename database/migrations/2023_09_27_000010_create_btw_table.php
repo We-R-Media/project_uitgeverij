@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('btw_groups', function (Blueprint $table) {
-            $table->char('btw_country_id', 3)->primary()->unique();
+            $table->id('btw_id');
+            $table->char('btw_country_id', 3);
             $table->integer('btw_percentage');
         });
     }
