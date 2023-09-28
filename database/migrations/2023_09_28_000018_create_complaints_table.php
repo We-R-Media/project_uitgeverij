@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('complaints', function (Blueprint $table) {
-            $table->id('complaint_id');
+            $table->id();
             
             $table->unsignedBigInteger('company_id');
-            $table->foreign('company_id')->references('company_id')->on('companies');
+            $table->foreign('company_id')->references('id')->on('companies');
 
             
             $table->unsignedBigInteger('order_number');
-            $table->foreign('order_number')->references('order_number')->on('order_total');
+            $table->foreign('order_number')->references('id')->on('order_total');
 
             $table->string('type', 50);
 

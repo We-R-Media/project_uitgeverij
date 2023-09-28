@@ -12,28 +12,28 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->string('project_id', 25)->primary()->unique();
+            $table->string('id', 25)->primary()->unique();
 
             $table->unsignedBigInteger('format_id');
-            $table->foreign('format_id')->references('group_id')->on('format_group')->onDelete('cascade');
+            $table->foreign('format_id')->references('id')->on('format_group')->onDelete('cascade');
 
             $table->unsignedBigInteger('layout_id');
-            $table->foreign('layout_id')->references('layout_id')->on('layouts')->onDelete('cascade');
+            $table->foreign('layout_id')->references('id')->on('layouts')->onDelete('cascade');
 
             $table->unsignedBigInteger('designer_id');
-            $table->foreign('designer_id')->references('designer_id')->on('designer')->onDelete('cascade');
+            $table->foreign('designer_id')->references('id')->on('designer')->onDelete('cascade');
 
             $table->unsignedBigInteger('printer_id');
-            $table->foreign('printer_id')->references('printer_id')->on('printer')->onDelete('cascade');
+            $table->foreign('printer_id')->references('id')->on('printer')->onDelete('cascade');
       
             $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')->references('client_id')->on('clients')->onDelete('cascade');
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
 
             $table->unsignedBigInteger('distribution_id');
-            $table->foreign('distribution_id')->references('distribution_agency_id')->on('distribution_agency')->onDelete('cascade');
+            $table->foreign('distribution_id')->references('id')->on('distribution_agency')->onDelete('cascade');
             
             $table->unsignedBigInteger('btw_country_id');
-            $table->foreign('btw_country_id')->references('btw_id')->on('btw_groups')->onDelete('cascade');
+            $table->foreign('btw_country_id')->references('id')->on('btw_groups')->onDelete('cascade');
 
             $table->string('release_name', 25);
             $table->string('edition_name', 25);

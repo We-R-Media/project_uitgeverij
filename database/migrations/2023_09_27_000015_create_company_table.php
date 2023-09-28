@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->id('company_id');
+            $table->id();
             $table->unsignedBigInteger('contact_id');
-            $table->foreign('contact_id')->references('contact_id')->on('contacts')->onDelete('cascade');
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
             $table->string('company_name')->unique();
             $table->enum('company_isactive', ['yes', 'no'])->default('yes');
             $table->string('mailbox');

@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('btw_groups', function (Blueprint $table) {
-            $table->id('btw_id');
-            $table->char('btw_country_id', 3);
+            $table->id();
+            $table->char('btw_country', 3);
             $table->integer('btw_percentage');
         });
     }

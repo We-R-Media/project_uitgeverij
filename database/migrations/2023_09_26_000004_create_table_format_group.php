@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('format_group', function (Blueprint $table) {
-            $table->id('group_id');
+            $table->id();
             $table->string('group_name')->unique();
         });
     }

@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('order_total', function (Blueprint $table) {
 
-            $table->id('order_number');
+            $table->id();
 
             $table->unsignedBigInteger('company_id');
-            $table->foreign('company_id')->references('company_id')->on('companies')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->unsignedBigInteger('contact_id');
-            $table->foreign('contact_id')->references('contact_id')->on('contacts')->onDelete('cascade');
+            $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
             
         });
     }

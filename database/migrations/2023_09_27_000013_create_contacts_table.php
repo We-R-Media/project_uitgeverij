@@ -13,7 +13,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contacts', function (Blueprint $table) {
-            $table->id('contact_id');
+            $table->id();
             $table->string('first_name', 25);
             $table->char('initial', 2);
             $table->string('insertion', 10)->nullable();

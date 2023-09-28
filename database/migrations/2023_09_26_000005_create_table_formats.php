@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('format_name');
             $table->unsignedBigInteger('group_id');
-            $table->foreign('group_id')->references('group_id')->on('format_group')->onDelete('cascade');
+            $table->foreign('group_id')->references('id')->on('format_group')->onDelete('cascade');
             $table->string('size');
             $table->string('measurement');
             $table->double('price');
