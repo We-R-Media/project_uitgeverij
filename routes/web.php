@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\SellerController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,12 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function() {
     route::view('/orders', 'pages.orders')->name('orders.page');
-    route::view('/relaties', 'pages.companies')->name('companies.page');
+
+    route::view('/companies', 'pages.companies')->name('companies.page');
+    Route::post('/companies/create', [CompanyController::class, 'create'])->name('companies.create');
+    Route::post('/companies/store', [CompanyController::class, 'store'])->name('companies.store');
+
+
     route::view('/projecten', 'pages.projects')->name('projects.page');
     route::view('/facturen', 'pages.invoices')->name('invoices.page');
     route::view('/instellingen', 'pages.settings')->name('settings.page');
@@ -30,4 +36,4 @@ Route::group(['middleware' => 'auth'], function() {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');

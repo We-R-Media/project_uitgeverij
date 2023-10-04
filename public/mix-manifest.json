@@ -1,3 +1,5 @@
 {
-    "/css/main.css": "/css/main.css"
+    "/dist/js/bundle.js": "/dist/js/bundle.js",
+    "/dist/js/maps.js": "/dist/js/maps.js",
+    "/css/styles.css": "/css/styles.css"
 }

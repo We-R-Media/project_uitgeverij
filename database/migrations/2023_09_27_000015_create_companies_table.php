@@ -13,16 +13,17 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('contact_id');
+            $table->unsignedBigInteger('contact_id')->nullable();
             $table->foreign('contact_id')->references('id')->on('contacts')->onDelete('cascade');
             $table->string('company_name')->unique();
             $table->enum('company_isactive', ['yes', 'no'])->default('yes');
             $table->string('mailbox');
-            $table->string('postalcode');
+            $table->string('postal_code');
             $table->string('city');
             $table->string('province');
             $table->integer('phone_mobile')->unique();
             $table->integer('phone_number')->unique();
+            $table->timestamps();
         });
     }
 
