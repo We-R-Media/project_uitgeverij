@@ -22,7 +22,7 @@ return new class extends Migration
             $table->foreign('company_id')->references('id')->on('companies');
 
             $table->unsignedBigInteger('order_number');
-            $table->foreign('order_number')->references('id')->on('order_total');
+            $table->foreign('order_number')->references('id')->on('orders_total');
 
             $table->enum('send_method', ['mail','post']);
 

@@ -15,7 +15,17 @@ use App\Http\Controllers\SellerController;
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('pages.dashboard');
+});
+
+// Grouped routes for better performance
+
+Route::group(['middleware' => 'auth'], function() {
+    route::view('/orders', 'pages.orders')->name('orders.page');
+    route::view('/relaties', 'pages.companies')->name('companies.page');
+    route::view('/projecten', 'pages.projects')->name('projects.page');
+    route::view('/facturen', 'pages.invoices')->name('invoices.page');
+    route::view('/instellingen', 'pages.settings')->name('settings.page');
 });
 
 Auth::routes();
