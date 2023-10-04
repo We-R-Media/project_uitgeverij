@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
+    use HasFactory;
+
     protected $table = 'companies';
 
     protected $fillable = [
@@ -21,5 +23,4 @@ class Company extends Model
        'phone_mobile',
        'phone_number', 
     ];
-    use HasFactory;
 }

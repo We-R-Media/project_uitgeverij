@@ -13,7 +13,9 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        //
+        $records = Company::all();
+
+        return view('pages.companies', compact('records'));
     }
 
     /**
@@ -46,11 +48,9 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Company $company)
+    public function show()
     {
-        // $company = Company::all();
-
-        // return view('pages.companies')->with('records', $company);
+        //
     }
 
     /**

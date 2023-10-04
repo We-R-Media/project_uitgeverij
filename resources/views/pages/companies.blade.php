@@ -12,8 +12,33 @@
         <input type="number" name="phone_number" placeholder="Vul telefoonnummer in..." id="">
         <button type="submit">Verzenden</button>
     </form>
-{{-- 
-    @foreach($records as $record)
-        <li>{{$record->company_name}}</li>
-    @endforeach --}}
+
+    <div class="tableContainer">
+        <table class="companiesTable">
+            <tr>
+                <th>Klantnummer</th>
+                <th>Bedrijfsnaam</th>
+                <th>Actief</th>
+                <th>Postadres</th>
+                <th>Postcode</th>
+                <th>Woonplaats</th>
+                <th>Provincie</th>
+                <th>Mobiel</th>
+                <th>Telefoon</th>
+            </tr>
+            @foreach($records as $company)
+            <tr>
+                <td>{{$company->id}}</td>
+                <td>{{$company->company_name}}</td>
+                <td>{{$company->isactive}}</td>
+                <td>{{$company->mailbox}}</td>
+                <td>{{$company->postal_code}}</td>
+                <td>{{$company->city}}</td>
+                <td>{{$company->province}}</td>
+                <td>{{$company->phone_mobile}}</td>
+                <td>{{$company->phone_number}}</td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
 @endsection

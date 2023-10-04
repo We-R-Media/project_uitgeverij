@@ -22,11 +22,11 @@ Route::get('/', function () {
 // Grouped routes for better performance
 
 Route::group(['middleware' => 'auth'], function() {
+
     route::view('/orders', 'pages.orders')->name('orders.page');
 
-    route::view('/companies', 'pages.companies')->name('companies.page');
+    route::get('/companies', [CompanyController::class, 'index'])->name('companies.page');
     Route::post('/companies/create', [CompanyController::class, 'create'])->name('companies.create');
-    Route::post('/companies/store', [CompanyController::class, 'store'])->name('companies.store');
 
 
     route::view('/projecten', 'pages.projects')->name('projects.page');
