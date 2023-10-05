@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->enum('salutation', ['male', 'female']);
-            $table->string('first_name', 25);
             $table->char('initial', 2);
-            $table->string('insertion', 25)->nullable();
+            $table->string('first_name', 25);
             $table->string('last_name', 25);
-            $table->string('address', 25)->nullable()->default('');
-            $table->string('email', 25)->unique();
+            $table->string('preposition', 10)->nullable();
+            $table->enum('gender', ['male', 'female', 'other']);
+            $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password', 255);
             $table->enum('role', ['user', 'seller', 'administration'])->default('user');
+            $table->softDeletes();
             $table->rememberToken();
             $table->timestamps();
         });
@@ -33,6 +33,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropSoftDeletes();
+        });
     }
 };
