@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email', 25);
             $table->enum('contact_isactive', ['yes', 'no'])->default('yes');
+            $table->timestamps();
         });
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,8 +15,9 @@ class CompanyController extends Controller
     public function index()
     {
         $records = Company::all();
+        $contacts = Contact::all();
 
-        return view('pages.companies', compact('records'));
+        return view('pages.companies', compact('records', 'contacts'));
     }
 
     /**

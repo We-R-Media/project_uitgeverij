@@ -1,3 +1,6 @@
+@use 'namespaces/colors';
+
+
 .formContainer {
     display: flex;
     justify-content: center;
@@ -9,25 +12,39 @@
 }
 
 .tableContainer {
-    width: 100%;
+    width: auto;
     height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
-}
+    box-shadow: 4px 4px 4px 4px darkgrey;
 
 .companiesTable {
-    width: auto;
-    height: auto;
-}
 
-.companiesTable tr {
-    border: 2px solid black;
-    padding: 10px;
     margin: 10px;
-    text-align: center;
+    padding: 20px;
+
+    tr {
+        width: auto;
+        height: auto;
+        font-size: 1rem;
+
+         td {
+            text-align: center;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 1px 1px 1px darkgrey;
+
+        }
+
+        
+        th {
+            text-align: center;
+            padding: 20px;
+            margin: 10px;
+            box-shadow: 1px 1px 1px darkgrey;
+        }
+    }
 }
 
-.companiesTable td, .companiesTable th {
-    padding: 10px !important;
 }

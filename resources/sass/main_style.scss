@@ -1,3 +1,5 @@
+@use 'namespaces/colors';
+
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -10,4 +12,5 @@ body {
 .pageContainer {
     width: 100%;
     min-height: 100vh;
+    background-color: colors.$page-background;
 }

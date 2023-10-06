@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 
 /*
@@ -28,9 +29,13 @@ Route::group(['middleware' => 'auth'], function() {
     route::get('/companies', [CompanyController::class, 'index'])->name('companies.page');
     Route::post('/companies/create', [CompanyController::class, 'create'])->name('companies.create');
 
+    Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.page');
+    Route::post('/contacts/create', [ContactController::class, 'create'])->name('contacts.create');
+
 
     route::view('/projecten', 'pages.projects')->name('projects.page');
     route::view('/facturen', 'pages.invoices')->name('invoices.page');
+
     route::view('/instellingen', 'pages.settings')->name('settings.page');
 });
 
