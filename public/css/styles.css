@@ -8,6 +8,11 @@ body {
 }
 
 .pageContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
   width: 100%;
   min-height: 100vh;
   background-color: #FFFFFF;
@@ -20,7 +25,7 @@ body {
   flex-direction: column;
   gap: 10px;
   width: 100%;
-  height: 75vh;
+  height: auto;
 }
 
 .tableContainer {
@@ -77,6 +82,5 @@ body {
   font-weight: bold;
   margin: 20px;
   padding: 20px;
-  box-shadow: 2px 2px 2px 2px black;
   transition: 0.25s;
 }

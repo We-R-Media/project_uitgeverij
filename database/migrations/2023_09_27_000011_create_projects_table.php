@@ -14,25 +14,25 @@ return new class extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->string('id', 25)->primary()->unique();
 
-            $table->unsignedBigInteger('format_id');
+            $table->unsignedBigInteger('format_id')->nullable();
             $table->foreign('format_id')->references('id')->on('format_group')->onDelete('cascade');
 
-            $table->unsignedBigInteger('layout_id');
+            $table->unsignedBigInteger('layout_id')->nullable();
             $table->foreign('layout_id')->references('id')->on('layouts')->onDelete('cascade');
 
-            $table->unsignedBigInteger('designer_id');
+            $table->unsignedBigInteger('designer_id')->nullable();
             $table->foreign('designer_id')->references('id')->on('designer')->onDelete('cascade');
 
-            $table->unsignedBigInteger('printer_id');
+            $table->unsignedBigInteger('printer_id')->nullable();
             $table->foreign('printer_id')->references('id')->on('printer')->onDelete('cascade');
       
-            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('client_id')->nullable();
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
 
-            $table->unsignedBigInteger('distribution_id');
+            $table->unsignedBigInteger('distribution_id')->nullable();
             $table->foreign('distribution_id')->references('id')->on('distribution_agency')->onDelete('cascade');
             
-            $table->unsignedBigInteger('btw_country_id');
+            $table->unsignedBigInteger('btw_country_id')->nullable();
             $table->foreign('btw_country_id')->references('id')->on('btw_groups')->onDelete('cascade');
 
             $table->string('release_name', 25);
@@ -50,7 +50,9 @@ return new class extends Migration
             $table->integer('department');
             $table->date('year');
             $table->double('revenue_goals');
-            $table->text('comments');
+            $table->text('comments')->nullable();
+
+            $table->timestamps();
         });
     }
 

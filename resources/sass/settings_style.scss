@@ -8,10 +8,6 @@
     .buttonGroup {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        // display: flex;
-        // justify-content: center;
-        // align-items: center;
-        // flex-direction: column;
         gap: 1em;
         width: auto;
         height: auto;
@@ -26,7 +22,6 @@
             font-weight: bold;
             margin: 20px;
             padding: 20px;
-            box-shadow: 2px 2px 2px 2px black;
             transition: 0.25s;
         }
     }
