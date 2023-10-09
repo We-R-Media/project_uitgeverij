@@ -14,7 +14,10 @@ return new class extends Migration
         Schema::create('btw_groups', function (Blueprint $table) {
             $table->id();
             $table->char('btw_country', 3);
-            $table->integer('btw_percentage');
+            $table->integer('btw_zero');
+            $table->integer('btw_low');
+            $table->integer('btw_high');
+            $table->timestamps();
         });
     }
 

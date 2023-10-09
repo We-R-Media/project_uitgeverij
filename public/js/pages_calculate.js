@@ -13,3 +13,4 @@ document.addEventListener('DOMContentLoaded', function() {
         sumElement.innerText = "Totaal aantal pagina's " + total;
     }
 });
+

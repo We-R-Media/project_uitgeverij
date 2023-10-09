@@ -12,8 +12,14 @@
         <input type="number" name="printer" placeholder="Vul drukker in..." id="">
         <input type="number" name="client" placeholder="Vul opdrachtgever in..." id="">
         <input type="number" name="distribution" placeholder="Vul verspreidbureau in..." id="">
+            <select name="btw_country" id="">
+                @foreach($btw_group as $country)
+                    <option value="{{$country->btw_country}}">{{$country->btw_country}}</option>
+                @endforeach
+            </select>
         <input type="number" name="btw_country" placeholder="Vul BTW id in..." id="">
 
+        
         <input type="text" name="release_name" placeholder="Vul in naam uitgave in..." id="">
         <input type="text" name="edition_name" placeholder="Vul editie in..." id="">
         <input type="text" name="print_edition" placeholder="Vul oplage in..." id="">

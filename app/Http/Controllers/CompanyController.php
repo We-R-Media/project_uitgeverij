@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use App\Http\Resources\CompanyResource;
 use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
@@ -50,9 +51,10 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show($id)
     {
-        //
+        $company = Company::all();
+        return CompanyResource::collection($company);
     }
 
     /**
