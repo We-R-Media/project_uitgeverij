@@ -4,24 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Company extends Model
 {
-<<<<<<< HEAD
+    use HasFactory, SoftDeletes;
+
     /**
      * Fillable fields for mass assignment.
      *
      * @var array
      */
-=======
-    use HasFactory;
-
-    protected $table = 'companies';
-
->>>>>>> 7647ae6ba2d5d1243e3579e2b4057d22fa3cf2f2
     protected $fillable = [
         'id',
-        'contact_id',
         'company_name',
         'company_isactive',
         'mailbox',

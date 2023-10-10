@@ -15,7 +15,7 @@ class ProjectSeeder extends Seeder
      */
     public function run()
     {
-        $user = Project::factory()
+        $project = Project::factory()
             ->has( Format::factory()->count(3) )
             ->count(4)
             ->create();

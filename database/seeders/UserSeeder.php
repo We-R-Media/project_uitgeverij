@@ -10,6 +10,8 @@ class UserSeeder extends Seeder
     public function run()
     {
         // Create 10 user records using the UserFactory
-        $user = User::factory()->count(4)->create();
+        $user = User::factory()
+            ->count(4)
+            ->create();
     }
 }

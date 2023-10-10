@@ -41,6 +41,6 @@ class Project extends Model
      */
     public function formats() : HasMany
     {
-        return $this->hasMany(Format::class);
+        return $this->hasMany(Format::class, 'project_id');
     }
 }

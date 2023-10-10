@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('formats', function (Blueprint $table) {
+        Schema::create('layouts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_id');
-            $table->string('format_name')->unique();
-            $table->string('size');
-            $table->string('measurement');
-            $table->double('price');
-            $table->softDeletes();
+            $table->string('layout_name')->unique();
+            $table->string('city_name');
+            $table->string('logo');
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('formats');
+        Schema::dropIfExists('layouts');
     }
 };

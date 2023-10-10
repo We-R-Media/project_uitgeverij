@@ -14,21 +14,13 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->timestamp('invoice_date');
-
             $table->timestamp('first_reminder')->nullable();
             $table->timestamp('second_reminder')->nullable();
-
-            $table->unsignedBigInteger('company_id');
-            $table->foreign('company_id')->references('id')->on('companies');
-
-            $table->unsignedBigInteger('order_number');
-            $table->foreign('order_number')->references('id')->on('orders_total');
-
             $table->enum('send_method', ['mail','post']);
-
             $table->enum('exhortation', ['yes', 'no'])->default('no');
-
             $table->integer('payment_condition');
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 

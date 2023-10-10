@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('distribution_agency', function (Blueprint $table) {
+        Schema::create('taxes', function (Blueprint $table) {
             $table->id();
-            $table->string('company_name')->unique();
-            $table->string('address');
-            $table->string('city');
+            $table->char('btw_country');
+            $table->integer('btw_percentage');
+            $table->timestamps();
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('distribution_agency');
+        Schema::dropIfExists('taxes');
     }
 };

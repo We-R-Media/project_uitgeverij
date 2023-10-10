@@ -20,7 +20,7 @@ return new class extends Migration
             $table->enum('gender', ['male', 'female', 'other']);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password', 255);
+            $table->string('password', 50);
             $table->enum('role', ['user', 'seller', 'administration'])->default('user');
             $table->softDeletes();
             $table->rememberToken();
