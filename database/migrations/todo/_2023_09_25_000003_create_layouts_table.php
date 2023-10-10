@@ -11,9 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('format_group', function (Blueprint $table) {
+        Schema::create('layouts', function (Blueprint $table) {
             $table->id();
-            $table->string('group_name')->unique();
+            $table->string('layout_name')->unique();
+            $table->string('city_name');
+            $table->string('logo');
+            $table->timestamps();
         });
     }
 
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('format_group');
+        Schema::dropIfExists('layouts');
     }
 };

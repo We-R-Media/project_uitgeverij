@@ -1,0 +1,39 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\Format;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Model>
+ */
+class ProjectFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'release_name' => fake()->word(),
+            'edition_name' => fake()->word(),
+            'print_edition' => fake()->word(),
+            'pages_redaction' => fake()->numberBetween(1, 100),
+            'pages_adverts' => fake()->numberBetween(1, 100),
+            'pages_total' => fake()->optional()->numberBetween(1, 100),
+            'paper_type_cover' => fake()->word(),
+            'paper_type_interior' => fake()->word(),
+            'color_cover' => fake()->word(),
+            'color_interior' => fake()->word(),
+            'ledger' => fake()->numberBetween(1, 10),
+            'journal' => fake()->numberBetween(1, 10),
+            'department' => fake()->numberBetween(1, 10),
+            'year' => fake()->date('Y-m-d', 'now'),
+            'revenue_goals' => fake()->randomFloat(2, 1000, 10000),
+            'comments' => fake()->paragraph(),
+        ];
+    }
+}

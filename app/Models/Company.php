@@ -7,8 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Company extends Model
 {
-    protected $table = 'companies';
-
+    /**
+     * Fillable fields for mass assignment.
+     *
+     * @var array
+     */
     protected $fillable = [
         'id',
         'contact_id',
@@ -19,7 +22,7 @@ class Company extends Model
         'city',
         'province',
        'phone_mobile',
-       'phone_number', 
+       'phone_number',
     ];
     use HasFactory;
 }

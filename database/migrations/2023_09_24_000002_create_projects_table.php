@@ -12,29 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('projects', function (Blueprint $table) {
-            $table->string('id', 25)->primary()->unique();
-
-            $table->unsignedBigInteger('format_id');
-            $table->foreign('format_id')->references('id')->on('format_group')->onDelete('cascade');
-
-            $table->unsignedBigInteger('layout_id');
-            $table->foreign('layout_id')->references('id')->on('layouts')->onDelete('cascade');
-
-            $table->unsignedBigInteger('designer_id');
-            $table->foreign('designer_id')->references('id')->on('designer')->onDelete('cascade');
-
-            $table->unsignedBigInteger('printer_id');
-            $table->foreign('printer_id')->references('id')->on('printer')->onDelete('cascade');
-      
-            $table->unsignedBigInteger('client_id');
-            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
-
-            $table->unsignedBigInteger('distribution_id');
-            $table->foreign('distribution_id')->references('id')->on('distribution_agency')->onDelete('cascade');
-            
-            $table->unsignedBigInteger('btw_country_id');
-            $table->foreign('btw_country_id')->references('id')->on('btw_groups')->onDelete('cascade');
-
+            $table->id();
             $table->string('release_name', 25);
             $table->string('edition_name', 25);
             $table->string('print_edition', 25);
@@ -51,6 +29,8 @@ return new class extends Migration
             $table->date('year');
             $table->double('revenue_goals');
             $table->text('comments');
+            $table->softDeletes();
+            $table->timestamps();
         });
     }
 

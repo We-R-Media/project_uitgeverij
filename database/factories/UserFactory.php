@@ -4,7 +4,6 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use Faker\Generator as Faker;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -40,17 +39,5 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
         ]);
-    }
-
-    /**
-     * Indicate that the user is suspended.
-     */
-    public function suspended(): Factory
-    {
-        return $this->state(function (array $attributes) {
-            return [
-                'account_status' => 'suspended',
-            ];
-        });
     }
 }
