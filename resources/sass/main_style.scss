@@ -1,0 +1,21 @@
+@use 'namespaces/colors';
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.pageContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 40px;
+    width: 100%;
+    min-height: 100vh;
+    background-color: colors.$page-background;
+}
