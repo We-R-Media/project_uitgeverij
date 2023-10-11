@@ -35,16 +35,16 @@ return new class extends Migration
             $table->unsignedBigInteger('btw_country_id')->nullable();
             $table->foreign('btw_country_id')->references('id')->on('btw_groups')->onDelete('cascade');
 
-            $table->string('release_name', 25);
-            $table->string('edition_name', 25);
-            $table->string('print_edition', 25);
+            $table->string('release_name');
+            $table->string('edition_name');
+            $table->string('print_edition');
             $table->integer('pages_redaction');
             $table->integer('pages_adverts');
             $table->integer('pages_total')->nullable();
-            $table->string('paper_type_cover', 25);
-            $table->string('paper_type_interior', 25);
-            $table->string('color_cover', 25);
-            $table->string('color_interior', 25);
+            $table->string('paper_type_cover');
+            $table->string('paper_type_interior');
+            $table->string('color_cover');
+            $table->string('color_interior');
             $table->integer('ledger');
             $table->integer('journal');
             $table->integer('department');

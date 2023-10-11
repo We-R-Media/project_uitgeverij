@@ -21,6 +21,12 @@ class FormatController extends Controller
      */
     public function create(Request $request)
     {
+        $check = DB::table('format_group')->count();
+
+        // if($check === 0) {
+        //     echo "True!";
+        // }
+
         DB::transaction(function () use($request) {
             Format::create([
                 'format_name' => $request->input('format_name'),

@@ -8,17 +8,21 @@ use Illuminate\Database\Eloquent\Model;
 class Format extends Model
 {
 
-    public function getFormat() {
-        return $format_groups = [
-            [
-                'format_name' => 'A4',
-                
-            ],
-            [
+    protected $table = 'formats';
 
-            ],
-        ];
+    protected $fillable = [
+        'id',
+        'format_name',
+        'group_id',
+        'size',
+        'measurement',
+        'price',
+    ];
+
+    public function format_group(): belongsTo {
+        return $this->belongsTo(Project::class);
     }
+
 
     use HasFactory;
 }

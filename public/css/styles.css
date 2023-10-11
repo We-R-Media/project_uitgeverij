@@ -84,3 +84,28 @@ body {
   padding: 20px;
   transition: 0.25s;
 }
+
+.pageCounter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row !important;
+}
+
+.is-invalid {
+  border: 1px solid red;
+}
+
+.is-invalid::-moz-placeholder {
+  color: red;
+}
+
+.is-invalid::placeholder {
+  color: red;
+}
+
+.error-message {
+  padding: 0 !important;
+  margin: 0 !important;
+  color: red;
+}

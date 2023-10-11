@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('size');
             $table->string('measurement');
             $table->double('price');
+            $table->timestamps();
         });
     }
 

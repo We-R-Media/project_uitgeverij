@@ -38,4 +38,8 @@ class Project extends Model
         'revenue_goals',
         'comments',
     ];
+
+    public function formats() {
+        return $this->hasMany(Format::class);
+    }
 }

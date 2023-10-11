@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\BTW;
 use Illuminate\Http\Request;
+use App\Http\Requests\ProjectRequest;
 use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
@@ -12,8 +13,9 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+
         $btw_group = BTW::all();
         return view('pages.projects', compact('btw_group'));
     }
@@ -21,7 +23,7 @@ class ProjectController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create(ProjectRequest $request)
     {
         $project = DB::transaction(function () use($request) {
             

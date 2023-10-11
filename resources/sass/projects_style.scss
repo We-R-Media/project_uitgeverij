@@ -4,3 +4,18 @@
     align-items: center;
     flex-direction: row !important;
 }
+
+.is-invalid {
+    border: 1px solid red;
+}
+
+.is-invalid::placeholder {
+    color: red;
+}
+
+.error-message {
+    padding: 0 !important;
+    margin: 0 !important;
+    color: red;
+}
+

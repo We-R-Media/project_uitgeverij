@@ -18,7 +18,6 @@ use App\Http\UserResource;
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
-|
 */
 
 Route::get('/', function () {
@@ -42,7 +41,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('/btw/show', [BtwController::class, 'show'])->name('btw.show');
 
     Route::get('/formats', [FormatController::class, 'index'])->name('formats.page');
-    Route::get('/formats/create', [FormatController::class, 'create'])->name('formats.create');
+    Route::post('/formats/create', [FormatController::class, 'create'])->name('formats.create');
 
 
 
