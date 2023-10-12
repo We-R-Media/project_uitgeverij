@@ -20,6 +20,7 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <script src="{{asset('js/pages_calculate.js')}}"></script>
+    <script src="{{asset('js/contact_add.js')}}"></script>
     
     @livewireStyles
 </head>

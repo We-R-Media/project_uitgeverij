@@ -6,6 +6,7 @@ use App\Models\Company;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use App\Http\Resources\CompanyResource;
+use App\Http\Requests\CompanyRequest;
 use Illuminate\Support\Facades\DB;
 
 class CompanyController extends Controller
@@ -14,7 +15,7 @@ class CompanyController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
+    {   
         $records = Company::all();
         $contacts = Contact::all();
 
@@ -24,7 +25,7 @@ class CompanyController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create(CompanyRequest $request)
     {
         $company = DB::transaction(function () use($request) {
             Company::create([

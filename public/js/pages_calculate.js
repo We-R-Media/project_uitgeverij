@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    let paginaRedactieInput = document.getElementById('pagina_redactie');
-    let paginaAdvertentieInput = document.getElementById('pagina_advertentie');
+    let paginaRedactieInput = document.getElementById('pages_redaction');
+    let paginaAdvertentieInput = document.getElementById('pages_adverts');
     let sumElement = document.getElementById('sum');
 
     paginaRedactieInput.addEventListener('input', updateSum);

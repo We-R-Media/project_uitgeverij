@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BTW;
+use App\Models\VAT;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class BtwController extends Controller
+class VATController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('pages.settings.btw');
+        return view('pages.settings.vat');
     }
 
     /**
@@ -22,7 +22,7 @@ class BtwController extends Controller
     public function create(Request $request)
     {
         $btw = DB::transaction(function () use($request) {
-            bTW::create([
+            VAT::create([
                 'btw_country' => $request->input('country_code'),
                 'btw_zero' => $request->input('percentage_zero'),
                 'btw_low' => $request->input('percentage_low'),
@@ -30,7 +30,7 @@ class BtwController extends Controller
 
             ]);
         });
-        return redirect()->route('btw.page');
+        return redirect()->route('vat.page');
     }
 
     /**
@@ -44,7 +44,7 @@ class BtwController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(BTW $BTW)
+    public function show(VAT $VAT)
     {
         //
     }
@@ -52,7 +52,7 @@ class BtwController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(BTW $BTW,)
+    public function edit(VAT $VAT,)
     {
         //
     }
@@ -60,7 +60,7 @@ class BtwController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, BTW $BTW)
+    public function update(Request $request, VAT $VAT)
     {
         //
     }
@@ -68,7 +68,7 @@ class BtwController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(BTW $BTW)
+    public function destroy(VAT $VAT)
     {
         //
     }

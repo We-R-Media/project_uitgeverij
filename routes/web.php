@@ -5,7 +5,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\BtwController;
+use App\Http\Controllers\VATController;
 use App\Http\Controllers\FormatController;
 use App\Http\Livewire\TotalSum;
 use App\Http\UserResource;
@@ -26,30 +26,54 @@ Route::get('/', function () {
 
 // Grouped routes for better performance
 
+    $controllers = [
+        CompanyController::class,
+        ContactController::class,
+        VATController::class,
+        FormatController::class,
+        ProjectController::class,
+    ];
+
 Route::group(['middleware' => 'auth'], function() {
 
+    Route::prefix('companies')->group(function() {
+        $controller = CompanyController::class;
+
+        Route::get('/', [$controller, 'index'])->name('companies.page');
+        Route::post('create', [$controller, 'create'])->name('companies.create');
+    });
+
+    Route::prefix('contacts')->group(function() {
+        $controller = ContactController::class;
+
+        Route::get('/', [$controller, 'index'])->name('contacts.page');
+        Route::post('create', [$controller, 'create'])->name('contacts.create');
+    });
+
+    Route::prefix('vat')->group(function() {
+        $controller = VATController::class;
+
+        Route::get('/', [$controller, 'index'])->name('vat.page');
+        Route::post('create', [$controller, 'create'])->name('vat.create');
+    });
+
+    Route::prefix('formats')->group(function() {
+        $controller = FormatController::class;
+
+        Route::get('/', [$controller, 'index'])->name('formats.page');
+        Route::post('create', [$controller, 'create'])->name('formats.create');
+    });
+
+    Route::prefix('projects')->group(function() {
+        $controller = ProjectController::class;
+
+        Route::get('/', [$controller, 'index'])->name('projects.page');
+        Route::post('create', [$controller, 'create'])->name('projects.create');
+    });
+
+
     route::view('/orders', 'pages.orders')->name('orders.page');
-
-    route::get('/companies', [CompanyController::class, 'index'])->name('companies.page');
-    Route::post('/companies/create', [CompanyController::class, 'create'])->name('companies.create');
-
-    Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.page');
-    Route::post('/contacts/create', [ContactController::class, 'create'])->name('contacts.create');
-
-    Route::get('/btw', [BtwController::class, 'index'])->name('btw.page');
-    Route::post('/btw/create', [BtwController::class, 'create'])->name('btw.create');
-    Route::get('/btw/show', [BtwController::class, 'show'])->name('btw.show');
-
-    Route::get('/formats', [FormatController::class, 'index'])->name('formats.page');
-    Route::post('/formats/create', [FormatController::class, 'create'])->name('formats.create');
-
-
-
-    route::get('/projects', [ProjectController::class, 'index'])->name('projects.page');
-    route::post('/projects', [ProjectController::class, 'create'])->name('projects.create');
-
     route::view('/invoices', 'pages.invoices')->name('invoices.page');
-
     route::view('/settings', 'pages.settings')->name('settings.page');
 
     Route::get('/user/{id}', function (string $id) {

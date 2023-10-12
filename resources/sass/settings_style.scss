@@ -1,3 +1,6 @@
+@use 'namespaces/primary_colors';
+@use 'namespaces/secondary_colors';
+
 .settingsContainer {
     display: flex;
     justify-content: center;
@@ -23,6 +26,7 @@
             margin: 20px;
             padding: 20px;
             transition: 0.25s;
+            background: primary_colors.$page-background;
         }
     }
 }

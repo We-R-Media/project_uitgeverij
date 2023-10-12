@@ -1,4 +1,6 @@
-@use 'namespaces/colors';
+@use 'namespaces/primary_colors';
+@use 'namespaces/secondary_colors';
+
 
 *, *::before, *::after {
     box-sizing: border-box;
@@ -17,5 +19,5 @@ body {
     gap: 40px;
     width: 100%;
     min-height: 100vh;
-    background-color: colors.$page-background;
+    background-color: primary_colors.$page-background;
 }

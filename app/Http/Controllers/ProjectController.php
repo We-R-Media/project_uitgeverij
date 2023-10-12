@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
-use App\Models\BTW;
+use App\Models\VAT;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
 use Illuminate\Support\Facades\DB;
@@ -16,8 +16,8 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
 
-        $btw_group = BTW::all();
-        return view('pages.projects', compact('btw_group'));
+        $vat_group = VAT::all();
+        return view('pages.projects', compact('vat_group'));
     }
 
     /**
