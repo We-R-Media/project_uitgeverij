@@ -25,25 +25,23 @@
             <tr>
                 <th>Klantnummer</th>
                 <th>Bedrijfsnaam</th>
-                <th>Actief</th>
+                <th>Actief (datum)</th>
                 <th>Postadres</th>
                 <th>Postcode</th>
                 <th>Woonplaats</th>
-                <th>Provincie</th>
                 <th>Mobiel</th>
                 <th>Telefoon</th>
             </tr>
-            @foreach($records as $company)
+            @foreach($records as $advertiser)
             <tr>
-                <td>{{$company->id}}</td>
-                <td>{{$company->company_name}}</td>
-                <td>{{$company->isactive}}</td>
-                <td>{{$company->mailbox}}</td>
-                <td>{{$company->postal_code}}</td>
-                <td>{{$company->city}}</td>
-                <td>{{$company->province}}</td>
-                <td>{{$company->phone_mobile}}</td>
-                <td>{{$company->phone_number}}</td>
+                <td>{{$advertiser->id}}</td>
+                <td>{{$advertiser->name}}</td>
+                <td>{{$advertiser->deactivated_at}}</td>
+                <td>{{$advertiser->po_box}}</td>
+                <td>{{$advertiser->postal_code}}</td>
+                <td>{{$advertiser->city}}</td>
+                <td>{{$advertiser->phone_mobile}}</td>
+                <td>{{$advertiser->phone}}</td>
                 <td><a href="#">Bewerken</a></td>
                 <td><a href="#">Verwijderen</a></td>
             </tr>

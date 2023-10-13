@@ -12,9 +12,9 @@ class Format extends Model
     use HasFactory, SoftDeletes;
 
     /**
-     * Fillable fields for mass assignment.
+     * The attributes that are mass assignable.
      *
-     * @var array
+     * @var array<int, string>
      */
     protected $fillable = [
         'name',
@@ -28,7 +28,7 @@ class Format extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function project() : BelongsTo
+    public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
     }

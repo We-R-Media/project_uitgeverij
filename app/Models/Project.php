@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\Middleware\AuthenticatesRequests;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
@@ -37,10 +37,72 @@ class Project extends Model
     ];
 
     /**
-     * Get the formats associated with the project.
+     * Get the orders associated with the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function formats() : HasMany
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Get the formats associated with the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function formats(): HasMany
     {
         return $this->hasMany(Format::class, 'project_id');
+    }
+
+    /**
+     * Get the tax associated with the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function tax(): HasOne
+    {
+        return $this->hasOne(Tax::class);
+    }
+
+    /**
+     * Get the printer associated with the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function printer(): HasOne
+    {
+        return $this->hasOne(Printer::class);
+    }
+
+    /**
+     * Get the designer associated with the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function designer(): HasOne
+    {
+        return $this->hasOne(Designer::class);
+    }
+
+    /**
+     * Get the distributor associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function distributor(): HasOne
+    {
+        return $this->hasOne(Distributor::class);
+    }
+
+    /**
+     * Get the distributor associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function client(): HasOne
+    {
+        return $this->hasOne(Client::class);
     }
 }

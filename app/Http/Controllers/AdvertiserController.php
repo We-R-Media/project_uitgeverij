@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
+use App\Models\Advertiser;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class CompanyController extends Controller
+class AdvertiserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $records = Company::all();
+        $records = Advertiser::all();
         $contacts = Contact::all();
 
-        return view('pages.companies', compact('records', 'contacts'));
+        return view('pages.advertisers', compact('records', 'contacts'));
     }
 
     /**
@@ -25,18 +25,18 @@ class CompanyController extends Controller
      */
     public function create(Request $request)
     {
-        $company = DB::transaction(function () use($request) {
-            Company::create([
-                'company_name' => $request->input('company_name'),
-                'mailbox' => $request->input('mailbox'),
+        $advertiser = DB::transaction(function () use($request) {
+            Advertiser::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'phone_mobile' => $request->input('phone_mobile'),
+                'phone' => $request->input('phone'),
+                'po_box' => $request->input('mailbox'),
                 'postal_code' => $request->input('postal_code'),
                 'city' => $request->input('city'),
-                'province' => $request->input('province'),
-                'phone_mobile' => $request->input('phone_mobile'),
-                'phone_number' => $request->input('phone_number'),
             ]);
         });
-        return redirect()->route('companies.page');
+        return redirect()->route('advertiser.page');
     }
 
     /**
@@ -44,13 +44,13 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(Advertiser $advertiser)
     {
         //
     }
@@ -58,7 +58,7 @@ class CompanyController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Company $company)
+    public function edit(Advertiser $advertiser)
     {
         //
     }
@@ -66,7 +66,7 @@ class CompanyController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Company $company)
+    public function update(Request $request, Advertiser $advertiser)
     {
         //
     }
@@ -74,7 +74,7 @@ class CompanyController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Company $company)
+    public function destroy(Advertiser $advertiser)
     {
         //
     }

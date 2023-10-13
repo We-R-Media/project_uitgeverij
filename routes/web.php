@@ -1,11 +1,11 @@
 <?php
 
+use App\Http\Controllers\AdvertiserController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
-use App\Http\Livewire\TotalSum;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,15 +25,13 @@ Route::get('/', function () {
 // Grouped routes for better performance
 
 Route::group(['middleware' => 'auth'], function() {
-
     route::view('/orders', 'pages.orders')->name('orders.page');
 
-    route::get('/companies', [CompanyController::class, 'index'])->name('companies.page');
-    Route::post('/companies/create', [CompanyController::class, 'create'])->name('companies.create');
+    route::get('/advertisers', [AdvertiserController::class, 'index'])->name('advertisers.page');
+    Route::post('/advertisers/create', [AdvertiserController::class, 'create'])->name('advertisers.create');
 
     Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.page');
     Route::post('/contacts/create', [ContactController::class, 'create'])->name('contacts.create');
-
 
     route::get('/projecten', [ProjectController::class, 'index'])->name('projects.page');
     route::post('/projecten', [ProjectController::class, 'create'])->name('projects.create');
@@ -43,6 +41,11 @@ Route::group(['middleware' => 'auth'], function() {
     route::view('/instellingen', 'pages.settings')->name('settings.page');
 });
 
+
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});
