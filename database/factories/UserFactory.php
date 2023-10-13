@@ -18,10 +18,15 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
+            'initial' => strtoupper(fake()->randomLetter() . fake()->randomLetter()),
+            'first_name' => fake()->firstName(),
+            'preposition' => fake()->optional()->firstName(),
+            'last_name' => fake()->lastName(),
+            'gender' => fake()->randomElement(['male', 'female']),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => bcrypt('password123'),
+            'role' => fake()->randomElement(['user', 'seller', 'administration']),
             'remember_token' => Str::random(10),
         ];
     }

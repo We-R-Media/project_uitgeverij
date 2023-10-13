@@ -7,26 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Contact extends Model
+class Invoice extends Model
 {
     use HasFactory, SoftDeletes;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'first_name',
-        'initial',
-        'insertion',
-        'last_name',
-        'email',
-        'contact',
-    ];
-
-    /**
-     * Get the advertiser that owns the contacts.
+     * Get the phone associated with the user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

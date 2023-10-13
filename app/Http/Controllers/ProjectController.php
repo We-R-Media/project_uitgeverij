@@ -26,7 +26,7 @@ class ProjectController extends Controller
     public function create(ProjectRequest $request)
     {
         $project = DB::transaction(function () use($request) {
-            
+
             Project::create([
                 'id' => $request->input('project_code'),
                 'format_id' => $request->input('format'),

@@ -7,26 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Format extends Model
+class Tax extends Model
 {
     use HasFactory, SoftDeletes;
 
     /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'page_count',
-        'price',
-        'description'
-    ];
-
-    /**
-     * Get the project associated with the format.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * Get the project that owns the tax.
      */
     public function project(): BelongsTo
     {

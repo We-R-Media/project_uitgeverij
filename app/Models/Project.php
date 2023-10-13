@@ -4,23 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Project extends Model
-
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
-    protected $table = 'projects';
-
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
-        'id',
-        'format_id',
-        'layout_id',
-        'designer_id',
-        'printer_id',
-        'client_id',
-        'distribution_id',
-        'btw_country_id',
         'release_name',
         'edition_name',
         'print_edition',
@@ -39,7 +36,73 @@ class Project extends Model
         'comments',
     ];
 
-    public function formats() {
-        return $this->hasMany(Format::class);
+    /**
+     * Get the orders associated with the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Get the formats associated with the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function formats(): HasMany
+    {
+        return $this->hasMany(Format::class, 'project_id');
+    }
+
+    /**
+     * Get the tax associated with the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function tax(): HasOne
+    {
+        return $this->hasOne(Tax::class);
+    }
+
+    /**
+     * Get the printer associated with the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function printer(): HasOne
+    {
+        return $this->hasOne(Printer::class);
+    }
+
+    /**
+     * Get the designer associated with the project.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function designer(): HasOne
+    {
+        return $this->hasOne(Designer::class);
+    }
+
+    /**
+     * Get the distributor associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function distributor(): HasOne
+    {
+        return $this->hasOne(Distributor::class);
+    }
+
+    /**
+     * Get the distributor associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function client(): HasOne
+    {
+        return $this->hasOne(Client::class);
     }
 }
