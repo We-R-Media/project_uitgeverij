@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BTW;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class FormatController extends Controller
+class BtwController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('pages.settings.formats');
+        return view('pages.settings.btw');
     }
 
     /**
@@ -20,22 +21,16 @@ class FormatController extends Controller
      */
     public function create(Request $request)
     {
-        $check = DB::table('format_group')->count();
+        $btw = DB::transaction(function () use($request) {
+            bTW::create([
+                'btw_country' => $request->input('country_code'),
+                'btw_zero' => $request->input('percentage_zero'),
+                'btw_low' => $request->input('percentage_low'),
+                'btw_high' => $request->input('percentage_high'),
 
-        // if($check === 0) {
-        //     echo "True!";
-        // }
-
-        DB::transaction(function () use($request) {
-            Format::create([
-                'format_name' => $request->input('format_name'),
-                'size' => $request->input('format_size'),
-                'measurement' => $request->input('format_measurement'),
-                'price' => $request->input('format_price'),
             ]);
         });
-
-        return redirect()->route('formats.page');
+        return redirect()->route('btw.page');
     }
 
     /**
@@ -49,7 +44,7 @@ class FormatController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Format $format)
+    public function show(BTW $BTW)
     {
         //
     }
@@ -57,7 +52,7 @@ class FormatController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Format $format)
+    public function edit(BTW $BTW,)
     {
         //
     }
@@ -65,7 +60,7 @@ class FormatController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Format $format)
+    public function update(Request $request, BTW $BTW)
     {
         //
     }
@@ -73,7 +68,7 @@ class FormatController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Format $format)
+    public function destroy(BTW $BTW)
     {
         //
     }

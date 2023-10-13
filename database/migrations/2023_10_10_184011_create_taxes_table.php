@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('project_id');
             $table->char('btw_country');
-            $table->integer('btw_percentage');
+            $table->integer('btw_zero');
+            $table->integer('btw_low');
+            $table->integer('btw_high');
             $table->softDeletes();
             $table->timestamps();
         });

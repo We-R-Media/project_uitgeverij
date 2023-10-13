@@ -2,6 +2,11 @@
 
 
 @section('content')
+
+ 
+
+    {{-- Validatie/Erorhandling wordt gedaan in ProjectRequest.php --}}
+
     <form class="formContainer" action="{{route('projects.create')}}" method="post">
         @csrf
 
@@ -12,11 +17,35 @@
         <input type="number" name="printer" placeholder="Vul drukker in..." id="">
         <input type="number" name="client" placeholder="Vul opdrachtgever in..." id="">
         <input type="number" name="distribution" placeholder="Vul verspreidbureau in..." id="">
+        
+
+        {{-- Zorgen dat database btw_country veld oppakt --}}
+            <select name="btw_country" id="">
+                @foreach($btw_group as $country)
+                    <option value="{{$country->btw_country}}">{{$country->btw_country}}</option>
+                @endforeach
+            </select>
         <input type="number" name="btw_country" placeholder="Vul BTW id in..." id="">
 
-        <input type="text" name="release_name" placeholder="Vul in naam uitgave in..." id="">
-        <input type="text" name="edition_name" placeholder="Vul editie in..." id="">
+        
+        
+
+        <input type="text" class="@error('release_name') is-invalid @enderror" value="{{ old('release_name') }}" name="release_name" placeholder="Vul in naam uitgave in..." id="">
+        @if($errors->has('release_name'))
+            <p class="error-message">{{$errors->first('release_name')}}</p>
+        @endif 
+        
+        <input type="text" class="@error('edition_name') is-invalid @enderror" value="{{ old('edition_name') }}" name="edition_name" placeholder="Vul editie in..." id="">
+        @if($errors->has('edition_name'))
+            <p class="error-message">{{$errors->first('edition_name')}}</p>
+        @endif
+
+       
+
         <input type="text" name="print_edition" placeholder="Vul oplage in..." id="">
+
+
+        {{-- Kijken hoe naar livewire components bijgewerkt kan worden --}}
 
         <div class="pageCalculate">
             <input type="number" name="pages_redaction" id="pagina_redactie" placeholder="Pagina's redactie...">
@@ -37,5 +66,17 @@
         <textarea name="comments" id="" placeholder="Vul opmerkingen in..." cols="30" rows="10"></textarea>
         
         <button type="submit">Toevoegen</button>
+
     </form>
+    {{-- @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error )
+                    <li class="text-red-500">
+                        {{ $error }}
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+    @endif --}}
 @endsection

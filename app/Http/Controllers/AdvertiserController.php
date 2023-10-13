@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Advertiser;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use App\Http\Resources\CompanyResource;
 use Illuminate\Support\Facades\DB;
 
 class AdvertiserController extends Controller
@@ -52,7 +53,8 @@ class AdvertiserController extends Controller
      */
     public function show(Advertiser $advertiser)
     {
-        //
+        $advertiser = Advertiser::all();
+        return AdvertiserResource::collection($advertiser);
     }
 
     /**
