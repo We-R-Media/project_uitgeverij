@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AdvertiserResource;
 use App\Models\Advertiser;
 use App\Models\Contact;
 use Illuminate\Http\Request;

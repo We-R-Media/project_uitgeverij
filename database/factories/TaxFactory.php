@@ -17,8 +17,10 @@ class TaxFactory extends Factory
     public function definition(): array
     {
         return [
-            'btw_country' => fake()->country(),
-            'btw_percentage' => fake()->numberBetween(1, 10),
+            'country' => fake()->country(),
+            'zero' => fake()->optional()->numberBetween(1, 10),
+            'low' => fake()->optional()->numberBetween(1, 10),
+            'high' => fake()->optional()->numberBetween(1, 10),
         ];
     }
 }

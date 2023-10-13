@@ -5,14 +5,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
-<<<<<<< HEAD
-use Illuminate\Support\Facades\Auth;
-=======
-use App\Http\Controllers\BtwController;
+use App\Http\Controllers\TaxController;
 use App\Http\Controllers\FormatController;
-use App\Http\Livewire\TotalSum;
 use App\Http\UserResource;
->>>>>>> 1049469e109bd828ad923437909d882304f73040
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,9 +49,9 @@ Route::group(['middleware' => 'auth'], function() {
 
     route::view('/settings', 'pages.settings')->name('settings.page');
 
-    Route::get('/user/{id}', function (string $id) {
-        return new UserResource(User::findOrFail($id));
-    });
+    // Route::get('/user/{id}', function (string $id) {
+    //     return new UserResource(User::findOrFail($id));
+    // });
 });
 
 

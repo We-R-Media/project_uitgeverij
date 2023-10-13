@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('taxes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('project_id');
-            $table->char('btw_country');
-            $table->integer('btw_zero');
-            $table->integer('btw_low');
-            $table->integer('btw_high');
+            $table->char('country');
+            $table->integer('zero')->nullable();
+            $table->integer('low')->nullable();;
+            $table->integer('high')->nullable();;
             $table->softDeletes();
             $table->timestamps();
         });
