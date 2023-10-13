@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('printers', function (Blueprint $table) {
             $table->id();
-            $table->string('company_name')->unique();
+            $table->foreignId('project_id');
+            $table->string('name')->unique();
             $table->string('address');
+            $table->string('postal_code');
             $table->string('city');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

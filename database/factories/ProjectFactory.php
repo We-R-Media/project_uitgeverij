@@ -31,9 +31,9 @@ class ProjectFactory extends Factory
             'ledger' => fake()->numberBetween(1, 10),
             'journal' => fake()->numberBetween(1, 10),
             'department' => fake()->numberBetween(1, 10),
-            'year' => fake()->date('Y-m-d', 'now'),
+            'year' => fake()->dateTimeBetween('-2 years', 'now'),
             'revenue_goals' => fake()->randomFloat(2, 1000, 10000),
-            'comments' => fake()->paragraph(),
+            'comments' => fake()->optional()->paragraph(),
         ];
     }
 }

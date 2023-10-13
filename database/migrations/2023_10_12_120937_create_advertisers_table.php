@@ -11,13 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('designers', function (Blueprint $table) {
+        Schema::create('advertisers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_id');
+            $table->foreignId('order_id');
             $table->string('name')->unique();
-            $table->string('address');
+            $table->string('email')->unique();
+            $table->string('phone_mobile')->unique()->nullable();
+            $table->string('phone')->unique();
+            $table->string('po_box')->nullable();
             $table->string('postal_code');
             $table->string('city');
+            $table->text('comments')->nullable();
+            $table->date('deactivated_at')->nullable();
+            $table->date('blacklisted_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -28,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('designers');
+        Schema::dropIfExists('advertisers');
     }
 };

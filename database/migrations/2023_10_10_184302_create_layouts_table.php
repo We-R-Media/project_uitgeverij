@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('layout_name')->unique();
             $table->string('city_name');
             $table->string('logo');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

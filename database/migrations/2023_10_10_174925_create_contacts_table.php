@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->string('first_name');
             $table->char('initial');
-            $table->string('insertion')->nullable();
+            $table->string('first_name');
+            $table->string('preposition')->nullable();
             $table->string('last_name');
             $table->string('email');
-            $table->enum('contact_isactive', ['yes', 'no'])->default('yes');
+            $table->timestamp('deactivated_at');
             $table->softDeletes();
             $table->timestamps();
         });

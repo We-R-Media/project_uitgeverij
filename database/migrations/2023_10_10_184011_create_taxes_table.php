@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('taxes', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('project_id');
             $table->char('btw_country');
             $table->integer('btw_percentage');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

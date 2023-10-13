@@ -17,7 +17,9 @@ class OrderLineFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'base_price' => fake()->numberBetween(0, 500),
+            'discount' => fake()->numberBetween(0, 100),
+            'invoiced_at' => fake()->optional()->dateTimeThisCentury(),
         ];
     }
 }

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Distribution>
  */
-class DistributionFactory extends Factory
+class DistributorFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,10 @@ class DistributionFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->company(),
+            'address' => fake()->address(),
+            'postal_code' => fake()->postcode(),
+            'city' => fake()->city(),
         ];
     }
 }

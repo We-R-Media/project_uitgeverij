@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->timestamp('invoice_date');
-            $table->timestamp('first_reminder')->nullable();
-            $table->timestamp('second_reminder')->nullable();
-            $table->enum('send_method', ['mail','post']);
-            $table->enum('exhortation', ['yes', 'no'])->default('no');
-            $table->integer('payment_condition');
+            $table->foreignID('advertiser_id');
+            $table->datetime('invoice_date');
+            $table->enum('post_method', ['mail','post']);
+            $table->datetime('first_reminder')->nullable();
+            $table->datetime('second_reminder')->nullable();
+            $table->datetime('third_reminder')->nullable();
+            $table->datetime('payed_at')->nullable();;
             $table->softDeletes();
             $table->timestamps();
         });

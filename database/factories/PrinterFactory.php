@@ -17,7 +17,10 @@ class PrinterFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->company(),
+            'address' => fake()->address(),
+            'postal_code' => fake()->postcode(),
+            'city' => fake()->city(),
         ];
     }
 }
