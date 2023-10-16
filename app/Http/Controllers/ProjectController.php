@@ -16,8 +16,9 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
 
-        $vat_group = VAT::all();
-        return view('pages.projects', compact('vat_group'));
+        // $vat_group = VAT::all();
+        // return view('pages.projects', compact('vat_group'));
+        return view('pages.projects');
     }
 
     /**

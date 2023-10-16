@@ -9,12 +9,12 @@ class VAT extends Model
 {
     use HasFactory;
 
-    protected $table = 'btw_groups';
+    // protected $table = 'btw_groups';
     
-    protected $fillable = [
-        'btw_country',
-       'btw_zero', 
-       'btw_low',
-       'btw_high', 
-    ];
+    // protected $fillable = [
+    //     'btw_country',
+    //    'btw_zero', 
+    //    'btw_low',
+    //    'btw_high', 
+    // ];
 }

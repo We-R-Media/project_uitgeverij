@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <form class="formContainer-companies" action="{{route('companies.create')}}" method="post">
+    <form class="formContainer-companies" action="{{route('advertisers.create')}}" method="post">
         @csrf
 
         <div class="formBlock-companies">
@@ -94,7 +94,7 @@
                 <th>Mobiel</th>
                 <th>Telefoon</th>
             </tr>
-            @foreach($records as $advertiser)
+            @foreach($advertisers as $advertiser)
             <tr>
                 <td>{{$advertiser->id}}</td>
                 <td>{{$advertiser->name}}</td>

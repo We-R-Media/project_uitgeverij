@@ -39,6 +39,12 @@ class ProjectRequest extends FormRequest
             'year' => 'required|unique:projects',
             'revenue_goals' => 'required|unique:projects',
             'comments' => 'required|unique:projects',
+            'format' => 'required|unique:projects',
+            'layout' => 'required|unique:projects',
+            'designer' => 'required|unique:projects',
+            'client' => 'required|unique:projects',
+            'printer' => 'required|unique:projects',
+            'distribution' => 'required|unique:projects',
         ];
     }
 }

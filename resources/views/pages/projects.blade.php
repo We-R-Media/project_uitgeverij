@@ -10,19 +10,45 @@
     <form class="formContainer-projects" action="{{route('projects.create')}}" method="post">
         @csrf
         
-        {{-- <div class="formBlock-projects">
-            <input type="text" name="format" placeholder="Vul formaat in..." id="">
-            <input type="text" name="layout" placeholder="Vul layout in..." id="">
-            <input type="number" name="designer" placeholder="Vul vormgever in..." id="">
-            <input type="number" name="printer" placeholder="Vul drukker in..." id="">
-            <input type="number" name="client" placeholder="Vul opdrachtgever in..." id="">
-            <input type="number" name="distribution" placeholder="Vul verspreidbureau in..." id="">
-        </div> --}}
+        <div class="formBlock-projects">
+            <input type="text" class="@error('format') is-invalid @enderror" value="{{ old('format') }}" name="format" placeholder="Vul formaat in..." id="">
+            @if($errors->has('format'))
+                <p class="error-message">{{$errors->first('format')}}</p>
+            @endif
+
+            <input type="text" class="@error('layout') is-invalid @enderror" value="{{ old('layout') }}" name="layout" placeholder="Vul layout in..." id="">
+            @if($errors->has('layout'))
+                <p class="error-message">{{$errors->first('layout')}}</p>
+            @endif
+            
+            <input type="text" class="@error('designer') is-invalid @enderror" value="{{ old('designer') }}" name="designer" placeholder="Vul vormgever in..." id="">
+            @if($errors->has('designer'))
+                <p class="error-message">{{$errors->first('designer')}}</p>
+            @endif
+
+            <input type="text" class="@error('printer') is-invalid @enderror" value="{{ old('printer') }}" name="printer" placeholder="Vul drukker in..." id="">
+            @if($errors->has('printer'))
+                <p class="error-message">{{$errors->first('printer')}}</p>
+            @endif
+
+            <input type="text" class="@error('client') is-invalid @enderror" value="{{ old('client') }}" name="client" placeholder="Vul opdrachtgever in..." id="">
+            @if($errors->has('client'))
+                <p class="error-message">{{$errors->first('client')}}</p>
+            @endif
+
+            <input type="text" class="@error('distribution') is-invalid @enderror" value="{{ old('distribution') }}" name="distribution" placeholder="Vul verspreidbureau in..." id="">
+            @if($errors->has('distribution'))
+                <p class="error-message">{{$errors->first('distribution')}}</p>
+            @endif
+
+
+        </div>
+
 
         <div class="formBlock-projects">
             <input type="text" class="@error('project_code') is-invalid @enderror" value="{{ old('project_code') }}" name="project_code" placeholder="Vul projectcode in..." id="">
             @if($errors->has('project_code'))
-                <p class="error-message">{{$errors->first('release_name')}}</p>
+                <p class="error-message">{{$errors->first('project_code')}}</p>
             @endif
 
             <input type="text" class="@error('release_name') is-invalid @enderror" value="{{ old('release_name') }}" name="release_name" placeholder="Vul naam uitgave in..." id="">

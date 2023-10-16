@@ -55,16 +55,27 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="insertion" class="col-md-4 col-form-label text-md-end">{{ __('Tussenvoegsel') }}</label>
+                            <label for="preposition" class="col-md-4 col-form-label text-md-end">{{ __('Tussenvoegsel') }}</label>
 
                             <div class="col-md-6">
-                                <input id="insertion" type="text" class="form-control @error('insertion') is-invalid @enderror" name="insertion" value="{{ old('insertion') }}" autocomplete="insertion" autofocus>
+                                <input id="preposition" type="text" class="form-control @error('preposition') is-invalid @enderror" name="preposition" value="{{ old('preposition') }}" autocomplete="preposition" autofocus>
 
-                                @error('insertion')
+                                @error('preposition')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="gender" class="col-md-4 col-form-label text-md-end">{{'Geslacht'}}</label>
+                            <div class="col-md-6">
+                                <select id="gender" class="form-control @error('gender') is-invalid @enderror" name="gender">
+                                    <option value="male">Man</option>
+                                    <option value="female">Vrouw</option>
+                                    <option value="other">Anders</option>
+                                </select>
                             </div>
                         </div>
 
@@ -76,21 +87,6 @@
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" autocomplete="email">
 
                                 @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        
-                        <div class="row mb-3">
-                            <label for="address" class="col-md-4 col-form-label text-md-end">{{ __('Adres') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ old('address') }}" autocomplete="address" autofocus>
-
-                                @error('address')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
