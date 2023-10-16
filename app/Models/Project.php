@@ -97,12 +97,22 @@ class Project extends Model
     }
 
     /**
-     * Get the distributor associated with the user.
+     * Get the client associated with the user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function client(): HasOne
     {
         return $this->hasOne(Client::class);
+    }
+
+    /**
+     * Get the layout associated with the user.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function layout(): HasOne
+    {
+        return $this->hasOne(Layout::class);
     }
 }

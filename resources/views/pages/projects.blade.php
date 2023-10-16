@@ -16,10 +16,16 @@
                 <p class="error-message">{{$errors->first('format')}}</p>
             @endif
 
-            <input type="text" class="@error('layout') is-invalid @enderror" value="{{ old('layout') }}" name="layout" placeholder="Vul layout in..." id="">
+            {{-- <input type="text" class="@error('layout') is-invalid @enderror" value="{{ old('layout') }}" name="layout" placeholder="Vul layout in..." id="">
             @if($errors->has('layout'))
                 <p class="error-message">{{$errors->first('layout')}}</p>
-            @endif
+            @endif --}}
+
+            <select title="layout" name="layout" id="layout">
+                @foreach($layouts as $layout)
+                    <option value="{{$layout->id}}">{{$layout->layout_name}}</option>
+                @endforeach
+            </select>
             
             <input type="text" class="@error('designer') is-invalid @enderror" value="{{ old('designer') }}" name="designer" placeholder="Vul vormgever in..." id="">
             @if($errors->has('designer'))
@@ -41,9 +47,7 @@
                 <p class="error-message">{{$errors->first('distribution')}}</p>
             @endif
 
-
         </div>
-
 
         <div class="formBlock-projects">
             <input type="text" class="@error('project_code') is-invalid @enderror" value="{{ old('project_code') }}" name="project_code" placeholder="Vul projectcode in..." id="">
@@ -135,4 +139,6 @@
             <button type="submit">Toevoegen</button>
         </div>
     </form>
+
+    
 @endsection

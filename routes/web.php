@@ -8,6 +8,8 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\FormatController;
+use App\Http\Controllers\LayoutController;
+use App\Http\Controllers\InvoiceController;
 use App\Http\UserResource;
 use Illuminate\Support\Facades\Auth;
 
@@ -56,14 +58,20 @@ Route::group(['middleware' => 'auth'], function() {
 
 
     Route::controller(ProjectController::class)->group(function() {
-        route::get('/projects', 'index')->name('projects.page');
-        route::post('/projects', 'create')->name('projects.create');
+        Route::get('/projects', 'index')->name('projects.page');
+        Route::post('/projects/create', 'create')->name('projects.create');
+    });
+
+    Route::controller(LayoutController::class)->group(function() {
+        Route::get('/layouts', 'index')->name('layouts.page');
+        Route::post('/layouts/create', 'create')->name('layouts.create');
     });
 
     Route::controller(InvoiceController::class)->group(function() {
-        route::view('/invoices', 'pages.invoices')->name('invoices.page');
-        route::view('/settings', 'pages.settings')->name('settings.page');
+        Route::get('/invoices', 'index')->name('invoices.page');
     });
+
+    route::view('/settings', 'pages.settings')->name('settings.page');
 
     // Route::get('/user/{id}', function (string $id) {
     //     return new UserResource(User::findOrFail($id));

@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('layouts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('project_id')->unique()->nullable();
             $table->string('layout_name')->unique();
             $table->string('city_name');
-            $table->string('logo');
+            $table->string('logo')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

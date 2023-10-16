@@ -19,6 +19,8 @@ class AdvertiserController extends Controller
     {
         $advertisers = Advertiser::all();
         $contacts = Contact::all();
+        // $contacts = Advertiser::with('contacts')->find($id);
+        
 
         return view('pages.advertisers', compact('advertisers', 'contacts'));
     }

@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use App\Models\Layout;
 
 class LayoutSeeder extends Seeder
 {
@@ -12,6 +13,6 @@ class LayoutSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        
     }
 }

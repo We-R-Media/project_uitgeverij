@@ -17,7 +17,8 @@ class LayoutFactory extends Factory
     public function definition(): array
     {
         return [
-            //
-        ];
+            'layout_name' => fake()->word(2),
+            'city_name' => fake()->word(1),
+        ]; 
     }
 }

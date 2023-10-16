@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use App\Models\VAT;
+use App\Models\Layout;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
 use Illuminate\Support\Facades\DB;
@@ -16,9 +17,10 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
 
-        // $vat_group = VAT::all();
-        // return view('pages.projects', compact('vat_group'));
-        return view('pages.projects');
+        // $layouts = Layout::all();
+        $layouts = Layout::all();
+
+        return view('pages.projects', compact('layouts'));
     }
 
     /**
@@ -60,6 +62,7 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request)
     {
         //

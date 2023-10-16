@@ -39,6 +39,20 @@
     }
 }
 
+// LAYOUTS FORM
+
+.formContainer-layouts {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    .formBlock-layouts {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
 .is-invalid {
     border: 1px solid red;
     color: red;

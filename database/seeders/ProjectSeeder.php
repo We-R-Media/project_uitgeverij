@@ -14,6 +14,7 @@ use App\Models\Printer;
 use Illuminate\Database\Seeder;
 use App\Models\Project;
 use App\Models\Tax;
+use App\Models\Layout;
 
 class ProjectSeeder extends Seeder
 {
@@ -39,6 +40,7 @@ class ProjectSeeder extends Seeder
             ->has( Printer::factory() )
             ->has( Distributor::factory() )
             ->has( Designer::factory() )
+            ->has( Layout::factory() )
             ->has( Tax::factory() )
             ->count($randomNumberSmall);
 
