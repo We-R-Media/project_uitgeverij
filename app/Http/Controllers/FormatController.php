@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Format;
 use Illuminate\Http\Request;
+use App\Http\Requests\FormatRequest;
 use Illuminate\Support\Facades\DB;
 
 class FormatController extends Controller
@@ -19,13 +20,8 @@ class FormatController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create(FormatRequest $request)
     {
-        $check = DB::table('format_group')->count();
-
-        // if($check === 0) {
-        //     echo "True!";
-        // }
 
         DB::transaction(function () use($request) {
             Format::create([

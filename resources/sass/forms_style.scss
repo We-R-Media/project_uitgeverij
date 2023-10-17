@@ -27,26 +27,12 @@
 
 // COMPANIES FORM
 
-.formContainer-companies {
+.formContainer-companies, .formContainer-formats, .formContainer-layouts, .formContainer-tax {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    .formBlock-companies {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-}
-
-// LAYOUTS FORM
-
-.formContainer-layouts {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    .formBlock-layouts {
+    .formBlock-companies, .formBlock-formats, .formBlock-layouts, .formBlock-tax {
         display: flex;
         flex-direction: column;
         gap: 10px;

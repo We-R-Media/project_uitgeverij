@@ -75,25 +75,13 @@ body {
   gap: 10px;
 }
 
-.formContainer-companies {
+.formContainer-companies, .formContainer-formats, .formContainer-layouts, .formContainer-tax {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100%;
 }
-.formContainer-companies .formBlock-companies {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.formContainer-layouts {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-.formContainer-layouts .formBlock-layouts {
+.formContainer-companies .formBlock-companies, .formContainer-companies .formBlock-formats, .formContainer-companies .formBlock-layouts, .formContainer-companies .formBlock-tax, .formContainer-formats .formBlock-companies, .formContainer-formats .formBlock-formats, .formContainer-formats .formBlock-layouts, .formContainer-formats .formBlock-tax, .formContainer-layouts .formBlock-companies, .formContainer-layouts .formBlock-formats, .formContainer-layouts .formBlock-layouts, .formContainer-layouts .formBlock-tax, .formContainer-tax .formBlock-companies, .formContainer-tax .formBlock-formats, .formContainer-tax .formBlock-layouts, .formContainer-tax .formBlock-tax {
   display: flex;
   flex-direction: column;
   gap: 10px;

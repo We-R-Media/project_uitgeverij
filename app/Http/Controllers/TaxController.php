@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Tax;
 use Illuminate\Http\Request;
+use App\Http\Requests\TaxRequest;
+use Illuminate\Support\Facades\DB;
 
 class TaxController extends Controller
 {
@@ -12,15 +14,27 @@ class TaxController extends Controller
      */
     public function index()
     {
-        return view('pages.settings.tax');
+        $tax_array = [
+            'Nederland',
+            'Duitsland'
+        ];
+        return view('pages.settings.tax', compact('tax_array'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(TaxRequest $request)
     {
-        //
+        DB::transaction(function () use($request) {
+            Tax::create([
+                'country' => $request->input('country'),
+                'zero' => $request->input('zero'),
+                'low' => $request->input('low'),
+                'high' => $request->input('high'),
+            ]);
+        });
+        return redirect()->route('tax.page');
     }
 
     /**

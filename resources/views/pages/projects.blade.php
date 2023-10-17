@@ -9,6 +9,7 @@
 
     <form class="formContainer-projects" action="{{route('projects.create')}}" method="post">
         @csrf
+        @method('post')
         
         <div class="formBlock-projects">
             <input type="text" class="@error('format') is-invalid @enderror" value="{{ old('format') }}" name="format" placeholder="Vul formaat in..." id="">
@@ -24,6 +25,12 @@
             <select title="layout" name="layout" id="layout">
                 @foreach($layouts as $layout)
                     <option value="{{$layout->id}}">{{$layout->layout_name}}</option>
+                @endforeach
+            </select>
+
+            <select title="taxes" name="taxes" id="taxes">
+                @foreach($taxes as $tax)
+                    <option value="{{$tax->id}}">{{$tax->country}}</option>
                 @endforeach
             </select>
             

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
-use App\Models\VAT;
+use App\Models\Tax;
 use App\Models\Layout;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
@@ -19,8 +19,9 @@ class ProjectController extends Controller
 
         // $layouts = Layout::all();
         $layouts = Layout::all();
+        $taxes = Tax::all();
 
-        return view('pages.projects', compact('layouts'));
+        return view('pages.projects', compact('layouts','taxes'));
     }
 
     /**

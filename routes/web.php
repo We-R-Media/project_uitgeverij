@@ -47,13 +47,12 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::controller(TaxController::class)->group(function() {
         Route::get('/tax', 'index')->name('tax.page');
-        Route::get('/tax/show', 'show')->name('tax.show');
         Route::post('/tax/create', 'create')->name('tax.create');
     });
 
     Route::controller(FormatController::class)->group(function() {
         Route::get('/formats', 'index')->name('formats.page');
-        Route::post('/formats/create','create')->name('formats.create');
+        Route::post('/formats/create', 'create')->name('formats.create');
     });
 
 
