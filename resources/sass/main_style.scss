@@ -21,3 +21,11 @@ body {
     min-height: 100vh;
     background-color: primary_colors.$page-background;
 }
+
+.detailsButton {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 20px;
+    
+}

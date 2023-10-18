@@ -25,10 +25,10 @@ class FormatController extends Controller
 
         DB::transaction(function () use($request) {
             Format::create([
-                'format_name' => $request->input('format_name'),
-                'size' => $request->input('format_size'),
-                'measurement' => $request->input('format_measurement'),
-                'price' => $request->input('format_price'),
+                'name' => $request->input('name'),
+                'size' => $request->input('size'),
+                'measurement' => $request->input('measurement'),
+                'price' => $request->input('price'),
             ]);
         });
 

@@ -18,8 +18,10 @@ class Format extends Model
      */
     protected $fillable = [
         'name',
-        'page_count',
+        'size',
+        'measurement',
         'price',
+        'page_count',
         'description'
     ];
 

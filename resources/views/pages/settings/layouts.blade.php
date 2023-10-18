@@ -2,9 +2,9 @@
 
 @section('content')
 
-<form class="formContainer-layouts" action="{{route('layouts.create')}}" method="post" enctype="multipart/form-data">
+<form class="formContainer" action="{{route('layouts.create')}}" method="post" enctype="multipart/form-data">
 @csrf
-    <div class="formBlock-layouts">
+    <div class="formBlock">
         {{-- <input type="text" name="layout_name" placeholder="Vul layout naam in..." id=""> --}}
         <input type="text" class="@error('layout_name') is-invalid @enderror" value="{{ old('layout_name') }}" name="layout_name" placeholder="Vul layout naam in..." id="">
         @if($errors->has('layout_name'))

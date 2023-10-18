@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\Tax;
 use App\Models\Layout;
+use App\Models\Format;
 use Illuminate\Http\Request;
 use App\Http\Requests\ProjectRequest;
 use Illuminate\Support\Facades\DB;
@@ -16,12 +17,11 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-
-        // $layouts = Layout::all();
         $layouts = Layout::all();
         $taxes = Tax::all();
+        $formats = Format::all();
 
-        return view('pages.projects', compact('layouts','taxes'));
+        return view('pages.projects', compact('layouts','taxes','formats'));
     }
 
     /**
@@ -58,6 +58,12 @@ class ProjectController extends Controller
             ]);
         });
         return redirect()->route('projects.page');
+    }
+
+    public function showDetails() {
+        $projects = Project::all();
+
+        return view('pages.tables.projects-table', compact('projects'));
     }
 
     /**

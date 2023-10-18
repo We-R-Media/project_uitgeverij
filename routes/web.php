@@ -10,6 +10,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\FormatController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\PDFController;
 use App\Http\UserResource;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,11 +34,14 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::controller(OrderController::class)->group(function() {
         Route::get('/orders', 'index')->name('orders.page');
+        Route::post('/orders/create', 'create')->name('orders.create');
     });
 
     Route::controller(AdvertiserController::class)->group(function() {
-        route::get('/advertisers', 'index')->name('advertisers.page');
+        Route::get('/advertisers', 'index')->name('advertisers.page');
         Route::post('/advertisers/create', 'create')->name('advertisers.create');
+        Route::post('/advertisers/process', 'processForm')->name('advertisers.process');
+        Route::get('/advertisers/details', 'showDetails')->name('advertisers.details');
     });
 
     Route::controller(ContactController::class)->group(function() {
@@ -59,6 +63,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::controller(ProjectController::class)->group(function() {
         Route::get('/projects', 'index')->name('projects.page');
         Route::post('/projects/create', 'create')->name('projects.create');
+        Route::get('/projects/details', 'showDetails')->name('projects.details');
     });
 
     Route::controller(LayoutController::class)->group(function() {
@@ -70,8 +75,13 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('/invoices', 'index')->name('invoices.page');
     });
 
-    route::view('/settings', 'pages.settings')->name('settings.page');
+    Route::controller(PDFController::class)->group(function() {
+        Route::get('pdf-generate/', 'PDFGenerate')->name('pdf.generate');
+    });
 
+    Route::view('/settings', 'pages.settings')->name('settings.page');
+
+    
     // Route::get('/user/{id}', function (string $id) {
     //     return new UserResource(User::findOrFail($id));
     // });

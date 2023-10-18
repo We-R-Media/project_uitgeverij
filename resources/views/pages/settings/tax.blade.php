@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <form class="formContainer-tax" action="{{route('tax.create')}}" method="post" class="formContainer-tax">
+    <form class="formContainer" action="{{route('tax.create')}}" method="post" class="formContainer-tax">
         @csrf
         @method('post')
-        <div class="formBlock-tax">
+        <div class="formBlock">
             @if(isset($tax_array))
             <select title="taxcountry" class="@error('country') is-invalid @enderror" name="country" id="taxOptions" class="taxOptions">
                 @foreach($tax_array as $tax)

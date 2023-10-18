@@ -22,10 +22,10 @@ class FormatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'format_name' => 'required|unique:layouts|string|max:25',
-            'format_size' => 'required|unique:layouts|string|max:25',
-            'format_measurement' => 'required|unique:layouts|string|max:25',
-            'format_price' => 'required|double',
+            'name' => 'required|unique:formats|string|max:25',
+            'size' => 'required|unique:formats|string|max:25',
+            'measurement' => 'required|unique:formats|string|max:25',
+            'price' => 'required|numeric',
         ];
     }
 }

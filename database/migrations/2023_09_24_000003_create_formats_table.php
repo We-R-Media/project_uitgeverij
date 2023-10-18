@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('formats', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('project_id');
-            $table->string('format_name')->unique();
+            $table->foreignId('project_id')->nullable();
+            $table->string('name')->unique();
             $table->string('size');
             $table->string('measurement');
             $table->double('price');

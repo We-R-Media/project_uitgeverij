@@ -1,41 +1,19 @@
 @use 'namespaces/primary_colors';
 @use 'namespaces/secondary_colors';
 
-
-// PROJECTS FORM
-
-.formContainer-projects {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-    flex-direction: row;
-    padding: 20px;
-    gap: 10px;
-    width: 100%;
-    height: auto;
-
-    .formBlock-projects {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column !important;
-        align-items: center;
-        gap: 10px;
-    }
-}
-
-// COMPANIES FORM
-
-.formContainer-companies, .formContainer-formats, .formContainer-layouts, .formContainer-tax {
+.formContainer{
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: row;
     width: 100%;
-    .formBlock-companies, .formBlock-formats, .formBlock-layouts, .formBlock-tax {
+    min-height: 100vh;
+
+    .formBlock {
         display: flex;
         flex-direction: column;
         gap: 10px;
+        padding: 10px;
     }
 }
 

@@ -2,27 +2,27 @@
 
 
 @section('content')
-    <form class="formContainer-formats" action="{{route('formats.create')}}" method="post">
+    <form class="formContainer" action="{{route('formats.create')}}" method="post">
         @csrf
-        <div class="formBlock-formats">
-            <input type="text" class="@error('format_name') is-invalid @enderror" value="{{ old('format_name') }}" name="format_name" placeholder="Vul formaatnaam in..." id="">
-            @if($errors->has('format_name'))
-                <p class="error-message">{{$errors->first('format_name')}}</p>
+        <div class="formBlock">
+            <input type="text" class="@error('name') is-invalid @enderror" value="{{ old('name') }}" name="name" placeholder="Vul formaatnaam in..." id="">
+            @if($errors->has('name'))
+                <p class="error-message">{{$errors->first('name')}}</p>
             @endif
 
-            <input type="text" class="@error('format_size') is-invalid @enderror" value="{{ old('format_size') }}" name="format_size" placeholder="Vul formaatgrootte in..." id="">
-            @if($errors->has('format_size'))
-                <p class="error-message">{{$errors->first('format_size')}}</p>
+            <input type="text" class="@error('size') is-invalid @enderror" value="{{ old('size') }}" name="size" placeholder="Vul formaatgrootte in..." id="">
+            @if($errors->has('size'))
+                <p class="error-message">{{$errors->first('size')}}</p>
             @endif
 
-            <input type="text" class="@error('format_measurement') is-invalid @enderror" value="{{ old('format_measurement') }}" name="format_measurement" placeholder="Vul afmeting in..." id="">
-            @if($errors->has('format_measurement'))
-                <p class="error-message">{{$errors->first('format_measurement')}}</p>
+            <input type="text" class="@error('measurement') is-invalid @enderror" value="{{ old('measurement') }}" name="measurement" placeholder="Vul afmeting in..." id="">
+            @if($errors->has('measurement'))
+                <p class="error-message">{{$errors->first('measurement')}}</p>
             @endif
 
-            <input type="text" class="@error('format_price') is-invalid @enderror" value="{{ old('format_price') }}" name="format_price" placeholder="Vul prijs in..." id="">
-            @if($errors->has('format_price'))
-                <p class="error-message">{{$errors->first('format_price')}}</p>
+            <input type="text" class="@error('price') is-invalid @enderror" value="{{ old('price') }}" name="price" placeholder="Vul prijs in..." id="">
+            @if($errors->has('price'))
+                <p class="error-message">{{$errors->first('price')}}</p>
             @endif            
             <button type="submit">Toevoegen</button>
         </div>

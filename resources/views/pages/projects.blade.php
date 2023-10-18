@@ -7,31 +7,46 @@
 
     {{-- Validatie/Erorhandling wordt gedaan in ProjectRequest.php --}}
 
-    <form class="formContainer-projects" action="{{route('projects.create')}}" method="post">
+    <a class="detailsButton" href="{{ route('projects.details') }}">Details</a>
+
+    <form class="formContainer" action="{{route('projects.create')}}" method="post">
         @csrf
         @method('post')
         
-        <div class="formBlock-projects">
+        <div class="formBlock">
             <input type="text" class="@error('format') is-invalid @enderror" value="{{ old('format') }}" name="format" placeholder="Vul formaat in..." id="">
             @if($errors->has('format'))
                 <p class="error-message">{{$errors->first('format')}}</p>
             @endif
 
-            {{-- <input type="text" class="@error('layout') is-invalid @enderror" value="{{ old('layout') }}" name="layout" placeholder="Vul layout in..." id="">
-            @if($errors->has('layout'))
-                <p class="error-message">{{$errors->first('layout')}}</p>
-            @endif --}}
+            <select title="format" name="format" id="format">
+                @if($formats->isEmpty())
+                    <option value="nvt" disabled selected>Niet beschikbaar...</option>
+                @else
+                @foreach($formats as $format)
+                    <option value="{{$format->id}}">{{$format->name}}</option>
+                @endforeach
+                @endif
+            </select>
 
             <select title="layout" name="layout" id="layout">
+                @if($layouts->isEmpty())
+                    <option value="nvt" disabled selected>Niet beschikbaar...</option>
+                @else
                 @foreach($layouts as $layout)
                     <option value="{{$layout->id}}">{{$layout->layout_name}}</option>
                 @endforeach
+                @endif
             </select>
 
             <select title="taxes" name="taxes" id="taxes">
+                @if($taxes->isEmpty())
+                    <option value="nvt" disabled selected>Niet beschikbaar...</option>
+                @else
                 @foreach($taxes as $tax)
                     <option value="{{$tax->id}}">{{$tax->country}}</option>
                 @endforeach
+                @endif
             </select>
             
             <input type="text" class="@error('designer') is-invalid @enderror" value="{{ old('designer') }}" name="designer" placeholder="Vul vormgever in..." id="">
@@ -56,7 +71,7 @@
 
         </div>
 
-        <div class="formBlock-projects">
+        <div class="formBlock">
             <input type="text" class="@error('project_code') is-invalid @enderror" value="{{ old('project_code') }}" name="project_code" placeholder="Vul projectcode in..." id="">
             @if($errors->has('project_code'))
                 <p class="error-message">{{$errors->first('project_code')}}</p>
@@ -75,10 +90,8 @@
             <input type="text" class="@error('print_edition') is-invalid @enderror" value="{{ old('print_edition') }}" name="print_edition" placeholder="Vul oplage in..." id="">
             @if($errors->has('print_edition'))
                 <p class="error-message">{{$errors->first('print_edition')}}</p>
-            @endif    
-        </div>
+            @endif   
 
-        <div class="formBlock-projects">
             <input type="text" class="@error('paper_type_cover') is-invalid @enderror" value="{{ old('paper_type_cover') }}" name="paper_type_cover" placeholder="Vul papier type cover in..." id="">
             @if($errors->has('paper_type_cover'))
                 <p class="error-message">{{$errors->first('paper_type_cover')}}</p>
@@ -110,7 +123,7 @@
                 <p id="sum">Totaal aantal pagina's:</p>
         </div>
 
-        <div class="formBlock-projects">
+        <div class="formBlock">
             <input type="number" class="@error('ledger') is-invalid @enderror" value="{{ old('ledger') }}" name="ledger" placeholder="Vul grootboek in..." id="">
             @if($errors->has('ledger'))
                 <p class="error-message">{{$errors->first('ledger')}}</p>
@@ -125,9 +138,7 @@
             @if($errors->has('department'))
                 <p class="error-message">{{$errors->first('department')}}</p>
             @endif    
-        </div>
 
-        <div class="formBlock-projects">
             <input type="date" class="@error('year') is-invalid @enderror" value="{{ old('year') }}" name="year" id="">
             @if($errors->has('year'))
                 <p class="error-message">{{$errors->first('department')}}</p>

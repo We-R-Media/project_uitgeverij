@@ -26,7 +26,7 @@ class ContactController extends Controller
             Contact::create([
                 'first_name' => $request->input('first_name'),
                 'initial' => $request->input('initial'),
-                'insertion' => $request->input('insertion'),
+                'preposition' => $request->input('preposition'),
                 'last_name' => $request->input('last_name'),
                 'email' => $request->input('email'),
             ]);

@@ -1,18 +1,21 @@
+
 @extends('layouts.app')
 
 @section('content')
-    <form class="formContainer-companies" action="{{route('advertisers.create')}}" method="post">
+    <a class="detailsButton nav-item" href="{{ route('advertisers.details') }}">Details</a>
+    <form class="formContainer" action="{{route('advertisers.create')}}" method="post">
         @csrf
+        @method('post')
 
-        <div class="formBlock-companies">
-        <input type="text" class="@error('company_name') is-invalid @enderror" value="{{ old('company_name') }}" name="company_name" placeholder="Vul bedrijfsnaam in..." id="">
-        @if($errors->has('company_name'))
-        <p class="error-message">{{$errors->first('company_name')}}</p>
+        <div class="formBlock">
+        <input type="text" class="@error('name') is-invalid @enderror" value="{{ old('name') }}" name="name" placeholder="Vul bedrijfsnaam in..." id="">
+        @if($errors->has('name'))
+        <p class="error-message">{{$errors->first('name')}}</p>
         @endif 
 
-        <input type="text" class="@error('mailbox') is-invalid @enderror" value="{{ old('mailbox') }}" name="mailbox" placeholder="Vul postadres in..." id="">
-        @if($errors->has('mailbox'))
-        <p class="error-message">{{$errors->first('mailbox')}}</p>
+        <input type="text" class="@error('po_box') is-invalid @enderror" value="{{ old('po_box') }}" name="po_box" placeholder="Vul postadres in..." id="">
+        @if($errors->has('po_box'))
+        <p class="error-message">{{$errors->first('po_box')}}</p>
         @endif 
 
         <input type="text" class="@error('postal_code') is-invalid @enderror" value="{{ old('postal_code') }}" name="postal_code" placeholder="Vul postcode in..." id="">
@@ -30,23 +33,30 @@
         <p class="error-message">{{$errors->first('province')}}</p>
         @endif 
 
-        <input type="text" class="@error('phone_mobile') is-invalid @enderror" value="{{ old('phone_mobile') }}" name="phone_mobile" placeholder="Vul mobiele nummer in..." id="">
+        <input type="number" class="@error('phone_mobile') is-invalid @enderror" value="{{ old('phone_mobile') }}" name="phone_mobile" placeholder="Vul mobiele nummer in..." id="">
         @if($errors->has('phone_mobile'))
         <p class="error-message">{{$errors->first('phone_mobile')}}</p>
         @endif 
 
-        <input type="text" class="@error('phone_number') is-invalid @enderror" value="{{ old('phone_number') }}" name="phone_number" placeholder="Vul telefoonnummer nummer in..." id="">
-        @if($errors->has('phone_number'))
-        <p class="error-message">{{$errors->first('phone_number')}}</p>
+        <input type="number" class="@error('phone') is-invalid @enderror" value="{{ old('phone') }}" name="phone" placeholder="Vul telefoonnummer nummer in..." id="">
+        @if($errors->has('phone'))
+        <p class="error-message">{{$errors->first('phone')}}</p>
         @endif 
 
-        <input type="text" class="@error('contact') is-invalid @enderror" value="{{ old('contact') }}" name="contact" placeholder="Vul contactpersoon in..." id="nameInput">
+        
+        <input type="email" class="@error('email') is-invalid @enderror" value="{{ old('email') }}" name="email" placeholder="Vul email in..." id="">
+        @if($errors->has('email'))
+        <p class="error-message">{{$errors->first('email')}}</p>
+        @endif 
+
+        {{-- <input type="text" class="@error('contact') is-invalid @enderror" value="{{ old('contact') }}" name="contact" placeholder="Vul contactpersoon in..." id="nameInput">
         @if($errors->has('contact'))
         <p class="error-message">{{$errors->first('contact')}}</p>
-        @endif 
+        @endif  --}}
 
 
         <button type="submit">Toevoegen</button>
+        <button href="{{route('advertisers.process')}}">Nieuwe order</button>
     </div>
 
 
@@ -59,7 +69,7 @@
 
     </form>
 
-    <table class="contactsTable">
+    {{-- <table class="contactsTable">
         <tr>
             <th>Voornaam</th>
             <th>Initiaal</th>
@@ -76,7 +86,6 @@
             <td>{{$contact->last_name}}</td>
             <td>{{$contact->email}}</td>
             <td>{{$contact->full_name}}</td>
-            {{-- Tijdelijke --}}
             <td><button id="addContact" data-fullname="{{$contact->full_name}}">X</button></td>
         </tr>
         @endforeach
@@ -109,5 +118,5 @@
             </tr>
             @endforeach
         </table>
-    </div>
+    </div> --}}
 @endsection
