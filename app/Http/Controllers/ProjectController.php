@@ -15,7 +15,7 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, $id)
+    public function index(Request $request)
     {
         $layouts = Layout::all();
         $taxes = Tax::all();
