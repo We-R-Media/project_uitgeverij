@@ -21,6 +21,7 @@ mix.options({
 });
 
 mix.sass('resources/sass/styles.scss', 'public/css');
+mix.sass('resources/sass/app.scss', 'public/css');
 
 mix.js('resources/js/app.js', './dist/js/bundle.js');
 mix.js('resources/js/maps.js', './dist/js/maps.js');

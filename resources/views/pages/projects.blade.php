@@ -116,11 +116,12 @@
                 @if($errors->has('pages_redaction'))
                 <p class="error-message">{{$errors->first('pages_redaction')}}</p>
                 @endif
+                
                 <input type="number"class="@error('pages_adverts') is-invalid @enderror" value="{{ old('pages_adverts') }}" name="pages_adverts" id="pages_adverts" placeholder="Pagina's redactie...">
                 @if($errors->has('pages_adverts'))
                 <p class="error-message">{{$errors->first('pages_adverts')}}</p>
                 @endif
-                <p id="sum">Totaal aantal pagina's:</p>
+                <p name="total_pages" id="sum">Totaal aantal pagina's:</p>
         </div>
 
         <div class="formBlock">

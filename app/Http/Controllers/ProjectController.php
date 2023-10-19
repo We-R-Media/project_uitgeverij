@@ -15,11 +15,13 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index(Request $request, $id)
     {
         $layouts = Layout::all();
         $taxes = Tax::all();
-        $formats = Format::all();
+        // $formats = Format::all();
+        $project = Project::with('format')->find($id);
+        $formats = $project->formats;
 
         return view('pages.projects', compact('layouts','taxes','formats'));
     }
@@ -45,6 +47,7 @@ class ProjectController extends Controller
                 'print_edition' => $request->input('print_edition'),
                 'pages_redaction' => $request->input('pages_redaction'),
                 'pages_adverts' => $request->input('pages_adverts'),
+                'pages_total' => $request->input('pages_total'),
                 'paper_type_cover' => $request->input('paper_type_cover'),
                 'paper_type_interior' => $request->input('paper_type_interior'),
                 'color_cover' => $request->input('color_cover'),
