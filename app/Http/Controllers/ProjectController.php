@@ -19,11 +19,11 @@ class ProjectController extends Controller
     {
         $layouts = Layout::all();
         $taxes = Tax::all();
-        // $formats = Format::all();
-        $project = Project::with('format')->find($id);
-        $formats = $project->formats;
+        $formats = Format::all();
+        // $project = Project::with('format')->find($id);
+        // $formats = $project->formats;
 
-        return view('pages.projects', compact('layouts','taxes','formats'));
+        return view('pages.projects', compact('layouts','taxes','formats' ));
     }
 
     /**
