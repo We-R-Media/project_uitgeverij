@@ -23,18 +23,20 @@
     @livewireStyles
 </head>
 <body>
-    <div id="app">
-
-        {{-- @livewire('dashboard-sidebar') --}}
-        {{-- @livewire('navigation') --}}
-
-        <main class="pageContainer">
-            @yield('content')
-        </main>
+    <div class="auth">
+        <div class="auth__wrapper">
+            <div class="auth__image">
+                <div class="auth__text">
+                    <h1></h1>
+                </div>
+            </div>
+            <div class="auth__form">
+                @yield('content')
+            </div>
+        </div>
     </div>
 
     @livewireScripts
-    <script src="{{asset('js/pages_calculate.js')}}"></script>
     <script src="{{asset('js/contact_add.js')}}"></script>
 </body>
 </html>

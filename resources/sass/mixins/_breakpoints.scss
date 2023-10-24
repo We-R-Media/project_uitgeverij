@@ -1,0 +1,54 @@
+$screen-mobile: 32.5em;
+$screen-tablet: 48em;
+$screen-laptop: 64em;
+$screen-desktop: 85em;
+$screen-desktop-large: 90em;
+$screen-desktop-xlarge: 120em;
+
+$breakpoints: (
+  "mobile": $screen-mobile,
+  "tablet": $screen-tablet,
+  "laptop": $screen-laptop,
+  "desktop": $screen-desktop,
+  "desktop-large": $screen-desktop-large,
+  "desktop-xlarge": $screen-desktop-xlarge,
+) !default;
+
+$modes: (
+  "min": min-width,
+  "max": max-width,
+) !default;
+
+@mixin breakpoint($mode: "min", $breakpoint: "laptop") {
+  @if map-has-key($modes, $mode) {
+    @if map-has-key($breakpoints, $breakpoint) {
+      $mediaBreakpoint: null;
+      $currentMode: map-get($modes, $mode);
+      $currentBreakpoint: map-get($breakpoints, $breakpoint);
+
+      @if $currentMode == "max-width" {
+        $mediaBreakpoint: calculateMaxWidth($currentBreakpoint);
+      } @else {
+        $mediaBreakpoint: $currentBreakpoint;
+      }
+
+      @media screen and ( #{$currentMode} : #{$mediaBreakpoint} ) {
+        @content;
+      }
+    } @else {
+      @warn "`#{$breakpoint}` is not a valid breakpoint, available breakpoints: #{map-keys($breakpoints)}.";
+    }
+  } @else {
+    @warn "`#{$mode}` is not a valid mode, available modes: #{map-keys($modes)}.";
+  }
+}
+
+/**
+* calculate the max width based on input
+*/
+@function calculateMaxWidth($breakpoint) {
+  $pixel: 0.0625;
+  $newBreakpoint: #{$breakpoint - $pixel}; // 1px  in em sizing.
+
+  @return $newBreakpoint;
+}

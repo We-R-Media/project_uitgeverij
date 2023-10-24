@@ -1,0 +1,45 @@
+@use './breakpoints' as b;
+
+@mixin wrapper(
+  $maxWidth: null,
+  $setBreakpointMaxWidth: null,
+  $setBreakpointMaxWidthSize: null,
+  $setDefaultPadding: null,
+  $setBreakpointPadding: 'laptop',
+  $setBreakpointPaddingSize: 0 calc(7.5rem + 1.5625vw),
+  $setClearPaddingWidth: null
+) {
+  margin: 0 auto;
+  width: 100%;
+
+  @if ($maxWidth != null) {
+    max-width: $maxWidth;
+  } 
+  @else {
+    max-width: 240rem;
+  }
+
+  @if $setDefaultPadding != null {
+    padding: $setDefaultPadding;
+  } @else {
+    padding: 0 2rem;
+  }
+
+  @if ($setBreakpointMaxWidth != null and $setBreakpointMaxWidthSize != null) {
+    @include b.breakpoint($setBreakpointMaxWidth) {
+      max-width: $setBreakpointMaxWidthSize;
+    }
+  }
+
+  @if ($setBreakpointPadding != null and $setBreakpointPaddingSize != null) {
+    @include b.breakpoint('min', $setBreakpointPadding) {
+      padding: $setBreakpointPaddingSize;
+    }
+  }
+
+  @if ($setClearPaddingWidth != null) {
+    @include b.breakpoint($setClearPaddingWidth) {
+      padding: 0 0 !important;
+    }
+  }
+}

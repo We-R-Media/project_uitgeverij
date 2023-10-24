@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('order_id')->nullable();
             $table->string('name')->unique();
             $table->string('email')->unique();
-            $table->integer('phone_mobile')->unique();
-            $table->integer('phone')->unique();
+            $table->string('phone_mobile')->unique()->nullable();
+            $table->string('phone')->unique();
             $table->string('po_box')->nullable();
             $table->string('postal_code');
             $table->string('city');

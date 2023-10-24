@@ -20,7 +20,7 @@ class AdvertiserController extends Controller
     {
         $advertisers = Advertiser::all();
         $contacts = Contact::all();
-        
+
 
         return view('pages.advertisers', compact('advertisers', 'contacts'));
     }
@@ -58,7 +58,7 @@ class AdvertiserController extends Controller
         session(['advertisers' => $advertisers]);
         return redirect()->route('orders.page');
     }
-    
+
 
     /**
      * Store a newly created resource in storage.

@@ -1,0 +1,6 @@
+@use '../mixins/' as mixin;
+@use '../base/colors' as color;
+
+.auth__wrapper {
+    @include mixin.flex;
+}

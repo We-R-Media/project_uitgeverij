@@ -24,13 +24,10 @@ use Illuminate\Support\Facades\Auth;
 | be assigned to the "web" middleware group. Make something great!
 */
 
-Route::get('/', function () {
-    return view('pages.dashboard');
-});
+Auth::routes();
 
-
-
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => ['auth']], function() {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::controller(OrderController::class)->group(function() {
         Route::get('/orders', 'index')->name('orders.page');
@@ -59,7 +56,6 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('/formats/create', 'create')->name('formats.create');
     });
 
-
     Route::controller(ProjectController::class)->group(function() {
         Route::get('/projects', 'index')->name('projects.page');
         Route::post('/projects/create', 'create')->name('projects.create');
@@ -81,17 +77,12 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::view('/settings', 'pages.settings')->name('settings.page');
 
-    
+
     // Route::get('/user/{id}', function (string $id) {
     //     return new UserResource(User::findOrFail($id));
     // });
 });
 
-
-Auth::routes();
-
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
 Route::fallback(function () {
-    return response()->view('errors.404', [], 404);
+    return redirect()->route('login');
 });
