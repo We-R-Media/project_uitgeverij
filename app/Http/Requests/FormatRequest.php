@@ -24,6 +24,7 @@ class FormatRequest extends FormRequest
         return [
             'name' => 'required|unique:formats|string|max:25',
             'size' => 'required|unique:formats|string|max:25',
+            'ratio' => 'required|unique:formats|double|max:25',
             'measurement' => 'required|unique:formats|string|max:25',
             'price' => 'required|numeric',
         ];

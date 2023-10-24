@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('release_name');
             $table->string('edition_name');
             $table->string('print_edition');
+            $table->string('paper_format');
             $table->integer('pages_redaction');
             $table->integer('pages_adverts');
             $table->integer('pages_total')->nullable();

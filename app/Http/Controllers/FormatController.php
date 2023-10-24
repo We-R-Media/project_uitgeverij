@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Format;
+use App\Models\FormatGroup;
 use Illuminate\Http\Request;
 use App\Http\Requests\FormatRequest;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +29,7 @@ class FormatController extends Controller
                 'name' => $request->input('name'),
                 'size' => $request->input('size'),
                 'measurement' => $request->input('measurement'),
+                'ratio' => $request->input('ratio'),
                 'price' => $request->input('price'),
             ]);
         });
