@@ -33,7 +33,7 @@
     </div>
 
     @livewireScripts
-    <script src="{{asset('js/pages_calculate.js')}}"></script>
-    <script src="{{asset('js/contact_add.js')}}"></script>
+    <script src="{{asset('js/pages_calculate.js')}}" defer></script>
+    <script src="{{asset('js/autofill_field.js')}}" defer></script>
 </body>
 </html>

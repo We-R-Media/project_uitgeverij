@@ -8,7 +8,7 @@
         @method('post')
 
         <div class="formBlock">
-        <input type="text" class="@error('name') is-invalid @enderror" value="{{ old('name') }}" name="name" placeholder="Vul bedrijfsnaam in..." id="">
+        <input type="text" class="@error('name') is-invalid @enderror" value="{{ old('name') }}" name="name" placeholder="Vul bedrijfsnaam in..." id="name-field">
         @if($errors->has('name'))
         <p class="error-message">{{$errors->first('name')}}</p>
         @endif 
