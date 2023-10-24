@@ -11,6 +11,9 @@ use App\Http\Requests\ProjectRequest;
 use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
+
+// BELANGRIJK: Toepassen firstOrCreate:: of firstOrNew
+// https://www.youtube.com/watch?v=wyZBE4x32Ks
 {
     /**
      * Display a listing of the resource.
@@ -59,12 +62,16 @@ class ProjectController extends Controller
                 'revenue_goals' => $request->input('revenue_goals'),
                 'comments' => $request->input('comments'),
             ]);
+            $layoutId = $request->input('layout');
+            $layout = Layout::findOrFail($layoutId);
+            $project->layout()->associate($layout);
         });
-        return redirect()->route('projects.page');
+        return redirect()->route('projects.page')->with('project', $project);
     }
 
     public function showDetails() {
-        $projects = Project::all();
+        // $projects = Project::all();
+        
 
         return view('pages.tables.projects-table', compact('projects'));
     }

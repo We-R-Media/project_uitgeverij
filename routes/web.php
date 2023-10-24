@@ -8,8 +8,10 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\FormatController;
+use App\Http\Controllers\FormatGroupController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\PDFController;
 use App\Http\UserResource;
 use Illuminate\Support\Facades\Auth;
@@ -40,7 +42,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::controller(AdvertiserController::class)->group(function() {
         Route::get('/advertisers', 'index')->name('advertisers.page');
         Route::post('/advertisers/create', 'create')->name('advertisers.create');
-        Route::post('/advertisers/process', 'processForm')->name('advertisers.process');
+        Route::get('/advertisers/process', 'processForm')->name('advertisers.process');
         Route::get('/advertisers/details', 'showDetails')->name('advertisers.details');
     });
 
@@ -57,6 +59,10 @@ Route::group(['middleware' => 'auth'], function() {
     Route::controller(FormatController::class)->group(function() {
         Route::get('/formats', 'index')->name('formats.page');
         Route::post('/formats/create', 'create')->name('formats.create');
+    });
+
+    Route::controller(FormatGroupController::class)->group(function() {
+        Route::post('/formatgroup/create')->name('formatgroup.create');
     });
 
 
@@ -79,12 +85,12 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('pdf-generate/', 'PDFGenerate')->name('pdf.generate');
     });
 
-    Route::view('/settings', 'pages.settings')->name('settings.page');
+    Route::controller(ReminderController::class)->group(function() {
+        Route::get('/reminders', 'index')->name('reminders.page');
+        Route::post('/reminders/create', 'create')->name('reminders.create');
+    });
 
-    
-    // Route::get('/user/{id}', function (string $id) {
-    //     return new UserResource(User::findOrFail($id));
-    // });
+    Route::view('/settings', 'pages.settings')->name('settings.page');  
 });
 
 

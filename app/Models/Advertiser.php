@@ -26,28 +26,39 @@ class Advertiser extends Model
         'postal_code',
         'city',
         'comments',
+        'contact_id',
         'deactivated_at',
         'blacklisted_at',
     ];
 
     /**
-     * Get the contacts associated with the advertiser.
+     * Get the contact associated with the Advertiser
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function contacts(): HasMany
+    public function contact(): HasOne
     {
-        return $this->hasMany(Contact::class);
+        return $this->hasOne(Contact::class);
     }
 
     /**
-     * Get the phone associated with the user.
+     * Get the invoice associated with the user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function invoices(): HasMany
     {
         return $this->hasMany(Invoice::class);
+    }
+
+    /**
+     * Get the reminder associated with the Advertiser
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function reminder(): HasOne
+    {
+       return $this->hasOne(Reminder::class);
     }
 
     /**

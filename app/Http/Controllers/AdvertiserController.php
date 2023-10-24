@@ -37,8 +37,10 @@ class AdvertiserController extends Controller
      */
     public function create(AdvertiserRequest $request)
     {
-        $advertiser = DB::transaction(function () use($request) {
-            Advertiser::create([
+        $contactId = $request->input('contact_id');
+    
+        DB::transaction(function () use($request, $contactId) {
+            $advertiser = Advertiser::create([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
                 'phone_mobile' => $request->input('phone_mobile'),
@@ -47,15 +49,17 @@ class AdvertiserController extends Controller
                 'postal_code' => $request->input('postal_code'),
                 'city' => $request->input('city'),
                 'province' => $request->input('province'),
+                'contact_id' => $request->input('contact_id'),
                 // 'comments' => $request->input('comments'),
             ]);
-        });
+            $contact = Contact::find($contactId);
+            $contact->advertiser()->associate($advertiser);
+            $advertiser->save();
+        });    
         return redirect()->route('advertisers.page');
     }
 
-    public function processForm(Request $request) {
-        $advertisers = $request->all();
-        session(['advertisers' => $advertisers]);
+    public function processForm() {
         return redirect()->route('orders.page');
     }
     

@@ -13,18 +13,19 @@ return new class extends Migration
     {
         Schema::create('advertisers', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('order_id')->nullable();
+            // $table->foreignId('order_id');
+            $table->foreignId('contact_id');
             $table->string('name')->unique();
             $table->string('email')->unique();
-            $table->integer('phone_mobile')->unique();
-            $table->integer('phone')->unique();
-            $table->string('po_box')->nullable();
+            $table->integer('phone_mobile');
+            $table->integer('phone');
+            $table->string('po_box');
             $table->string('postal_code');
             $table->string('city');
-            $table->string('province')->nullable();
-            $table->text('comments')->nullable();
-            $table->date('deactivated_at')->nullable();
-            $table->date('blacklisted_at')->nullable();
+            $table->string('province');
+            $table->longText('comments');
+            $table->date('deactivated_at');
+            $table->date('blacklisted_at');
             $table->softDeletes();
             $table->timestamps();
         });

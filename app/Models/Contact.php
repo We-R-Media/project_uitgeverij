@@ -17,21 +17,31 @@ class Contact extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'first_name',
         'initial',
         'insertion',
         'last_name',
         'email',
-        'contact',
     ];
 
     /**
-     * Get the advertiser that owns the contacts.
+     * Get the advertiser that owns the Contact
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function advertiser(): BelongsTo
     {
         return $this->belongsTo(Advertiser::class);
+    }
+
+    /**
+     * Get the reminder that owns the Contact
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function reminders()
+    {
+        return $this->hasMany(Reminder::class);
     }
 }

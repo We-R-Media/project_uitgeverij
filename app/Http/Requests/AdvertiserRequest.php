@@ -30,6 +30,7 @@ class AdvertiserRequest extends FormRequest
             'province' => 'required|unique:advertisers|string|max:25',
             'phone_mobile' => 'required|unique:advertisers|string',
             'phone' => 'required|unique:advertisers|string',
+            'contact_id' => 'required|unique:advertisers|integer',
             // 'comments' => 'required|unique:advertisers|string|max:25', 
         ];
     }

@@ -18,9 +18,9 @@ class FormatFactory extends Factory
     public function definition(): array
     {
         return [
-            'format_name' => fake()->unique()->word(),
             'size' => fake()->word(),
             'measurement' => fake()->word(),
+            'ratio' => fake()->randomFloat(2, 10, 100),
             'price' => fake()->randomFloat(2, 10, 1000),
         ];
     }

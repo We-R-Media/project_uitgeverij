@@ -47,7 +47,7 @@ class Project extends Model
     }
 
     /**
-     * Get the formats associated with the project.
+     * Get all of the groups for the Project
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

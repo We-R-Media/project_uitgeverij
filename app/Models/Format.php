@@ -26,12 +26,12 @@ class Format extends Model
     ];
 
     /**
-     * Get the project associated with the format.
+     * Get the groups associated with the format.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function project(): BelongsTo
+    public function groups(): BelongsTo
     {
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(FormatGroup::class);
     }
 }

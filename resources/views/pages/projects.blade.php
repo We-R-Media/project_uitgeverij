@@ -19,16 +19,6 @@
                 <p class="error-message">{{$errors->first('format')}}</p>
             @endif
 
-            <select title="format" name="format" id="format">
-                @if($formats->isEmpty())
-                    <option value="nvt" disabled selected>Niet beschikbaar...</option>
-                @else
-                @foreach($formats as $format)
-                    <option value="{{$format->id}}">{{$format->name}}</option>
-                @endforeach
-                @endif
-            </select>
-
             <select title="layout" name="layout" id="layout">
                 @if($layouts->isEmpty())
                     <option value="nvt" disabled selected>Niet beschikbaar...</option>
