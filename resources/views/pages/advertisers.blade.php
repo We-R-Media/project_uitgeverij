@@ -49,15 +49,29 @@
         <p class="error-message">{{$errors->first('email')}}</p>
         @endif 
 
-        <select name="contact_id" id="">
-            @foreach ($contacts as $contact )
-                <option value="{{$contact->id}}">{{$contact->first_name}} {{$contact->last_name}}</option>
-            @endforeach
+        <select class="@error('contact_id') is-invalid @enderror" name="contact_id" id="">
+                @if($contacts->isEmpty())
+                    <option value="nvt" disabled selected>Niet beschikbaar...</option>
+                @else
+                @foreach ($contacts as $contact )
+                    <option value="{{$contact->id}}">{{$contact->first_name}} {{$contact->last_name}}</option>
+                @endforeach
+                @endif
         </select>
 
+        @if($errors->has('contact_id'))
+        <p class="error-message">{{$errors->first('contact_id')}}</p>
+        @endif
+
+
+        <textarea type="comments" class="@error('comments') is-invalid @enderror" value="{{ old('comments') }}" name="comments" placeholder="Vul opmerking in..." cols="30" rows="10" id=""></textarea>
+        @if($errors->has('comments'))
+        <p class="error-message">{{$errors->first('comments')}}</p>
+        @endif 
 
         <button type="submit">Toevoegen</button>
         <a href="{{route('advertisers.process')}}">Nieuwe order</a>
     </div>
     </form>
+    <p>{{$errors}}</p>
 @endsection

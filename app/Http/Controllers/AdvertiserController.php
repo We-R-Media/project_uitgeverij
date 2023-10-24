@@ -20,6 +20,7 @@ class AdvertiserController extends Controller
     {
         $advertisers = Advertiser::all();
         $contacts = Contact::all();
+
         
 
         return view('pages.advertisers', compact('advertisers', 'contacts'));
@@ -38,19 +39,20 @@ class AdvertiserController extends Controller
     public function create(AdvertiserRequest $request)
     {
         $contactId = $request->input('contact_id');
+
     
         DB::transaction(function () use($request, $contactId) {
             $advertiser = Advertiser::create([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
-                'phone_mobile' => $request->input('phone_mobile'),
-                'phone' => $request->input('phone'),
                 'po_box' => $request->input('po_box'),
                 'postal_code' => $request->input('postal_code'),
                 'city' => $request->input('city'),
                 'province' => $request->input('province'),
+                'phone_mobile' => $request->input('phone_mobile'),
+                'phone' => $request->input('phone'),
                 'contact_id' => $request->input('contact_id'),
-                // 'comments' => $request->input('comments'),
+                'comments' => $request->input('comments'),
             ]);
             $contact = Contact::find($contactId);
             $contact->advertiser()->associate($advertiser);

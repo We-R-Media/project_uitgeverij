@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('advertisers', function (Blueprint $table) {
             $table->id();
             // $table->foreignId('order_id');
-            $table->foreignId('contact_id');
+            $table->foreignId('contact_id')->nullable();
             $table->string('name')->unique();
             $table->string('email')->unique();
             $table->integer('phone_mobile');
@@ -24,8 +24,8 @@ return new class extends Migration
             $table->string('city');
             $table->string('province');
             $table->longText('comments');
-            $table->date('deactivated_at');
-            $table->date('blacklisted_at');
+            $table->date('deactivated_at')->nullable();
+            $table->date('blacklisted_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

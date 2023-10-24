@@ -24,6 +24,7 @@ class Advertiser extends Model
         'phone',
         'po_box',
         'postal_code',
+        'province',
         'city',
         'comments',
         'contact_id',
