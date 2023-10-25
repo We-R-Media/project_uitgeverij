@@ -19,8 +19,8 @@ class AdvertiserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->email(),
-            // 'phone_mobile' => fake()->optional()->phoneNumber(),
-            // 'phone' => fake()->phoneNumber()->phoneNumber(),
+            'phone_mobile' => fake()->optional()->phoneNumber(),
+            'phone' => fake()->phoneNumber(),
             'po_box' => fake()->address(),
             'postal_code' => fake()->postcode(),
             'city' => fake()->city(),

@@ -10,15 +10,14 @@
     <title>{{ config('app.name', 'R.O.N.') }}</title>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+    <link rel="preconnect" href="https://p.typekit.net" crossorigin />
 
-    <!-- Stylesheets -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/styles.css')}}">
+    <!-- preload -->
+    <link  as="style" rel="stylesheet preload prefetch"  href="https://use.typekit.net/aie2oyg.css" crossorigin />
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/sass/main.scss', 'resources/js/app.js'])
 
     @livewireStyles
 </head>
@@ -26,8 +25,15 @@
     <div class="auth">
         <div class="auth__wrapper">
             <div class="auth__image">
+                <img class="image--cover" src="{{asset('images/background/auth.jpg')}}" alt="">
+
                 <div class="auth__text">
-                    <h1></h1>
+                    <div class="auth__brand">
+                        <div class="brand__logo">
+                            <img src="" alt="">
+                        </div>
+                    </div>
+                    <h1>Your perfect business partner</h1>
                 </div>
             </div>
             <div class="auth__form">

@@ -3,7 +3,7 @@
 
 html,
 body {
-    @include mixin.font-family('raleway');
+    @include mixin.font-family('roboto');
     position: relative;
     margin: 0;
     padding: 0;
@@ -18,26 +18,17 @@ html {
 
 body {
     margin: 0 0;
-
-    &:not(.auth) {
-        padding: 10rem 0 0;
-    }
+    letter-spacing: .5px;
 
     &.preload {
         animation: none;
-        transition: none;    
-        
+        transition: none;
+
         & * {
             animation: none;
-            transition: none;    
+            transition: none;
         }
-    }  
-    
-    &.logged-in {
-        .header {
-            top: 32px;
-        }
-    } 
+    }
 }
 
 main {
@@ -65,6 +56,11 @@ img {
     vertical-align: bottom;
 }
 
+textarea,
+input,
+button {
+    all: unset;
+}
 textarea:focus,
 input:focus,
 button:focus {
@@ -85,8 +81,6 @@ ol {
 }
 
 ::selection {
-    color: color.$tertiary;
-    background: rgba(color.$tertiary, .1);
+    color: color.$black;
+    background: rgba(color.$black, .1);
 }
-
-

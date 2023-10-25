@@ -7,22 +7,22 @@ body {
     * {
         font-size: inherit;
         line-height: 2;
-    }    
+    }
 }
 
 h1,
-h2, 
-h3, 
-h4, 
+h2,
+h3,
+h4,
 h5 {
-    margin: 0 0 1rem;
-    color: color.$primary;
     line-height: 1;
+    font-weight: 300;
+    margin: 0 0 1rem;
+    letter-spacing: .5px;
 }
 
-
 p,
-ol, 
+ol,
 ul {
     margin: 0 0;
 
@@ -30,9 +30,10 @@ ul {
         margin-bottom: 3rem;
     }
 }
+
 h1 {
     font-size: 3.4rem;
-    font-size: clamp(3.4rem, 3vw, 6.4rem);
+    font-size: clamp(3.4rem, 5vw, 6.4rem);
 }
 h2 {
     font-size: 3rem;
@@ -49,4 +50,8 @@ h4 {
 h5 {
     font-size: 1.8rem;
     font-size: clamp(1.8rem, 2.5vw, 2rem);
+}
+
+strong {
+    font-weight: 500;
 }

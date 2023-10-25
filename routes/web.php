@@ -8,13 +8,10 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\FormatController;
-use App\Http\Controllers\FormatGroupController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\PDFController;
-use App\Http\UserResource;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,9 +23,8 @@ use Illuminate\Support\Facades\Auth;
 | be assigned to the "web" middleware group. Make something great!
 */
 
-Auth::routes();
 
-Route::group(['middleware' => ['auth']], function() {
+// Route::group(['middleware' => ['auth']], function() {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     Route::controller(OrderController::class)->group(function() {
@@ -83,8 +79,8 @@ Route::group(['middleware' => ['auth']], function() {
     });
 
     Route::view('/settings', 'pages.settings')->name('settings.page');
-});
+// });
 
-Route::fallback(function () {
-    return redirect()->route('login');
-});
+// Route::fallback(function () {
+//     return redirect()->route('login');
+// });

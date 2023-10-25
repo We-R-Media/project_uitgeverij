@@ -41,7 +41,6 @@ class ProjectSeeder extends Seeder
             ->has( Distributor::factory() )
             ->has( Designer::factory() )
             ->has( Layout::factory() )
-            ->has( Format::factory() )
             ->has( Tax::factory() )
             ->count($randomNumberSmall);
 

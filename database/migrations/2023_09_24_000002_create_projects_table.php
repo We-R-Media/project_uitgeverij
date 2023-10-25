@@ -29,7 +29,7 @@ return new class extends Migration
             $table->integer('department');
             $table->timestamp('year');
             $table->double('revenue_goals');
-            $table->text('comments')->nullable();
+            $table->longText('comments')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

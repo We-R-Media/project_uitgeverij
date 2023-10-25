@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('formats', function (Blueprint $table) {
             $table->id();
+            $table->foreignID('project_id')->nullable();
             $table->string('size');
             $table->string('measurement');
             $table->double('ratio');

@@ -10,22 +10,22 @@
     <title>{{ config('app.name', 'R.O.N.') }}</title>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    {{-- <link rel="dns-prefetch" href="//fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"> --}}
 
     <!-- Stylesheets -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/styles.css')}}">
+    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{asset('css/styles.css')}}"> --}}
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/sass/main.scss', 'resources/js/app.js'])
 
     @livewireStyles
 </head>
 <body>
     <div id="app">
 
-        {{-- @livewire('dashboard-sidebar') --}}
+        @livewire('dashboard-sidebar')
         {{-- @livewire('navigation') --}}
 
         <main class="pageContainer">
