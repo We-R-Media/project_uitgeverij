@@ -58,8 +58,8 @@ Route::group(['middleware' => 'auth'], function() {
     });
 
     Route::controller(FormatController::class)->group(function() {
-        Route::get('/formats', 'index')->name('formats.page');
-        Route::get('/formats', 'show')->name('formats.show');
+        // Route::get('/formats', 'index')->name('formats.page');
+        Route::get('/formats', 'show')->name('formats.page');
         Route::post('/formats/create', 'create')->name('formats.create');
     });
 
