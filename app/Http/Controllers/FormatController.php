@@ -26,7 +26,6 @@ class FormatController extends Controller
 
         DB::transaction(function () use($request) {
             Format::create([
-                'name' => $request->input('name'),
                 'size' => $request->input('size'),
                 'measurement' => $request->input('measurement'),
                 'ratio' => $request->input('ratio'),
@@ -50,7 +49,9 @@ class FormatController extends Controller
      */
     public function show(Format $format)
     {
-        //
+        $formats = Format::all();
+
+        return view('pages.settings.formats', compact('formats'));
     }
 
     /**

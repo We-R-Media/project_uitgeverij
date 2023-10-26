@@ -22,7 +22,9 @@ body {
     background-color: primary_colors.$page-background;
 }
 
-.detailsButton {
+.buttonContainer {
+    display: flex;
+    gap: 20px;
     position: absolute;
     top: 0;
     right: 0;

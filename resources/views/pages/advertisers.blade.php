@@ -2,7 +2,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <a class="detailsButton nav-item" href="{{ route('advertisers.details') }}">Details</a>
+
+    <div class="buttonContainer">
+        <a class="detailsButton nav-item" href="{{ route('advertisers.details') }}">{{__('Details')}}</a>
+        <a class="orderButton nav-item" href="{{route('advertisers.process')}}">{{__('Nieuwe order')}}</a>
+    </div>
+    
     <form class="formContainer" action="{{route('advertisers.create')}}" method="post">
         @csrf
         @method('post')
@@ -69,9 +74,9 @@
         <p class="error-message">{{$errors->first('comments')}}</p>
         @endif 
 
+        <input type="number" name="advertiser_id" placeholder="Vul klantnummer in..." id="">
+
         <button type="submit">Toevoegen</button>
-        <a href="{{route('advertisers.process')}}">Nieuwe order</a>
     </div>
     </form>
-    <p>{{$errors}}</p>
 @endsection

@@ -18,7 +18,9 @@ body {
   background-color: #ffffff;
 }
 
-.detailsButton {
+.buttonContainer {
+  display: flex;
+  gap: 20px;
   position: absolute;
   top: 0;
   right: 0;

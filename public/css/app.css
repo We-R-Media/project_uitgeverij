@@ -1,5 +1,5 @@
 @import url(https://fonts.bunny.net/css?family=Nunito);
-/* @charset "UTF-8"; */
+@charset "UTF-8";
 /*!
  * Bootstrap  v5.3.2 (https://getbootstrap.com/)
  * Copyright 2011-2023 The Bootstrap Authors
@@ -426,8 +426,8 @@ caption {
 }
 
 th {
-  text-align: -webkit-match-parent;
   text-align: inherit;
+  text-align: -webkit-match-parent;
 }
 
 thead,
@@ -487,9 +487,9 @@ select:disabled {
 button,
 [type=button],
 [type=reset],
-/* [type=submit] {
+[type=submit] {
   -webkit-appearance: button;
-} */
+}
 button:not(:disabled),
 [type=button]:not(:disabled),
 [type=reset]:not(:disabled),
@@ -543,11 +543,11 @@ legend + * {
 ::-webkit-inner-spin-button {
   height: auto;
 }
-/* 
+
 [type=search] {
   -webkit-appearance: textfield;
   outline-offset: -2px;
-} */
+}
 
 /* rtl:raw:
 [type="tel"],
@@ -565,10 +565,10 @@ legend + * {
   padding: 0;
 }
 
-/* ::file-selector-button {
+::file-selector-button {
   font: inherit;
   -webkit-appearance: button;
-} */
+}
 
 output {
   display: inline-block;
@@ -4555,7 +4555,7 @@ textarea.form-control-lg {
   background-color: var(--bs-accordion-btn-bg);
   border: 0;
   border-radius: 0;
-  /* overflow-anchor: none; */
+  overflow-anchor: none;
   transition: var(--bs-accordion-transition);
 }
 @media (prefers-reduced-motion: reduce) {

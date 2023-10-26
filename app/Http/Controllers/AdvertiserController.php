@@ -17,22 +17,12 @@ class AdvertiserController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $advertisers = Advertiser::all();
+    {   
         $contacts = Contact::all();
-
-        
-
-        return view('pages.advertisers', compact('advertisers', 'contacts'));
+        return view('pages.advertisers', compact('contacts'));
     }
 
-    public function showDetails() {
 
-        $advertisers = Advertiser::all();
-        $contacts = Contact::all();
-
-        return view('pages.tables.advertisers-table', compact('advertisers', 'contacts'));
-    }
     /**
      * Show the form for creating a new resource.
      */
@@ -55,32 +45,38 @@ class AdvertiserController extends Controller
                 'comments' => $request->input('comments'),
             ]);
             $contact = Contact::find($contactId);
-            $contact->advertiser()->associate($advertiser);
+            $contact->advertisers()->associate($advertiser);
             $advertiser->save();
         });    
         return redirect()->route('advertisers.page');
     }
 
-    public function processForm() {
+    public function process(Request $request) {
+
         return redirect()->route('orders.page');
     }
-    
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function details() 
     {
-        //
+        return view('pages.tables.advertisers-table');
     }
-
+    
     /**
      * Display the specified resource.
      */
-    public function show(Advertiser $advertiser)
+    public function show(Request $request)
     {
-        $advertiser = Advertiser::all();
-        return AdvertiserResource::collection($advertiser);
+        if($request->has('showContacts')) {
+            $contacts = Contact::all();
+            return view('pages.tables.advertisers-table', compact('contacts'));
+        }
+        else if($request->has('showAdvertisers')) {
+            $advertisers = Advertiser::all();
+            // $advertisers = Advertiser::with('contact')->get();
+            
+            // dd($advertisers);
+            return view('pages.tables.advertisers-table', compact('advertisers'));
+        }
     }
 
     /**

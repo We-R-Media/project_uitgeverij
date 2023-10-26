@@ -41,9 +41,10 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::controller(AdvertiserController::class)->group(function() {
         Route::get('/advertisers', 'index')->name('advertisers.page');
+        Route::post('/advertisers/show', 'show')->name('advertisers.show');
         Route::post('/advertisers/create', 'create')->name('advertisers.create');
-        Route::get('/advertisers/process', 'processForm')->name('advertisers.process');
-        Route::get('/advertisers/details', 'showDetails')->name('advertisers.details');
+        Route::get('/advertisers/process', 'process')->name('advertisers.process');
+        Route::get('/advertisers/details', 'details')->name('advertisers.details');
     });
 
     Route::controller(ContactController::class)->group(function() {
@@ -58,6 +59,7 @@ Route::group(['middleware' => 'auth'], function() {
 
     Route::controller(FormatController::class)->group(function() {
         Route::get('/formats', 'index')->name('formats.page');
+        Route::get('/formats', 'show')->name('formats.show');
         Route::post('/formats/create', 'create')->name('formats.create');
     });
 
@@ -101,3 +103,4 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::fallback(function () {
     return response()->view('errors.404', [], 404);
 });
+
