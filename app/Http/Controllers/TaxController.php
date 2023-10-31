@@ -18,6 +18,7 @@ class TaxController extends Controller
             'Nederland',
             'Duitsland'
         ];
+
         return view('pages.settings.tax', compact('tax_array'));
     }
 

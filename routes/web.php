@@ -25,7 +25,9 @@ use App\Http\Controllers\PDFController;
 
 
 // Route::group(['middleware' => ['auth']], function() {
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/', [
+        HomeController::class, 'index'
+    ] )->name('home');
 
     Route::controller(OrderController::class)->group(function() {
         Route::get('/orders', 'index')->name('orders.page');
@@ -49,10 +51,10 @@ use App\Http\Controllers\PDFController;
         Route::post('/tax/create', 'create')->name('tax.create');
     });
 
-    Route::controller(FormatController::class)->group(function() {
-        Route::get('/formats', 'index')->name('formats.page');
-        Route::post('/formats/create', 'create')->name('formats.create');
-    });
+    // Route::controller(FormatController::class)->group(function() {
+    //     Route::get('/formats', 'index')->name('formats.page');
+    //     Route::post('/formats/create', 'create')->name('formats.create');
+    // });
 
     Route::controller(ProjectController::class)->group(function() {
         Route::get('/projects', 'index')->name('projects.page');
@@ -78,7 +80,13 @@ use App\Http\Controllers\PDFController;
         Route::post('/reminders/create', 'create')->name('reminders.create');
     });
 
-    Route::view('/settings', 'pages.settings')->name('settings.page');
+    Route::middleware(['can:manage-projects'])->group(function () {
+        // Routes for managing projects
+    });
+
+    Route::middleware(['can:manage-application'])->group(function () {
+        Route::view('/settings', 'pages.settings')->name('settings.page');
+    });
 // });
 
 // Route::fallback(function () {

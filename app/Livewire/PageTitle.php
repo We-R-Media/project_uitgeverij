@@ -4,10 +4,12 @@ namespace App\Livewire;
 
 use Livewire\Component;
 
-class Navigation extends Component
+class PageTitle extends Component
 {
+    public $pageTitle;
+
     public function render()
     {
-        return view('livewire.sidebar');
+        return view('livewire.page-title');
     }
 }

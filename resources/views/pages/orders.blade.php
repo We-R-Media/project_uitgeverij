@@ -1,5 +1,13 @@
 @extends('layouts.app')
 
+@section('title',  $pageTitleSection)
+
+@livewire('page-title', [ 'pageTitle' => $pageTitleSection ])
+
+@if( $subpages )
+    @livewire('subpages', ['subpages' => $subpages])
+@endif
+
 @section('content')
 
 
@@ -7,7 +15,7 @@
 <form  class="formContainer" action="{{route('orders.create')}}" method="post">
     <div class="formBlock">
         <h3>Bevestigingsadres</h3>
-        
+
         <input type="text" class="@error ('advertiser') is-invalid @enderror" value="{{ old('advertiser') }}" name="advertiser" placeholder="Vul klantnummer in..." id="">
             @if($errors->has('advertiser'))
                 <p class="error-message">{{$errors->first('advertiser')}}</p>
@@ -16,7 +24,7 @@
             @if($errors->has('company'))
                 <p class="error-message">{{$errors->first('company')}}</p>
             @endif
-            
+
         <input type="text" class="@error ('contact') is-invalid @enderror" value="{{ old('contact') }}" name="contact" placeholder="Vul contact in..." id="">
             @if($errors->has('contact'))
                 <p class="error-message">{{$errors->first('contact')}}</p>
@@ -37,7 +45,7 @@
                 <p class="error-message">{{$errors->first('city')}}</p>
             @endif
 
-            
+
         <input type="text" class="@error ('province') is-invalid @enderror" value="{{ old('province') }}" name="province" placeholder="Vul provincie in..." id="">
             @if($errors->has('province'))
                 <p class="error-message">{{$errors->first('province')}}</p>
@@ -51,9 +59,9 @@
         <input type="email" class="@error ('email') is-invalid @enderror" value="{{ old('email') }}" name="email" placeholder="Vul email in..." id="">
             @if($errors->has('email'))
                 <p class="error-message">{{$errors->first('email')}}</p>
-            @endif        
+            @endif
     </div>
-{{-- 
+{{--
     <div class="formBlock">
         <h3>Afwijkend factuuradres</h3>
         <input type="text" name="advertiser" placeholder="Vul klantnummer in..." id="">

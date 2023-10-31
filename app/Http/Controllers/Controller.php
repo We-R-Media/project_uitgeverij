@@ -9,4 +9,16 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
+
+    protected $subpages = [];
+
+    /**
+     * Get subpages set from constrcutor
+     *
+     * @return void
+     */
+    public function getSubpages()
+    {
+        return $this->subpages;
+    }
 }

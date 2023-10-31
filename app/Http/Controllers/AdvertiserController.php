@@ -12,6 +12,17 @@ use Illuminate\Support\Facades\DB;
 
 class AdvertiserController extends Controller
 {
+    private static $page_title_singular = 'Relatie';
+    private static $page_title_plural = 'Relaties';
+
+    public function __construct()
+    {
+        $this->subpages = [
+            'Bedrijfsgegevens' => '/',
+            'ContactPersonen' => '/',
+            'Orders' => '/',
+        ];
+    }
 
     /**
      * Display a listing of the resource.
@@ -21,11 +32,17 @@ class AdvertiserController extends Controller
         $advertisers = Advertiser::all();
         $contacts = Contact::all();
 
-        return view('pages.advertisers', compact('advertisers', 'contacts'));
+        $subpages = $this->getSubpages() ?? false;
+
+        return view('pages.advertisers', compact('advertisers', 'contacts', 'subpages'))
+            ->with([
+                'pageTitleSection' => self::$page_title_plural,
+                'pageTitle' => self::$page_title_singular
+            ]);
     }
 
-    public function showDetails() {
-
+    public function showDetails()
+    {
         $advertisers = Advertiser::all();
         $contacts = Contact::all();
 
@@ -38,8 +55,7 @@ class AdvertiserController extends Controller
     {
         $contactId = $request->input('contact_id');
 
-
-        DB::transaction(function () use($request, $contactId) {
+        DB::transaction(function () use ($request, $contactId) {
             $advertiser = Advertiser::create([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
@@ -59,7 +75,8 @@ class AdvertiserController extends Controller
         return redirect()->route('advertisers.page');
     }
 
-    public function processForm() {
+    public function processForm()
+    {
         return redirect()->route('orders.page');
     }
 

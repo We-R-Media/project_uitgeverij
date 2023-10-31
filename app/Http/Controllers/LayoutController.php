@@ -14,7 +14,6 @@ class LayoutController extends Controller
      */
     public function index()
     {
-
         $layouts = Layout::all();
 
         return view('pages.settings.layouts', compact('layouts'));

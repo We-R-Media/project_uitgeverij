@@ -7,12 +7,20 @@ use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
+    private static $page_title_singular = 'Factuur';
+    private static $page_title_plural = 'Facturen';
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('pages.invoices');
+        $subpages = $this->getSubpages() ?? false;
+
+        return view('pages.invoices', compact('subpages'))->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => self::$page_title_singular
+        ]);
     }
 
     /**

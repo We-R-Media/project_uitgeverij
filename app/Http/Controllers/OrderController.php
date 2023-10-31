@@ -8,13 +8,33 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    private static $page_title_singular = 'Order';
+    private static $page_title_plural = 'Orders';
+
+    public function __construct()
+    {
+        $this->subpages = [
+            'Algemeen' => '/',
+            'Print' => '/',
+            'Artikel' => '/',
+            'Klacht' => '/',
+            'Verzoeken onbehandeld' => '/',
+            'Verzoeken' => '/',
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {  
-             
-        return view('pages.orders');
+    {
+        $subpages = $this->getSubpages() ?? false;
+
+        return view('pages.orders', compact('subpages'))
+            ->with([
+                'pageTitle' => self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_plural,
+            ]);
     }
 
     /**
