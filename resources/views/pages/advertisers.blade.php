@@ -2,7 +2,10 @@
 @extends('layouts.app')
 
 @section('content')
-    <a class="detailsButton nav-item" href="{{ route('advertisers.details') }}">Details</a>
+    <div class="sub__pages">
+        <a class="detailsButton nav-item" href="{{ route('advertisers.details') }}">Details</a>
+    </div>
+    
     <form class="formContainer" action="{{route('advertisers.create')}}" method="post">
         @csrf
         @method('post')

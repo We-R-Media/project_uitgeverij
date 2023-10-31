@@ -1,0 +1,25 @@
+@use "../mixins" as mixin;
+@use "../base/colors" as color;
+
+.sidebar {
+    position:fixed; left:0px; height:100vh; background:color.$accent; width:auto; max-width:50px; transition:max-width 0.4s ease;
+    nav {
+        .navigation__link {
+            position:relative; display:flex; align-items:center; margin-bottom:5px; font-weight:500;
+            .nav__icon { 
+                max-width:50px; min-width:50px; height:50px; display:flex; align-items:center; justify-content: center; padding:10px;
+                svg { width:100%; height:auto; overflow:visible;}
+            
+            }
+            span  { position:relative; display:inline-block;  visibility: hidden; opacity:0; transition:all 0.4s ease; padding:0px 50px 0px 25px; transform:translatex(-100%);} 
+        }
+    }
+    &:hover {
+        max-width:500px;
+        nav {
+            .navigation__link {
+                span { visibility: visible; opacity:1; transform:translatex(0); }
+            }
+        }
+    }    
+}
