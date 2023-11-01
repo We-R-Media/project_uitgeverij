@@ -5,10 +5,10 @@
         <a class="navigation__link" href="{{ route('advertisers.page') }}">{{ __('Relaties') }}</a>
         <a class="navigation__link" href="{{ route('invoices.page') }}">{{ __('Facturen') }}</a>
     </nav>
-
+{{--
     <nav class="navigation--column">
-        <a class="navigation__link" href="">Instellingen</a>
-    </nav>
+        <a class="navigation__link" href="{{ route('settings.page') }}">Instellingen</a>
+    </nav> --}}
 
 
 

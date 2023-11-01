@@ -9,7 +9,7 @@ class Settings extends Component
 {
     public function render()
     {
-        if (Gate::allows('isAdmin', $this->post)) {
+        if (Gate::allows('isAdmin')) {
             return view('livewire.settings');
         } else {
             abort(403, 'Unauthorized');

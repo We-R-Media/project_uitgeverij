@@ -24,7 +24,7 @@ use App\Http\Controllers\PDFController;
 */
 
 
-// Route::group(['middleware' => ['auth']], function() {
+Route::group(['middleware' => ['auth']], function() {
     Route::get('/', [
         HomeController::class, 'index'
     ] )->name('home');
@@ -84,11 +84,9 @@ use App\Http\Controllers\PDFController;
         // Routes for managing projects
     });
 
-    Route::middleware(['can:manage-application'])->group(function () {
-        Route::view('/settings', 'pages.settings')->name('settings.page');
-    });
-// });
+    // Route::view('/settings', 'pages.settings')->name('settings.page');
+});
 
-// Route::fallback(function () {
-//     return redirect()->route('login');
-// });
+Route::fallback(function () {
+    abort(404);
+});
