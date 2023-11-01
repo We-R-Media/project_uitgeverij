@@ -2,11 +2,14 @@
 @use '../base/colors' as color;
 
 #app { 
-    padding-left:50px; 
+    padding-top:50px;
+    @include mixin.breakpoint('min', 'tablet') {
+        padding-left:50px; padding-top:0px;
+    }
 }
 
 .topbar__wrapper { 
-    padding:10px 50px;  background:color.$secondary;
+    padding:10px 50px;  background:color.$secondary; 
     .topbar { 
         display:flex; justify-content: flex-end;
         .UserInfo { 
@@ -26,20 +29,26 @@
      .title__wrapper {
         h1 { font-size:30px; }
         span { font-size:25px; font-weight:300; color:color.$primary; }
+        @include mixin.breakpoint('max', 'tablet') {
+            span { position:fixed; top:0px; height:50px; background:linear-gradient(90deg, #FFD4A8, color.$primary); left:0px; width:100%; text-align:center; font-weight:500; font-size:18px; color:#fff; display: flex; align-items: center; justify-content: center; letter-spacing:1px;}
+        }
      }
 }
 .mainContent {
     padding:10px 50px;
     .sub__pages { 
-        background:transparentize(color.$accent, 0.9); margin:-10px -50px 50px; padding:0px 50px;
-        a {  padding:15px 0px;display:inline-block; line-height:1; margin-right:50px;}
+        background:transparentize(color.$accent, 0.9); margin:-10px -50px 50px; padding:0px 50px; 
+        a {  padding:15px 0px;display:inline-block; line-height:1; margin-right:30px;}
+        @include mixin.breakpoint('max', 'tablet') {
+            white-space: nowrap; overflow:scroll;
+        }
     }
 }
 
 .grid__wrapper {
-    display:flex; flex-wrap:wrap; margin:0px -15px;
+    display:flex; flex-wrap:wrap; margin:0px -15px; gap: 50px; max-width:1600px;
     fieldset { 
-        flex:0 0 50%; max-width:50%; padding:0px 15px; margin-bottom:50px;
+        flex:0 0 calc(50% - 50px); max-width:calc(50% - 50px); padding:0px 15px; margin-bottom:50px;
         .form__row {
             display:flex; flex-wrap:wrap; flex-direction:unset; gap:unset; margin:0px -15px;
             .field { flex:0 0 50%; max-width:50%; padding:0px 15px;}
@@ -49,6 +58,35 @@
             border-bottom: 1px solid color.$primary; position:relative;
             select { -webkit-appearance: none; width:100%; border:0px; padding-right:25px;}
             &:after { content:''; border: solid color.$primary; border-width: 0 3px 3px 0; display: inline-block; padding: 3px;position:absolute; right:0px; transform: rotate(45deg);-webkit-transform: rotate(45deg);bottom:25px;}
+        }
+        &.notes {
+            border:0px; flex: 0 0 calc(100% - 50px); max-width:calc(100% - 50px);
+            textarea { border:0; margin-top:20px; background:#F9F9F9; padding:10px;}
+        }
+        @include mixin.breakpoint('min', 'tablet') {
+            .field-alt, .form__row-alt {
+                display:flex; flex-direction:row; flex-wrap:wrap;
+                > label { flex: 0 0 25%; font-weight: 400; font-size:15px; color:#000;}
+                > input, > .field__row,  > .dropdown { flex: 0 0 75%; }
+            }
+            &.notes { 
+                label { font-weight: 400; font-size:15px; color:#000; }
+            }
+        }
+        * { box-sizing:border-box; }
+    }
+    @include mixin.breakpoint('max', 'laptop') {
+        gap:0;
+        fieldset, fieldset.notes { flex:0 0 100%; max-width:100%;  }
+    }
+}
+
+.form__box {
+    padding-bottom:100px;
+    .ButtonGroup {
+        width:100%; padding:50px;  bottom:50px;  left:0px; display:flex; justify-content: flex-end;
+        @include mixin.breakpoint('min', 'tablet') {
+            left: 50px; width: calc(100% - 50px); bottom:0; position: fixed; background: #F9F9F9;
         }
     }
 }
