@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title',  $pageTitle)
+
 @section('content')
 
 @if( Gate::allows( 'isAdmin' ) )

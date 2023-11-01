@@ -25,9 +25,13 @@
     <div id="app">
 
         @livewire('dashboard-sidebar')
-        {{-- @livewire('navigation') --}}
+
         <main class="pageContainer">
-            @livewire('top-bar')
+            @livewire('top-bar', [
+                'pageTitle' => $pageTitleSection ?? 'RON',
+                'subpages' => $subpages ?? false
+            ])
+
             <div class="mainContent">
                 @yield('content')
             </div>

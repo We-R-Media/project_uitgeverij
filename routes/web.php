@@ -84,7 +84,7 @@ Route::group(['middleware' => ['auth']], function() {
         // Routes for managing projects
     });
 
-    // Route::view('/settings', 'pages.settings')->name('settings.page');
+    Route::view('/settings', 'pages.settings')->name('settings.page');
 });
 
 Route::fallback(function () {

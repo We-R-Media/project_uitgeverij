@@ -2,18 +2,9 @@
 
 @section('title',  $pageTitleSection)
 
-@livewire('page-title', [ 'pageTitle' => $pageTitleSection ])
-
-@if( $subpages )
-    @livewire('subpages', ['subpages' => $subpages])
-@endif
-
 @section('content')
 
 
-    <div class="sub__pages">
-        <!---- insert subpages here----->
-    </div>
 <form  class="formContainer" action="{{route('orders.create')}}" method="post">
     <div class="formBlock">
         <h3>Bevestigingsadres</h3>
