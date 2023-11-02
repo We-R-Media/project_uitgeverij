@@ -2,9 +2,11 @@ $primary: #F7A637;
 $secondary: #FFF2E4;
 $tertiary: #FFF7F0;
 $accent: #FFD4A8;
+$accent-light: #FFFAF5;
 
 $gray: #787878;
 $gray-light: #eaeaea;
+$grey-lighter: #f9f9f9;
 
 $white: #FFFFFF;
 $black: #000000;
@@ -13,4 +15,4 @@ $error: #E53935;
 $success: #9CCC65;
 $warning: #FFCC80;
 
-
+$gradiant: linear-gradient(90deg, $accent, $primary);

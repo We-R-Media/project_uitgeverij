@@ -82,7 +82,7 @@ class ProjectController extends Controller
             $layout = Layout::findOrFail($layoutId);
             $project->layout()->associate($layout);
         });
-        return redirect()->route('projects.page')->with('project', $project);
+        return redirect()->route('projects.index')->with('project', $project);
     }
 
     public function showDetails()

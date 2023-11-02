@@ -17,19 +17,19 @@
                     @endif
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('orders.page') }}">{{ __('Orders') }}</a>
+                        <a class="nav-link" href="{{ route('orders.index') }}">{{ __('Orders') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('advertisers.page') }}">{{ __('Relaties') }}</a>
+                        <a class="nav-link" href="{{ route('advertisers.index') }}">{{ __('Relaties') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('projects.page') }}">{{ __('Projecten') }}</a>
+                        <a class="nav-link" href="{{ route('projects.index') }}">{{ __('Projecten') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('invoices.page') }}">{{ __('Facturen') }}</a>
+                        <a class="nav-link" href="{{ route('invoices.index') }}">{{ __('Facturen') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('settings.page') }}">{{ __('Instellingen') }}</a>
+                        <a class="nav-link" href="{{ route('settings.index') }}">{{ __('Instellingen') }}</a>
                     </li>
 
                     <li class="nav-item dropdown">

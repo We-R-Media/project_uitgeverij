@@ -34,7 +34,7 @@ class FormatController extends Controller
             ]);
         });
 
-        return redirect()->route('formats.page');
+        return redirect()->route('formats.index');
     }
 
     /**

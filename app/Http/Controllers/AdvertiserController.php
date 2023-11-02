@@ -72,12 +72,12 @@ class AdvertiserController extends Controller
             $contact->advertiser()->associate($advertiser);
             $advertiser->save();
         });
-        return redirect()->route('advertisers.page');
+        return redirect()->route('advertisers.index');
     }
 
     public function processForm()
     {
-        return redirect()->route('orders.page');
+        return redirect()->route('orders.index');
     }
 
 

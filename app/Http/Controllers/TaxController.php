@@ -35,7 +35,7 @@ class TaxController extends Controller
                 'high' => $request->input('high'),
             ]);
         });
-        return redirect()->route('tax.page');
+        return redirect()->route('tax.index');
     }
 
     /**

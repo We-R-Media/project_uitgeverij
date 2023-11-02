@@ -34,7 +34,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('orders')
         ->controller(OrderController::class)
         ->group(function () {
-            Route::get('/', 'index')->name('page');
+            Route::get('/', 'index')->name('index');
             Route::post('/create', 'create')->name('create');
         });
 
@@ -43,7 +43,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('advertisers')
         ->controller(AdvertiserController::class)
         ->group(function () {
-            Route::get('/', 'index')->name('page');
+            Route::get('/', 'index')->name('index');
             Route::get('/process','processForm')->name('process');
             Route::get('/details', 'showDetails')->name('details');
             Route::post('/create', 'create')->name('create');
@@ -53,7 +53,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('contacts')
         ->controller(ContactController::class)
         ->group(function () {
-            Route::get('/', 'index')->name('page');
+            Route::get('/', 'index')->name('index');
             Route::post('/create', 'create')->name('create');
         });
 
@@ -61,7 +61,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('tax')
         ->controller(TaxController::class)
         ->group(function () {
-            Route::get('/', 'index')->name('page');
+            Route::get('/', 'index')->name('index');
             Route::post('/create', 'create')->name('create');
         });
 
@@ -69,7 +69,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('projects')
         ->controller(ProjectController::class)
         ->group(function () {
-            Route::get('/', 'index')->name('page');
+            Route::get('/', 'index')->name('index');
             Route::get('/details', 'showDetails')->name('details');
             Route::post('/create', 'create')->name('create');
         });
@@ -78,7 +78,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('layouts')
         ->controller(LayoutController::class)
         ->group(function () {
-            Route::get('/', 'index')->name('page');
+            Route::get('/', 'index')->name('index');
             Route::post('/create', 'create')->name('create');
         });
 
@@ -86,7 +86,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('invoices')
         ->controller(InvoiceController::class)
         ->group(function () {
-            Route::get('/', 'index')->name('page');
+            Route::get('/', 'index')->name('index');
         });
 
     Route::name('pdf.')
@@ -100,7 +100,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('reminders')
         ->controller(ReminderController::class)
         ->group(function () {
-            Route::get('/', 'index')->name('page');
+            Route::get('/', 'index')->name('index');
             Route::post('/create', 'create')->name('create');
         });
 
@@ -108,7 +108,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('settings')
         ->controller(SettingsController::class)
         ->group(function () {
-            Route::get('/', 'index')->name('page');
+            Route::get('/', 'index')->name('index');
         });
 
     // Route::controller(FormatController::class)->group(function() {
