@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\AdvertiserResource;
 use App\Models\Advertiser;
 use App\Models\Contact;
 use Illuminate\Http\Request;
-use App\Http\Resources\CompanyResource;
-use App\Http\Requests\AdvertiserRequest;
 use Illuminate\Support\Facades\DB;
 
 class AdvertiserController extends Controller
@@ -30,28 +27,29 @@ class AdvertiserController extends Controller
     public function index()
     {
         $advertisers = Advertiser::all();
-        $contacts = Contact::all();
 
         $subpages = $this->getSubpages() ?? false;
 
-        return view('pages.advertisers', compact('advertisers', 'contacts', 'subpages'))
+        return view('pages.advertisers', compact('advertisers'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular
+                'pageTitle' => self::$page_title_singular,
+                'subpages' => $subpages
             ]);
     }
 
-    public function showDetails()
-    {
-        $advertisers = Advertiser::all();
-        $contacts = Contact::all();
-
-        return view('pages.tables.advertisers-table', compact('advertisers', 'contacts'));
-    }
     /**
      * Show the form for creating a new resource.
      */
-    public function create(AdvertiserRequest $request)
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         $contactId = $request->input('contact_id');
 
@@ -68,40 +66,20 @@ class AdvertiserController extends Controller
                 'contact_id' => $request->input('contact_id'),
                 'comments' => $request->input('comments'),
             ]);
-            $contact = Contact::find($contactId);
+
+            $contact = Contact::find( $contactId );
             $contact->advertiser()->associate($advertiser);
+
             $advertiser->save();
         });
-        return redirect()->route('advertisers.page');
-    }
 
-    public function processForm()
-    {
-        return redirect()->route('orders.page');
-    }
-
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Advertiser $advertiser)
-    {
-        $advertiser = Advertiser::all();
-        return AdvertiserResource::collection($advertiser);
+        return redirect()->back();
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Advertiser $advertiser)
+    public function edit(string $id)
     {
         //
     }
@@ -109,7 +87,7 @@ class AdvertiserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Advertiser $advertiser)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -117,7 +95,7 @@ class AdvertiserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Advertiser $advertiser)
+    public function destroy(string $id)
     {
         //
     }

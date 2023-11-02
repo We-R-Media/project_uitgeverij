@@ -22,19 +22,26 @@ class ReminderController extends Controller
 
         $contacts = Contact::all();
 
+
         return view('pages.settings.reminders', compact('contacts'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         $contactId = $request->input('contact');
 
-    
         DB::transaction(function () use($request, $contactId) {
-    
            $reminder = Reminder::create([
                 'period_first' => $request->input('period_first'),
                 'period_second' => $request->input('period_second'),
@@ -43,35 +50,18 @@ class ReminderController extends Controller
                 'administration_cost_second' => $request->input('administration_cost_second'),
                 'contact_id' => $contactId,
             ]);
-    
+
             $contact = Contact::find($contactId);
             $contact->reminders()->save($reminder);
-            // Other operations if needed
         });
-    
-        return redirect()->route('reminders.page');
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Reminder $reminder)
-    {
-        //
+        return redirect()->back();
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Reminder $reminder)
+    public function edit(string $id)
     {
         //
     }
@@ -79,7 +69,7 @@ class ReminderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Reminder $reminder)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -87,7 +77,7 @@ class ReminderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Reminder $reminder)
+    public function destroy(string $id)
     {
         //
     }

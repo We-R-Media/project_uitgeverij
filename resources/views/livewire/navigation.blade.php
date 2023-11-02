@@ -28,9 +28,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('invoices.page') }}">{{ __('Facturen') }}</a>
                     </li>
-                    <li class="nav-item">
+                    {{-- <li class="nav-item">
                         <a class="nav-link" href="{{ route('settings.page') }}">{{ __('Instellingen') }}</a>
-                    </li>
+                    </li> --}}
 
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

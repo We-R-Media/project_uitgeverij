@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Complaint;
 use Illuminate\Http\Request;
 
 class ComplaintController extends Controller
@@ -32,17 +31,9 @@ class ComplaintController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Complaint $complaint)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Complaint $complaint)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +41,7 @@ class ComplaintController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Complaint $complaint)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +49,7 @@ class ComplaintController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Complaint $complaint)
+    public function destroy(string $id)
     {
         //
     }

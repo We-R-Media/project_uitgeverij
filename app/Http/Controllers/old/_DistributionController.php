@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Printer;
 use Illuminate\Http\Request;
 
-class PrinterController extends Controller
+class DistributionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -32,17 +31,9 @@ class PrinterController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Printer $printer)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Printer $printer)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +41,7 @@ class PrinterController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Printer $printer)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +49,7 @@ class PrinterController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Printer $printer)
+    public function destroy(string $id)
     {
         //
     }

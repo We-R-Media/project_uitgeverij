@@ -36,20 +36,24 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::controller(AdvertiserController::class)->group(function() {
         Route::get('/advertisers', 'index')->name('advertisers.page');
-        Route::post('/advertisers/create', 'create')->name('advertisers.create');
+        Route::get('/advertisers/{id}', 'showDetails')->name('advertisers.details');
+
         Route::get('/advertisers/process', 'processForm')->name('advertisers.process');
-        Route::get('/advertisers/details', 'showDetails')->name('advertisers.details');
+
+        Route::match(['get'], '/advertisers/create', 'create')->name('advertisers.create');
     });
 
     Route::controller(ContactController::class)->group(function() {
         Route::get('/contacts', 'index')->name('contacts.page');
-        Route::post('/contacts/create', 'create')->name('contacts.create');
+
+        Route::match(['get', 'post'], '/contacts/create', 'create')->name('contacts.create');
     });
 
-    Route::controller(TaxController::class)->group(function() {
-        Route::get('/tax', 'index')->name('tax.page');
-        Route::post('/tax/create', 'create')->name('tax.create');
-    });
+    // Route::controller(TaxController::class)->group(function() {
+    //     Route::get('/tax', 'index')->name('tax.page');
+
+    //     Route::match(['get', 'post'], '/tax/create', 'create')->name('tax.create');
+    // });
 
     // Route::controller(FormatController::class)->group(function() {
     //     Route::get('/formats', 'index')->name('formats.page');
@@ -58,14 +62,17 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::controller(ProjectController::class)->group(function() {
         Route::get('/projects', 'index')->name('projects.page');
-        Route::post('/projects/create', 'create')->name('projects.create');
+        Route::get('/projects/{id}', 'edit')->name('projects.edit');
         Route::get('/projects/details', 'showDetails')->name('projects.details');
+
+        // Route::match(['get', 'post'], '/projects/create', 'create')->name('projects.create');
     });
 
-    Route::controller(LayoutController::class)->group(function() {
-        Route::get('/layouts', 'index')->name('layouts.page');
-        Route::post('/layouts/create', 'create')->name('layouts.create');
-    });
+    // Route::controller(LayoutController::class)->group(function() {
+    //     Route::get('/layouts', 'index')->name('layouts.page');
+
+    //     Route::match(['get', 'post'], '/layouts/create', 'create')->name('layouts.create');
+    // });
 
     Route::controller(InvoiceController::class)->group(function() {
         Route::get('/invoices', 'index')->name('invoices.page');
@@ -75,16 +82,12 @@ Route::group(['middleware' => ['auth']], function() {
         Route::get('pdf-generate/', 'PDFGenerate')->name('pdf.generate');
     });
 
-    Route::controller(ReminderController::class)->group(function() {
-        Route::get('/reminders', 'index')->name('reminders.page');
-        Route::post('/reminders/create', 'create')->name('reminders.create');
-    });
+    // Route::controller(ReminderController::class)->group(function() {
+    //     Route::get('/reminders', 'index')->name('reminders.page');
+    //     Route::post('/reminders/create', 'create')->name('reminders.create');
+    // });
 
-    Route::middleware(['can:manage-projects'])->group(function () {
-        // Routes for managing projects
-    });
-
-    Route::view('/settings', 'pages.settings')->name('settings.page');
+    // Route::view('/settings', 'pages.settings')->name('settings.page');
 });
 
 Route::fallback(function () {

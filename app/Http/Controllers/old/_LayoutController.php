@@ -22,9 +22,16 @@ class LayoutController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(LayoutRequest $request)
+    public function create()
     {
+        //
+    }
 
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
         DB::transaction(function () use($request) {
 
             $file = $request->file('logo');
@@ -38,29 +45,14 @@ class LayoutController extends Controller
                 'logo' => $originalName,
             ]);
         });
-        return redirect()->route('layouts.page');
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Layout $layout)
-    {
-        //
+        return redirect()->back();
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Layout $layout)
+    public function edit(string $id)
     {
         //
     }
@@ -68,7 +60,7 @@ class LayoutController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Layout $layout)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -76,7 +68,7 @@ class LayoutController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Layout $layout)
+    public function destroy(string $id)
     {
         //
     }

@@ -25,7 +25,15 @@ class TaxController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(TaxRequest $request)
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         DB::transaction(function () use($request) {
             Tax::create([
@@ -39,25 +47,9 @@ class TaxController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Tax $tax)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Tax $tax)
+    public function edit(string $id)
     {
         //
     }
@@ -65,7 +57,7 @@ class TaxController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Tax $tax)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -73,7 +65,7 @@ class TaxController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tax $tax)
+    public function destroy(string $id)
     {
         //
     }

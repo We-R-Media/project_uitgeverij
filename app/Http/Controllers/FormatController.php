@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Format;
-use App\Models\FormatGroup;
 use Illuminate\Http\Request;
-use App\Http\Requests\FormatRequest;
 use Illuminate\Support\Facades\DB;
 
 class FormatController extends Controller
@@ -15,15 +13,22 @@ class FormatController extends Controller
      */
     public function index()
     {
-        return view('pages.settings.formats');
+        //
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(FormatRequest $request)
+    public function create()
     {
+        //
+    }
 
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
         DB::transaction(function () use($request) {
             Format::create([
                 'name' => $request->input('name'),
@@ -34,29 +39,13 @@ class FormatController extends Controller
             ]);
         });
 
-        return redirect()->route('formats.page');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Format $format)
-    {
-        //
+        return redirect()->back();
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Format $format)
+    public function edit(string $id)
     {
         //
     }
@@ -64,7 +53,7 @@ class FormatController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Format $format)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -72,7 +61,7 @@ class FormatController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Format $format)
+    public function destroy(string $id)
     {
         //
     }

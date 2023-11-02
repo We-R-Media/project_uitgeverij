@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Contact;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Http\Requests\ContactRequest;
+use Illuminate\Support\Facades\DB;
 
 class ContactController extends Controller
 {
@@ -14,14 +13,21 @@ class ContactController extends Controller
      */
     public function index()
     {
-
-        return view('pages.settings.contacts');
+        //
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(ContactRequest $request)
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         $contact = DB::transaction(function () use($request) {
             Contact::create([
@@ -33,29 +39,13 @@ class ContactController extends Controller
             ]);
         });
 
-        return redirect()->route('contacts.page');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Contact $contact)
-    {
-        
+        return redirect()->back();
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Contact $contact)
+    public function edit(string $id)
     {
         //
     }
@@ -63,7 +53,7 @@ class ContactController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Contact $contact)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -71,7 +61,7 @@ class ContactController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Contact $contact)
+    public function destroy(string $id)
     {
         //
     }
