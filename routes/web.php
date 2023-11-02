@@ -12,6 +12,7 @@ use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\SettingsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,62 +30,96 @@ Route::group(['middleware' => ['auth']], function() {
         HomeController::class, 'index'
     ] )->name('home');
 
-    Route::controller(OrderController::class)->group(function() {
-        Route::get('/orders', 'index')->name('orders.page');
-        Route::post('/orders/create', 'create')->name('orders.create');
-    });
+    Route::name('orders.')
+        ->prefix('orders')
+        ->controller(OrderController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('page');
+            Route::post('/create', 'create')->name('create');
+        });
 
-    Route::controller(AdvertiserController::class)->group(function() {
-        Route::get('/advertisers', 'index')->name('advertisers.page');
-        Route::post('/advertisers/create', 'create')->name('advertisers.create');
-        Route::get('/advertisers/process', 'processForm')->name('advertisers.process');
-        Route::get('/advertisers/details', 'showDetails')->name('advertisers.details');
-    });
 
-    Route::controller(ContactController::class)->group(function() {
-        Route::get('/contacts', 'index')->name('contacts.page');
-        Route::post('/contacts/create', 'create')->name('contacts.create');
-    });
+    Route::name('advertisers.')
+        ->prefix('advertisers')
+        ->controller(AdvertiserController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('page');
+            Route::get('/process','processForm')->name('process');
+            Route::get('/details', 'showDetails')->name('details');
+            Route::post('/create', 'create')->name('create');
+        });
 
-    Route::controller(TaxController::class)->group(function() {
-        Route::get('/tax', 'index')->name('tax.page');
-        Route::post('/tax/create', 'create')->name('tax.create');
-    });
+    Route::name('contacts.')
+        ->prefix('contacts')
+        ->controller(ContactController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('page');
+            Route::post('/create', 'create')->name('create');
+        });
+
+    Route::name('tax.')
+        ->prefix('tax')
+        ->controller(TaxController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('page');
+            Route::post('/create', 'create')->name('create');
+        });
+
+    Route::name('projects.')
+        ->prefix('projects')
+        ->controller(ProjectController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('page');
+            Route::get('/details', 'showDetails')->name('details');
+            Route::post('/create', 'create')->name('create');
+        });
+
+    Route::name('layouts.')
+        ->prefix('layouts')
+        ->controller(LayoutController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('page');
+            Route::post('/create', 'create')->name('create');
+        });
+
+    Route::name('invoices.')
+        ->prefix('invoices')
+        ->controller(InvoiceController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('page');
+        });
+
+    Route::name('pdf.')
+        ->prefix('pdf-generate')
+        ->controller(PDFController::class)
+        ->group(function () {
+            Route::get('/', 'PDFGenerate')->name('generate');
+        });
+
+    Route::name('reminders.')
+        ->prefix('reminders')
+        ->controller(ReminderController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('page');
+            Route::post('/create', 'create')->name('create');
+        });
+
+    Route::name('settings.')
+        ->prefix('settings')
+        ->controller(SettingsController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('page');
+        });
 
     // Route::controller(FormatController::class)->group(function() {
     //     Route::get('/formats', 'index')->name('formats.page');
     //     Route::post('/formats/create', 'create')->name('formats.create');
     // });
 
-    Route::controller(ProjectController::class)->group(function() {
-        Route::get('/projects', 'index')->name('projects.page');
-        Route::post('/projects/create', 'create')->name('projects.create');
-        Route::get('/projects/details', 'showDetails')->name('projects.details');
-    });
-
-    Route::controller(LayoutController::class)->group(function() {
-        Route::get('/layouts', 'index')->name('layouts.page');
-        Route::post('/layouts/create', 'create')->name('layouts.create');
-    });
-
-    Route::controller(InvoiceController::class)->group(function() {
-        Route::get('/invoices', 'index')->name('invoices.page');
-    });
-
-    Route::controller(PDFController::class)->group(function() {
-        Route::get('pdf-generate/', 'PDFGenerate')->name('pdf.generate');
-    });
-
-    Route::controller(ReminderController::class)->group(function() {
-        Route::get('/reminders', 'index')->name('reminders.page');
-        Route::post('/reminders/create', 'create')->name('reminders.create');
-    });
-
+    
     Route::middleware(['can:manage-projects'])->group(function () {
         // Routes for managing projects
     });
-
-    Route::view('/settings', 'pages.settings')->name('settings.page');
 });
 
 Route::fallback(function () {

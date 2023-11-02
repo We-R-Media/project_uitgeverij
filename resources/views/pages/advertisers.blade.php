@@ -73,5 +73,4 @@
             <a href="{{route('advertisers.process')}}">Nieuwe order</a>
         </div>
     </form>
-    <p>{{$errors}}</p>
 @endsection
