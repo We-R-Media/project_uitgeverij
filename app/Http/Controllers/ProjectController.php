@@ -18,7 +18,7 @@ class ProjectController extends Controller
     {
         $this->subpages = [
             'Bedrijfsgegevens' => '/',
-            'ContactPersonen' => '/',
+            'Contactpersonen' => '/',
             'Orders' => '/',
         ];
     }
@@ -29,13 +29,11 @@ class ProjectController extends Controller
     public function index()
     {
         $projects = Project::paginate(10);
-        $subpages = $this->getSubpages() ?? false;
 
-        return view('pages.projects', compact('projects'))
+        return view('pages.projects.index', compact('projects'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => 'Nieuwe ' . self::$page_title_singular,
-                'subpages' => $subpages
+                'pageTitle' => 'Nieuwe ' . self::$page_title_singular
             ]);
     }
 
@@ -93,11 +91,13 @@ class ProjectController extends Controller
     public function edit(string $id)
     {
         $project = Project::findOrFail($id);
+        $subpages = $this->getSubpages() ?? false;
 
         return view('pages.projects.edit', compact('project'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
                 'pageTitle' => 'Nieuwe ' . self::$page_title_singular,
+                'subpages' => $subpages
             ]);
     }
 

@@ -66,21 +66,12 @@ class AdvertiserController extends Controller
                 'contact_id' => $request->input('contact_id'),
                 'comments' => $request->input('comments'),
             ]);
-<<<<<<< Updated upstream
-
-            $contact = Contact::find( $contactId );
-            $contact->advertiser()->associate($advertiser);
-
-            $advertiser->save();
-        });
-=======
             $contact = Contact::find($contactId);
             $contact->advertisers()->associate($advertiser);
             $advertiser->save();
         });
 
         return redirect()->back();
->>>>>>> Stashed changes
     }
 
     /**

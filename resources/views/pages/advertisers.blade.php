@@ -65,17 +65,6 @@
         @endif
 
 
-<<<<<<< HEAD
-            <textarea type="comments" class="@error('comments') is-invalid @enderror" value="{{ old('comments') }}" name="comments" placeholder="Vul opmerking in..." cols="30" rows="10" id=""></textarea>
-            @if($errors->has('comments'))
-            <p class="error-message">{{$errors->first('comments')}}</p>
-            @endif
-
-            <input type="number" name="advertiser_id" placeholder="Vul klantnummer in..." id="">
-
-            <button type="submit">Toevoegen</button>
-        </div>
-=======
         <textarea type="comments" class="@error('comments') is-invalid @enderror" value="{{ old('comments') }}" name="comments" placeholder="Vul opmerking in..." cols="30" rows="10" id=""></textarea>
         @if($errors->has('comments'))
         <p class="error-message">{{$errors->first('comments')}}</p>
@@ -84,7 +73,6 @@
         <button type="submit">Toevoegen</button>
         <a href="{{route('advertisers.process')}}">Nieuwe order</a>
     </div>
->>>>>>> 996052bce501e48e05b2c7b4330e5aee81ccea58
     </form>
     <p>{{$errors}}</p>
 @endsection

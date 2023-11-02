@@ -7,8 +7,8 @@
 <ul>
     @foreach ($projects as $project)
         <li>
-            <a href="{{$project->id}}" class="">
-            {{ $project->release_name }}
+            <a href="{{ route('projects.edit', $project->id) }}" class="">
+                {{ $project->release_name }}
             </a>
 
         </li>

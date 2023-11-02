@@ -56,13 +56,13 @@ Route::group(['middleware' => ['auth']], function() {
             Route::post('/create', 'create')->name('create');
         });
 
-    Route::name('tax.')
-        ->prefix('tax')
-        ->controller(TaxController::class)
-        ->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::post('/create', 'create')->name('create');
-        });
+    // Route::name('tax.')
+    //     ->prefix('tax')
+    //     ->controller(TaxController::class)
+    //     ->group(function () {
+    //         Route::get('/', 'index')->name('index');
+    //         Route::post('/create', 'create')->name('create');
+    //     });
 
     Route::name('projects.')
         ->prefix('projects')
@@ -73,13 +73,13 @@ Route::group(['middleware' => ['auth']], function() {
             Route::post('/create', 'create')->name('create');
         });
 
-    Route::name('layouts.')
-        ->prefix('layouts')
-        ->controller(LayoutController::class)
-        ->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::post('/create', 'create')->name('create');
-        });
+    // Route::name('layouts.')
+    //     ->prefix('layouts')
+    //     ->controller(LayoutController::class)
+    //     ->group(function () {
+    //         Route::get('/', 'index')->name('index');
+    //         Route::post('/create', 'create')->name('create');
+    //     });
 
     Route::name('invoices.')
         ->prefix('invoices')
@@ -95,13 +95,13 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/', 'PDFGenerate')->name('generate');
         });
 
-    Route::name('reminders.')
-        ->prefix('reminders')
-        ->controller(ReminderController::class)
-        ->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::post('/create', 'create')->name('create');
-        });
+    // Route::name('reminders.')
+    //     ->prefix('reminders')
+    //     ->controller(ReminderController::class)
+    //     ->group(function () {
+    //         Route::get('/', 'index')->name('index');
+    //         Route::post('/create', 'create')->name('create');
+    //     });
 
     Route::name('settings.')
         ->prefix('settings')
