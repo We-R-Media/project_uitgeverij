@@ -26,8 +26,8 @@
      <!--- Subpages ---->
     <div class="sub__pages">
         @if($subpages)
-            @foreach ( $subpages as $pageName => $route )
-                <a href="{{ $route }}">{{ $pageName }}</a>
+            @foreach ($subpages as $pageName => $route)
+                <a href="{{ route( $route, request('id') ) }}">{{ $pageName }}</a>
             @endforeach
         @endif
     </div>

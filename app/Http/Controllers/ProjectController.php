@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Format;
 use App\Models\Layout;
 use App\Models\Project;
-use App\Models\Tax;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,9 +15,9 @@ class ProjectController extends Controller
     public function __construct()
     {
         $this->subpages = [
-            'Bedrijfsgegevens' => '/',
-            'Contactpersonen' => '/',
-            'Orders' => '/',
+            'Projectgegevens' => 'projects.edit',
+            'Planning' => 'projects.planning',
+            'Calculatie' => 'projects.calculation',
         ];
     }
 
@@ -96,7 +94,7 @@ class ProjectController extends Controller
         return view('pages.projects.edit', compact('project'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => 'Nieuwe ' . self::$page_title_singular,
+                'pageTitle' => 'Bewerk ' . self::$page_title_singular,
                 'subpages' => $subpages
             ]);
     }
@@ -115,5 +113,28 @@ class ProjectController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+    public function planning(string $id)
+    {
+        $subpages = $this->getSubpages( $id ) ?? false;
+
+        return view('pages.projects.planning')->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => 'Planning van ' . self::$page_title_singular,
+            'subpages' => $subpages
+        ]);
+    }
+
+    public function calculation(string $id)
+    {
+        $subpages = $this->getSubpages( $id ) ?? false;
+
+        return view('pages.projects.calculation')->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => 'Calculatie van ' . self::$page_title_singular,
+            'subpages' => $subpages
+        ]);
     }
 }

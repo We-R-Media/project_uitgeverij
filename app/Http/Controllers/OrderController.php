@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-use PDF;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -14,12 +13,11 @@ class OrderController extends Controller
     public function __construct()
     {
         $this->subpages = [
-            'Algemeen' => '/',
-            'Print' => '/',
-            'Artikel' => '/',
-            'Klacht' => '/',
-            'Verzoeken onbehandeld' => '/',
-            'Verzoeken' => '/',
+            'Ordergegevens' => 'orders.edit',
+            'Print' => 'orders.print',
+            'Artikel' => 'orders.articles',
+            'Klachten' => 'orders.complaints',
+            'Verzoeken' => 'orders.requests',
         ];
     }
 
@@ -29,13 +27,11 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::paginate(10);
-        $subpages = $this->getSubpages() ?? false;
 
-        return view('pages.orders', compact('orders'))
+        return view('pages.orders.index', compact('orders'))
             ->with([
                 'pageTitle' => self::$page_title_singular,
                 'pageTitleSection' => self::$page_title_plural,
-                'subpages' => $subpages
             ]);
     }
 
@@ -60,7 +56,15 @@ class OrderController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $order = Order::findOrFail($id);
+        $subpages = $this->getSubpages() ?? false;
+
+        return view('pages.orders.edit', compact('order'))
+            ->with([
+                'pageTitleSection' => self::$page_title_plural,
+                'pageTitle' => 'Bewerk ' . self::$page_title_singular,
+                'subpages' => $subpages
+            ]);
     }
 
     /**
@@ -77,5 +81,50 @@ class OrderController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+    public function requests(string $id)
+    {
+        $subpages = $this->getSubpages( $id ) ?? false;
+
+        return view('pages.orders.requests')->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => 'Verzoeken van ' . self::$page_title_singular,
+            'subpages' => $subpages
+        ]);
+    }
+
+    public function print(string $id)
+    {
+        $subpages = $this->getSubpages( $id ) ?? false;
+
+        return view('pages.orders.print')->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => '??? ' . self::$page_title_singular,
+            'subpages' => $subpages
+        ]);
+    }
+
+    public function articles(string $id)
+    {
+        $subpages = $this->getSubpages( $id ) ?? false;
+
+        return view('pages.orders.articles')->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'subpages' => $subpages
+        ]);
+    }
+
+    public function complaints(string $id)
+    {
+        $subpages = $this->getSubpages( $id ) ?? false;
+
+        return view('pages.orders.complaints')->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'subpages' => $subpages
+        ]);
     }
 }

@@ -29,12 +29,34 @@ Route::group(['middleware' => ['auth']], function() {
         HomeController::class, 'index'
     ] )->name('home');
 
+    Route::name('projects.')
+        ->prefix('projects')
+        ->controller(ProjectController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/{id}', 'edit')->name('edit');
+            Route::get('/{id}/planning', 'planning')->name('planning');
+            Route::get('/{id}/calculation', 'calculation')->name('calculation');
+            Route::get('/create', 'create')->name('create');
+
+            Route::post('/store', 'store')->name('store');
+            Route::post('/update', 'update')->name('update');
+        });
+
     Route::name('orders.')
         ->prefix('orders')
         ->controller(OrderController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::post('/create', 'create')->name('create');
+            Route::get('/{id}', 'edit')->name('edit');
+            Route::get('/{id}/requests', 'requests')->name('requests');
+            Route::get('/{id}/print', 'print')->name('print');
+            Route::get('/{id}/articles', 'articles')->name('articles');
+            Route::get('/{id}/complaints', 'complaints')->name('complaints');
+            Route::get('/create', 'create')->name('create');
+
+            Route::post('/store', 'store')->name('store');
+            Route::post('/update', 'update')->name('update');
         });
 
 
@@ -43,9 +65,13 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(AdvertiserController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/process','processForm')->name('process');
-            Route::get('/details', 'showDetails')->name('details');
-            Route::post('/create', 'create')->name('create');
+            Route::get('/{id}', 'edit')->name('edit');
+            Route::get('/{id}/contacts', 'contacts')->name('contacts');
+            Route::get('/{id}/orders', 'orders')->name('orders');
+            Route::get('/create', 'create')->name('create');
+
+            Route::post('/store', 'store')->name('store');
+            Route::post('/update', 'update')->name('update');
         });
 
     Route::name('contacts.')
@@ -53,7 +79,10 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(ContactController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::post('/create', 'create')->name('create');
+            Route::get('/create', 'create')->name('create');
+
+            Route::post('/store', 'store')->name('store');
+            Route::post('/update', 'update')->name('update');
         });
 
     // Route::name('tax.')
@@ -63,15 +92,6 @@ Route::group(['middleware' => ['auth']], function() {
     //         Route::get('/', 'index')->name('index');
     //         Route::post('/create', 'create')->name('create');
     //     });
-
-    Route::name('projects.')
-        ->prefix('projects')
-        ->controller(ProjectController::class)
-        ->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::get('/details', 'showDetails')->name('details');
-            Route::post('/create', 'create')->name('create');
-        });
 
     // Route::name('layouts.')
     //     ->prefix('layouts')

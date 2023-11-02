@@ -15,9 +15,9 @@ class AdvertiserController extends Controller
     public function __construct()
     {
         $this->subpages = [
-            'Bedrijfsgegevens' => '/',
-            'ContactPersonen' => '/',
-            'Orders' => '/',
+            'Adverteerder' => 'advertisers.edit',
+            'ContactPersonen' => 'advertisers.contacts',
+            'Orders' => 'advertisers.orders',
         ];
     }
 
@@ -26,15 +26,12 @@ class AdvertiserController extends Controller
      */
     public function index()
     {
-        $advertisers = Advertiser::all();
-
-        $subpages = $this->getSubpages() ?? false;
+        $advertisers = Advertiser::paginate();
 
         return view('pages.advertisers.index', compact('advertisers'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
                 'pageTitle' => self::$page_title_singular,
-                'subpages' => $subpages
             ]);
     }
 
@@ -79,7 +76,15 @@ class AdvertiserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $advertiser = Advertiser::findOrFail($id);
+        $subpages = $this->getSubpages() ?? false;
+
+        return view('pages.advertisers.edit', compact('advertiser'))
+            ->with([
+                'pageTitleSection' => self::$page_title_plural,
+                'pageTitle' => 'Bewerk ' . self::$page_title_singular,
+                'subpages' => $subpages
+            ]);
     }
 
     /**
@@ -96,5 +101,27 @@ class AdvertiserController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function contacts(string $id)
+    {
+        $subpages = $this->getSubpages( $id ) ?? false;
+
+        return view('pages.advertisers.contacts')->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'subpages' => $subpages
+        ]);
+    }
+
+    public function orders(string $id)
+    {
+        $subpages = $this->getSubpages( $id ) ?? false;
+
+        return view('pages.advertisers.orders')->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'subpages' => $subpages
+        ]);
     }
 }

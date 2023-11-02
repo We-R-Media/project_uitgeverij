@@ -3,5 +3,9 @@
 @section('title',  $pageTitle)
 
 @section('content')
-    {{ $project->id }}
+
+<div class="page__wrapper">
+   <div class="">
+        Contactpersonen
+   </div>
 @endsection

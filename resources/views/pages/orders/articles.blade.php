@@ -1,7 +1,12 @@
+
 @extends('layouts.app')
 
 @section('title',  $pageTitle)
 
 @section('content')
-    {{ $project->id }}
+
+<div class="page__wrapper">
+   <div class="">
+        Artikelen
+   </div>
 @endsection
