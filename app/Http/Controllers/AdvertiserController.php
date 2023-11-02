@@ -30,7 +30,7 @@ class AdvertiserController extends Controller
 
         $subpages = $this->getSubpages() ?? false;
 
-        return view('pages.advertisers', compact('advertisers'))
+        return view('pages.advertisers.index', compact('advertisers'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
                 'pageTitle' => self::$page_title_singular,
@@ -66,12 +66,21 @@ class AdvertiserController extends Controller
                 'contact_id' => $request->input('contact_id'),
                 'comments' => $request->input('comments'),
             ]);
+<<<<<<< Updated upstream
 
             $contact = Contact::find( $contactId );
             $contact->advertiser()->associate($advertiser);
 
             $advertiser->save();
         });
+=======
+            $contact = Contact::find($contactId);
+            $contact->advertisers()->associate($advertiser);
+            $advertiser->save();
+        });
+
+        return redirect()->back();
+>>>>>>> Stashed changes
     }
 
     /**
