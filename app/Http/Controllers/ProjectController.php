@@ -19,7 +19,7 @@ class ProjectController extends Controller
     {
         $this->subpages = [
             'Bedrijfsgegevens' => '/',
-            'ContactPersonen' => '/',
+            'Contactpersonen' => '/',
             'Orders' => '/',
         ];
     }
@@ -36,8 +36,7 @@ class ProjectController extends Controller
         // $formats = $project->formats;
 
         $subpages = $this->getSubpages() ?? false;
-
-
+        
         return view('pages.projects', compact('layouts', 'taxes', 'formats', 'subpages'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,

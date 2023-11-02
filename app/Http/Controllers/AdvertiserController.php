@@ -31,6 +31,8 @@ class AdvertiserController extends Controller
     {   
         $contacts = Contact::all();
 
+        $advertisers = Advertiser::all();
+
         $subpages = $this->getSubpages() ?? false;
 
         return view('pages.advertisers', compact('advertisers', 'contacts', 'subpages'))
