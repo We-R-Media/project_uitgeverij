@@ -30,8 +30,8 @@ class Format extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function groups(): BelongsTo
+    public function project(): BelongsTo
     {
-        return $this->belongsTo(FormatGroup::class);
+        return $this->belongsTo(Project::class);
     }
 }

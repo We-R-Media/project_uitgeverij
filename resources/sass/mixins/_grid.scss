@@ -1,0 +1,42 @@
+@use "./breakpoints" as breakpoint;
+
+@mixin grid(
+  $gap: 2rem,
+  $portraitColumns: null,
+  $landscapeColumns: null,
+  $desktopColumns: null,
+  $portraitGap: null,
+  $landscapeGap: null,
+  $desktopGap: null
+) {
+  display: grid;
+  gap: $gap;
+
+  @if ($portraitColumns != null) {
+    @include breakpoint.breakpoint("min", "tablet") {
+      grid-template-columns: $portraitColumns;
+
+      @if $portraitGap {
+        grid-gap: $portraitGap;
+      }
+    }
+  }
+  @if ($landscapeColumns != null) {
+    @include breakpoint.breakpoint("min", "laptop") {
+      grid-template-columns: $landscapeColumns;
+
+      @if $landscapeGap {
+        grid-gap: $landscapeGap;
+      }
+    }
+  }
+  @if ($desktopColumns != null) {
+    @include breakpoint.breakpoint("min", "desktop") {
+      grid-template-columns: $desktopColumns;
+
+      @if $desktopGap {
+        grid-gap: $desktopGap;
+      }
+    }
+  }
+}

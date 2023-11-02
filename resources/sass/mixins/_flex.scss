@@ -1,0 +1,43 @@
+@use "./breakpoints" as breakpoint;
+
+$default-flex: flex;
+$default-direction-breakpoint: "tablet";
+
+@mixin flex(
+	$flex: $default-flex,
+	$flex-direction: null,
+	$flex-wrap: null,
+	$align-items: null,
+	$align-self: null,
+	$justify-content: null,
+	$dynamic-direction-breakpoint: null
+) {
+	display: $flex;
+
+  @if ($dynamic-direction-breakpoint) {
+		flex-direction: column;
+
+		@include breakpoint.breakpoint("min", $dynamic-direction-breakpoint) {
+			flex-direction: row;
+		}
+	}
+
+	@if ($flex-direction != null) {
+		flex-direction: $flex-direction;
+	}
+
+	@if ($flex-wrap) {
+		flex-wrap: $flex-wrap;
+	}
+
+	@if ($align-items != null) {
+		align-items: $align-items;
+	}
+	@if ($align-self != null) {
+		align-self: $align-self;
+	}
+
+	@if ($justify-content != null) {
+		justify-content: $justify-content;
+	}
+}

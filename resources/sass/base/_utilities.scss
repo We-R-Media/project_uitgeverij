@@ -1,0 +1,41 @@
+@use '../mixins' as mixin;
+@use '../base/colors' as color;
+
+.image--cover,
+.image--contain {
+    width: 100%;
+    height: 100%;
+}
+.image--cover {
+    object-fit: cover;
+}
+.image--contain {
+    object-fit: contain;
+}
+
+.text--large {
+    font-size: clamp(1.8rem, 3vw, 2.2rem);
+}
+
+.text--primary {
+    color: color.$primary;
+}
+.text--secondary {
+    color: color.$secondary;
+}
+
+.heading--thin {
+    font-weight: 300;
+}
+.heading--medium {
+    font-weight: 500;
+}
+.heading--margin-none {
+    margin: 0 0;
+}
+.heading--margin {
+    margin: 0 0 2rem;
+}
+.heading--margin-big {
+    margin: 0 0 4rem;
+}

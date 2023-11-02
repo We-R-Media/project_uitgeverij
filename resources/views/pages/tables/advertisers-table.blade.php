@@ -1,6 +1,5 @@
 @extends('layouts.app')
 
-
 @section('content')
 
 <div class="buttonContainer">
@@ -64,5 +63,4 @@
     </table>
     @endif
 </div>
-
 @endsection

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title',  $pageTitle)
+
 @section('content')
-    @livewire('content-settings');
+
 @endsection

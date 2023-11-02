@@ -1,19 +1,15 @@
-
 @extends('layouts.app')
 
-@section('content')
+@section('title', $pageTitle)
 
-    <div class="buttonContainer">
-        <a class="detailsButton nav-item" href="{{ route('advertisers.details') }}">{{__('Details')}}</a>
-        <a class="orderButton nav-item" href="{{route('advertisers.process')}}">{{__('Nieuwe order')}}</a>
-    </div>
-    
+@section('content')
+    <a class="detailsButton nav-item" href="{{ route('advertisers.details') }}">Details</a>
     <form class="formContainer" action="{{route('advertisers.create')}}" method="post">
         @csrf
         @method('post')
 
         <div class="formBlock">
-        <input type="text" class="@error('name') is-invalid @enderror" value="{{ old('name') }}" name="name" placeholder="Vul bedrijfsnaam in..." id="name-field">
+        <input type="text" class="@error('name') is-invalid @enderror" value="{{ old('name') }}" name="name" placeholder="Vul bedrijfsnaam in..." id="">
         @if($errors->has('name'))
         <p class="error-message">{{$errors->first('name')}}</p>
         @endif 
@@ -74,9 +70,9 @@
         <p class="error-message">{{$errors->first('comments')}}</p>
         @endif 
 
-        <input type="number" name="advertiser_id" placeholder="Vul klantnummer in..." id="">
-
         <button type="submit">Toevoegen</button>
+        <a href="{{route('advertisers.process')}}">Nieuwe order</a>
     </div>
     </form>
+    <p>{{$errors}}</p>
 @endsection

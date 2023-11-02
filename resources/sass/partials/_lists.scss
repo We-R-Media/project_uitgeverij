@@ -1,0 +1,36 @@
+@use "../mixins" as mixin;
+@use '../base/colors' as color;
+
+.list--column {
+    @include mixin.flex($flex-direction: column);
+
+    .list__row {
+        @include mixin.flex;
+    }
+    .list__label {
+        width: 30%;
+    }
+    .list__data {
+        text-align: right;
+    }
+}
+.list--checked {
+    list-style: none;
+     padding: 0;
+
+    .list__row {
+        position: relative;
+
+        &:before {
+            content: '';
+            display: inline-block;
+            width: 2rem;
+            height: 1.4rem;
+            background: url('../../images/svg/check.svg');
+            background-origin: center center;
+            background-size: contain;
+            background-repeat: no-repeat;
+            margin-right: 10px;
+        }
+    }
+}

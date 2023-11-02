@@ -14,7 +14,6 @@ class LayoutController extends Controller
      */
     public function index()
     {
-
         $layouts = Layout::all();
 
         return view('pages.settings.layouts', compact('layouts'));
@@ -39,7 +38,7 @@ class LayoutController extends Controller
                 'logo' => $originalName,
             ]);
         });
-        return redirect()->route('layouts.page');
+        return redirect()->route('layouts.index');
     }
 
     /**

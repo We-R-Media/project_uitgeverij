@@ -33,7 +33,7 @@ class ContactController extends Controller
             ]);
         });
 
-        return redirect()->route('contacts.page');
+        return redirect()->route('contacts.index');
     }
 
     /**

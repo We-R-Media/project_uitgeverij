@@ -1,0 +1,75 @@
+@use "../mixins/" as mixin;
+@use "../base/colors" as color;
+
+.fields {
+    @include mixin.flex($flex-direction: column);
+    border: 0;
+    padding: 0;
+    margin: 0 0;
+    gap: 1rem;
+}
+.field {
+    @include mixin.flex($flex-direction: column);
+
+    label {
+        font-size: clamp(1rem, 4vw, 1.2rem);
+        color: color.$gray;
+    }
+    input:not([type='checkbox']):not([type='radio']),
+    select,
+    textarea {
+        border-bottom: 1px solid color.$primary;
+        font-size: clamp(1.4rem, 4vw, 1.6rem);
+        font-weight:300;
+        appearance: none;
+        min-height: 4rem;
+        transition: background-color .2s linear;
+        padding: 0 1rem;
+
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: rgba(color.$primary, .1);
+        }
+    }
+    input:not([type='checkbox']):not([type='radio']),
+    select {
+        min-height: 4rem;
+    }
+    textarea {
+        min-height: 10rem;
+    }
+}
+
+label{
+    text-justify: distribute-all-lines;
+
+    label {
+        font-size: clamp(1.2rem, 4vw, 1.4rem);
+        color: color.$gray;
+    }
+}
+
+.form__message {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    color: color.$error;
+}
+
+.form__row {
+    @include mixin.flex($flex-direction: column);
+    gap: 1rem;
+}
+.form__row--centered {
+    @include mixin.flex($flex-direction: column);
+    gap: 1rem;
+    justify-content: center;
+}
+.form__row--spacer-top {
+    margin-top: 2rem;
+}
+
+
+.form__instruction {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    margin-bottom: 2rem;
+}

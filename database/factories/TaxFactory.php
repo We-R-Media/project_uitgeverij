@@ -18,9 +18,9 @@ class TaxFactory extends Factory
     {
         return [
             'country' => fake()->country(),
-            'zero' => fake()->optional()->numberBetween(1, 10),
-            'low' => fake()->optional()->numberBetween(1, 10),
-            'high' => fake()->optional()->numberBetween(1, 10),
+            'zero' => fake()->numberBetween(1, 10),
+            'low' => fake()->numberBetween(1, 10),
+            'high' => fake()->numberBetween(1, 10),
         ];
     }
 }

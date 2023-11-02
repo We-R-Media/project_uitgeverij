@@ -7,28 +7,34 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>RON - @yield('title')</title>
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+   <!-- Fonts -->
+   <link rel="preconnect" href="https://use.typekit.net" crossorigin />
+   <link rel="preconnect" href="https://p.typekit.net" crossorigin />
 
-    <!-- Stylesheets -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/styles.css')}}">
+   <!-- preload -->
+   <link  as="style" rel="stylesheet preload prefetch"  href="https://use.typekit.net/aie2oyg.css" crossorigin />
 
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    
+    @vite(['resources/sass/main.scss', 'resources/js/app.js'])
+
     @livewireStyles
 </head>
 <body>
     <div id="app">
 
-        @livewire('navigation')
+        @livewire('dashboard-sidebar')
 
         <main class="pageContainer">
-            @yield('content')
+            @livewire('top-bar', [
+                'pageTitle' => $pageTitleSection ?? 'RON',
+                'subpages' => $subpages ?? false
+            ])
+
+            <div class="mainContent">
+                @yield('content')
+            </div>
         </main>
     </div>
 

@@ -18,6 +18,7 @@ class TaxController extends Controller
             'Nederland',
             'Duitsland'
         ];
+
         return view('pages.settings.tax', compact('tax_array'));
     }
 
@@ -34,7 +35,7 @@ class TaxController extends Controller
                 'high' => $request->input('high'),
             ]);
         });
-        return redirect()->route('tax.page');
+        return redirect()->route('tax.index');
     }
 
     /**

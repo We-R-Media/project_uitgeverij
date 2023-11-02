@@ -49,7 +49,7 @@ class ReminderController extends Controller
             // Other operations if needed
         });
     
-        return redirect()->route('reminders.page');
+        return redirect()->route('reminders.index');
     }
 
     /**

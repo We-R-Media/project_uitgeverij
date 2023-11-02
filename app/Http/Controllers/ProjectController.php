@@ -11,10 +11,19 @@ use App\Http\Requests\ProjectRequest;
 use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
-
-// BELANGRIJK: Toepassen firstOrCreate:: of firstOrNew
-// https://www.youtube.com/watch?v=wyZBE4x32Ks
 {
+    private static $page_title_singular = 'Project';
+    private static $page_title_plural = 'Projecten';
+
+    public function __construct()
+    {
+        $this->subpages = [
+            'Bedrijfsgegevens' => '/',
+            'ContactPersonen' => '/',
+            'Orders' => '/',
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -26,7 +35,14 @@ class ProjectController extends Controller
         // $project = Project::with('format')->find($id);
         // $formats = $project->formats;
 
-        return view('pages.projects', compact('layouts','taxes','formats' ));
+        $subpages = $this->getSubpages() ?? false;
+
+
+        return view('pages.projects', compact('layouts', 'taxes', 'formats', 'subpages'))
+            ->with([
+                'pageTitleSection' => self::$page_title_plural,
+                'pageTitle' => self::$page_title_singular
+            ]);
     }
 
     /**
@@ -34,7 +50,7 @@ class ProjectController extends Controller
      */
     public function create(ProjectRequest $request)
     {
-        $project = DB::transaction(function () use($request) {
+        $project = DB::transaction(function () use ($request) {
 
             Project::create([
                 'id' => $request->input('project_code'),
@@ -66,12 +82,13 @@ class ProjectController extends Controller
             $layout = Layout::findOrFail($layoutId);
             $project->layout()->associate($layout);
         });
-        return redirect()->route('projects.page')->with('project', $project);
+        return redirect()->route('projects.index')->with('project', $project);
     }
 
-    public function showDetails() {
+    public function showDetails()
+    {
         // $projects = Project::all();
-        
+
 
         return view('pages.tables.projects-table', compact('projects'));
     }

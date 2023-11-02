@@ -1,0 +1,21 @@
+@use "../breakpoints" as breakpoint;
+
+$default-mobile-size: 1.6rem;
+$default-desktop-size: 1.8rem;
+$default-breakpoint: 'desktop' !default;
+
+@mixin font-size(
+	$mobile: $default-mobile-size,
+	$desktop: $default-desktop-size,
+	$breakpoint: $default-breakpoint,
+	$line-height: 1.8,
+) {
+	font-size: $mobile;
+	line-height: $line-height;
+
+	@if ($desktop != null and $breakpoint != null) {
+		@include breakpoint.breakpoint('min', $breakpoint) {
+			font-size: $desktop;
+		}
+	}
+}

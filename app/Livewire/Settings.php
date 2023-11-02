@@ -2,12 +2,17 @@
 
 namespace App\Livewire;
 
+use Illuminate\Support\Facades\Gate;
 use Livewire\Component;
 
 class Settings extends Component
 {
     public function render()
     {
-        return view('livewire.settings');
+        if (Gate::allows('isAdmin')) {
+            return view('livewire.settings');
+        } else {
+            abort(403, 'Unauthorized');
+        }
     }
 }

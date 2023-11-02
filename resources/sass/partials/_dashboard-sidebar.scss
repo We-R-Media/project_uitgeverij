@@ -1,0 +1,40 @@
+@use "../mixins" as mixin;
+@use "../base/colors" as color;
+
+.sidebar {
+    position:fixed; left:0px; height:100vh; background:color.$accent; width:auto; max-width:50px; transition:max-width 0.4s ease; z-index:10;
+    nav {
+        .navigation__link {
+            position:relative; display:flex; align-items:center; margin-bottom:5px; font-weight:500;
+            .nav__icon { 
+                max-width:50px; min-width:50px; height:50px; display:flex; align-items:center; justify-content: center; padding:10px;
+                svg { width:100%; height:auto; overflow:visible;}
+            
+            }
+            span  { position:relative; display:inline-block;  visibility: hidden; opacity:0; transition:transform 0.4s ease, opacity 0.4s ease, visibility 0.4s ease; padding:0px 50px 0px 25px; transform:translatex(-10%);} 
+        }
+    }
+    @include mixin.breakpoint('min', 'tablet') {
+        &:hover {
+            max-width:500px;
+            nav {
+                .navigation__link {
+                    span { visibility: visible; opacity:1; transform:translatex(0); }
+                    &:hover { 
+                        background:color.$primary; color:#fff;
+                        svg path { fill:#fff; }
+                    }
+                }
+            }
+        }   
+    } 
+    @include mixin.breakpoint('max', 'tablet') { 
+        height:auto; max-height:50px;  bottom:0px; width:100%; max-width:inherit;
+        nav { 
+            display:flex; justify-content: space-around;
+             .navigation__link { 
+                span { display:none; }
+              }
+        }
+    }
+}

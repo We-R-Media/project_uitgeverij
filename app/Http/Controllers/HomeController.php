@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    private static $page_title_singular = 'Dashboard';
+    private static $page_title_plural = 'Dashboard';
+
     /**
      * Create a new controller instance.
      *
@@ -13,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -23,6 +26,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('pages.home');
+        return view('pages.home')
+            ->with([
+                'pageTitle' => self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_plural,
+            ]);
     }
 }
