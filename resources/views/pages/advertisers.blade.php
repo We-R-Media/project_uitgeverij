@@ -69,9 +69,9 @@
             <p class="error-message">{{$errors->first('comments')}}</p>
             @endif
 
+            <input type="number" name="advertiser_id" placeholder="Vul klantnummer in..." id="">
+
             <button type="submit">Toevoegen</button>
-            <a href="{{route('advertisers.process')}}">Nieuwe order</a>
         </div>
     </form>
-    <p>{{$errors}}</p>
 @endsection

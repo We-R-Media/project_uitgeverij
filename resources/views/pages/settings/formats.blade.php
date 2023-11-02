@@ -29,4 +29,21 @@
             <button type="submit">Toevoegen</button>
         </div>
     </form>
+
+    <table class="tableContainer">
+        <tr>
+          <th>Formaat grootte</th>
+          <th>Afmeting</th>
+          <th>Verhouding</th>
+          <th>Prijs</th>  
+        </tr>
+        @foreach ($formats as $format )
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr> 
+        @endforeach       
+    </table>
 @endsection

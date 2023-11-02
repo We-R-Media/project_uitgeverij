@@ -66,14 +66,48 @@ class AdvertiserController extends Controller
                 'contact_id' => $request->input('contact_id'),
                 'comments' => $request->input('comments'),
             ]);
+<<<<<<< HEAD
 
             $contact = Contact::find( $contactId );
             $contact->advertiser()->associate($advertiser);
 
+=======
+            $contact = Contact::find($contactId);
+            $contact->advertisers()->associate($advertiser);
+>>>>>>> aec960fad002582c2921211616f88ac6549d6c80
             $advertiser->save();
         });
 
+<<<<<<< HEAD
         return redirect()->back();
+=======
+    public function process(Request $request) {
+
+        return redirect()->route('orders.page');
+    }
+
+    public function details()
+    {
+        return view('pages.tables.advertisers-table');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Request $request)
+    {
+        if($request->has('showContacts')) {
+            $contacts = Contact::all();
+            return view('pages.tables.advertisers-table', compact('contacts'));
+        }
+        else if($request->has('showAdvertisers')) {
+            $advertisers = Advertiser::all();
+            // $advertisers = Advertiser::with('contact')->get();
+
+            // dd($advertisers);
+            return view('pages.tables.advertisers-table', compact('advertisers'));
+        }
+>>>>>>> aec960fad002582c2921211616f88ac6549d6c80
     }
 
     /**

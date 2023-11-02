@@ -19,6 +19,7 @@ class Advertiser extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'phone_mobile',

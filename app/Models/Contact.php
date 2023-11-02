@@ -30,7 +30,7 @@ class Contact extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function advertiser(): BelongsTo
+    public function advertisers(): BelongsTo
     {
         return $this->belongsTo(Advertiser::class);
     }

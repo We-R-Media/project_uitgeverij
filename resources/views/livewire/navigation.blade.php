@@ -20,7 +20,7 @@
                         <a class="nav-link" href="{{ route('orders.page') }}">{{ __('Orders') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('advertisers.page') }}">{{ __('Relaties') }}</a>
+                        <a href=" {{ route('advertisers.page') }} " class="nav-link">{{ __('Relaties') }}</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('projects.page') }}">{{ __('Projecten') }}</a>
