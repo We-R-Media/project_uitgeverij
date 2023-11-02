@@ -14,12 +14,6 @@ class ReminderController extends Controller
      */
     public function index()
     {
-
-
-        // $contacts = Contact::pluck('first_name', 'id');
-
-        // $contacts = Reminder::with('contact')->where('id', 1)->get();
-
         $contacts = Contact::all();
 
 
@@ -41,7 +35,7 @@ class ReminderController extends Controller
     {
         $contactId = $request->input('contact');
 
-        DB::transaction(function () use($request, $contactId) {
+        $reminder = DB::transaction(function () use($request, $contactId) {
            $reminder = Reminder::create([
                 'period_first' => $request->input('period_first'),
                 'period_second' => $request->input('period_second'),
@@ -55,7 +49,7 @@ class ReminderController extends Controller
             $contact->reminders()->save($reminder);
         });
 
-        return redirect()->back();
+        return redirect()->route('reminders.index');
     }
 
     /**

@@ -45,8 +45,7 @@ class LayoutController extends Controller
                 'logo' => $originalName,
             ]);
         });
-
-        return redirect()->back();
+        return redirect()->route('layouts.index');
     }
 
     /**

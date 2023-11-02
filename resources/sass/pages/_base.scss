@@ -11,18 +11,16 @@
 }
 
 .topbar__wrapper {
-    padding: 10px 50px;
     background: color.$secondary;
-
-    .topbar {
-        display: flex;
-        justify-content: flex-end;
-
+    padding-top:10px;
+        
         .UserInfo {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
-
+            padding: 0px 50px;
+            flex-direction: row;
+            justify-content: flex-end;
             .userLoggedIn {
                 line-height: 1;
                 text-align: right;
@@ -44,40 +42,37 @@
                 }
             }
         }
-    }
-    .title__wrapper {
-        h1 {
-            font-size: 30px;
-        }
-        span {
-            font-size: 25px;
-            font-weight: 300;
-            color: color.$primary;
-        }
-        @include mixin.breakpoint("max", "tablet") {
-            span {
-                position: fixed;
-                top: 0px;
-                height: 50px;
-                background: linear-gradient(90deg, #ffd4a8, color.$primary);
-                left: 0px;
-                width: 100%;
-                text-align: center;
-                font-weight: 500;
-                font-size: 18px;
-                color: #fff;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                letter-spacing: 1px;
+        .page__title, .sub__title {
+            padding: 0px 50px 0px;
+            &.page__title {
+                font-size: 30px; padding-bottom:25px;
+            }
+            &.sub__title {
+                font-size: 25px;
+                font-weight: 300;
+                color: color.$primary;
+                @include mixin.breakpoint("max", "tablet") {
+                    position: fixed;
+                    top: 0px;
+                    height: 50px;
+                    background: color.$gradiant;
+                    left: 0px;
+                    width: 100%;
+                    text-align: center;
+                    font-weight: 500;
+                    font-size: 18px;
+                    color: #fff;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    letter-spacing: 1px;
+                }
             }
         }
-    }
 }
 
 .sub__pages {
-    background: transparentize(color.$accent, 0.9);
-    margin: -10px -50px 50px;
+    background: color.$accent-light;
     padding: 0px 50px;
 
     a {
@@ -85,6 +80,11 @@
         display: inline-block;
         line-height: 1;
         margin-right: 30px;
+        border-bottom:3px solid transparent;
+        &:hover {
+            //color:color.$primary;
+            border-color:color.$primary;
+        }
     }
 
     @include mixin.breakpoint("max", "tablet") {
@@ -149,15 +149,17 @@
         }
         &.notes {
             border: 0px;
-            flex: 0 0 calc(100% - 50px);
-            max-width: calc(100% - 50px);
 
             textarea {
                 border: 0;
                 margin-top: 20px;
-                background: #f9f9f9;
+                background: color.$grey-lighter;
                 padding: 10px;
             }
+        }
+        &.full-width {
+            flex: 0 0 calc(100% - 50px);
+            max-width: calc(100% - 50px);
         }
         @include mixin.breakpoint("min", "tablet") {
             .field-alt,
@@ -182,7 +184,7 @@
                 label {
                     font-weight: 400;
                     font-size: 15px;
-                    color: #000;
+                    color: color.$black;
                 }
             }
         }
@@ -194,14 +196,14 @@
         gap: 0;
 
         fieldset,
-        fieldset.notes {
+        fieldset.full-width {
             flex: 0 0 100%;
             max-width: 100%;
         }
     }
 }
 
-.form__box {
+.page__wrapper {
     padding-bottom: 100px;
     .ButtonGroup {
         width: 100%;
@@ -215,10 +217,15 @@
             width: calc(100% - 50px);
             bottom: 0;
             position: fixed;
-            background: #f9f9f9;
+            background: color.$grey-lighter;
         }
     }
+    .HeaderButtons {
+        display:flex; justify-content: flex-end;
+    }
 }
+
+.mainContent { padding: 50px; }
 
 .page-details {
     p {

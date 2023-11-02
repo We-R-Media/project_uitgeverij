@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <div class="form__box">
+<div class="page__wrapper">
     <form class="formContainer" action="{{route('projects.create')}}" method="post">
         @csrf
         @method('post')
@@ -277,7 +277,7 @@
 
             </fieldset>
 
-            <fieldset class="field notes">
+            <fieldset class="field notes full-width">
                 <label for="comments">{{ __('Opmerkingen') }}</label>
                 <textarea id="" cols="30" rows="10" name="comments" value="{{ old('comments') }}" placeholder="Vul opmerkingen in..."></textarea>
                 @error('comments')
@@ -296,6 +296,6 @@
             </div>
         </div>
     </form>
-
+</div>
 
 @endsection

@@ -17,20 +17,20 @@
                     @endif
                 @else
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('orders.page') }}">{{ __('Orders') }}</a>
+                        <a class="nav-link" href="{{ route('orders.index') }}">{{ __('Orders') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a href=" {{ route('advertisers.page') }} " class="nav-link">{{ __('Relaties') }}</a>
+                        <a class="nav-link" href="{{ route('advertisers.index') }}">{{ __('Relaties') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('projects.page') }}">{{ __('Projecten') }}</a>
+                        <a class="nav-link" href="{{ route('projects.index') }}">{{ __('Projecten') }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('invoices.page') }}">{{ __('Facturen') }}</a>
+                        <a class="nav-link" href="{{ route('invoices.index') }}">{{ __('Facturen') }}</a>
                     </li>
-                    {{-- <li class="nav-item">
-                        <a class="nav-link" href="{{ route('settings.page') }}">{{ __('Instellingen') }}</a>
-                    </li> --}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('settings.index') }}">{{ __('Instellingen') }}</a>
+                    </li>
 
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

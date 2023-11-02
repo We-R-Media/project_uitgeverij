@@ -11,7 +11,7 @@
                 svg { width:100%; height:auto; overflow:visible;}
             
             }
-            span  { position:relative; display:inline-block;  visibility: hidden; opacity:0; transition:all 0.4s ease; padding:0px 50px 0px 25px; transform:translatex(-100%);} 
+            span  { position:relative; display:inline-block;  visibility: hidden; opacity:0; transition:transform 0.4s ease, opacity 0.4s ease, visibility 0.4s ease; padding:0px 50px 0px 25px; transform:translatex(-10%);} 
         }
     }
     @include mixin.breakpoint('min', 'tablet') {
@@ -20,6 +20,10 @@
             nav {
                 .navigation__link {
                     span { visibility: visible; opacity:1; transform:translatex(0); }
+                    &:hover { 
+                        background:color.$primary; color:#fff;
+                        svg path { fill:#fff; }
+                    }
                 }
             }
         }   

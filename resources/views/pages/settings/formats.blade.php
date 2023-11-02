@@ -39,8 +39,8 @@
         </tr>
         @foreach ($formats as $format )
         <tr>
-            <td></td>
-            <td></td>
+            <td>{{ $format->size }}</td>
+            <td> {{ $format->measurement }}</td>
             <td></td>
             <td></td>
         </tr> 

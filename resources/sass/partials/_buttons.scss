@@ -24,7 +24,7 @@
 }
 
 .button--action {
-    background: transparent linear-gradient(120deg, color.$secondary 0%, color.$primary 100% );
+    background: color.$gradiant;
     color: color.$white;
 }
 
