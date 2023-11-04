@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let advertentieValue = parseInt(paginaAdvertentieInput.value) || 0;
         let total = redactieValue + advertentieValue;
         sumElement.innerText = "Totaal aantal pagina's " + total;
+        $('#sumInput').val(total);
     }
 });
 

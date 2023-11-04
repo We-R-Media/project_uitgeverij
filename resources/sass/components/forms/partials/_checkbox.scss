@@ -31,3 +31,9 @@
         cursor: not-allowed;
     }
 }
+
+.radio__group {
+    input {
+        all:revert;
+    }
+}
