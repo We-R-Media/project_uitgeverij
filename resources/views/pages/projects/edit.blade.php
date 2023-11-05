@@ -294,7 +294,7 @@
             <div class="ButtonGroup">
                 <div class="buttons">
                     <button type="submit" class="button button--action">
-                        {{ __('Toevoegen') }}
+                        {{ __('Opslaan') }}
                     </button>
                 </div>
             </div>

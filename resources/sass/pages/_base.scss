@@ -235,3 +235,55 @@
         .select2-results__option--highlighted.select2-results__option--selectable { background-color:color.$accent; color:#000;}
     }
 }
+
+.items__view {
+    list-style-type: none; padding:0; width:100%;
+    .item {
+        display:flex; flex-wrap:wrap; padding:15px;
+        .item__content { 
+            flex:0 0 50%; max-width:50%;
+            .item__actions {
+                margin:0px -10px; 
+                a { 
+                    font-size:12px; color:color.$primary; font-weight:300; padding:0px 10px;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+            h3 {
+                font-size:18px;
+                &:hover { color:color.$primary; }
+            }
+        }
+        .item__summery { 
+            flex:0 0 50%; max-width:50%; display:flex; flex-wrap:wrap;
+            > div { flex: 1; }
+        }
+        &:nth-child(even) {
+            background:color.$grey-lighter;
+        }
+        @include mixin.breakpoint("min", "laptop") {
+            .item__content {
+                .item__actions {
+                    opacity:0; visibility: hidden;
+                }
+            }
+            &:hover {
+                .item__content {
+                    .item__actions {
+                        opacity:1; visibility: visible;
+                    }
+                }
+            }
+        }
+        @include mixin.breakpoint("max", "tablet") {
+            border:1px solid color.$grey-lighter;
+            .item__content, .item__summery { flex:0 0 100%; max-width:100%; }
+            .item__summery {
+                margin-top:25px;
+                > div { flex:0 0 50%; max-width:50%; margin-bottom:20px;}
+            }
+        }
+    }
+}

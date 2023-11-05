@@ -11,11 +11,11 @@
 
     <div class="HeaderButtons">
         <div class="buttons">
-            {{--<a href="{{route('advertisers.process')}}" class="button button--action">+ {{ __('Nieuwe order') }}</a>--}}
+            <a href="{{route('orders.create')}}" class="button button--action">+ {{ __('Nieuwe order') }}</a>
         </div>
     </div>
 
-    <form class="formContainer" action="{{route('advertisers.create')}}" method="post">
+    <form class="formContainer" action="{{route('advertisers.edit', $advertiser->id)}}" method="post">
         @csrf
         @method('post')
         <div class="grid__wrapper">
@@ -24,7 +24,7 @@
 
                 <div class="field field-alt">
                     <label for="advertiser_id">{{ __('Klantnummer') }}</label>
-                    <input id="" type="text" name="advertiser_id" value="{{ old('advertiser_id') }}" placeholder="Vul klantnummer in...">
+                    <input id="" type="text" name="advertiser_id" value="{{$advertiser->id}}" placeholder="Vul klantnummer in...">
                     @error('advertiser_id')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -34,7 +34,7 @@
 
                 <div class="field field-alt">
                     <label for="name">{{ __('Bedrijfsnaam') }}</label>
-                    <input id="" type="text" name="name" value="{{ old('name') }}">
+                    <input id="" type="text" name="name" value="{{ $advertiser->name }}">
                     @error('name')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -44,7 +44,7 @@
 
                 <div class="field field-alt">
                     <label for="po_box">{{ __('Postadres') }}</label>
-                    <input id="" type="text" name="po_box" value="{{ old('po_box') }}">
+                    <input id="" type="text" name="po_box" value="{{ $advertiser->po_box }}">
                     @error('po_box')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -54,7 +54,7 @@
 
                 <div class="field field-alt">
                     <label for="postal_code">{{ __('Postcode') }}</label>
-                    <input id="" type="text" name="postal_code" value="{{ old('postal_code') }}">
+                    <input id="" type="text" name="postal_code" value="{{ $advertiser->postal_code }}">
                     @error('postal_code')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -64,7 +64,7 @@
 
                 <div class="field field-alt">
                     <label for="city">{{ __('Woonplaats') }}</label>
-                    <input id="" type="text" name="city" value="{{ old('city') }}">
+                    <input id="" type="text" name="city" value="{{ $advertiser->city }}">
                     @error('city')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -74,7 +74,7 @@
 
                 <div class="field field-alt">
                     <label for="province">{{ __('Provincie') }}</label>
-                    <input id="" type="text" name="province" value="{{ old('province') }}">
+                    <input id="" type="text" name="province" value="{{ $advertiser->province }}">
                     @error('province')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -84,7 +84,7 @@
 
                 <div class="field field-alt">
                     <label for="phone">{{ __('Telefoonnummer') }}</label>
-                    <input id="" type="number" name="phone" value="{{ old('phone') }}">
+                    <input id="" type="number" name="phone" value="{{ $advertiser->phone }}">
                     @error('phone')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -94,7 +94,7 @@
 
                 <div class="field field-alt">
                     <label for="phone_mobile">{{ __('Mobiel') }}</label>
-                    <input id="" type="number" name="phone_mobile" value="{{ old('phone_mobile') }}">
+                    <input id="" type="number" name="phone_mobile" value="{{ $advertiser->phone_mobile }}">
                     @error('phone_mobile')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -104,7 +104,7 @@
 
                 <div class="field field-alt">
                     <label for="email">{{ __('E-mailadres') }}</label>
-                    <input id="" type="email" name="email" value="{{ old('email') }}">
+                    <input id="" type="email" name="email" value="{{ $advertiser->email }}">
                     @error('email')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -134,14 +134,77 @@
             </fieldset>
           
             <fieldset class="fields notes">
-            <div class="field">
-                <label for="comments">{{ __('Opmerkingen') }}</label>
-                <textarea id="" cols="30" rows="10" name="comments" value="{{ old('comments') }}" placeholder="Vul opmerkingen in..."></textarea>
-                @error('comments')
-                    <span class="form__message" role="alert">
-                        <small>{{ $message }}</small>
-                    </span>
-                @enderror
+                <h3>{{ __('Vestiging') }}</h3> 
+                <div class="field field-alt">
+                    <label for="company_adres">{{ __('Vestigingsadres') }}</label>
+                    <input id="" type="text" name="company_adres" value="">
+                    @error('company_adres')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="company_postal">{{ __('Postcode') }}</label>
+                    <input id="" type="text" name="company_postal" value="">
+                    @error('company_postal')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="company_city">{{ __('Plaats') }}</label>
+                    <input id="" type="text" name="company_city" value="">
+                    @error('company_city')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="company_country">{{ __('Land') }}</label>
+                    <input id="" type="text" name="company_country" value="">
+                    @error('company_country')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="credit_limit">{{ __('Kredietlimiet') }}</label>
+                    <input id="" type="text" name="credit_limit" value="">
+                    @error('credit_limit')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="company_iban">{{ __('Rekeningnummer') }}</label>
+                    <input id="" type="text" name="company_iban" value="">
+                    @error('company_iban')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+                
+                <div class="field">
+                    <label for="comments">{{ __('Opmerkingen') }}</label>
+                    <textarea id="" cols="30" rows="10" name="comments" placeholder="Vul opmerkingen in...">
+                        {{ $advertiser->comments }}
+                    </textarea>
+                    @error('comments')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
                 </div>
             </fieldset>
         </div>
