@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Advertiser;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -27,7 +28,7 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::paginate(10);
-
+        
         return view('pages.orders.index', compact('orders'))
             ->with([
                 'pageTitle' => self::$page_title_singular,
@@ -58,12 +59,13 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         $subpages = $this->getSubpages() ?? false;
+        $advertiser = Advertiser::where('order_id', $order->id)->first();
 
-        return view('pages.orders.edit', compact('order'))
+        return view('pages.orders.edit', compact('order', 'advertiser'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
                 'pageTitle' => 'Bewerk ' . self::$page_title_singular,
-                'subpages' => $subpages
+                'subpages' => $subpages,
             ]);
     }
 

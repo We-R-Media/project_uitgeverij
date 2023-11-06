@@ -192,25 +192,19 @@
                     </div>
     
                 </fieldset>
-    
                 <fieldset class="fields financial'">
                     <h3>{{ __('Financieel') }}</h3>
-
                         <div class="field field-alt">
                         <label for="layout">{{ __('Layout') }}</label>
                         <div class="dropdown">
                             <select title="layout" name="layout" id="layout">
-                                {{--
-                                @if($layouts->isEmpty())
-                                --}}
-                                    <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
-                                {{--    
+                                @if(empty($layouts))
+                                    <option value="" disabled selected>{{ __('Niet beschikbaar ...') }}</option> 
                                 @else
                                 @foreach($layouts as $layout)
                                     <option value="{{$layout->id}}">{{$layout->layout_name}}</option>
                                 @endforeach
                                 @endif
-                                --}}
                             </select>
                         </div>
                     </div>
