@@ -11,6 +11,7 @@
     transition: background-color .25s linear;
     border-radius: 4rem;
     min-width: 15rem;
+    border:2px solid transparent;
 }
 .button__solid--primary {
     background-color: color.$primary;
@@ -26,6 +27,22 @@
 .button--action {
     background: color.$gradiant;
     color: color.$white;
+    &:hover {
+        background:transparent;
+        color:color.$primary;
+        border-color:color.$primary;
+    }
+}
+
+.button__secondary {
+    background:transparent;
+    border: 2px solid color.$primary;
+    color: color.$primary;
+    &:hover {
+        background:color.$secondary;
+        //color:#fff;
+        border-color:color.$secondary;
+    }
 }
 
 .button__box {

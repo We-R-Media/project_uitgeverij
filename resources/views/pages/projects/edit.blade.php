@@ -195,39 +195,42 @@
     
                 <fieldset class="fields financial'">
                     <h3>{{ __('Financieel') }}</h3>
-    
-                    {{--
+
                         <div class="field field-alt">
                         <label for="layout">{{ __('Layout') }}</label>
                         <div class="dropdown">
                             <select title="layout" name="layout" id="layout">
+                                {{--
                                 @if($layouts->isEmpty())
+                                --}}
                                     <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
+                                {{--    
                                 @else
                                 @foreach($layouts as $layout)
                                     <option value="{{$layout->id}}">{{$layout->layout_name}}</option>
                                 @endforeach
                                 @endif
+                                --}}
                             </select>
                         </div>
                     </div>
-                    --}}
-                    {{--
+                    
                     <div class="field field-alt">
                         <label for="taxes">{{ __('BTW') }}</label>
                         <div class="dropdown">
                             <select title="taxes" name="taxes" id="taxes">
-                                @if($taxes->isEmpty())
+                                {{--@if($taxes->isEmpty())--}}
                                     <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
+                                {{--
                                 @else
                                 @foreach($taxes as $tax)
                                     <option value="{{$tax->id}}">{{$tax->country}}</option>
                                 @endforeach
                                 @endif
+                                --}}
                         </select>
                         </div>
                     </div>
-                    --}}
                     <div class="field field-alt">
                         <label for="ledger">{{ __('Grootboek') }}</label>
                         <input id="" type="text" name="ledger" value="{{$project->ledger}}">
