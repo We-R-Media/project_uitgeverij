@@ -85,6 +85,10 @@ class OrderController extends Controller
         //
     }
 
+    public function delete() {
+        
+    }
+
 
     public function requests(string $id)
     {
