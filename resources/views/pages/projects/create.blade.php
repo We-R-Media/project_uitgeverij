@@ -279,7 +279,7 @@
 
             <fieldset class="field notes full-width">
                 <label for="comments">{{ __('Opmerkingen') }}</label>
-                <textarea id="" cols="30" rows="10" name="comments" value="{{ old('comments') }}" placeholder="Vul opmerkingen in..."></textarea>
+                <textarea id="" cols="30" rows="10" name="comments" placeholder="Vul opmerkingen in...">{{ old('comments') }}</textarea>
                 @error('comments')
                     <span class="form__message" role="alert">
                         <small>{{ $message }}</small>
