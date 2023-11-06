@@ -1,7 +1,3 @@
-@use 'namespaces/primary_colors';
-@use 'namespaces/secondary_colors';
-
-
 *, *::before, *::after {
     box-sizing: border-box;
 }
@@ -19,7 +15,6 @@ body {
     gap: 40px;
     width: 100%;
     min-height: 100vh;
-    background-color: primary_colors.$page-background;
 }
 
 .buttonContainer {

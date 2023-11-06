@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Project;
-use App\Models\Tax;
 use App\Models\Layout;
-use App\Models\Format;
+use App\Models\Project;
 use Illuminate\Http\Request;
-use App\Http\Requests\ProjectRequest;
 use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
@@ -18,40 +15,41 @@ class ProjectController extends Controller
     public function __construct()
     {
         $this->subpages = [
-            'Bedrijfsgegevens' => '/',
-            'Contactpersonen' => '/',
-            'Orders' => '/',
+            'Projectgegevens' => 'projects.edit',
+            'Planning' => 'projects.planning',
+            'Calculatie' => 'projects.calculation',
         ];
     }
 
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $layouts = Layout::all();
-        $taxes = Tax::all();
-        $formats = Format::all();
-        // $project = Project::with('format')->find($id);
-        // $formats = $project->formats;
+        $projects = Project::paginate(10);
 
-        $subpages = $this->getSubpages() ?? false;
-        
-        return view('pages.projects', compact('layouts', 'taxes', 'formats', 'subpages'))
+        return view('pages.projects.index', compact('projects'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular
+                'pageTitle' => 'Nieuwe ' . self::$page_title_singular
             ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(ProjectRequest $request)
+    public function create()
     {
-        $project = DB::transaction(function () use ($request) {
+        //
+    }
 
-            Project::create([
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        DB::transaction(function () use ($request) {
+            $project = Project::create([
                 'id' => $request->input('project_code'),
                 'format_id' => $request->input('format'),
                 'layout_id' => $request->input('layout'),
@@ -81,46 +79,30 @@ class ProjectController extends Controller
             $layout = Layout::findOrFail($layoutId);
             $project->layout()->associate($layout);
         });
-        return redirect()->route('projects.index')->with('project', $project);
-    }
 
-    public function showDetails()
-    {
-        // $projects = Project::all();
-
-
-        return view('pages.tables.projects-table', compact('projects'));
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Project $project)
-    {
-        //
+        return redirect()->back();
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Project $project)
+    public function edit(string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+        $subpages = $this->getSubpages() ?? false;
+
+        return view('pages.projects.edit', compact('project'))
+            ->with([
+                'pageTitleSection' => self::$page_title_plural,
+                'pageTitle' => 'Bewerk ' . self::$page_title_singular,
+                'subpages' => $subpages
+            ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Project $project)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -128,8 +110,31 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Project $project)
+    public function destroy(string $id)
     {
         //
+    }
+
+
+    public function planning(string $id)
+    {
+        $subpages = $this->getSubpages( $id ) ?? false;
+
+        return view('pages.projects.planning')->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => 'Planning van ' . self::$page_title_singular,
+            'subpages' => $subpages
+        ]);
+    }
+
+    public function calculation(string $id)
+    {
+        $subpages = $this->getSubpages( $id ) ?? false;
+
+        return view('pages.projects.calculation')->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => 'Calculatie van ' . self::$page_title_singular,
+            'subpages' => $subpages
+        ]);
     }
 }

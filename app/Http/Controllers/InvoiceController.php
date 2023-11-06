@@ -15,11 +15,13 @@ class InvoiceController extends Controller
      */
     public function index()
     {
+        $invoices = Invoice::paginate(10);
         $subpages = $this->getSubpages() ?? false;
 
-        return view('pages.invoices', compact('subpages'))->with([
+        return view('pages.invoices', compact('invoices'))->with([
             'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => self::$page_title_singular
+            'pageTitle' => self::$page_title_singular,
+            'subpages' => $subpages
         ]);
     }
 
@@ -40,17 +42,9 @@ class InvoiceController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Invoice $invoice)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Invoice $invoice)
+    public function edit(string $id)
     {
         //
     }
@@ -58,7 +52,7 @@ class InvoiceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Invoice $invoice)
+    public function update(Request $request, string $id)
     {
         //
     }

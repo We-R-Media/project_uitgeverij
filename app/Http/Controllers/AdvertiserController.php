@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\AdvertiserResource;
 use App\Models\Advertiser;
 use App\Models\Contact;
 use Illuminate\Http\Request;
-use App\Http\Resources\CompanyResource;
-use App\Http\Requests\AdvertiserRequest;
 use Illuminate\Support\Facades\DB;
 
 class AdvertiserController extends Controller
@@ -18,9 +15,9 @@ class AdvertiserController extends Controller
     public function __construct()
     {
         $this->subpages = [
-            'Bedrijfsgegevens' => '/',
-            'ContactPersonen' => '/',
-            'Orders' => '/',
+            'Adverteerder' => 'advertisers.edit',
+            'Contactpersonen' => 'advertisers.contacts',
+            'Orders' => 'advertisers.orders',
         ];
     }
 
@@ -28,31 +25,28 @@ class AdvertiserController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {   
-        $contacts = Contact::all();
+    {
+        $advertisers = Advertiser::paginate();
 
-        $advertisers = Advertiser::all();
-
-        $subpages = $this->getSubpages() ?? false;
-
-        return view('pages.advertisers', compact('advertisers', 'contacts', 'subpages'))
+        return view('pages.advertisers.index', compact('advertisers'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular
+                'pageTitle' => self::$page_title_singular,
             ]);
     }
 
-    public function showDetails()
-    {
-        $advertisers = Advertiser::all();
-        $contacts = Contact::all();
-
-        return view('pages.tables.advertisers-table', compact('advertisers', 'contacts'));
-    }
     /**
      * Show the form for creating a new resource.
      */
-    public function create(AdvertiserRequest $request)
+    public function create()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
     {
         $contactId = $request->input('contact_id');
 
@@ -73,50 +67,30 @@ class AdvertiserController extends Controller
             $contact->advertisers()->associate($advertiser);
             $advertiser->save();
         });
-        return redirect()->route('advertisers.index');
-    }
 
-    public function processForm()
-    {
-        return redirect()->route('orders.index');
-    }
-
-
-    public function details() 
-    {
-        return view('pages.tables.advertisers-table');
-    }
-    
-    /**
-     * Display the specified resource.
-     */
-    public function show(Request $request)
-    {
-        if($request->has('showContacts')) {
-            $contacts = Contact::all();
-            return view('pages.tables.advertisers-table', compact('contacts'));
-        }
-        else if($request->has('showAdvertisers')) {
-            $advertisers = Advertiser::all();
-            // $advertisers = Advertiser::with('contact')->get();
-            
-            // dd($advertisers);
-            return view('pages.tables.advertisers-table', compact('advertisers'));
-        }
+        return redirect()->back();
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Advertiser $advertiser)
+    public function edit(string $id)
     {
-        //
+        $advertiser = Advertiser::findOrFail($id);
+        $subpages = $this->getSubpages() ?? false;
+
+        return view('pages.advertisers.edit', compact('advertiser'))
+            ->with([
+                'pageTitleSection' => self::$page_title_plural,
+                'pageTitle' => 'Bewerk ' . self::$page_title_singular,
+                'subpages' => $subpages
+            ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Advertiser $advertiser)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -124,8 +98,30 @@ class AdvertiserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Advertiser $advertiser)
+    public function destroy(string $id)
     {
         //
+    }
+
+    public function contacts(string $id)
+    {
+        $subpages = $this->getSubpages( $id ) ?? false;
+
+        return view('pages.advertisers.contacts')->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'subpages' => $subpages
+        ]);
+    }
+
+    public function orders(string $id)
+    {
+        $subpages = $this->getSubpages( $id ) ?? false;
+
+        return view('pages.advertisers.orders')->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'subpages' => $subpages
+        ]);
     }
 }

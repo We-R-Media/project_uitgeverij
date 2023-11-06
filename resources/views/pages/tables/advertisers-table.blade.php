@@ -12,7 +12,7 @@
 
 
 <div class="tableContainer">
-    
+
     @if(request()->has('showContacts'))
     <table class="tableContent">
         <tr>

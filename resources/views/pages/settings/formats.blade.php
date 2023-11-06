@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
-
+@section('title', $pageTitle)
 @section('content')
 
-    <form class="formContainer" action="{{route('formats.create')}}" method="post">
+    {{-- <form class="formContainer" action="{{route('settings.formats')}}" method="post">
         @csrf
         <div class="formBlock">
 
@@ -45,5 +45,5 @@
             <td></td>
         </tr> 
         @endforeach       
-    </table>
+    </table> --}}
 @endsection

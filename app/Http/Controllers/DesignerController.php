@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Designer;
 use Illuminate\Http\Request;
 
 class DesignerController extends Controller
@@ -32,17 +31,9 @@ class DesignerController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Designer $designer)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Designer $designer)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +41,7 @@ class DesignerController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Designer $designer)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +49,7 @@ class DesignerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Designer $designer)
+    public function destroy(string $id)
     {
         //
     }

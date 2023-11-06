@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
-use PDF;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -14,12 +13,11 @@ class OrderController extends Controller
     public function __construct()
     {
         $this->subpages = [
-            'Algemeen' => '/',
-            'Print' => '/',
-            'Artikel' => '/',
-            'Klacht' => '/',
-            'Verzoeken onbehandeld' => '/',
-            'Verzoeken' => '/',
+            'Ordergegevens' => 'orders.edit',
+            'Print' => 'orders.print',
+            'Artikel' => 'orders.articles',
+            'Klachten' => 'orders.complaints',
+            'Verzoeken' => 'orders.requests',
         ];
     }
 
@@ -28,9 +26,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $subpages = $this->getSubpages() ?? false;
+        $orders = Order::paginate(10);
 
-        return view('pages.orders', compact('subpages'))
+        return view('pages.orders.index', compact('orders'))
             ->with([
                 'pageTitle' => self::$page_title_singular,
                 'pageTitleSection' => self::$page_title_plural,
@@ -54,25 +52,25 @@ class OrderController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(Order $order)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Order $order)
+    public function edit(string $id)
     {
-        //
+        $order = Order::findOrFail($id);
+        $subpages = $this->getSubpages() ?? false;
+
+        return view('pages.orders.edit', compact('order'))
+            ->with([
+                'pageTitleSection' => self::$page_title_plural,
+                'pageTitle' => 'Bewerk ' . self::$page_title_singular,
+                'subpages' => $subpages
+            ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -80,8 +78,53 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Order $order)
+    public function destroy(string $id)
     {
         //
+    }
+
+
+    public function requests(string $id)
+    {
+        $subpages = $this->getSubpages( $id ) ?? false;
+
+        return view('pages.orders.requests')->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => 'Verzoeken van ' . self::$page_title_singular,
+            'subpages' => $subpages
+        ]);
+    }
+
+    public function print(string $id)
+    {
+        $subpages = $this->getSubpages( $id ) ?? false;
+
+        return view('pages.orders.print')->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => '??? ' . self::$page_title_singular,
+            'subpages' => $subpages
+        ]);
+    }
+
+    public function articles(string $id)
+    {
+        $subpages = $this->getSubpages( $id ) ?? false;
+
+        return view('pages.orders.articles')->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'subpages' => $subpages
+        ]);
+    }
+
+    public function complaints(string $id)
+    {
+        $subpages = $this->getSubpages( $id ) ?? false;
+
+        return view('pages.orders.complaints')->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'subpages' => $subpages
+        ]);
     }
 }

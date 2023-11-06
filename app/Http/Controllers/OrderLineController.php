@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\OrderLine;
 use Illuminate\Http\Request;
 
 class OrderLineController extends Controller
@@ -32,17 +31,9 @@ class OrderLineController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     */
-    public function show(OrderLine $orderLine)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      */
-    public function edit(OrderLine $orderLine)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +41,7 @@ class OrderLineController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, OrderLine $orderLine)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +49,7 @@ class OrderLineController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(OrderLine $orderLine)
+    public function destroy(string $id)
     {
         //
     }
