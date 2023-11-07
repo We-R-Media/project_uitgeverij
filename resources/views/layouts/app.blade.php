@@ -41,5 +41,28 @@
     @livewireScripts
     <script src="{{asset('js/pages_calculate.js')}}" defer></script>
     <script src="{{asset('js/autofill_field.js')}}" defer></script>
+    <script type="module">
+         $("body").on("click"," .delete", function(){
+            var current_object = $(this);
+            swal.fire({
+                title: "Weet je het zeker?",
+                text: "Dit wordt definitief verwijderd.",
+                type: "error",
+                showCancelButton: true,
+                dangerMode: true,
+                cancelButtonClass: 'grey',
+                confirmButtonColor: 'orange',
+                confirmButtonText: 'Verwijderen',
+            },function (result) {
+                if (result) {
+                    var action = current_object.attr('data-action');
+                    var token = jQuery('meta[name="csrf-token"]').attr('content');
+                    var id = current_object.attr('data-id');
+
+                    console.log(id);
+                }
+            });
+        });
+    </script>
 </body>
 </html>

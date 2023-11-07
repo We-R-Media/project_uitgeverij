@@ -16,7 +16,7 @@ class AdvertiserController extends Controller
     {
         $this->subpages = [
             'Adverteerder' => 'advertisers.edit',
-            'ContactPersonen' => 'advertisers.contacts',
+            'Contactpersonen' => 'advertisers.contacts',
             'Orders' => 'advertisers.orders',
         ];
     }

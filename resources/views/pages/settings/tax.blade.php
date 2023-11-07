@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+
+@section('title', $pageTitle)
 @section('content')
-    <form class="formContainer" action="{{route('tax.create')}}" method="post" class="formContainer-tax">
+    {{-- <form class="formContainer" action="{{route('tax.create')}}" method="post" class="formContainer-tax">
         @csrf
         @method('post')
         <div class="formBlock">
@@ -29,5 +31,5 @@
             @endif
             <button type="submit">Toevoegen</button>
         </div>
-    </form>
+    </form> --}}
 @endsection
