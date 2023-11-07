@@ -123,12 +123,13 @@ Route::group(['middleware' => ['auth']], function() {
     //         Route::post('/create', 'create')->name('create');
     //     });
 
-    Route::name('settings.')
+
+        Route::name('settings.')
         ->prefix('settings')
-        ->controller(SettingsController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
         });
+
 
     // Route::controller(FormatController::class)->group(function() {
     //     Route::get('/formats', 'index')->name('formats.page');
