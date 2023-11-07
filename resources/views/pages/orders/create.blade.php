@@ -3,56 +3,115 @@
 @section('title', $pageTitleSection)
 
 @section('content')
-    <form class="formContainer" action="{{route('orders.store')}}" method="post">
-        <div class="formBlock">
-            <h3>Bevestigingsadres</h3>
 
-            <input type="text" class="@error ('advertiser') is-invalid @enderror" value="{{ old('advertiser') }}" name="advertiser" placeholder="Vul klantnummer in..." id="">
-            @if($errors->has('advertiser'))
-                <p class="error-message">{{$errors->first('advertiser')}}</p>
-            @endif
+    <div class="page__wrapper">
+        <form action="{{ route('orders.store') }}" method="post">
+            @csrf
+            @method('post')
 
-            <input type="text" class="@error ('company') is-invalid @enderror" value="{{ old('company') }}" name="company" placeholder="Vul bedrijfsnaam in..." id="">
-            @if($errors->has('company'))
-                <p class="error-message">{{$errors->first('company')}}</p>
-            @endif
+            <div class="grid__wrapper">
+                <fieldset class="fields base">
+                    <h3>{{__('Bevestiginsadres')}}</h3>
 
-            <input type="text" class="@error ('contact') is-invalid @enderror" value="{{ old('contact') }}" name="contact" placeholder="Vul contact in..." id="">
-            @if($errors->has('contact'))
-                <p class="error-message">{{$errors->first('contact')}}</p>
-            @endif
+                    <div class="field field-alt">
+                        <label for="advertiser_id">{{ __('Klantnummer') }}</label>
+                        <input type="text" name="advertiser_id" value="{{$advertiser->id}}" disabled>
+                        @error('advertiser_id')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
 
-            <input type="text" class="@error ('po_box') is-invalid @enderror" value="{{ old('po_box') }}" name="po_box" placeholder="Vul postadres in..." id="">
-            @if($errors->has('po_box'))
-                <p class="error-message">{{$errors->first('po_box')}}</p>
-            @endif
+                    <div class="field field-alt">
+                        <label for="name">{{ __('Bedrijfsnaam') }}</label>
+                        <input type="text" name="name" value="{{$advertiser->name}}" disabled>
+                        @error('name')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
 
-            <input type="text" class="@error ('postal_code') is-invalid @enderror" value="{{ old('postal_code') }}" name="postal_code" placeholder="Vul postcode in..." id="">
-            @if($errors->has('postal_code'))
-                <p class="error-message">{{$errors->first('postal_code')}}</p>
-            @endif
+                    <div class="field field-alt">
+                        <label for="po_box">{{ __('Postadres') }}</label>
+                        <input type="text" name="po_box" value="{{$advertiser->po_box}}" disabled>
+                        @error('po_box')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
 
-            <input type="text" class="@error ('city') is-invalid @enderror" value="{{ old('city') }}" name="city" placeholder="Vul plaats in..." id="">
-            @if($errors->has('city'))
-                <p class="error-message">{{$errors->first('city')}}</p>
-            @endif
+                    <div class="field field-alt">
+                        <label for="postal_code">{{ __('Postcode') }}</label>
+                        <input type="text" name="postal_code" value="{{$advertiser->postal_code}}" disabled>
+                        @error('postal_code')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
 
-            <input type="text" class="@error ('province') is-invalid @enderror" value="{{ old('province') }}" name="province" placeholder="Vul provincie in..." id="">
-            @if($errors->has('province'))
-                <p class="error-message">{{$errors->first('province')}}</p>
-            @endif
+                    <div class="field field-alt">
+                        <label for="city">{{ __('Woonplaats') }}</label>
+                        <input type="text" name="city" value="{{$advertiser->city}}" disabled>
+                        @error('city')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
 
-            <input type="text" class="@error ('country') is-invalid @enderror" value="{{ old('country') }}" name="country" placeholder="Vul land in..." id="">
-            @if($errors->has('country'))
-                <p class="error-message">{{$errors->first('country')}}</p>
-            @endif
+                    <div class="field field-alt">
+                        <label for="province">{{ __('Provincie') }}</label>
+                        <input type="text" name="province" value="{{$advertiser->province}}" disabled>
+                        @error('province')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
 
-            <input type="email" class="@error ('email') is-invalid @enderror" value="{{ old('email') }}" name="email" placeholder="Vul email in..." id="">
-            @if($errors->has('email'))
-                <p class="error-message">{{$errors->first('email')}}</p>
-            @endif
+                    <div class="field field-alt">
+                        <label for="phone">{{ __('Telefoon') }}</label>
+                        <input type="text" name="phone" value="{{$advertiser->phone}}" disabled>
+                        @error('phone')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
+
+                    
+                    <div class="field field-alt">
+                        <label for="phone_mobile">{{ __('Mobiel') }}</label>
+                        <input type="text" name="phone_mobile" value="{{$advertiser->phone_mobile}}" disabled>
+                        @error('phone_mobile')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="field field-alt">
+                        <label for="email">{{ __('E-mailadres') }}</label>
+                        <input type="text" name="email" value="{{$advertiser->email}}" disabled>
+                        @error('email')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
+
+                </fieldset>
+            </div>
+        </form>
+    </div>
+
+    <div class="ButtonGroup">
+        <div class="buttons">
+            <a href="{{route('pdf.generate')}}" class="button button--action">{{__('Genereer PDF')}}</a>
         </div>
-    </form>
-
-    <a href="{{route('pdf.generate')}}">Genereer PDF</a>
+    </div>
 @endsection

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->nullable();
             $table->foreignID('project_id')->nullable();
             $table->dateTime('order_date');
             $table->double('order_total_price');
