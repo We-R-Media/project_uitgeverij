@@ -45,7 +45,7 @@
          $("body").on("click"," .delete", function(){
             var current_object = $(this);
             swal.fire({
-                title: "Weet je zeker",
+                title: "Weet je het zeker?",
                 text: "Dit wordt definitief verwijderd.",
                 type: "error",
                 showCancelButton: true,
@@ -58,6 +58,8 @@
                     var action = current_object.attr('data-action');
                     var token = jQuery('meta[name="csrf-token"]').attr('content');
                     var id = current_object.attr('data-id');
+
+                    console.log(id);
                 }
             });
         });

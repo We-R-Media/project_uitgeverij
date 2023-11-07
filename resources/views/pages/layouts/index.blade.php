@@ -15,13 +15,12 @@
         @foreach ($layouts as $layout)
             <li class="item">
                 <div class="item__content">
-
                     <a href="{{route('layouts.edit', $layout->id)}}">
                         <h3>{{ $layout->layout_name}}</h3>
                     </a>
                     <h5>{{$layout->city_name}}</h5>
                     <div class="item__actions">
-                        <a href="{{route('layouts.edit', $layout->id)}}">Bewerken</a>
+                        <a href="{{route('layouts.edit', $layout->id)}}">{{__('Bewerken')}}</a>
                     </div>
                 </div>
             </li>

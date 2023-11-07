@@ -13,25 +13,25 @@
                         <h3>{{ $advertiser->name }}</h3>
                     </a>
                     <div class="item__actions">
-                        <a href="{{ route('advertisers.edit', $advertiser->id) }}">Bewerken</a>
+                        <a href="{{ route('advertisers.edit', $advertiser->id) }}">{{__('Bewerken')}}</a>
                         <a href="#" class="delete" data-id="{{ $advertiser->id }}" data-action="{{-- route('advertisers.destroy', $advertiser->id) --}}">Verwijderen</a>
                     </div>
                 </div>
                 <div class="item__summery">
                     <div class="item__format field">
-                        <label>E-mailadres</label>
+                        <label>{{__('E-mailadres')}}</label>
                         {{$advertiser->email}}
                     </div>
                     <div class="item__pages field">
-                        <label>Aangemaakt op</label>
+                        <label>{{__('Aangemaakt op')}}</label>
                         {{$advertiser->created_at}}
                     </div>
                     <div class="blacklisted field">
-                        <label>Blacklisted</label>
+                        <label>{{__('Blacklisted')}}</label>
                         @if(!empty($advertiser->blacklisted_at))
-                            Ja
+                            {{__('Ja')}}
                         @else 
-                            Nee
+                            {{__('Nee')}}
                         @endif
                     </div>
                 </div>

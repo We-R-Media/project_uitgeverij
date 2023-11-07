@@ -55,7 +55,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{id}/print', 'print')->name('print');
             Route::get('/{id}/articles', 'articles')->name('articles');
             Route::get('/{id}/complaints', 'complaints')->name('complaints');
-            Route::get('/create', 'create')->name('create');
+            Route::get('/create/{id}', 'create')->name('create');
 
             Route::post('/store', 'store')->name('store');
             Route::post('/update', 'update')->name('update');
@@ -87,13 +87,18 @@ Route::group(['middleware' => ['auth']], function() {
             Route::post('/update', 'update')->name('update');
         });
 
-    // Route::name('tax.')
-    //     ->prefix('tax')
-    //     ->controller(TaxController::class)
-    //     ->group(function () {
-    //         Route::get('/', 'index')->name('index');
-    //         Route::post('/create', 'create')->name('create');
-    //     });
+    Route::name('tax.')
+        ->prefix('tax')
+        ->controller(TaxController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/edit/{id}', 'edit')->name('edit');
+            Route::get('/create', 'create')->name('create');
+
+            Route::post('/store', 'store')->name('store');
+            Route::post('/update/{id}', 'update')->name('update');
+            Route::delete('/destroy/{id}', 'destroy')->name('destroy');
+        });
 
     Route::name('invoices.')
         ->prefix('invoices')
@@ -109,13 +114,12 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/', 'PDFGenerate')->name('generate');
         });
 
-    // Route::name('reminders.')
-    //     ->prefix('reminders')
-    //     ->controller(ReminderController::class)
-    //     ->group(function () {
-    //         Route::get('/', 'index')->name('index');
-    //         Route::post('/create', 'create')->name('create');
-    //     });
+    Route::name('reminders.')
+        ->prefix('reminders')
+        ->controller(ReminderController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+        });
 
     Route::name('settings.')
         ->prefix('settings')
@@ -152,11 +156,6 @@ Route::group(['middleware' => ['auth']], function() {
         ->group(function () {
             Route::get('/', 'index')->name('index');
         });
-        
-    // Route::controller(FormatController::class)->group(function() {
-    //     Route::get('/formats', 'index')->name('formats.page');
-    //     Route::post('/formats/create', 'create')->name('formats.create');
-    // });
 });
 
 Route::fallback(function () {

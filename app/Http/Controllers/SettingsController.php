@@ -20,7 +20,8 @@ class SettingsController extends Controller
             'Formaten' => 'formats.index',
             'Verkopers' => 'sellers.index',
             'Layouts' => 'layouts.index',
-            'BTW' => 'settings.tax',
+            'BTW' => 'tax.index',
+            'Aanmaningen' => 'reminders.index',
         ];
     }
 
@@ -34,26 +35,5 @@ class SettingsController extends Controller
                 'pageTitleSection' => self::$page_title_plural,
                 'pageTitle' => self::$page_title_singular,
             ]);
-    }
-
-    public function formats() {
-
-        $subpages = $this->getSubpages() ?? false;
-
-        return view('pages.settings.formats', compact('subpages'))
-        ->with([
-            'pageTitlteSection' => self::$page_title_plural,
-            'pageTitle' => self::$page_title_singular,
-        ]);
-    }
-
-    public function tax() {
-        $subpages = $this->getSubpages() ?? false; 
-
-        return view('pages.settings.tax', compact('subpages'))
-        ->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => self::$page_title_singular,
-        ]);
     }
 }

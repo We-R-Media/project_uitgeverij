@@ -5,7 +5,6 @@
 @section('content')
 
 <div class="page__wrapper">
-    @foreach ($layouts as $layout)
     <form action="{{ route('layouts.edit', $layout->id) }}" class="formContainer">
         @csrf
         @method('post')
@@ -49,7 +48,6 @@
             </div>
         </div>
     </form>
-    @endforeach
 </div>
 
 @endsection

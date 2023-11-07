@@ -3,7 +3,6 @@
 
 @section('title', $pageTitle)
 @section('content')
-@foreach ($sellers as $seller )
     <div class="page__wrapper">
         <form class="formContainer" action="{{ route('sellers.update', $seller->id) }}" method="post">
             @csrf
@@ -63,5 +62,4 @@
             </div>
         </form>
     </div>
-@endforeach
 @endsection

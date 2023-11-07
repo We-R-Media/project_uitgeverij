@@ -18,7 +18,8 @@ class SellerController extends Controller
             'Formaten' => 'formats.index',
             'Verkopers' => 'sellers.index',
             'Layouts' => 'layouts.index',
-            'BTW' => 'settings.tax',
+            'BTW' => 'tax.index',
+            'Aanmaningen' => 'reminders.index',
         ];
     }
 
@@ -69,11 +70,12 @@ class SellerController extends Controller
     {
         $subpages = $this->getSubpages() ?? false;
 
-        $sellers = User::where('id', $id)->get();
+        // $sellers = User::where('id', $id)->get();
+        $seller = User::findOrFail($id);
 
         // dd($sellers);
 
-        return view('pages.sellers.edit', compact('subpages', 'sellers'))
+        return view('pages.sellers.edit', compact('subpages', 'seller'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
                 'pageTitle' => self::$page_title_singular,

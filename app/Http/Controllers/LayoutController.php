@@ -17,7 +17,8 @@ class LayoutController extends Controller
             'Formaten' => 'formats.index',
             'Verkopers' => 'sellers.index',
             'Layouts' => 'layouts.index',
-            'BTW' => 'settings.tax',
+            'BTW' => 'tax.index',
+            'Aanmaningen' => 'reminders.index',
         ];
     }
 
@@ -80,11 +81,12 @@ class LayoutController extends Controller
      */
     public function edit(Layout $layout, string $id)
     {
-        $layouts = Layout::where('id', $id)->get();
+        // $layouts = Layout::where('id', $id)->get();
+        $layout = Layout::findOrFail($id);
 
         $subpages = $this->getSubpages() ?? false;
 
-        return view('pages.layouts.edit', compact('layouts'))
+        return view('pages.layouts.edit', compact('layout'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
                 'pageTitle' => self::$page_title_singular,
