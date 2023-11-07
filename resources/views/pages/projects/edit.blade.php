@@ -3,9 +3,6 @@
 @section('title',  $pageTitle)
 
 @section('content')
-<<<<<<< HEAD
-    {{ $project->id }}
-=======
     
     <div class="page__wrapper">
         <form class="formContainer" action="{{route('projects.edit', $project->id)}}" method="post">
@@ -307,5 +304,4 @@
         </form>
     </div>
 
->>>>>>> 5af2bf4502a2bd22be2b676e93754b1fc60e7890
 @endsection

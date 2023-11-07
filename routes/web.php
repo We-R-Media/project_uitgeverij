@@ -38,11 +38,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/', 'index')->name('index');
             Route::get('/{id}', 'edit')->name('edit');
             Route::get('/{id}/planning', 'planning')->name('planning');
-<<<<<<< HEAD
             Route::get('/{id}/calculatie', 'calculation')->name('calculation');
-=======
-            Route::get('/{id}/calculation', 'calculation')->name('calculation');
->>>>>>> 5af2bf4502a2bd22be2b676e93754b1fc60e7890
             Route::get('/create', 'create')->name('create');
 
             Route::post('/store', 'store')->name('store');
@@ -64,51 +60,6 @@ Route::group(['middleware' => ['auth']], function() {
             Route::post('/store', 'store')->name('store');
             Route::post('/update', 'update')->name('update');
         });
-<<<<<<< HEAD
-=======
-
-
-    Route::name('advertisers.')
-        ->prefix('advertisers')
-        ->controller(AdvertiserController::class)
-        ->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::get('/{id}', 'edit')->name('edit');
-            Route::get('/{id}/contacts', 'contacts')->name('contacts');
-            Route::get('/{id}/orders', 'orders')->name('orders');
-            Route::get('/create', 'create')->name('create');
-
-            Route::post('/store', 'store')->name('store');
-            Route::post('/update', 'update')->name('update');
-        });
-
-    Route::name('contacts.')
-        ->prefix('contacts')
-        ->controller(ContactController::class)
-        ->group(function () {
-            Route::get('/', 'index')->name('index');
-            Route::get('/create', 'create')->name('create');
-
-            Route::post('/store', 'store')->name('store');
-            Route::post('/update', 'update')->name('update');
-        });
-
-    // Route::name('tax.')
-    //     ->prefix('tax')
-    //     ->controller(TaxController::class)
-    //     ->group(function () {
-    //         Route::get('/', 'index')->name('index');
-    //         Route::post('/create', 'create')->name('create');
-    //     });
-
-    // Route::name('layouts.')
-    //     ->prefix('layouts')
-    //     ->controller(LayoutController::class)
-    //     ->group(function () {
-    //         Route::get('/', 'index')->name('index');
-    //         Route::post('/create', 'create')->name('create');
-    //     });
->>>>>>> 5af2bf4502a2bd22be2b676e93754b1fc60e7890
 
 
     Route::name('advertisers.')
@@ -144,14 +95,6 @@ Route::group(['middleware' => ['auth']], function() {
     //         Route::post('/create', 'create')->name('create');
     //     });
 
-    // Route::name('layouts.')
-    //     ->prefix('layouts')
-    //     ->controller(LayoutController::class)
-    //     ->group(function () {
-    //         Route::get('/', 'index')->name('index');
-    //         // Route::post('/create', 'create')->name('create');
-    //     });
-
     Route::name('invoices.')
         ->prefix('invoices')
         ->controller(InvoiceController::class)
@@ -180,7 +123,6 @@ Route::group(['middleware' => ['auth']], function() {
         ->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/formats', 'formats')->name('formats');
-            Route::get('/layouts', 'layouts')->name('layouts');
             Route::get('/tax', 'tax')->name('tax');
         });
     
@@ -189,19 +131,28 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(SellerController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/sellers/edit/{id}', 'edit')->name('edit');
-            Route::post('/sellers/update/{id}', 'update')->name('update');
+            Route::get('/{id}/edit', 'edit')->name('edit');
+            Route::post('/{id}/update', 'update')->name('update');
         });
 
-    // Route::name('formats.')
-    //     ->prefix('formats')
-    //     ->controller(FormatController::class)
-    //     ->group(function () {
-    //         route::get('/', 'index')->name('index');
-    //     });
+    Route::name('layouts.')
+        ->prefix('layouts')
+        ->controller(LayoutController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/edit/{id}', 'edit')->name('edit');
+            Route::get('/create', 'create')->name('create');
+            Route::post('/store', 'store')->name('store');
+        });
 
 
-
+    Route::name('formats.')
+        ->prefix('formats')
+        ->controller(FormatController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+        });
+        
     // Route::controller(FormatController::class)->group(function() {
     //     Route::get('/formats', 'index')->name('formats.page');
     //     Route::post('/formats/create', 'create')->name('formats.create');

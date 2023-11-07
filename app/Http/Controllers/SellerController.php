@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 class SellerController extends Controller
@@ -14,9 +15,9 @@ class SellerController extends Controller
     public function __construct()
     {
         $this->subpages = [
-            'Formaten' => 'settings.formats',
+            'Formaten' => 'formats.index',
             'Verkopers' => 'sellers.index',
-            'Layouts' => 'settings.layouts',
+            'Layouts' => 'layouts.index',
             'BTW' => 'settings.tax',
         ];
     }
@@ -94,7 +95,7 @@ class SellerController extends Controller
             ]);
         });
 
-        return redirect()->route('sellers.index');
+        return redirect()->back();
     }
 
     /**

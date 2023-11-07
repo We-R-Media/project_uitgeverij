@@ -21,6 +21,7 @@
     <h1 class="sub__title">{{ __($pageTitle) }}</h1>
 
      <!--- Page title ---->
+     
     <h2 class="page__title">{{ __('Onderdeeltitel') }}</h2>
 
      <!--- Subpages ---->

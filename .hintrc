@@ -13,7 +13,8 @@
           "-webkit-tap-highlight-color",
           "text-align: -webkit-match-parent",
           "-webkit-text-size-adjust",
-          "text-justify"
+          "text-justify",
+          "backdrop-filter"
         ]
       }
     ]

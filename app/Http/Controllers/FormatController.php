@@ -7,13 +7,38 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class FormatController extends Controller
+
 {
+    private static $page_title_singular = 'Formaat';
+    private static $page_title_plural = 'Formaten';
+
+
+    public function __construct() 
+    {
+        $this->subpages = [
+            'Formaten' => 'formats.index',
+            'Verkopers' => 'sellers.index',
+            'Layouts' => 'layouts.index',
+            'BTW' => 'settings.tax',
+        ];
+    }
+
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $subpages = $this->getSubpages() ?? false;
+
+        $formats = Format::all();
+
+        return view('pages.formats.index', compact('formats'))
+            ->with([
+                'pageTitleSection' => self::$page_title_plural,
+                'pageTitle' => self::$page_title_singular,
+                'subpages' => $subpages,
+            ]);
     }
 
     /**

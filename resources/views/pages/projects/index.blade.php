@@ -4,18 +4,6 @@
 
 @section('content')
 
-<<<<<<< HEAD
-<ul>
-    @foreach ($projects as $project)
-        <li>
-            <a href="{{ route('projects.edit', $project->id) }}" class="">
-                {{ $project->release_name }}
-            </a>
-
-        </li>
-    @endforeach
-</ul>
-=======
 <div class="page__wrapper">
     <ul class="items__view">
         @foreach ($projects as $project)
@@ -43,7 +31,6 @@
         @endforeach
     </ul>
 </div>
->>>>>>> 5af2bf4502a2bd22be2b676e93754b1fc60e7890
 
 {{ $projects->links() }}
 

@@ -17,9 +17,9 @@ class SettingsController extends Controller
     public function __construct()
     {
         $this->subpages = [
-            'Formaten' => 'settings.formats',
+            'Formaten' => 'formats.index',
             'Verkopers' => 'sellers.index',
-            'Layouts' => 'settings.layouts',
+            'Layouts' => 'layouts.index',
             'BTW' => 'settings.tax',
         ];
     }
@@ -41,17 +41,6 @@ class SettingsController extends Controller
         $subpages = $this->getSubpages() ?? false;
 
         return view('pages.settings.formats', compact('subpages'))
-        ->with([
-            'pageTitlteSection' => self::$page_title_plural,
-            'pageTitle' => self::$page_title_singular,
-        ]);
-    }
-
-    public function layouts() {
-
-        $subpages = $this->getSubpages() ?? false;
-
-        return view('pages.settings.layouts', compact('subpages'))
         ->with([
             'pageTitlteSection' => self::$page_title_plural,
             'pageTitle' => self::$page_title_singular,

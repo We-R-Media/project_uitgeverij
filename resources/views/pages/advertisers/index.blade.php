@@ -4,19 +4,6 @@
 
 @section('content')
 
-<<<<<<< HEAD
-<ul>
-    @foreach ($advertisers as $advertiser)
-        <li>
-            <a href="{{ route('advertisers.edit', $advertiser->id) }}" class="">
-                {{ $advertiser->id }}
-                {{ $advertiser->name }}
-            </a>
-
-        </li>
-    @endforeach
-</ul>
-=======
 <div class="page__wrapper">
     <ul class="items__view">
         @foreach ($advertisers as $advertiser)
@@ -52,7 +39,6 @@
         @endforeach
     </ul>
 </div>
->>>>>>> 5af2bf4502a2bd22be2b676e93754b1fc60e7890
 
 {{ $advertisers->links() }}
 
