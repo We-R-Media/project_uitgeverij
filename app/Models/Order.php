@@ -8,10 +8,36 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
-class Order extends Model
+class Order extends BaseModel
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        // 'layout_name',
+        // 'city_name',
+        // 'logo',
+    ];
+
+    /**
+     * Boot the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($post) {
+            // $post->title = $post->layout_name;
+        });
+    }
 
     /**
      * Get the project that owns the order.
@@ -20,7 +46,7 @@ class Order extends Model
      */
     public function project(): BelongsTo
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Project::class);
     }
 
     /**
@@ -41,5 +67,13 @@ class Order extends Model
     public function orderLines(): HasMany
     {
         return $this->hasMany(OrderLine::class);
+    }
+
+    /**
+     * Get the name of the index associated with the model.
+     */
+    public function searchableAs()
+    {
+        return 'order_index';
     }
 }

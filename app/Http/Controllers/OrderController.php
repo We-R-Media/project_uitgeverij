@@ -27,8 +27,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::paginate(10);
-        
+        // $orders = Order::paginate(10);
+
+        $orders = Order::with(['advertiser', 'project'])->paginate(2);
+
+
         return view('pages.orders.index', compact('orders'))
             ->with([
                 'pageTitle' => self::$page_title_singular,
@@ -59,9 +62,12 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         $subpages = $this->getSubpages() ?? false;
-        $advertiser = Advertiser::where('order_id', $order->id)->first();
+        // $advertiser = Advertiser::where('order_id', $order->id)->first();
+        $advertiser = $order->advertiser::where('order_id', $order->id)->first();
 
-        return view('pages.orders.edit', compact('order', 'advertiser'))
+
+
+        return view('pages.orders.edit', compact('order'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
                 'pageTitle' => 'Bewerk ' . self::$page_title_singular,
@@ -86,7 +92,7 @@ class OrderController extends Controller
     }
 
     public function delete() {
-        
+
     }
 
 

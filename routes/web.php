@@ -13,6 +13,7 @@ use App\Http\Controllers\SellerController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
 
 /*
@@ -123,10 +124,9 @@ Route::group(['middleware' => ['auth']], function() {
 
     Route::name('settings.')
         ->prefix('settings')
+        ->controller(SettingsController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/formats', 'formats')->name('formats');
-            Route::get('/tax', 'tax')->name('tax');
         });
 
     Route::name('sellers.')
@@ -146,6 +146,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/edit/{id}', 'edit')->name('edit');
             Route::get('/create', 'create')->name('create');
             Route::post('/store', 'store')->name('store');
+            Route::post('/{id}/update', 'update')->name('update');
         });
 
 
@@ -154,10 +155,13 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(FormatController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
+            Route::get('/edit/{id}', 'edit')->name('edit');
         });
+
+    Route::get('/search', [ SearchController::class, 'search'])->name('search');
+
 });
 
 Route::fallback(function () {
     abort(404);
 });
-

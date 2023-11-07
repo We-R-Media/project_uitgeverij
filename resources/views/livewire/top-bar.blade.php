@@ -1,5 +1,10 @@
 <div class="topbar__wrapper">
     <!--- Auth User info ---->
+    <form action="{{ route('search') }}" method="GET">
+        <input type="text" name="q" placeholder="Search products...">
+        <button type="submit">Search</button>
+    </form>
+
     @auth
     <div class="UserInfo">
         <div class="userLoggedIn">
@@ -7,6 +12,8 @@
             {{--<span class="rol">({{Auth::user()->role}})</span>--}}
         </div>
         <div class="button-group">
+
+
             <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 {{ __('Logout') }}
             </a>
@@ -21,7 +28,7 @@
     <h1 class="sub__title">{{ __($pageTitle) }}</h1>
 
      <!--- Page title ---->
-     
+
     <h2 class="page__title">{{ __('Onderdeeltitel') }}</h2>
 
      <!--- Subpages ---->

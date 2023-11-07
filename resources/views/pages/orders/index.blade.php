@@ -10,7 +10,7 @@
             <li class="item">
                 <div class="item__content">
                     <a href="{{ route('orders.edit', $order->id) }}" class="">
-                        <h3>{{ __('Klantnaam') }}</h3>
+                        <h3>{{ $order->advertiser->name }}</h3>
                     </a>
                     <div class="item__actions">
                         <a href="{{ route('orders.edit', $order->id) }}">Bewerken</a>

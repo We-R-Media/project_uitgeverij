@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('layouts', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->foreignId('project_id')->unique()->nullable();
             $table->string('layout_name')->unique();
             $table->string('city_name');

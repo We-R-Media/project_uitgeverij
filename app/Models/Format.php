@@ -3,11 +3,10 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Format extends Model
+class Format extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
@@ -24,6 +23,20 @@ class Format extends Model
         'page_count',
         'description'
     ];
+
+    /**
+     * Boot the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($post) {
+            $post->title = $post->name;
+        });
+    }
 
     /**
      * Get the groups associated with the format.

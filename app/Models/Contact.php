@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
-class Contact extends Model
+class Contact extends BaseModel
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +24,20 @@ class Contact extends Model
         'last_name',
         'email',
     ];
+
+    /**
+     * Boot the model.
+     *
+     * @return void
+     */
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($post) {
+            $post->title = "{$post->first_name} {$post->last_name}";
+        });
+    }
 
     /**
      * Get the advertiser that owns the Contact
@@ -43,5 +57,13 @@ class Contact extends Model
     public function reminders()
     {
         return $this->hasMany(Reminder::class);
+    }
+
+    /**
+     * Get the name of the index associated with the model.
+     */
+    public function searchableAs()
+    {
+        return 'contact_index';
     }
 }
