@@ -4,18 +4,14 @@
 
 @section('content')
 <div class="page__wrapper">
-    {{--@if($errors)
-        <p>{{$errors}}</p>
-    @endif--}}
-
-
+    
     <div class="HeaderButtons">
         <div class="buttons">
-            <a href="{{route('orders.create')}}" class="button button--action">+ {{ __('Nieuwe order') }}</a>
+            <a href="{{route('orders.create', $advertiser->id)}}" class="button button--action">+ {{ __('Nieuwe order') }}</a>
         </div>
     </div>
 
-    <form class="formContainer" action="{{route('advertisers.edit', $advertiser->id)}}" method="post">
+    <form class="formContainer" action="{{ route('advertisers.edit', $advertiser->id) }}" method="post">
         @csrf
         @method('post')
         <div class="grid__wrapper">

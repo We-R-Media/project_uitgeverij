@@ -1,4 +1,4 @@
 {
-    "/dist/js/bundle.js": "/dist/js/bundle.js",
-    "/dist/js/maps.js": "/dist/js/maps.js"
+    "/js/app.js": "/js/app.js",
+    "/js/maps.js": "/js/maps.js"
 }

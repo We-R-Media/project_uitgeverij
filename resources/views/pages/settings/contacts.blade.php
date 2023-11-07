@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
+
+@section('title', $pageTitle)
 @section('content')
-    <form class="formContainer" action="{{route('contacts.create')}}" method="post">
+    <form class="formContainer" action="{{route('sellers.store')}}" method="post">
         @csrf
         <div class="formBlock">
             <input type="text" value="{{ old('first_name') }}" class="@error ('first_name') is-invalid @enderror" name="first_name" placeholder="{{__('Voer voornaam in...')}}" id="">
