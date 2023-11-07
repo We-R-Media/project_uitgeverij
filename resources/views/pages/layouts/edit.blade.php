@@ -10,6 +10,7 @@
         @method('post')
         <div class="grid__wrapper">
             <fieldset class="fields base">
+                <h3>{{ __('Algemeen') }}</h3>
 
                 <div class="field field-alt">
                     <label for="layout__name">{{__('Layout naam')}}</label>
@@ -30,6 +31,10 @@
                     </span>
                     @enderror
                 </div>
+
+            </fieldset>
+            <fieldset class="fields">
+                <h3>{{ __('Uiterlijk') }}</h3>
 
                 <div class="field field-alt">
                     <label for="logo">{{__('Logo')}}</label>

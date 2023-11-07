@@ -9,6 +9,8 @@
             @method('post')
             <div class="grid__wrapper">
                 <fieldset class="fields base">
+                    <h3>{{ __('Algemeen') }}</h3>
+
                     <div class="field field-alt">
                         <label for="seller_id">{{__('Verkopernummer')}}</label>
                         <input type="number" value="{{$seller->id}}" name="id" id="" disabled>
@@ -18,15 +20,7 @@
                         </span>
                         @enderror
                     </div>
-                    <div class="field field-alt">
-                        <label for="first_name">{{__('Voornaam')}}</label>
-                        <input type="text" value="{{$seller->first_name}}" name="first_name" id="">
-                        @error('first_name')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                        @enderror
-                    </div>
+
                     <div class="field field-alt">
                         <label for="initial">{{__('Initiaal')}}</label>
                         <input type="text" value="{{$seller->initial}}" name="initial">    
@@ -38,8 +32,23 @@
                     </div>
 
                     <div class="field field-alt">
+                        <label for="first_name">{{__('Voornaam')}}</label>
+                        <input type="text" value="{{$seller->first_name}}" name="first_name" id="">
+                        @error('first_name')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="field field-alt">
                         <label for="last_name">{{__('Achternaam')}}</label>
-                        <input type="text" value="{{$seller->last_name}}" name="last_name" id="">    
+                        <input type="text" value="{{$seller->last_name}}" name="last_name" id=""> 
+                        @error('last_name')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                        @enderror   
                     </div>
 
             

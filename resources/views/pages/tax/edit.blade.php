@@ -9,7 +9,7 @@
             @method('post')
                 <div class="grid__wrapper">
                     <fieldset class="fields base">
-
+                        <h3>{{ __('Algemeen') }}</h3>
                         <div class="field field-alt">
                             <label for="country">{{__('Land')}}</label>
                             <input type="text" name="country" value="{{$tax->country}}" id="">
