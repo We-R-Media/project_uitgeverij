@@ -8,4 +8,7 @@ select2(window, $);
 $('select').select2();
 
 import swal from 'sweetalert2';
-window.Swal = swal;
+window.swal = swal;
+
+import Dropzone from "dropzone";
+window.dropzone = Dropzone;

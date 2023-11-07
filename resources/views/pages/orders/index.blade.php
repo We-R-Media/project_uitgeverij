@@ -14,7 +14,7 @@
                     </a>
                     <div class="item__actions">
                         <a href="{{ route('orders.edit', $order->id) }}">Bewerken</a>
-                        <a href="{{--delete($project->id)--}}">Verwijderen</a>
+                        <a href="#" class="delete" data-id="{{ $order->id }}" data-action="{{-- route('orders.destroy', $order->id) --}}">Verwijderen</a>
                     </div>
                 </div>
                 <div class="item__summery">

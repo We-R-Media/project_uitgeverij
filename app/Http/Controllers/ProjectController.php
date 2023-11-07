@@ -91,11 +91,14 @@ class ProjectController extends Controller
         $project = Project::findOrFail($id);
         $subpages = $this->getSubpages() ?? false;
 
+        $layouts = Layout::all();
+        
         return view('pages.projects.edit', compact('project'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
                 'pageTitle' => 'Bewerk ' . self::$page_title_singular,
-                'subpages' => $subpages
+                'subpages' => $subpages,
+                'layouts' => $layouts,
             ]);
     }
 
