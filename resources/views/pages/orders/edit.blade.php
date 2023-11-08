@@ -204,13 +204,6 @@
                     @enderror
                 </div>
 
-                <div class="field field-alt">
-                    <label>Bestand</label>
-                    <div class="dropzone" id="fileupload">
-                    
-                    </div> 
-                </div>
-
             </fieldset>
 
             <fieldset class="field notes full-width">

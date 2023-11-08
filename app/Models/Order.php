@@ -20,20 +20,8 @@ class Order extends BaseModel
      * @var array<int, string>
      */
     protected $fillable = [
-        // 'layout_name',
-        // 'city_name',
-        // 'logo',
+        'name',
     ];
-
-    // /**
-    //  * An array of fields that should be included in the searchable data array for the model.
-    //  *
-    //  * @var array<string>
-    //  */
-    // protected $searchableFields = [
-    //     'layout_name',
-    //     'year',
-    // ];
 
     /**
      * Get the project that owns the order.

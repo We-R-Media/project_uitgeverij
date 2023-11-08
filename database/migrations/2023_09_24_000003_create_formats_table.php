@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignID('project_id')->nullable();
             $table->string('size');
             $table->string('measurement');
-            $table->double('ratio');
+            $table->string('ratio');
             $table->double('price');
             $table->softDeletes();
             $table->timestamps();

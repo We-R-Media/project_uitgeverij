@@ -21,6 +21,14 @@ class Layout extends BaseModel
         'logo',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function ($post) {
+            $post->title = $post->layout_name;
+        });
+    }
+
     /**
      * An array of fields that should be included in the searchable data array for the model.
      *

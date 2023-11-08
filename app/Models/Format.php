@@ -19,6 +19,7 @@ class Format extends BaseModel
         'name',
         'size',
         'measurement',
+        'ratio',
         'price',
         'page_count',
         'description'
