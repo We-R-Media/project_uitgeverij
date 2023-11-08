@@ -30,6 +30,7 @@ class HomeController extends Controller
             ->with([
                 'pageTitle' => self::$page_title_singular,
                 'pageTitleSection' => self::$page_title_plural,
+                'seoTitle' => self::$page_seo,
             ]);
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->unique()->nullable();
             $table->foreignID('advertiser_id');
             $table->datetime('invoice_date');
             $table->enum('post_method', ['mail','post']);

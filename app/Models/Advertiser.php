@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -36,19 +35,6 @@ class Advertiser extends BaseModel
         'blacklisted_at',
     ];
 
-    /**
-     * Boot the model.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($post) {
-            $post->title = $post->name;
-        });
-    }
 
     /**
      * Get the contact associated with the Advertiser

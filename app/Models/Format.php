@@ -25,20 +25,6 @@ class Format extends BaseModel
     ];
 
     /**
-     * Boot the model.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($post) {
-            $post->title = $post->name;
-        });
-    }
-
-    /**
      * Get the groups associated with the format.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

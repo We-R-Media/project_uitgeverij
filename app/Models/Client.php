@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
@@ -22,20 +21,6 @@ class Client extends BaseModel
     protected $fillable = [];
 
     /**
-     * Boot the model.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($post) {
-            $post->title = $post->name;
-        });
-    }
-
-    /**
      * Get the project that owns the distributor.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -43,27 +28,5 @@ class Client extends BaseModel
     public function project(): BelongsTo
     {
         return $this->belongsTo(Project::class);
-    }
-
-    /**
-     * Get the name of the index associated with the model.
-     */
-    public function searchableAs()
-    {
-        return 'client_index';
-    }
-
-    /**
-     * Get the indexable data array for the model.
-     *
-     * @return array<string, mixed>
-     */
-    #[SearchUsingPrefix(['name'])]
-    #[SearchUsingFullText(['name'])]
-    public function toSearchableArray(): array
-    {
-        return [
-            'name' => $this->name,
-        ];
     }
 }

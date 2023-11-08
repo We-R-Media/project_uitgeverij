@@ -19,20 +19,6 @@ class Invoice extends BaseModel
     protected $fillable = [];
 
     /**
-     * Boot the model.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        // static::creating(function ($post) {
-        //     $post->title = $post->name;
-        // });
-    }
-
-    /**
      * Get the phone associated with the user.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -40,13 +26,5 @@ class Invoice extends BaseModel
     public function advertiser(): BelongsTo
     {
         return $this->belongsTo(Advertiser::class);
-    }
-
-    /**
-     * Get the name of the index associated with the model.
-     */
-    public function searchableAs()
-    {
-        return 'invoice_index';
     }
 }

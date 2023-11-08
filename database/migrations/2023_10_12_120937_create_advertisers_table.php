@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('advertisers', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->unique()->nullable();
             $table->foreignId('order_id');
             $table->foreignId('contact_id')->nullable();
             $table->string('name')->unique();

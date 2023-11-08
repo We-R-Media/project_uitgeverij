@@ -33,19 +33,15 @@ class User extends Authenticatable implements MustVerifyEmail
         'role',
     ];
 
-    /**
-     * Boot the model.
+       /**
+     * An array of fields that should be included in the searchable data array for the model.
      *
-     * @return void
+     * @var array<string>
      */
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($post) {
-            $post->title = "{$post->first_name} {$post->last_name}";
-        });
-    }
+    protected $searchableFields = [
+        'first_name',
+        'last_name'
+    ];
 
     /**
      * The attributes that should be hidden for serialization.

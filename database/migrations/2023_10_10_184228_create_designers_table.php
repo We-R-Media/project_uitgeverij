@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('designers', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
+            $table->string('title')->unique()->nullable();
             $table->foreignId('project_id');
             $table->string('name')->unique();
             $table->string('address');

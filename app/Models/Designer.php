@@ -19,19 +19,6 @@ class Designer extends BaseModel
         //
     ];
 
-    /**
-     * Boot the model.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        // static::creating(function ($post) {
-        //     $post->title = "{$post->first_name} {$post->last_name}";
-        // });
-    }
 
     /**
      * Get the project that owns the designer.

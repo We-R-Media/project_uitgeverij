@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('order_lines', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->unique()->nullable();
             $table->foreignID('order_id');
             $table->double('base_price');
             $table->integer('discount');

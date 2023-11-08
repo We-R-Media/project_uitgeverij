@@ -23,20 +23,6 @@ class Printer extends BaseModel
     ];
 
     /**
-     * Boot the model.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($post) {
-            // $post->title = $post->layout_name;
-        });
-    }
-
-    /**
      * Get the project that owns the printer.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

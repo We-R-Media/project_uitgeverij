@@ -22,18 +22,13 @@ class Layout extends BaseModel
     ];
 
     /**
-     * Boot the model.
+     * An array of fields that should be included in the searchable data array for the model.
      *
-     * @return void
+     * @var array<string>
      */
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($post) {
-            $post->title = $post->layout_name;
-        });
-    }
+    protected $searchableFields = [
+        'layout_name',
+    ];
 
     /**
      * Get the project associated with the layout.

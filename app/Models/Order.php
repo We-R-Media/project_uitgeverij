@@ -25,19 +25,15 @@ class Order extends BaseModel
         // 'logo',
     ];
 
-    /**
-     * Boot the model.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($post) {
-            // $post->title = $post->layout_name;
-        });
-    }
+    // /**
+    //  * An array of fields that should be included in the searchable data array for the model.
+    //  *
+    //  * @var array<string>
+    //  */
+    // protected $searchableFields = [
+    //     'layout_name',
+    //     'year',
+    // ];
 
     /**
      * Get the project that owns the order.
@@ -67,13 +63,5 @@ class Order extends BaseModel
     public function orderLines(): HasMany
     {
         return $this->hasMany(OrderLine::class);
-    }
-
-    /**
-     * Get the name of the index associated with the model.
-     */
-    public function searchableAs()
-    {
-        return 'order_index';
     }
 }
