@@ -31,6 +31,9 @@
                                 <span class="date">00-00-XXXX</span>
                             </div>
                         </div>
+                        <div class="notifications__footer">
+                            <a href="">Bekijk alle notificaties</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -40,22 +43,27 @@
                 </div>
                 <div class="controls__wrapper">
                     <div class="controls search__bar">
-                        <input type="text" value="" name="s" placeholder="Zoeken naar gebruiker, order, factuur etc.">
+                        <div class="field">
+                            <label for="s">Zoeken naar</label>
+                            <input type="text" value="" name="s" placeholder="Gebruiker, order, factuur, project etc.">
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="icon icon__user">
-                <div class="thumbnail"></div>
+                <div class="thumbnail">
+                    <img src="{{asset('images/no-image.png')}}">
+                </div>
                 <div class="controls__wrapper">
                     <div class="controls">
                         <div class="UserInfo">
                             <div class="userLoggedIn">
                                 {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
-                                {{--<span class="rol">({{Auth::user()->role}})</span>--}}
+                                <span class="rol">{{Auth::user()->role}}</span>
                             </div>
                             <div class="button-group">
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                                    {{ __('Uitloggen') }}
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
