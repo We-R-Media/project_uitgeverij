@@ -63,6 +63,28 @@
                 }
             });
         });
+
+        let myDropzone = new Dropzone("#UploadImageDrop", {
+
+        paramName: "file", // The name that will be used to transfer the file
+        maxFilesize: 8,
+        url: "{{ route('layouts.upload') }}", 
+        headers: {
+            'X-CSRF-TOKEN': "{{ csrf_token() }}"
+        },
+        success: function (file, response) {
+            console.log(response.success);
+            console.log(response);
+        },
+        error: function (file, response) {
+            //alert(response);
+            //alert(JSON.stringify(response));
+            //this.removeFile(file);
+            console.log(response);
+            //return false;
+        }
+    });
     </script>
+
 </body>
 </html>

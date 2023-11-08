@@ -110,6 +110,19 @@ class LayoutController extends Controller
         return redirect()->route('layouts.index');
     }
 
+     /**
+     * Upload the logo in the public folder
+     */
+    public function upload(Request $request ) :  JsonResponse
+    {
+        $image = $request->file('file');
+     
+        $imageName = time().'.'.$image->extension();
+        $image->move(public_path('images/uploads'),$imageName);
+     
+        return response()->json();
+    }
+
     /**
      * Remove the specified resource from storage.
      */

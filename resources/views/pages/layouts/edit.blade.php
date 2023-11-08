@@ -38,13 +38,16 @@
 
                 <div class="field field-alt">
                     <label for="logo">{{__('Logo')}}</label>
-                    <input type="file" name="logo">
+                    <input type="hidden" name="logo">
                     @error('logo')
                     <span class="form__message" role="alert">
                         <small>{{ $message }}</small>
                     </span>
                     @enderror
                 </div>
+
+                <div class="dropzone" id="UploadImageDrop" data-action="{{route('layouts.update', $layout->id)}}"></div>
+
             </fieldset>
         </div>
         <div class="ButtonGroup">
