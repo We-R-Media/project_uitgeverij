@@ -65,25 +65,33 @@
         });
 
         let myDropzone = new Dropzone("#UploadImageDrop", {
+            paramName: "file",
+            maxFilesize: 8,
+            url: "{{ route('layouts.upload') }}", 
+            headers: {
+                'X-CSRF-TOKEN': "{{ csrf_token() }}"
+            },
+            dictDefaultMessage: "<span>Klik hier</span> <div>of sleep een afbeelding hier om te uploaden.</div>",
+            acceptedFiles: ".jpeg,.jpg,.png,.gif,.svg",
+            success: function (file, response) {
+                // Change input value to save in db
+                $('#logo').val(response.success);
 
-        paramName: "file", // The name that will be used to transfer the file
-        maxFilesize: 8,
-        url: "{{ route('layouts.upload') }}", 
-        headers: {
-            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-        },
-        success: function (file, response) {
-            console.log(response.success);
-            console.log(response);
-        },
-        error: function (file, response) {
-            //alert(response);
-            //alert(JSON.stringify(response));
-            //this.removeFile(file);
-            console.log(response);
-            //return false;
-        }
-    });
+                // fire sweetalert on succes
+                swal.fire({
+                    position: "top-end",
+                    icon: "success",
+                    title: "Afbeelding is geupload.",
+                    showConfirmButton: false,
+                    timer: 1500,
+                });
+            },
+            error: function (file, response) {
+                this.removeFile(file);
+                //console.log(response);
+                return false;
+            }
+        });
     </script>
 
 </body>

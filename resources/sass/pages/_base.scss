@@ -90,6 +90,34 @@
         * {
             box-sizing: border-box;
         }
+        .current__logo {
+            max-width:200px; 
+            height:auto;
+            margin-bottom:50px;
+            border:1px solid #000;
+            padding:25px;
+            img { 
+                width:100%; 
+                height:auto; 
+            }
+        }
+        .dropzone {
+            border:3px dashed color.$accent;
+            button {
+                span { 
+                    display:inline-flex; 
+                    padding:5px 20px;  
+                    border:1px solid color.$primary;
+                    margin-bottom:20px;
+                    transition:background-color 0.4s ease;
+                    border-radius:50px;
+                    &:hover {
+                        background:color.$primary;
+                        color:#fff;
+                    }
+                }
+            }
+        }
     }
     @include mixin.breakpoint("max", "laptop") {
         gap: 0;

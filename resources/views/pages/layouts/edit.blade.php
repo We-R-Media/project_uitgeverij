@@ -38,15 +38,17 @@
 
                 <div class="field field-alt">
                     <label for="logo">{{__('Logo')}}</label>
-                    <input type="hidden" name="logo">
-                    @error('logo')
-                    <span class="form__message" role="alert">
-                        <small>{{ $message }}</small>
-                    </span>
-                    @enderror
+                    <input type="hidden" name="logo" id="logo" value="{{$layout->logo}}">
+
+                    @if(!empty($layout->logo))
+                        <div class="current__logo">
+                            <img src="{{asset($layout->logo)}}">
+                        </div>
+                    @endif
+                    
                 </div>
 
-                <div class="dropzone" id="UploadImageDrop" data-action="{{route('layouts.update', $layout->id)}}"></div>
+                <div class="dropzone" id="UploadImageDrop"></div>
 
             </fieldset>
         </div>
