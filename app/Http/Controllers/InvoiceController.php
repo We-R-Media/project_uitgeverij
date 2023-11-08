@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
-    private static $page_title = 'Factuur';
     private static $page_title_section = 'Facturen';
 
     /**

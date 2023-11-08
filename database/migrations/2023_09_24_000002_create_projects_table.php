@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique()->nullable();
+             $table->string('title')->nullable();
             $table->string('release_name');
             $table->string('edition_name');
             $table->string('print_edition');

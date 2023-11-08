@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('orders_total', function (Blueprint $table) {
 
             $table->id();
-            $table->string('title')->unique()->nullable();
+            $table->string('title')->nullable();
             $table->foreignId('advertiser_id');
             $table->foreignId('user_id');
             $table->foreignId('contact_id');

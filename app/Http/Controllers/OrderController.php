@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    private static $page_title = 'Order';
     private static $page_title_section = 'Orders';
 
     public function __construct()

@@ -26,6 +26,16 @@ class Contact extends BaseModel
     ];
 
     /**
+     * An array of fields that should be included while generating the title.
+     *
+     * @var array<string>
+     */
+    protected $titleGenerationAttributes = [
+        'first_name',
+        'last_name',
+    ];
+
+    /**
      * An array of fields that should be included in the searchable data array for the model.
      *
      * @var array<string>

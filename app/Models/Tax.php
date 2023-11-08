@@ -19,6 +19,15 @@ class Tax extends Model
     ];
 
     /**
+     * An array of fields that should be included while generating the title.
+     *
+     * @var array<string>
+     */
+    protected $titleGenerationAttributes = [
+        'country',
+    ];
+
+    /**
      * An array of fields that should be included in the searchable data array for the model.
      *
      * @var array<string>

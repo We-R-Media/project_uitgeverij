@@ -8,6 +8,10 @@ use Laravel\Scout\Attributes\SearchUsingPrefix;
 
 class BaseModel extends Model
 {
+    protected $titleGenerationAttributes = [
+        'name'
+    ];
+
     protected $searchableFields = [
         'name'
     ];
@@ -17,10 +21,19 @@ class BaseModel extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            if (is_null($model->title)) {
-                $modelName = class_basename($model);
-                $token = fake()->uuid();
-                $model->title = "{$modelName} - {$token}";
+            if (is_null($model->title) && empty($model->title) ) {
+                $title = '';
+
+                foreach ($model->titleGenerationAttributes as $field) {
+                    $value = $model->$field;
+
+                    if (!empty($value)) {
+                        $title .= $value . ' ';
+                    }
+                }
+
+                $title = rtrim($title);
+                $model->title = $title;
             }
         });
     }
@@ -39,9 +52,8 @@ class BaseModel extends Model
         foreach ($this->searchableFields as $field) {
             $title .= $this->$field . ' ';
         }
-        $title = rtrim($title);
 
-        $data['title'] = $title;
+        $data['title'] = rtrim($title);
 
         return $data;
     }

@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 
 class SellerController extends Controller
 {
-    private static $page_title = 'Verkoper';
     private static $page_title_section = 'Verkopers';
 
     public function __construct()

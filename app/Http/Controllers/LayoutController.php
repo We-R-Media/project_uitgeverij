@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class LayoutController extends Controller
 {
-    private static $page_title = 'Layout';
     private static $page_title_section = 'Layouts';
 
     public function __construct()

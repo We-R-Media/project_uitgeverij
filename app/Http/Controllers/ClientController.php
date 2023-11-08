@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
-    private static $page_title = 'Relatie';
     private static $page_title_section = 'Relaties';
 
     public function __construct()

@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 
 class ReminderController extends Controller
 {
-
-    private static $page_title = 'Aanmaning';
     private static $page_title_section = 'Aanmaningen';
 
     public function __construct() {

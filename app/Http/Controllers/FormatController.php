@@ -80,7 +80,6 @@ class FormatController extends Controller
         $format = Format::findOrFail($id);
         $subpages = $this->getSubpages() ?? false;
 
-
         return view('pages.formats.edit', compact('format'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,

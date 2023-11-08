@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\DB;
 
 class AdvertiserController extends Controller
 {
-    private static $page_title = 'Relatie';
     private static $page_title_section = 'Relaties';
 
     public function __construct()
@@ -31,7 +30,6 @@ class AdvertiserController extends Controller
         return view('pages.advertisers.index', compact('advertisers'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
-                'pageTitle' => self::$page_title
             ]);
     }
 

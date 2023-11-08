@@ -21,6 +21,11 @@ class Layout extends BaseModel
         'logo',
     ];
 
+    /**
+     * Bootstrap the model and register the "creating" event.
+     *
+     * @return void
+     */
     public static function boot()
     {
         parent::boot();
@@ -30,12 +35,22 @@ class Layout extends BaseModel
     }
 
     /**
+     * An array of fields that should be included while generating the title.
+     *
+     * @var array<string>
+     */
+    protected $titleGenerationAttributes = [
+        'layout_name',
+    ];
+
+    /**
      * An array of fields that should be included in the searchable data array for the model.
      *
      * @var array<string>
      */
     protected $searchableFields = [
         'layout_name',
+        'city_name'
     ];
 
     /**
