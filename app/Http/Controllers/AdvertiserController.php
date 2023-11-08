@@ -31,7 +31,7 @@ class AdvertiserController extends Controller
         return view('pages.advertisers.index', compact('advertisers'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'seoTitle' => self::$page_title_singular,
             ]);
     }
 
@@ -82,7 +82,8 @@ class AdvertiserController extends Controller
         return view('pages.advertisers.edit', compact('advertiser'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => 'Bewerk ' . self::$page_title_singular,
+                'pageTitle' => $advertiser->title,
+                'seoTitle' => 'Bewerk ' . self::$page_title_singular,
                 'subpages' => $subpages
             ]);
     }
@@ -121,7 +122,7 @@ class AdvertiserController extends Controller
 
         return view('pages.advertisers.contacts')->with([
             'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'seoTitle' => self::$page_title_singular,
             'subpages' => $subpages
         ]);
     }
@@ -132,7 +133,7 @@ class AdvertiserController extends Controller
 
         return view('pages.advertisers.orders')->with([
             'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'seoTitle' => self::$page_title_singular,
             'subpages' => $subpages
         ]);
     }

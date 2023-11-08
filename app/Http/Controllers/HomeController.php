@@ -28,9 +28,8 @@ class HomeController extends Controller
     {
         return view('pages.home')
             ->with([
-                'pageTitle' => self::$page_title_singular,
                 'pageTitleSection' => self::$page_title_plural,
-                'seoTitle' => self::$page_seo,
+                'seoTitle' => self::$page_title_singular,
             ]);
     }
 }

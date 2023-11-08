@@ -11,7 +11,7 @@ class LayoutController extends Controller
     private static $page_title_singular = 'Layout';
     private static $page_title_plural = 'Layouts';
 
-    public function __construct() 
+    public function __construct()
     {
         $this->subpages = [
             'Formaten' => 'formats.index',
@@ -27,13 +27,13 @@ class LayoutController extends Controller
      */
     public function index()
     {
-        $layouts = Layout::all();
+        $layouts = Layout::paginate(10);
 
         $subpages = $this->getSubpages() ?? false;
 
         return view('pages.layouts.index', compact('layouts'))->with([
             'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => self::$page_title_singular,
+            'seoTitle' => self::$page_title_singular,
             'subpages' => $subpages
         ]);
     }
@@ -48,7 +48,7 @@ class LayoutController extends Controller
         return view('pages.layouts.create')
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'seoTitle' => self::$page_title_singular,
                 'subpages' => $subpages
             ]);
     }
@@ -81,15 +81,14 @@ class LayoutController extends Controller
      */
     public function edit(Layout $layout, string $id)
     {
-        // $layouts = Layout::where('id', $id)->get();
         $layout = Layout::findOrFail($id);
-
         $subpages = $this->getSubpages() ?? false;
 
         return view('pages.layouts.edit', compact('layout'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'pageTitle' => $layout->title,
+                'seoTitle' => self::$page_title_singular,
                 'subpages' => $subpages
             ]);
     }

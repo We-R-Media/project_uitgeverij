@@ -35,7 +35,7 @@ class SellerController extends Controller
         return view('pages.sellers.index', compact('sellers', 'subpages'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'seoTitle' => self::$page_title_singular,
             ]);
     }
 
@@ -78,7 +78,7 @@ class SellerController extends Controller
         return view('pages.sellers.edit', compact('subpages', 'seller'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'seoTitle' => self::$page_title_singular,
             ]);
     }
 

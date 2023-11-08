@@ -35,7 +35,7 @@ class TaxController extends Controller
         return view('pages.tax.index', compact('taxes'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'seoTitle' => self::$page_title_singular,
                 'subpages' => $subpages,
             ]);
     }
@@ -45,13 +45,13 @@ class TaxController extends Controller
      */
     public function create()
     {
-        
+
         $subpages = $this->getSubpages() ?? false;
 
         return view('pages.tax.create')
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'seoTitle' => self::$page_title_singular,
                 'subpages' => $subpages,
             ]);
     }
@@ -92,7 +92,7 @@ class TaxController extends Controller
         return view('pages.tax.edit', compact('tax'))
         ->with([
             'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => self::$page_title_singular,
+            'seoTitle' => self::$page_title_singular,
             'subpages' => $subpages
         ]);
     }

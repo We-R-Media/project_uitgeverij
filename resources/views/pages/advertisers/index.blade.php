@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title',  $pageTitle)
+@section('title',  $seoTitle)
 
 @section('content')
 
@@ -30,7 +30,7 @@
                         <label>{{__('Blacklisted')}}</label>
                         @if(!empty($advertiser->blacklisted_at))
                             {{__('Ja')}}
-                        @else 
+                        @else
                             {{__('Nee')}}
                         @endif
                     </div>

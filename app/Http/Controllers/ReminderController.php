@@ -30,7 +30,7 @@ class ReminderController extends Controller
         return view('pages.reminders.index')
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'seoTitle' => self::$page_title_singular,
                 'subpages' => $subpages
             ]);
     }

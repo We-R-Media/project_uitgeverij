@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 
-@section('title', $pageTitle)
+@section('title', $seoTitle)
 @section('content')
     <div class="page__wrapper">
         <form action="{{ route('tax.update', $tax->id) }}" method="post" class="formContainer">
-            @csrf 
+            @csrf
             @method('post')
                 <div class="grid__wrapper">
                     <fieldset class="fields base">

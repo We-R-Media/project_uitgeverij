@@ -12,7 +12,7 @@
 
                 <div class="field field-alt">
                     <label for="advertiser">{{ __('Klantnummer') }}</label>
-                    <input id="" type="text" name="advertiser" value="{{$advertiser->id}}">
+                    <input id="" type="text" name="advertiser" value="{{$order->advertiser->id}}">
                     @error('advertiser')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -32,7 +32,7 @@
 
                 <div class="field field-alt">
                     <label for="contact">{{ __('Contactpersoon') }}</label>
-                    <input id="" type="text" name="contact" value="{{ $advertiser->name }}">
+                    <input id="" type="text" name="contact" value="{{ $order->advertiser->name }}">
                     @error('contact')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -42,7 +42,7 @@
 
                 <div class="field field-alt">
                     <label for="po_box">{{ __('Postadres') }}</label>
-                    <input id="" type="text" name="po_box" value="{{ $advertiser->po_box }}">
+                    <input id="" type="text" name="po_box" value="{{ $order->advertiser->po_box }}">
                     @error('po_box')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -52,7 +52,7 @@
 
                 <div class="field field-alt">
                     <label for="postal_code">{{ __('Postcode') }}</label>
-                    <input id="" type="text" name="postal_code" value="{{ $advertiser->postal_code }}">
+                    <input id="" type="text" name="postal_code" value="{{ $order->advertiser->postal_code }}">
                     @error('postal_code')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -62,7 +62,7 @@
 
                 <div class="field field-alt">
                     <label for="city">{{ __('Woonplaats') }}</label>
-                    <input id="" type="text" name="city" value="{{ $advertiser->city }}">
+                    <input id="" type="text" name="city" value="{{ $order->advertiser->city }}">
                     @error('city')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -72,7 +72,7 @@
 
                 <div class="field field-alt">
                     <label for="province">{{ __('Provincie') }}</label>
-                    <input id="" type="text" name="province" value="{{ $advertiser->province }}">
+                    <input id="" type="text" name="province" value="{{ $order->advertiser->province }}">
                     @error('province')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -92,7 +92,7 @@
 
                 <div class="field field-alt">
                     <label for="phone">{{ __('Telefoonnummer') }}</label>
-                    <input id="" type="text" name="phone" value="{{$advertiser->phone}}">
+                    <input id="" type="text" name="phone" value="{{$order->advertiser->phone}}">
                     @error('phone')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -102,7 +102,7 @@
 
                 <div class="field field-alt">
                     <label for="email">{{ __('E-mailadres') }}</label>
-                    <input id="" type="email" name="email" value="{{$advertiser->email}}">
+                    <input id="" type="email" name="email" value="{{$order->advertiser->email}}">
                     @error('email')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>

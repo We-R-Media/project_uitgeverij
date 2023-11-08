@@ -33,7 +33,7 @@ class SettingsController extends Controller
         return view('pages.settings', compact('subpages'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'seoTitle' => self::$page_title_singular,
             ]);
     }
 }

@@ -27,14 +27,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        // $orders = Order::paginate(10);
-
-        $orders = Order::with(['advertiser', 'project'])->paginate(2);
-
+        $orders = Order::with(['advertiser', 'project'])->paginate(10);
 
         return view('pages.orders.index', compact('orders'))
             ->with([
-                'pageTitle' => self::$page_title_singular,
+                'seoTitle' => self::$page_title_singular,
                 'pageTitleSection' => self::$page_title_plural,
             ]);
     }
@@ -49,7 +46,7 @@ class OrderController extends Controller
 
         return view('pages.orders.create', compact('advertiser'))
         ->with([
-            'pageTitle' => self::$page_title_singular,
+            'seoTitle' => self::$page_title_singular,
             'pageTitleSection' => self::$page_title_plural,
             'subpages' => $subpages
         ]);
@@ -68,17 +65,13 @@ class OrderController extends Controller
      */
     public function edit(string $id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::with('advertiser')->where('id', $id)->firstOrFail();
         $subpages = $this->getSubpages() ?? false;
-        // $advertiser = Advertiser::where('order_id', $order->id)->first();
-        $advertiser = $order->advertiser::where('order_id', $order->id)->first();
-
-
 
         return view('pages.orders.edit', compact('order'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => 'Bewerk ' . self::$page_title_singular,
+                'seoTitle' => 'Bewerk ' . self::$page_title_singular,
                 'subpages' => $subpages,
             ]);
     }
@@ -110,7 +103,7 @@ class OrderController extends Controller
 
         return view('pages.orders.requests')->with([
             'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => 'Verzoeken van ' . self::$page_title_singular,
+            'seoTitle' => 'Verzoeken van ' . self::$page_title_singular,
             'subpages' => $subpages
         ]);
     }
@@ -121,7 +114,7 @@ class OrderController extends Controller
 
         return view('pages.orders.print')->with([
             'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => '??? ' . self::$page_title_singular,
+            'seoTitle' => '??? ' . self::$page_title_singular,
             'subpages' => $subpages
         ]);
     }
@@ -132,7 +125,7 @@ class OrderController extends Controller
 
         return view('pages.orders.articles')->with([
             'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'seoTitle' => 'Contactpersonen van ' . self::$page_title_singular,
             'subpages' => $subpages
         ]);
     }
@@ -143,7 +136,7 @@ class OrderController extends Controller
 
         return view('pages.orders.complaints')->with([
             'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'seoTitle' => 'Contactpersonen van ' . self::$page_title_singular,
             'subpages' => $subpages
         ]);
     }

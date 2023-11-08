@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 
-@section('title', $pageTitle)
+@section('title', $seoTitle)
 @section('content')
     <div class="page__wrapper">
         <form action="{{ route('formats.store') }}" method="post">

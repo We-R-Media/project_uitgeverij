@@ -20,7 +20,7 @@ class InvoiceController extends Controller
 
         return view('pages.invoices', compact('invoices'))->with([
             'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => self::$page_title_singular,
+            'seoTitle' => self::$page_title_singular,
             'subpages' => $subpages
         ]);
     }

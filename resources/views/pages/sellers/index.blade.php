@@ -2,7 +2,7 @@
 
 
 
-@section('title', $pageTitle)
+@section('title', $seoTitle)
 
 @section('content')
     <div class="page__wrapper">
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </li>
-            @endforeach 
+            @endforeach
         </ul>
     </div>
 

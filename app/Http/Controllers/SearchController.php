@@ -28,7 +28,7 @@ class SearchController extends Controller
         return view('search.results', compact('results', 'query'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => 'Nieuwe ' . self::$page_title_singular
+                'seoTitle' => 'Nieuwe ' . self::$page_title_singular
             ]);
     }
 

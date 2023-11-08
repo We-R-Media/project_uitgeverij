@@ -31,7 +31,7 @@ class ProjectController extends Controller
         return view('pages.projects.index', compact('projects'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => 'Nieuwe ' . self::$page_title_singular
+                'seoTitle' => 'Nieuwe ' . self::$page_title_singular
             ]);
     }
 
@@ -92,11 +92,11 @@ class ProjectController extends Controller
         $subpages = $this->getSubpages() ?? false;
 
         $layouts = Layout::all();
-        
+
         return view('pages.projects.edit', compact('project'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => 'Bewerk ' . self::$page_title_singular,
+                'seoTitle' => 'Bewerk ' . self::$page_title_singular,
                 'subpages' => $subpages,
                 'layouts' => $layouts,
             ]);
@@ -125,7 +125,7 @@ class ProjectController extends Controller
 
         return view('pages.projects.planning')->with([
             'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => 'Planning van ' . self::$page_title_singular,
+            'seoTitle' => 'Planning van ' . self::$page_title_singular,
             'subpages' => $subpages
         ]);
     }
@@ -136,7 +136,7 @@ class ProjectController extends Controller
 
         return view('pages.projects.calculation')->with([
             'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => 'Calculatie van ' . self::$page_title_singular,
+            'seoTitle' => 'Calculatie van ' . self::$page_title_singular,
             'subpages' => $subpages
         ]);
     }

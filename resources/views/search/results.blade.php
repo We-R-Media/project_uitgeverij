@@ -12,8 +12,7 @@
                 <ul>
                     @foreach ($searchResult['results'] as $result)
                         <li>
-                            <strong>{{ $result->name }}</strong>
-                            <p>{{ $result->description }}</p>
+                            <strong>{{ $result->title }}</strong>
                         </li>
                     @endforeach
                 </ul>

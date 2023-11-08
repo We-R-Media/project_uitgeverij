@@ -14,7 +14,7 @@ class FormatController extends Controller
     private static $page_title_plural = 'Formaten';
 
 
-    public function __construct() 
+    public function __construct()
     {
         $this->subpages = [
             'Formaten' => 'formats.index',
@@ -33,12 +33,12 @@ class FormatController extends Controller
     {
         $subpages = $this->getSubpages() ?? false;
 
-        $formats = Format::all();
+        $formats = Format::paginate(10);
 
         return view('pages.formats.index', compact('formats'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'seoTitle' => self::$page_title_singular,
                 'subpages' => $subpages,
             ]);
     }
@@ -53,7 +53,7 @@ class FormatController extends Controller
         return view('pages.formats.create')
         ->with([
             'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => self::$page_title_singular,
+            'seoTitle' => self::$page_title_singular,
             'subpages' => $subpages,
         ]);
     }
@@ -80,13 +80,15 @@ class FormatController extends Controller
      */
     public function edit(string $id)
     {
-        $subpages = $this->getSubpages() ?? false;
         $format = Format::findOrFail($id);
+        $subpages = $this->getSubpages() ?? false;
+
 
         return view('pages.formats.edit', compact('format'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'pageTitle' => $format->title,
+                'seoTitle' => self::$page_title_singular,
                 'subpages' => $subpages,
             ]);
     }

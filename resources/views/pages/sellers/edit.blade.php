@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 
-@section('title', $pageTitle)
+@section('title', $seoTitle)
 @section('content')
     <div class="page__wrapper">
         <form class="formContainer" action="{{ route('sellers.update', $seller->id) }}" method="post">
@@ -23,7 +23,7 @@
 
                     <div class="field field-alt">
                         <label for="initial">{{__('Initiaal')}}</label>
-                        <input type="text" value="{{$seller->initial}}" name="initial">    
+                        <input type="text" value="{{$seller->initial}}" name="initial">
                         @error('initial')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -43,15 +43,15 @@
 
                     <div class="field field-alt">
                         <label for="last_name">{{__('Achternaam')}}</label>
-                        <input type="text" value="{{$seller->last_name}}" name="last_name" id=""> 
+                        <input type="text" value="{{$seller->last_name}}" name="last_name" id="">
                         @error('last_name')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
-                        @enderror   
+                        @enderror
                     </div>
 
-            
+
                     <div class="field field-alt">
                         <label for="email">{{__('E-mailadres')}}</label>
                         <input type="email" value="{{$seller->email}}" name="email" id="">
@@ -62,7 +62,7 @@
                         @enderror
                     </div>
                 </fieldset>
-                
+
             </div>
             <div class="ButtonGroup">
                 <div class="buttons">
