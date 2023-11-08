@@ -8,8 +8,8 @@ use App\Models\Tax;
 
 class TaxController extends Controller
 {
-    private static $page_title_singular = 'BTW';
-    private static $page_title_plural = 'BTW';
+    private static $page_title = 'BTW';
+    private static $page_title_section = 'BTW';
 
     public function __construct() {
         $this->subpages = [
@@ -34,8 +34,7 @@ class TaxController extends Controller
 
         return view('pages.tax.index', compact('taxes'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'seoTitle' => self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
                 'subpages' => $subpages,
             ]);
     }
@@ -50,8 +49,7 @@ class TaxController extends Controller
 
         return view('pages.tax.create')
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'seoTitle' => self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
                 'subpages' => $subpages,
             ]);
     }
@@ -91,8 +89,8 @@ class TaxController extends Controller
 
         return view('pages.tax.edit', compact('tax'))
         ->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'seoTitle' => self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_section,
+            'pageTitle' => $tax->title,
             'subpages' => $subpages
         ]);
     }

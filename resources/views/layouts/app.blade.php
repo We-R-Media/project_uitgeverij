@@ -28,7 +28,8 @@
 
         <main class="pageContainer">
             @livewire('top-bar', [
-                'seoTitle' => $pageTitleSection ?? 'RON',
+                'pageTitleSection' => $pageTitleSection ?? 'RON',
+                'pageTitle' => $pageTitle ?? false,
                 'subpages' => $subpages ?? false
             ])
 

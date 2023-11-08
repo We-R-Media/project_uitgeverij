@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 
 class LayoutController extends Controller
 {
-    private static $page_title_singular = 'Layout';
-    private static $page_title_plural = 'Layouts';
+    private static $page_title = 'Layout';
+    private static $page_title_section = 'Layouts';
 
     public function __construct()
     {
@@ -32,8 +32,7 @@ class LayoutController extends Controller
         $subpages = $this->getSubpages() ?? false;
 
         return view('pages.layouts.index', compact('layouts'))->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'seoTitle' => self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_section,
             'subpages' => $subpages
         ]);
     }
@@ -47,8 +46,7 @@ class LayoutController extends Controller
 
         return view('pages.layouts.create')
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'seoTitle' => self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
                 'subpages' => $subpages
             ]);
     }
@@ -86,9 +84,8 @@ class LayoutController extends Controller
 
         return view('pages.layouts.edit', compact('layout'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
+                'pageTitleSection' => self::$page_title_section,
                 'pageTitle' => $layout->title,
-                'seoTitle' => self::$page_title_singular,
                 'subpages' => $subpages
             ]);
     }

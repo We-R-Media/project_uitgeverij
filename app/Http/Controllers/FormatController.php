@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\DB;
 class FormatController extends Controller
 
 {
-    private static $page_title_singular = 'Formaat';
-    private static $page_title_plural = 'Formaten';
+    private static $page_title_section = 'Formaten';
 
 
     public function __construct()
@@ -37,8 +36,7 @@ class FormatController extends Controller
 
         return view('pages.formats.index', compact('formats'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'seoTitle' => self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
                 'subpages' => $subpages,
             ]);
     }
@@ -52,8 +50,7 @@ class FormatController extends Controller
 
         return view('pages.formats.create')
         ->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'seoTitle' => self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_section,
             'subpages' => $subpages,
         ]);
     }
@@ -86,9 +83,8 @@ class FormatController extends Controller
 
         return view('pages.formats.edit', compact('format'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
+                'pageTitleSection' => self::$page_title_section,
                 'pageTitle' => $format->title,
-                'seoTitle' => self::$page_title_singular,
                 'subpages' => $subpages,
             ]);
     }

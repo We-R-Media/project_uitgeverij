@@ -6,8 +6,7 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
-    private static $page_title_singular = 'Dashboard';
-    private static $page_title_plural = 'Dashboard';
+    private static $page_title_section = 'Dashboard';
 
     /**
      * Create a new controller instance.
@@ -28,8 +27,7 @@ class HomeController extends Controller
     {
         return view('pages.home')
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'seoTitle' => self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
             ]);
     }
 }

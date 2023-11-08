@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 
-@section('title', $seoTitle)
+@section('seo_title', $pageTitleSection)
 @section('content')
     <div class="page__wrapper">
         <form action="{{ route('tax.update', $tax->id) }}" method="post" class="formContainer">

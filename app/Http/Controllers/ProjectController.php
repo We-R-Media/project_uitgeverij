@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
-    private static $page_title_singular = 'Project';
-    private static $page_title_plural = 'Projecten';
+    private static $page_title = 'Project';
+    private static $page_title_section = 'Projecten';
 
     public function __construct()
     {
@@ -30,8 +30,7 @@ class ProjectController extends Controller
 
         return view('pages.projects.index', compact('projects'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'seoTitle' => 'Nieuwe ' . self::$page_title_singular
+                'pageTitleSection' => self::$page_title_section,
             ]);
     }
 
@@ -95,8 +94,8 @@ class ProjectController extends Controller
 
         return view('pages.projects.edit', compact('project'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'seoTitle' => 'Bewerk ' . self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
+                'pageTitle' => $project->title,
                 'subpages' => $subpages,
                 'layouts' => $layouts,
             ]);
@@ -121,22 +120,24 @@ class ProjectController extends Controller
 
     public function planning(string $id)
     {
+        $project = Project::findOrFail($id);
         $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.projects.planning')->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'seoTitle' => 'Planning van ' . self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_section,
+            'pageTitle' => $project->title,
             'subpages' => $subpages
         ]);
     }
 
     public function calculation(string $id)
     {
+        $project = Project::findOrFail($id);
         $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.projects.calculation')->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'seoTitle' => 'Calculatie van ' . self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_section,
+            'pageTitle' => $project->title,
             'subpages' => $subpages
         ]);
     }

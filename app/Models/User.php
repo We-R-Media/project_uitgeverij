@@ -63,20 +63,16 @@ class User extends Authenticatable implements MustVerifyEmail
         'password' => 'hashed',
     ];
 
-    /**
-     * Get the indexable data array for the model.
-     *
-     * @return array<string, mixed>
-     */
-    #[SearchUsingPrefix(['first_name', 'last_name', 'email', 'role'])]
-    #[SearchUsingFullText(['first_name', 'last_name', 'email'])]
-    public function toSearchableArray(): array
+    protected static function boot()
     {
-        return [
-            'first_name' => $this->first_name,
-            'last_name' => $this->last_name,
-            'email' => $this->email,
-            'role' => $this->role,
-        ];
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (is_null($model->title)) {
+                $modelName = class_basename($model);
+                $token = fake()->uuid();
+                $model->title = "{$modelName} - {$token}";
+            }
+        });
     }
 }

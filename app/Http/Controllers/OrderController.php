@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    private static $page_title_singular = 'Order';
-    private static $page_title_plural = 'Orders';
+    private static $page_title = 'Order';
+    private static $page_title_section = 'Orders';
 
     public function __construct()
     {
@@ -31,8 +31,7 @@ class OrderController extends Controller
 
         return view('pages.orders.index', compact('orders'))
             ->with([
-                'seoTitle' => self::$page_title_singular,
-                'pageTitleSection' => self::$page_title_plural,
+                'pageTitleSection' => self::$page_title_section,
             ]);
     }
 
@@ -46,8 +45,7 @@ class OrderController extends Controller
 
         return view('pages.orders.create', compact('advertiser'))
         ->with([
-            'seoTitle' => self::$page_title_singular,
-            'pageTitleSection' => self::$page_title_plural,
+            'pageTitleSection' => self::$page_title_section,
             'subpages' => $subpages
         ]);
     }
@@ -70,8 +68,8 @@ class OrderController extends Controller
 
         return view('pages.orders.edit', compact('order'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'seoTitle' => 'Bewerk ' . self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
+                'pageTitle' => $order->title,
                 'subpages' => $subpages,
             ]);
     }
@@ -99,44 +97,48 @@ class OrderController extends Controller
 
     public function requests(string $id)
     {
+        $order = Order::findOrFail($id);
         $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.orders.requests')->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'seoTitle' => 'Verzoeken van ' . self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_section,
+            'pageTitle' => $order->title,
             'subpages' => $subpages
         ]);
     }
 
     public function print(string $id)
     {
+        $order = Order::findOrFail($id);
         $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.orders.print')->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'seoTitle' => '??? ' . self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_section,
+            'pageTitle' => $order->title,
             'subpages' => $subpages
         ]);
     }
 
     public function articles(string $id)
     {
+        $order = Order::findOrFail($id);
         $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.orders.articles')->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'seoTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_section,
+            'pageTitle' => $order->title,
             'subpages' => $subpages
         ]);
     }
 
     public function complaints(string $id)
     {
+        $order = Order::findOrFail($id);
         $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.orders.complaints')->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'seoTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_section,
+            'pageTitle' => $order->title,
             'subpages' => $subpages
         ]);
     }

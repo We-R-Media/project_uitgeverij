@@ -9,8 +9,8 @@ use Illuminate\Http\Request;
 
 class SellerController extends Controller
 {
-    private static $page_title_singular = 'Verkoper';
-    private static $page_title_plural = 'Verkopers';
+    private static $page_title = 'Verkoper';
+    private static $page_title_section = 'Verkopers';
 
     public function __construct()
     {
@@ -34,8 +34,7 @@ class SellerController extends Controller
 
         return view('pages.sellers.index', compact('sellers', 'subpages'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'seoTitle' => self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
             ]);
     }
 
@@ -68,17 +67,14 @@ class SellerController extends Controller
      */
     public function edit(User $seller, $id)
     {
+        $seller = User::findOrFail($id);
         $subpages = $this->getSubpages() ?? false;
 
-        // $sellers = User::where('id', $id)->get();
-        $seller = User::findOrFail($id);
-
-        // dd($sellers);
-
-        return view('pages.sellers.edit', compact('subpages', 'seller'))
+        return view('pages.sellers.edit', compact('seller'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'seoTitle' => self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
+                'pageTitle' => $seller->title,
+                'subpages' => $subpages
             ]);
     }
 
@@ -88,12 +84,10 @@ class SellerController extends Controller
     public function update(Request $request, User $seller, $id)
     {
         DB::transaction(function () use($request, $id, $seller) {
-
             User::where('id', $id)->update([
                 'first_name' => $request->input('first_name'),
                 'initial' => $request->input('initial'),
                 'last_name' => $request->input('last_name'),
-
             ]);
         });
 

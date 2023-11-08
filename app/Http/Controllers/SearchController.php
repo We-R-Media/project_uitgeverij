@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    private static $page_title_singular = 'Zoeken';
-    private static $page_title_plural = 'Zoeken';
+    private static $page_title = 'Zoeken';
+    private static $page_title_section = 'Zoeken';
 
     private static $searchable_models = [
         'Advertiser',
@@ -27,8 +27,7 @@ class SearchController extends Controller
 
         return view('search.results', compact('results', 'query'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'seoTitle' => 'Nieuwe ' . self::$page_title_singular
+                'pageTitleSection' => self::$page_title_section,
             ]);
     }
 

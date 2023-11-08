@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
-@section('title',  $seoTitle)
+@section([
+    'seo_title' => $pageTitleSection
+])
 
 @section('content')
 

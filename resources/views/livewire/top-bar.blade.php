@@ -25,10 +25,10 @@
     @endauth
 
      <!--- SubTitle ---->
-    <h1 class="sub__title">{{ __($seoTitle) }}</h1>
+    <h1 class="page__section">{{ __($pageTitleSection) }}</h1>
 
      <!--- Page title ---->
-    <h2 class="page__title">{{ __($seoTitle ?? 'Title')  }}</h2>
+    <h2 class="page__title">{{ __($pageTitle)  }}</h2>
 
      <!--- Subpages ---->
     <div class="sub__pages">
