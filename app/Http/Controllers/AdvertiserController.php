@@ -92,7 +92,19 @@ class AdvertiserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        DB::transaction(function () use($request, $id) {
+            Advertiser::where('id', $id)->update([
+                'name' => $request->input('name'),
+                'po_box' => $request->input('po_box'),
+                'postal_code' => $request->input('postal_code'),
+                'city' => $request->input('city'),
+                'province' => $request->input('province'),
+                'phone' => $request->input('phone'),
+                'phone_mobile' => $request->input('phone_mobile'),
+                'email' => $request->input('email'),
+            ]);
+        });
+        return redirect()->route('advertisers.index');
     }
 
     /**

@@ -32,17 +32,17 @@ Route::group(['middleware' => ['auth']], function() {
     ] )->name('home');
 
     Route::name('projects.')
-        ->prefix('projects')
+        ->prefix('projecten')
         ->controller(ProjectController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}', 'edit')->name('edit');
+            Route::get('/{id}/bewerken', 'edit')->name('edit');
             Route::get('/{id}/planning', 'planning')->name('planning');
             Route::get('/{id}/calculatie', 'calculation')->name('calculation');
-            Route::get('/create', 'create')->name('create');
+            Route::get('/creëren', 'create')->name('create');
 
-            Route::post('/store', 'store')->name('store');
-            Route::post('/update', 'update')->name('update');
+            Route::post('/opslaan', 'store')->name('store');
+            Route::post('/bijwerken', 'update')->name('update');
         });
 
     Route::name('orders.')
@@ -50,12 +50,12 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(OrderController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}', 'edit')->name('edit');
+            Route::get('/{id}/bewerken', 'edit')->name('edit');
             Route::get('/{id}/requests', 'requests')->name('requests');
             Route::get('/{id}/print', 'print')->name('print');
-            Route::get('/{id}/articles', 'articles')->name('articles');
-            Route::get('/{id}/complaints', 'complaints')->name('complaints');
-            Route::get('/create/{id}', 'create')->name('create');
+            Route::get('/{id}/artikelen', 'articles')->name('articles');
+            Route::get('/{id}/klachten', 'complaints')->name('complaints');
+            Route::get('/{id}/creëren/', 'create')->name('create');
 
             Route::post('/store', 'store')->name('store');
             Route::post('/update', 'update')->name('update');
@@ -67,76 +67,74 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(AdvertiserController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}', 'edit')->name('edit');
-            Route::get('/{id}/contacts', 'contacts')->name('contacts');
+            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/{id}/contacten', 'contacts')->name('contacts');
             Route::get('/{id}/orders', 'orders')->name('orders');
-            Route::get('/create', 'create')->name('create');
+            Route::get('/creëren', 'create')->name('create');
 
-            Route::post('/store', 'store')->name('store');
-            Route::post('/update', 'update')->name('update');
+            Route::post('/opslaan', 'store')->name('store');
+            Route::post('/{id}/bijwerken', 'update')->name('update');
         });
 
     Route::name('contact.')
-        ->prefix('contacts')
+        ->prefix('contacten')
         ->controller(ContactController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/create', 'create')->name('create');
+            Route::get('/creëren', 'create')->name('create');
 
-            Route::post('/store', 'store')->name('store');
-            Route::post('/update', 'update')->name('update');
+            Route::post('/opslaan', 'store')->name('store');
+            Route::post('/bijwerken', 'update')->name('update');
         });
 
     Route::name('tax.')
-        ->prefix('tax')
+        ->prefix('btw')
         ->controller(TaxController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/edit/{id}', 'edit')->name('edit');
-            Route::get('/create', 'create')->name('create');
+            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/creëren', 'create')->name('create');
 
-            Route::post('/store', 'store')->name('store');
-            Route::post('/update/{id}', 'update')->name('update');
-            Route::delete('/destroy/{id}', 'destroy')->name('destroy');
+            Route::post('/opslaan', 'store')->name('store');
+            Route::post('/{id}/bijewerken', 'update')->name('update');
+            Route::delete('/{id}/verwijderen', 'destroy')->name('destroy');
         });
 
     Route::name('invoices.')
-        ->prefix('invoices')
+        ->prefix('facturen')
         ->controller(InvoiceController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
         });
 
     Route::name('pdf.')
-        ->prefix('pdf-generate')
+        ->prefix('pdf')
         ->controller(PDFController::class)
         ->group(function () {
             Route::get('/', 'PDFGenerate')->name('generate');
         });
 
     Route::name('reminders.')
-        ->prefix('reminders')
+        ->prefix('aanmaningen')
         ->controller(ReminderController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
         });
 
     Route::name('settings.')
-        ->prefix('settings')
+        ->prefix('instellingen')
         ->controller(SettingsController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/formats', 'formats')->name('formats');
-            Route::get('/tax', 'tax')->name('tax');
         });
     
     Route::name('sellers.')
-        ->prefix('sellers')
+        ->prefix('verkopers')
         ->controller(SellerController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}/edit', 'edit')->name('edit');
-            Route::post('/{id}/update', 'update')->name('update');
+            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::post('/{id}/bijwerken', 'update')->name('update');
         });
 
     Route::name('layouts.')
@@ -144,17 +142,24 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(LayoutController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/edit/{id}', 'edit')->name('edit');
-            Route::get('/create', 'create')->name('create');
-            Route::post('/store', 'store')->name('store');
+            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/creëren', 'create')->name('create');
+
+            Route::post('/opslaan', 'store')->name('store');
+            Route::post('/{id}/bijwerken', 'update')->name('update');
         });
 
 
     Route::name('formats.')
-        ->prefix('formats')
+        ->prefix('formaten')
         ->controller(FormatController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
+            Route::get('/creëren', 'create')->name('create');
+            Route::get('/{id}/bewerken', 'edit')->name('edit');
+
+            Route::post('/opslaan', 'store')->name('store');
+            Route::post('/{id}/bijwerken', 'update')->name('update');
         });
 });
 

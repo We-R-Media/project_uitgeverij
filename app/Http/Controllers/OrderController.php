@@ -39,9 +39,17 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(string $id)
     {
-        //
+        $subpages = $this->getSubpages() ?? false;
+        $advertiser = Advertiser::findOrFail($id);
+
+        return view('pages.orders.create', compact('advertiser'))
+        ->with([
+            'pageTitle' => self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_plural,
+            'subpages' => $subpages
+        ]);
     }
 
     /**

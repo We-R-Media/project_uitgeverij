@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Format;
 use Illuminate\Http\Request;
+use Illuminate\Http\Requests\FormatRequest;
 use Illuminate\Support\Facades\DB;
 
 class FormatController extends Controller
@@ -19,7 +20,7 @@ class FormatController extends Controller
             'Formaten' => 'formats.index',
             'Verkopers' => 'sellers.index',
             'Layouts' => 'layouts.index',
-            'BTW' => 'settings.tax',
+            'BTW' => 'tax.index',
             'Aanmaningen' => 'reminders.index',
         ];
     }
@@ -47,7 +48,14 @@ class FormatController extends Controller
      */
     public function create()
     {
-        //
+        $subpages = $this->getSubpages() ?? false;
+
+        return view('pages.formats.create')
+        ->with([
+            'pageTitleSection' => self::$page_title_plural,
+            'pageTitle' => self::$page_title_singular,
+            'subpages' => $subpages,
+        ]);
     }
 
     /**
@@ -72,7 +80,15 @@ class FormatController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $subpages = $this->getSubpages() ?? false;
+        $format = Format::findOrFail($id);
+
+        return view('pages.formats.edit', compact('format'))
+            ->with([
+                'pageTitleSection' => self::$page_title_plural,
+                'pageTitle' => self::$page_title_singular,
+                'subpages' => $subpages,
+            ]);
     }
 
     /**
@@ -80,7 +96,16 @@ class FormatController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        DB::transaction(function () use($request,$id) {
+            Format::where('id', $id)->update([
+                'size' => $request->input('size'),
+                'measurement' => $request->input('measurement'),
+                'ratio' => $request->input('ratio'),
+                'price' => $request->input('price'),
+            ]);
+        });
+
+        return redirect()->route('formats.index');
     }
 
     /**

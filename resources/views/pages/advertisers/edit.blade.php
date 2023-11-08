@@ -11,7 +11,7 @@
         </div>
     </div>
 
-    <form class="formContainer" action="{{ route('advertisers.edit', $advertiser->id) }}" method="post">
+    <form class="formContainer" action="{{ route('advertisers.update', $advertiser->id) }}" method="post">
         @csrf
         @method('post')
         <div class="grid__wrapper">
@@ -80,7 +80,7 @@
 
                 <div class="field field-alt">
                     <label for="phone">{{ __('Telefoonnummer') }}</label>
-                    <input id="" type="number" name="phone" value="{{ $advertiser->phone }}">
+                    <input id="" type="text" name="phone" value="{{ $advertiser->phone }}">
                     @error('phone')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -90,7 +90,7 @@
 
                 <div class="field field-alt">
                     <label for="phone_mobile">{{ __('Mobiel') }}</label>
-                    <input id="" type="number" name="phone_mobile" value="{{ $advertiser->phone_mobile }}">
+                    <input id="" type="text" name="phone_mobile" value="{{ $advertiser->phone_mobile }}">
                     @error('phone_mobile')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -109,7 +109,7 @@
                 </div>
 
                     <div class="field field-alt">
-                    <label for="taxes">{{ __('Contactpersoon') }}</label>
+                    <label for="contacts">{{ __('Contactpersoon') }}</label>
                     <div class="dropdown">
                         <select class="@error('contact_id') is-invalid @enderror" name="contact_id" id="">
                            {{-- @if($contacts->isEmpty()) --}}

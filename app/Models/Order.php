@@ -11,6 +11,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
+    protected $fillable = [
+        'name',
+    ];
+
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function ($post) {
+            $post->title = $post->name;
+        });
+    }
+
     use HasFactory, SoftDeletes;
 
     /**

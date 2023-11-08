@@ -20,6 +20,7 @@ class Format extends Model
         'name',
         'size',
         'measurement',
+        'ratio',
         'price',
         'page_count',
         'description'

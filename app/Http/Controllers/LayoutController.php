@@ -107,7 +107,7 @@ class LayoutController extends Controller
             ]);
         });
 
-        return redirect()->back();
+        return redirect()->route('layouts.index');
     }
 
     /**

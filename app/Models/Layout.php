@@ -16,6 +16,14 @@ class Layout extends Model
         'logo',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+        static::creating(function ($post) {
+            $post->title = $post->layout_name;
+        });
+    }
+
     /**
      * Get the project associated with the layout.
      *
