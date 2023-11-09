@@ -106,6 +106,13 @@
 
                 </fieldset>
             </div>
+
+            <div class="ButtonGroup">
+                <div class="buttons">
+                    <button type="submit" class="button button--action">{{__('Opslaan')}}</button>
+                </div>
+            </div>
+
         </form>
     </div>
 
