@@ -115,9 +115,19 @@
                 <h3>{{ __('Opties') }}</h3>
 
                 <div class="field field-alt">
-                    <label for="layout">{{ __('Layout') }}</label>
-                    <input id="" type="text" name="layout" value="">
-                    @error('layout')
+                    <label for="project_id">{{ __('Projectcode') }}</label>
+                    <input id="" type="text" name="project_id" value="{{ $order->project->id }}" disabled>
+                    @error('project_id')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="invoiced">{{ __('Gefactureerd') }}</label>
+                    <input id="" type="text" name="invoiced" value="">
+                    @error('invoiced')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
