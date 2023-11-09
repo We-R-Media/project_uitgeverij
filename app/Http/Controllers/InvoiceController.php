@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
+use App\Models\Advertiser;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -18,7 +19,7 @@ class InvoiceController extends Controller
         $invoices = Invoice::paginate(10);
         $subpages = $this->getSubpages() ?? false;
 
-        return view('pages.invoices', compact('invoices'))->with([
+        return view('pages.invoices.index', compact('invoices'))->with([
             'pageTitleSection' => self::$page_title_plural,
             'pageTitle' => self::$page_title_singular,
             'subpages' => $subpages
@@ -46,7 +47,16 @@ class InvoiceController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $invoice = Invoice::FindOrFail($id);
+        $subpages = $this->getSubpages() ?? false;
+
+
+        return view('pages.invoices.edit', compact('invoice'))
+            ->with([
+                'pageTitleSection' => self::$page_title_plural,
+                'pageTitle' => 'Bewerk ' . self::$page_title_singular,
+                'subpages' => $subpages,
+            ]);
     }
 
     /**

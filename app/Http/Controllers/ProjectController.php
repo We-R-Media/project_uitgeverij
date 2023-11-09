@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Layout;
 use App\Models\Project;
+use App\Http\Requests\ProjectRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -46,7 +47,7 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
         DB::transaction(function () use ($request) {
             $project = Project::create([

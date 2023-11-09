@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Advertiser extends Model
 {
+
     use HasFactory, SoftDeletes;
 
     /**
@@ -35,13 +36,13 @@ class Advertiser extends Model
     ];
 
     /**
-     * Get the contact associated with the Advertiser
+     * Get all of the contacts for the Advertiser
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function contact(): HasOne
+    public function contacts(): HasMany
     {
-        return $this->hasOne(Contact::class);
+        return $this->hasMany(Comment::class);
     }
 
     /**

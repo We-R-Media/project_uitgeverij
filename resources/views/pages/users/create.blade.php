@@ -4,7 +4,7 @@
 @section('title', $pageTitle)
 @section('content')
     <div class="page__wrapper">
-        <form class="formContainer" action="{{ route('sellers.update', $seller->id) }}" method="post">
+        <form class="formContainer" action="{{ route('users.store') }}" method="post">
             @csrf
             @method('post')
             <div class="grid__wrapper">
@@ -12,28 +12,8 @@
                     <h3>{{ __('Algemeen') }}</h3>
 
                     <div class="field field-alt">
-                        <label for="seller_id">{{__('Verkopernummer')}}</label>
-                        <input type="number" value="{{$seller->id}}" name="id" id="" disabled>
-                        @error('seller_id')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                        @enderror
-                    </div>
-
-                    <div class="field field-alt">
-                        <label for="initial">{{__('Initiaal')}}</label>
-                        <input type="text" value="{{$seller->initial}}" name="initial">    
-                        @error('initial')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                        @enderror
-                    </div>
-
-                    <div class="field field-alt">
                         <label for="first_name">{{__('Voornaam')}}</label>
-                        <input type="text" value="{{$seller->first_name}}" name="first_name" id="">
+                        <input type="text" name="first_name" id="">
                         @error('first_name')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -42,8 +22,48 @@
                     </div>
 
                     <div class="field field-alt">
+                        <label for="initial">{{__('Initiaal')}}</label>
+                        <input type="text" name="initial">    
+                        @error('initial')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="field field-alt">
+                        <label for="preposition">{{__('Tussenvoegsel')}}</label>
+                        <input type="text" name="preposition">    
+                        @error('preposition')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                        @enderror
+                    </div>
+
+                    <div class="field field-alt">
+                        <label for="gender">{{__('Gender')}}</label>
+                        <select name="gender" id="">
+                            <option value="male">Man</option>
+                            <option value="female">Vrouw</option>
+                            <option value="other">Zeg ik liever niet</option>
+                        </select>
+                    </div>
+
+                    <div class="field field-alt">
+                        <label for="role">{{__('Rol')}}</label>
+                        <select name="role" id="">
+                            <option value="seller">Verkoper</option>
+                            <option value="supervisor">Administratie</option>
+                            <option value="admin">Beheerder</option>
+                        </select>
+                    </div>
+
+
+
+                    <div class="field field-alt">
                         <label for="last_name">{{__('Achternaam')}}</label>
-                        <input type="text" value="{{$seller->last_name}}" name="last_name" id=""> 
+                        <input type="text" name="last_name" id=""> 
                         @error('last_name')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -54,13 +74,24 @@
             
                     <div class="field field-alt">
                         <label for="email">{{__('E-mailadres')}}</label>
-                        <input type="email" value="{{$seller->email}}" name="email" id="">
+                        <input type="email" name="email" id="">
                         @error('email')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
                         @enderror
                     </div>
+
+                    <div class="field field-alt">
+                        <label for="password">{{__('Wachtwoord')}}</label>
+                        <input type="password" name="password" id="">
+                        @error('password')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                        @enderror
+                    </div>
+
                 </fieldset>
                 
             </div>

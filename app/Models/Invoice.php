@@ -9,6 +9,20 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Invoice extends Model
 {
+    protected $fillable = [
+        'id',
+        'advertiser_id',
+        'invoice_date',
+        'post_method',
+        'first_reminder',
+        'second_reminder',
+        'third_reminder',
+        'payed_at',
+        'deleted_at',
+        'created_at',
+        'updated_ad',
+    ];
+
     use HasFactory, SoftDeletes;
 
     /**

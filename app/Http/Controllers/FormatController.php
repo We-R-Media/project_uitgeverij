@@ -18,10 +18,10 @@ class FormatController extends Controller
     {
         $this->subpages = [
             'Formaten' => 'formats.index',
-            'Verkopers' => 'sellers.index',
             'Layouts' => 'layouts.index',
             'BTW' => 'tax.index',
             'Aanmaningen' => 'reminders.index',
+            'Gebruikers' => 'users.index',
         ];
     }
 

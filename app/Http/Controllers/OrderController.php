@@ -69,6 +69,7 @@ class OrderController extends Controller
         $subpages = $this->getSubpages() ?? false;
         $advertiser = Advertiser::where('order_id', $order->id)->first();
 
+
         return view('pages.orders.edit', compact('order', 'advertiser'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,

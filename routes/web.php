@@ -9,11 +9,11 @@ use App\Http\Controllers\TaxController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\FormatController;
-use App\Http\Controllers\SellerController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,6 +105,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(InvoiceController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
+            Route::get('/{id}/bewerken', 'edit')->name('edit');
         });
 
     Route::name('pdf.')
@@ -119,6 +120,11 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(ReminderController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
+            Route::get('/creëren', 'create')->name('create');
+            Route::get('/{id}/bewerken', 'edit')->name('edit');
+
+            Route::post('/{id}/bijwerken', 'update')->name('update');
+            Route::post('/opslaan', 'store')->name('store');
         });
 
     Route::name('settings.')
@@ -127,14 +133,22 @@ Route::group(['middleware' => ['auth']], function() {
         ->group(function () {
             Route::get('/', 'index')->name('index');
         });
-    
-    Route::name('sellers.')
-        ->prefix('verkopers')
-        ->controller(SellerController::class)
+
+    Route::name('users.')
+        ->prefix('gebruikers')
+        ->controller(UserController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
+
+            Route::get('/creëren', 'create')->name('create');
             Route::get('/{id}/bewerken', 'edit')->name('edit');
+
+            Route::get('/{role?}', 'index')->name('index.role');
+
+
             Route::post('/{id}/bijwerken', 'update')->name('update');
+            Route::post('/opslaan', 'store')->name('store');
+
         });
 
     Route::name('layouts.')
