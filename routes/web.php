@@ -110,7 +110,10 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(InvoiceController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
+            Route::get('/{id}/nieuw', 'create')->name('create');
             Route::get('/{id}/aanpassen', 'edit')->name('edit');
+
+            Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijewerken', 'update')->name('update');
         });
 

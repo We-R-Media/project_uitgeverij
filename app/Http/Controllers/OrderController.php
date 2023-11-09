@@ -41,8 +41,9 @@ class OrderController extends Controller
     {
         $subpages = $this->getSubpages() ?? false;
         $advertiser = Advertiser::findOrFail($id);
+        $order = Order::findOrFail($id);
 
-        return view('pages.orders.create', compact('advertiser'))
+        return view('pages.orders.create', compact('advertiser','order'))
         ->with([
             'pageTitleSection' => self::$page_title_section,
             'subpages' => $subpages
