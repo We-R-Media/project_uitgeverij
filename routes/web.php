@@ -62,7 +62,7 @@ Route::group(['middleware' => ['auth']], function() {
 
             Route::post('/store', 'store')->name('store');
             Route::post('/{id}/update', 'update')->name('update');
-
+            Route::post('/verzenden', 'approval')->name('approval');
             Route::delete('/{id}', 'delete')->name('delete');
         });
 

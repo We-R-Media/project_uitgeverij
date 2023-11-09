@@ -6,6 +6,8 @@ use App\Models\Order;
 use App\Models\Advertiser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SampleEmail;
 
 class OrderController extends Controller
 {
@@ -157,5 +159,9 @@ class OrderController extends Controller
             'pageTitle' => $order->title,
             'subpages' => $subpages
         ]);
+    }
+
+    public function approval(Request $request) {
+        Mail::to('rolniels@gmail.com')->send(new SampleEmail());
     }
 }
