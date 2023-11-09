@@ -165,9 +165,9 @@
                 </div>
 
                 <div class="field field-alt">
-                    <label for="third_reminder">{{__('Aanmaning')}}</label>
-                    <input type="text" name="third_reminder" value="{{Auth::user()->first_name}} {{Auth::user()->last_name}}" id="">
-                    @error('third_reminder')
+                    <label for="contact_debtor">{{__('Contactpersoon debiteur')}}</label>
+                    <input type="text" name="contact_debtor" value="{{Auth::user()->first_name}} {{Auth::user()->last_name}}" id="">
+                    @error('contact_debtor')
                         <span class="form__message">
                             <small>{{ $message }}</small>
                         </span>

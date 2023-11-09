@@ -40,7 +40,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{id}/bewerken', 'edit')->name('edit');
             Route::get('/{id}/planning', 'planning')->name('planning');
             Route::get('/{id}/calculatie', 'calculation')->name('calculation');
-            Route::get('/creëren', 'create')->name('create');
+            Route::get('/nieuw', 'create')->name('create');
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/bijwerken', 'update')->name('update');
@@ -58,7 +58,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{id}/print', 'print')->name('print');
             Route::get('/{id}/artikelen', 'articles')->name('articles');
             Route::get('/{id}/klachten', 'complaints')->name('complaints');
-            Route::get('/{id}/creëren/', 'create')->name('create');
+            Route::get('/{id}/nieuw/', 'create')->name('create');
 
             Route::post('/store', 'store')->name('store');
             Route::post('/update', 'update')->name('update');
@@ -75,7 +75,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{id}/bewerken', 'edit')->name('edit');
             Route::get('/{id}/contacten', 'contacts')->name('contacts');
             Route::get('/{id}/orders', 'orders')->name('orders');
-            Route::get('/creëren', 'create')->name('create');
+            Route::get('/nieuw', 'create')->name('create');
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijwerken', 'update')->name('update');
@@ -86,7 +86,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(ContactController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/creëren', 'create')->name('create');
+            Route::get('/nieuw', 'create')->name('create');
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/bijwerken', 'update')->name('update');
@@ -98,7 +98,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/{id}/bewerken', 'edit')->name('edit');
-            Route::get('/creëren', 'create')->name('create');
+            Route::get('/nieuw', 'create')->name('create');
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijwerken', 'update')->name('update');
@@ -125,7 +125,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(ReminderController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/creëren', 'create')->name('create');
+            Route::get('/nieuw', 'create')->name('create');
             Route::get('/{id}/bewerken', 'edit')->name('edit');
 
             Route::post('/{id}/bijwerken', 'update')->name('update');
@@ -145,7 +145,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->group(function () {
             Route::get('/', 'index')->name('index');
 
-            Route::get('/creëren', 'create')->name('create');
+            Route::get('/nieuw', 'create')->name('create');
             Route::get('/{id}/bewerken', 'edit')->name('edit');
 
             Route::get('/{role?}', 'index')->name('index.role');
@@ -162,7 +162,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/{id}/bewerken', 'edit')->name('edit');
-            Route::get('/creëren', 'create')->name('create');
+            Route::get('/nieuw', 'create')->name('create');
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijwerken', 'update')->name('update');
@@ -176,7 +176,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(FormatController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/creëren', 'create')->name('create');
+            Route::get('/nieuw', 'create')->name('create');
             Route::get('/{id}/bewerken', 'edit')->name('edit');
 
             Route::post('/opslaan', 'store')->name('store');
