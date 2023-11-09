@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Reminder;
 
 class ReminderController extends Controller
 {
@@ -11,10 +13,10 @@ class ReminderController extends Controller
     public function __construct() {
         $this->subpages = [
             'Formaten' => 'formats.index',
-            'Verkopers' => 'sellers.index',
             'Layouts' => 'layouts.index',
             'BTW' => 'tax.index',
             'Aanmaningen' => 'reminders.index',
+            'Gebruikers' => 'users.index',
         ];
     }
 
@@ -24,8 +26,9 @@ class ReminderController extends Controller
     public function index()
     {
         $subpages = $this->getSubpages() ?? false;
+        $reminders = Reminder::all();
 
-        return view('pages.reminders.index')
+        return view('pages.reminders.index',compact('reminders'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'subpages' => $subpages
@@ -37,7 +40,14 @@ class ReminderController extends Controller
      */
     public function create()
     {
-        //
+        $subpages = $this->getSubpages() ?? false;
+        
+        return view('pages.reminders.create')
+            ->with([
+                'pageTitleSection' => self::$page_title_plural,
+                'pageTitle' => self::$page_title_singular,
+                'subpages' => $subpages
+            ]);
     }
 
     /**
@@ -45,7 +55,18 @@ class ReminderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::transaction(function () use($request) {
+            Reminder::create([
+                'period_first' => $request->input('period_first'),
+                'period_second' => $request->input('period_second'),
+                'period_third' => $request->input('period_third'),
+                'administration_cost_first' => $request->input('administration_first'),
+                'administration_cost_second' => $request->input('administration_second'),
+                'contact_debtor' => $request->input('contact_debtor'),
+            ]);
+        });
+
+        return redirect()->route('reminders.index');
     }
 
     /**
@@ -61,7 +82,16 @@ class ReminderController extends Controller
      */
     public function edit(string $id)
     {
-        //
+
+        $reminder = Reminder::findOrFail($id);
+        $subpages = $this->getSubpages() ?? false;
+
+        return view('pages.reminders.edit', compact('reminder'))
+            ->with([
+                'pageTitleSection' => self::$page_title_plural,
+                'pageTitle' => self::$page_title_singular,
+                'subpages' => $subpages,
+            ]);
     }
 
     /**
@@ -69,7 +99,17 @@ class ReminderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        DB::transaction(function () use($request, $id) {
+            Reminder::where('id', $id)->update([
+                'period_first' => $request->input('period_first'),
+                'period_second' => $request->input('period_second'),
+                'period_third' => $request->input('period_third'),
+                'administration_cost_first' => $request->input('administration_first'),
+                'administration_cost_second' => $request->input('administration_second'),
+                'contact_debtor' => $request->input('contact_debtor'),
+            ]);
+        });
+        return redirect()->route('reminders.index');
     }
 
     /**

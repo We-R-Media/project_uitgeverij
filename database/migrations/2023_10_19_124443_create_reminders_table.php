@@ -18,7 +18,8 @@ return new class extends Migration
             $table->integer('period_third');
             $table->double('administration_cost_first');
             $table->double('administration_cost_second');
-            $table->foreignId('contact_id')->nullable()->onDelete('set null');
+            // $table->foreignId('contact_id')->nullable()->onDelete('set null');
+            $table->string('contact_debtor');
             $table->timestamps();
         });
     }

@@ -17,13 +17,19 @@ class Invoice extends BaseModel
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'title',
         'invoice_number',
+        'advertiser_id',
         'invoice_date',
         'post_method',
         'first_reminder',
         'second_reminder',
         'third_reminder',
+        'payed_at',
+        'deleted_at',
+        'created_at',
+        'updated_ad',
     ];
 
     /**
@@ -83,7 +89,7 @@ class Invoice extends BaseModel
         $year = date('Y');
         $prefix = $year . '00';
 
-        $maxNumber = self::where('invoice_number', 'like', $prefix . '%')->max('invoice_number') ?: $prefix . '000';
+        $maxNumber = self::where('invoice_number', 'like', $prefix . '%')->max('invoice_number') ?: $prefix . '00';
 
         $autoIncrementedPart = str_pad((int)substr($maxNumber, strlen($prefix)) + 1, 3, '0', STR_PAD_LEFT);
 

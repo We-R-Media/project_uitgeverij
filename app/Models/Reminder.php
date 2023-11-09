@@ -14,7 +14,7 @@ class Reminder extends BaseModel
         'period_third',
         'administration_cost_first',
         'administration_cost_second',
-        'contact_id',
+        'contact_debtor',
     ];
 
     public function advertiser() {

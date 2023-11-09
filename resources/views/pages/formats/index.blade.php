@@ -21,8 +21,29 @@
                     </a>
                     <div class="item__actions">
                         <a href="{{ route('formats.edit', $format->id) }}">{{__('Bewerken')}}</a>
+                        <a href="#" class="delete" data-id="{{ $format->id }}" data-action="{{--route('layouts.destroy', $layout->id) --}}">{{__('Verwijderen')}}</a>
                     </div>
                 </div>
+
+                <div class="item__summery">
+                    <div class="field">
+                        <label>{{__('Grootte')}}</label>
+                        {{ $format->size }}
+                    </div>
+                    <div class="field">
+                        <label>{{__('Afmeting')}}</label>
+                        {{ $format->measurement }}
+                    </div>
+                    <div class="field">
+                        <label>{{__('Verhouding')}}</label>
+                        {{ $format->ratio }}
+                    </div>
+                    <div class="field">
+                        <label>{{__('Prijs')}}</label>
+                        {{ $format->price }}
+                    </div>
+                </div>
+
             </li>
         @endforeach
     </ul>
