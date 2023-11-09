@@ -12,9 +12,10 @@
                     <a href="{{ route('advertisers.edit', $advertiser->id) }}" class="">
                         <h3>{{ $advertiser->name }}</h3>
                     </a>
+
                     <div class="item__actions">
                         <a href="{{ route('advertisers.edit', $advertiser->id) }}">{{__('Bewerken')}}</a>
-                        <a href="#" class="delete" data-id="{{ $advertiser->id }}" data-action="{{-- route('advertisers.destroy', $advertiser->id) --}}">Verwijderen</a>
+                        <a href="#" class="delete" data-id="{{ $advertiser->id }}" data-action="route('advertisers.destroy', $advertiser->id)">Verwijderen</a>
                     </div>
                 </div>
                 <div class="item__summery">

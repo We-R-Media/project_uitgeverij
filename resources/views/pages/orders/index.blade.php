@@ -14,7 +14,7 @@
                     </a>
                     <div class="item__actions">
                         <a href="{{ route('orders.edit', $order->id) }}">Bewerken</a>
-                        <a href="#" class="delete" data-id="{{ $order->id }}" data-action="{{-- route('orders.destroy', $order->id) --}}">Verwijderen</a>
+                        <button type="button" wire:confirm.prompt="Are you sure you want to delete this post?" wire:click="delete">Verwijderen</button>
                     </div>
                 </div>
                 <div class="item__summery">

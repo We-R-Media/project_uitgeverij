@@ -3,8 +3,12 @@ document.addEventListener('DOMContentLoaded', function() {
     let paginaAdvertentieInput = document.getElementById('pages_adverts');
     let sumElement = document.getElementById('sum');
 
-    paginaRedactieInput.addEventListener('input', updateSum);
-    paginaAdvertentieInput.addEventListener('input', updateSum);
+    if( paginaRedactieInput ){
+        paginaRedactieInput.addEventListener('input', updateSum);
+    }
+    if(paginaAdvertentieInput) {
+        paginaAdvertentieInput.addEventListener('input', updateSum);
+    }
 
     function updateSum() {
         let redactieValue = parseInt(paginaRedactieInput.value) || 0;
