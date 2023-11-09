@@ -1,8 +1,10 @@
 @extends('layouts.app')
 
-@section([
+{{-- @section([
     'seo_title' => $pageTitleSection
-])
+]) --}}
+
+@section('seo_title',  $pageTitleSection)
 
 @section('content')
 

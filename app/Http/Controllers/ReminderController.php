@@ -44,8 +44,7 @@ class ReminderController extends Controller
         
         return view('pages.reminders.create')
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
                 'subpages' => $subpages
             ]);
     }
@@ -88,8 +87,7 @@ class ReminderController extends Controller
 
         return view('pages.reminders.edit', compact('reminder'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
                 'subpages' => $subpages,
             ]);
     }

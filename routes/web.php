@@ -37,7 +37,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(ProjectController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
             Route::get('/{id}/planning', 'planning')->name('planning');
             Route::get('/{id}/calculatie', 'calculation')->name('calculation');
             Route::get('/nieuw', 'create')->name('create');
@@ -53,7 +53,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(OrderController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
             Route::get('/{id}/requests', 'requests')->name('requests');
             Route::get('/{id}/print', 'print')->name('print');
             Route::get('/{id}/artikelen', 'articles')->name('articles');
@@ -72,7 +72,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(AdvertiserController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
             Route::get('/{id}/contacten', 'contacts')->name('contacts');
             Route::get('/{id}/orders', 'orders')->name('orders');
             Route::get('/nieuw', 'create')->name('create');
@@ -97,12 +97,12 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(TaxController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
             Route::get('/nieuw', 'create')->name('create');
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijwerken', 'update')->name('update');
-            Route::delete('/verwijderen', 'delete')->name('delete');
+            Route::delete('/{id}/verwijderen', 'delete')->name('delete');
         });
 
     Route::name('invoices.')
@@ -110,7 +110,8 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(InvoiceController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
+            Route::post('/{id}/bijewerken', 'update')->name('update');
         });
 
     Route::name('pdf.')
@@ -126,7 +127,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/nieuw', 'create')->name('create');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
 
             Route::post('/{id}/bijwerken', 'update')->name('update');
             Route::post('/opslaan', 'store')->name('store');
@@ -146,7 +147,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/', 'index')->name('index');
 
             Route::get('/nieuw', 'create')->name('create');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
 
             Route::get('/{role?}', 'index')->name('index.role');
 
@@ -161,7 +162,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(LayoutController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
             Route::get('/nieuw', 'create')->name('create');
 
             Route::post('/opslaan', 'store')->name('store');
@@ -177,7 +178,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/nieuw', 'create')->name('create');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijwerken', 'update')->name('update');

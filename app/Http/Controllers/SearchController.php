@@ -15,8 +15,8 @@ class SearchController extends Controller
         'Invoice',
         'Order',
         'Project',
-        'Seller',
         'User',
+        'Reminder',
     ];
 
     public function search(Request $request)

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Invoice;
 use App\Models\Advertiser;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -61,7 +62,11 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        DB::transaction(function () use($request, $id) {
+            Invoice::where('id', $id)->update([
+                'name' => $request->input('name')
+            ]);
+        });
     }
 
     /**

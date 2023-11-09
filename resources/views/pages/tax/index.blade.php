@@ -20,20 +20,20 @@
                     </a>
                     <div class="item__actions">
                         <a href="{{ route('tax.edit', $tax->id) }}">{{__('Bewerken')}}</a>
-                        <a href="#" data-action="{{ route('tax.destroy', $tax->id) }}" data-id="{{ $tax->id }}" class="delete">{{__('Verwijderen')}}</a>
+                        <a href="#" data-action="{{ route('tax.delete', $tax->id) }}" data-id="{{ $tax->id }}" class="delete">{{__('Verwijderen')}}</a>
                     </div>
                 </div>
                 <div class="item__summery">
                     <div class="field">
-                        <label>BTW 0</label>
+                        <label>{{__('BTW 0')}}</label>
                         {{$tax->zero}}
                     </div>
                     <div class="field">
-                        <label>BTW laag</label>
+                        <label>{{__('BTW laag')}}</label>
                         {{$tax->low}}
                     </div>
                     <div class="field">
-                        <label>BTW hoog</label>
+                        <label>{{__('BTW hoog')}}</label>
                         {{$tax->high}}
                     </div>
                 </div>

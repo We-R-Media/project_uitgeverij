@@ -1,19 +1,107 @@
 @extends('layouts.app')
 
 
-@section('title', $pageTitleSection)
+@section('seo_title', $pageTitleSection)
 @section('content')
 <div class="page__wrapper">
-    <form action="#" method="post" class="formContainer">
+    <form action="{{ route('invoices.update', $invoice->id) }}" method="post" class="formContainer">
         @csrf
         @method('post')
         <div class="grid__wrapper">
             <fieldset class="fields base">
-                <h3>{{__('Factuur')}}</h3>
+                <h3>{{__('Klantgegevens')}}</h3>
+
+                <div class="field field-alt">
+                    <label for="advertiser_id">{{__('Klantnummer')}}</label>
+                    <input type="text" name="advertiser_id" value="{{$invoice->advertiser->id}}" id="" disabled>
+                    @error('advertiser_id')
+                        <span class="form__message">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="name">{{__('Bedrijfsnaam')}}</label>
+                <input type="text" name="name" value="{{$invoice->advertiser->name}}" disabled id="">
+                    @error('name')
+                        <span class="form__message">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="contact">{{__('Contactpersoon')}}</label>
+                    <input type="text" name="contact" value="{{$invoice->advertiser->contact}}" disabled id="">
+                    @error('contact')
+                        <span class="form__message">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="po_box">{{__('Postadres')}}</label>
+                    <input type="text" name="po_box" value="{{$invoice->advertiser->po_box}}" disabled id="">
+                    @error('po_box')
+                        <span class="form__message">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                
+                <div class="field field-alt">
+                    <label for="postal_code">{{__('Postadres')}}</label>
+                    <input type="text" name="postal_code" value="{{$invoice->advertiser->postal_code}}" disabled id="">
+                    @error('postal_code')
+                        <span class="form__message">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                                
+                <div class="field field-alt">
+                    <label for="city">{{__('Postadres')}}</label>
+                    <input type="text" name="city" value="{{$invoice->advertiser->city}}" disabled id="">
+                    @error('city')
+                        <span class="form__message">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="phone_number">{{__('Telefoonnumer')}}</label>
+                    <input type="text" name="phone_number" value="{{$invoice->advertiser->phone}}" disabled id="">
+                    @error('phone_number')
+                        <span class="form__message">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="phone_mobile">{{__('Mobiel')}}</label>
+                    <input type="text" name="phone_mobile" value="{{$invoice->advertiser->phone_mobile}}" disabled id="">
+                    @error('phone_mobile')
+                        <span class="form__message">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+            </fieldset>
+
+            <fieldset class="fields fields-base">
+
+                <h3>{{__('Factuurgegevens')}}</h3>
 
                 <div class="field field-alt">
                     <label for="invoice_id">{{__('Factuurnummer')}}</label>
-                    <input type="number" name="invoice_id" value="{{$invoice->id}}">
+                    <input type="number" name="invoice_id" value="{{$invoice->id}}" disabled>
                     @error('invoice_id')
                         <span class="form__message">
                             <small>{{ $message }}</small>
@@ -31,97 +119,7 @@
                     @enderror
                 </div>
 
-                <div class="field field-alt">
-                    <label for="advertiser_id">{{__('Klantnummer')}}</label>
-                    <input type="text" name="advertiser_id" value="{{$invoice->advertiser->id}}" id="">
-                    @error('advertiser_id')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
 
-                <div class="field field-alt">
-                    <label for="name">{{__('Bedrijfsnaam')}}</label>
-                    <input type="text" name="name" value="{{$invoice->advertiser->name}}" id="">
-                    @error('name')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field field-alt">
-                    <label for="contact">{{__('Contactpersoon')}}</label>
-                    <input type="text" name="contact" value="{{$invoice->advertiser->contact}}" id="">
-                    @error('contact')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field field-alt">
-                    <label for="po_box">{{__('Postadres')}}</label>
-                    <input type="text" name="po_box" value="{{$invoice->advertiser->po_box}}" id="">
-                    @error('po_box')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                
-                <div class="field field-alt">
-                    <label for="postal_code">{{__('Postadres')}}</label>
-                    <input type="text" name="postal_code" value="{{$invoice->advertiser->postal_code}}" id="">
-                    @error('postal_code')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                                
-                <div class="field field-alt">
-                    <label for="city">{{__('Postadres')}}</label>
-                    <input type="text" name="city" value="{{$invoice->advertiser->city}}" id="">
-                    @error('city')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field field-alt">
-                    <label for="phone_number">{{__('Telefoonnumer')}}</label>
-                    <input type="text" name="phone_number" value="{{$invoice->advertiser->phone}}" id="">
-                    @error('phone_number')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field field-alt">
-                    <label for="phone_mobile">{{__('Telefoonnumer')}}</label>
-                    <input type="text" name="phone_mobile" value="{{$invoice->advertiser->phone_mobile}}" id="">
-                    @error('phone_mobile')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field field-alt">
-                    <label for="phone_mobile">{{__('Mobiel')}}</label>
-                    <input type="text" name="phone_mobile" value="{{$invoice->advertiser->phone_mobile}}" id="">
-                    @error('phone_mobile')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
 
                 <div class="field field-alt">
                     <label for="post_method">{{__('Verzonden per')}}</label>
@@ -165,17 +163,63 @@
                 </div>
 
                 <div class="field field-alt">
-                    <label for="contact_debtor">{{__('Contactpersoon debiteur')}}</label>
-                    <input type="text" name="contact_debtor" value="{{Auth::user()->first_name}} {{Auth::user()->last_name}}" id="">
-                    @error('contact_debtor')
+                    <label for="seller">{{__('Verkoper')}}</label>
+                    <input type="text" name="seller" value="{{Auth::user()->first_name}} {{Auth::user()->last_name}}" id="">
+                    @error('seller')
                         <span class="form__message">
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
                 </div>
+            </fieldset>
 
+            <fieldset class="fields base">
+
+                <h3>{{__('Incasso')}}</h3>
+
+                <div class="field field-alt">
+                    <label for="date_of_action">{{__('Datum actie')}}</label>
+                    <input type="date" name="date_of_action" id="">
+                    @error('date_of_action')
+                        <span class="form__message">
+                            <small>{{$message}}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="collection_agency">{{__('Incassobureau')}}</label>
+                    <input type="text" name="collection_agency" id="">
+                    @error('collection_agency')
+                    <span class="form__message">
+                        <small>{{$message}}</small>
+                    </span>
+                @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="collection_date">{{__('Datum incassobureau')}}</label>
+                    <input type="date" name="collection_date" id="">
+                    @error('collection_date')
+                    <span class="form__message">
+                        <small>{{$message}}</small>
+                    </span>
+                @enderror
+                </div>
 
             </fieldset>
+            
+            <fieldset class="fields notes full-width">
+                <h3>{{__('Aantekeningen')}}</h3>
+                <label for="comments">{{__('Aantekeningen')}}</label>
+                <textarea name="comments" id="" cols="30" rows="10"></textarea>
+            </fieldset>
+        </div>
+
+        <div class="ButtonGroup">
+            <div class="buttons">
+                <button type="submit" class="button button--action">Opslaan</button>
+            </div>
         </div>
     </form>
 </div>
