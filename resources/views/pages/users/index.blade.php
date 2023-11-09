@@ -2,7 +2,7 @@
 
 
 
-@section('title', $pageTitle)
+@section('seo_title', $pageTitleSection)
 
 @section('content')
     <div class="page__wrapper">
@@ -24,21 +24,21 @@
                             <h3>{{ $user->first_name}} {{$user->last_name}}</h3>
                         </a>
                         <div class="item__actions">
-                            <a href="{{route('users.edit', $user->id)}}">Bewerken</a>
-                            <a href="#" class="delete" data-id="{{ $user->id }}" data-action="{{--route('sellers.destroy', $user->id) --}}">Delete</a>
+                            <a href="{{route('users.edit', $user->id)}}">{{__('Bewerken')}}</a>
+                            <a href="#" class="delete" data-id="{{ $user->id }}" data-action="{{--route('sellers.destroy', $user->id) --}}">{{__('Delete')}}</a>
                         </div>
                     </div>
                     <div class="item__summery">
                         <div class="item__format field">
-                            <label>E-mailadres</label>
+                            <label>{{__('E-mailadres')}}</label>
                             {{$user->email}}
                         </div>
                         <div class="item__format field">
-                            <label>Rol</label>
+                            <label>{{__('Rol')}}</label>
                             {{$aliases[$user->role]}}
                         </div>
                         <div class="item__pages field">
-                            <label>Aangemaakt op:</label>
+                            <label>{{__('Aangemaakt op')}}</label>
                             {{$user->created_at}}
                         </div>
                     </div>

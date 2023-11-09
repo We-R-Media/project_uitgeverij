@@ -9,6 +9,7 @@ class Reminder extends BaseModel
     use HasFactory;
 
     protected $fillable = [
+        'title',
         'period_first',
         'period_second',
         'period_third',

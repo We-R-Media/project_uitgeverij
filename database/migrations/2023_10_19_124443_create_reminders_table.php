@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('reminders', function (Blueprint $table) {
             $table->id();
+            $table->string('title')->nullable();
             $table->integer('period_first');
             $table->integer('period_second');
             $table->integer('period_third');

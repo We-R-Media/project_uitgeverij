@@ -37,10 +37,10 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(ProjectController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
             Route::get('/{id}/planning', 'planning')->name('planning');
             Route::get('/{id}/calculatie', 'calculation')->name('calculation');
-            Route::get('/creëren', 'create')->name('create');
+            Route::get('/nieuw', 'create')->name('create');
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/bijwerken', 'update')->name('update');
@@ -53,15 +53,15 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(OrderController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
             Route::get('/{id}/requests', 'requests')->name('requests');
             Route::get('/{id}/print', 'print')->name('print');
             Route::get('/{id}/artikelen', 'articles')->name('articles');
             Route::get('/{id}/klachten', 'complaints')->name('complaints');
-            Route::get('/{id}/creëren/', 'create')->name('create');
+            Route::get('/{id}/nieuw/', 'create')->name('create');
 
             Route::post('/store', 'store')->name('store');
-            Route::post('/update', 'update')->name('update');
+            Route::post('/{id}/update', 'update')->name('update');
 
             Route::delete('/{id}', 'delete')->name('delete');
         });
@@ -72,10 +72,10 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(AdvertiserController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
             Route::get('/{id}/contacten', 'contacts')->name('contacts');
             Route::get('/{id}/orders', 'orders')->name('orders');
-            Route::get('/creëren', 'create')->name('create');
+            Route::get('/nieuw', 'create')->name('create');
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijwerken', 'update')->name('update');
@@ -88,7 +88,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(ContactController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/creëren', 'create')->name('create');
+            Route::get('/nieuw', 'create')->name('create');
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/bijwerken', 'update')->name('update');
@@ -101,13 +101,12 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(TaxController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
-            Route::get('/creëren', 'create')->name('create');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
+            Route::get('/nieuw', 'create')->name('create');
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijwerken', 'update')->name('update');
-
-            Route::delete('/{id}', 'delete')->name('delete');
+            Route::delete('/{id}/verwijderen', 'delete')->name('delete');
         });
 
     Route::name('invoices.')
@@ -115,7 +114,11 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(InvoiceController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/{id}/nieuw', 'create')->name('create');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
+
+            Route::post('/opslaan', 'store')->name('store');
+            Route::post('/{id}/bijewerken', 'update')->name('update');
         });
 
     Route::name('pdf.')
@@ -130,8 +133,8 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(ReminderController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/creëren', 'create')->name('create');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/nieuw', 'create')->name('create');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
 
             Route::post('/{id}/bijwerken', 'update')->name('update');
             Route::post('/opslaan', 'store')->name('store');
@@ -149,8 +152,10 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(UserController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/creëren', 'create')->name('create');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
+
+            Route::get('/nieuw', 'create')->name('create');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
+
             Route::get('/{role?}', 'index')->name('index.role');
 
             Route::post('/{id}/bijwerken', 'update')->name('update');
@@ -164,8 +169,8 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(LayoutController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
-            Route::get('/creëren', 'create')->name('create');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
+            Route::get('/nieuw', 'create')->name('create');
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijwerken', 'update')->name('update');
@@ -180,9 +185,8 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(FormatController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/creëren', 'create')->name('create');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
-            Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
+            Route::get('/nieuw', 'create')->name('create');
+            Route::get('/{id}/aanpassen', 'edit')->name('edit');
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijwerken', 'update')->name('update');

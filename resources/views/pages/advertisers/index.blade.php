@@ -56,7 +56,7 @@
                         </div>
                         <div class="actions__group">
                             <a href="{{route('advertisers.edit', $advertiser->id)}}">{{__('Bewerken')}}</a>
-                            <a href="{{ route('formats.destroy', $format) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">Verwijderen</a>
+                            {{-- <a href="{{ route('formats.destroy', $format) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">Verwijderen</a> --}}
                         </div>
                     </div>
                 </div>

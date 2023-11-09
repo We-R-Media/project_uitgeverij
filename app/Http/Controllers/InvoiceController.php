@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Invoice;
+use App\Models\Order;
 use App\Models\Advertiser;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
@@ -25,9 +27,15 @@ class InvoiceController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $subpages = $this->getSubpages() ?? false;
+        $order = Order::findOrFail($id);
+
+        return view('pages.invoices.create', compact('order'))->with([
+            'pageTitleSection' => self::$page_title_section,
+            'subpages' => $subpages
+        ]);
     }
 
     /**
@@ -35,7 +43,7 @@ class InvoiceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect()->route('invoices.index');
     }
 
     /**
@@ -47,12 +55,11 @@ class InvoiceController extends Controller
         $subpages = $this->getSubpages() ?? false;
 
 
-        // return view('pages.invoices.edit', compact('invoice'))
-        //     ->with([
-        //         'pageTitleSection' => self::$page_title_plural,
-        //         'pageTitle' => 'Bewerk ' . self::$page_title_singular,
-        //         'subpages' => $subpages,
-        //     ]);
+        return view('pages.invoices.edit', compact('invoice'))
+            ->with([
+                'pageTitleSection' => self::$page_title_section,
+                'subpages' => $subpages,
+            ]);
     }
 
     /**
@@ -60,7 +67,11 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        DB::transaction(function () use($request, $id) {
+            Invoice::where('id', $id)->update([
+                'name' => $request->input('name')
+            ]);
+        });
     }
 
     /**

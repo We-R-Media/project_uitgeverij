@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Advertiser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -41,8 +42,9 @@ class OrderController extends Controller
     {
         $subpages = $this->getSubpages() ?? false;
         $advertiser = Advertiser::findOrFail($id);
+        $order = Order::findOrFail($id);
 
-        return view('pages.orders.create', compact('advertiser'))
+        return view('pages.orders.create', compact('advertiser','order'))
         ->with([
             'pageTitleSection' => self::$page_title_section,
             'subpages' => $subpages
@@ -54,7 +56,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return redirect()->route('orders.index');
     }
 
     /**
@@ -78,7 +80,13 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        DB::transaction(function () use($request, $id) {
+            Order::where('id', $id)->update([
+
+            ]);
+        });
+
+        return redirect()->route('orders.index');
     }
 
     /**

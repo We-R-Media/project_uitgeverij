@@ -51,7 +51,7 @@
                         </div>
                         <div class="actions__group">
                             <a href="{{ route('orders.edit', $order->id) }}">{{__('Bewerken')}}</a>
-                            <a href="{{ route('orders.destroy', $order->id) }}" onclick="return confirm('Are you sure you want to delete this record?')">Verwijderen</a>
+                            {{-- <a href="{{ route('orders.destroy', $order->id) }}" onclick="return confirm('Are you sure you want to delete this record?')">Verwijderen</a> --}}
                         </div>
                     </div>
                 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\TaxRequest;
 use App\Models\Tax;
 
 class TaxController extends Controller
@@ -56,7 +57,7 @@ class TaxController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TaxRequest $request)
     {
         DB::transaction(function () use($request) {
             Tax::create([
@@ -97,7 +98,7 @@ class TaxController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(TaxRequest $request, string $id)
     {
         DB::transaction(function () use($request, $id) {
             Tax::where('id', $id)->update([
@@ -113,7 +114,7 @@ class TaxController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
         $tax = Tax::where('id', $id)->get();
 

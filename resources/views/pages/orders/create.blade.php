@@ -106,12 +106,19 @@
 
                 </fieldset>
             </div>
+
+            <div class="ButtonGroup">
+                <div class="buttons">
+                    <button type="submit" class="button button--action">{{__('Opslaan')}}</button>
+                </div>
+            </div>
+
         </form>
     </div>
 
     <div class="ButtonGroup">
         <div class="buttons">
-            <a href="{{route('pdf.generate')}}" class="button button--action">{{__('Genereer PDF')}}</a>
+            <a href="{{  route('pdf.generate') }}" class="button button--action">{{__('Genereer PDF')}}</a>
         </div>
     </div>
 @endsection

@@ -30,7 +30,7 @@
 
         <ul class="items__view">
         @foreach ($taxes as $tax)
-        
+
             <li class="item">
                 <div class="item__content">
                     <a href=" {{ route('tax.edit', $tax->id) }} ">
@@ -39,15 +39,15 @@
                 </div>
                 <div class="item__summery">
                     <div class="field">
-                        <label>BTW 0</label>
+                        <label>{{__('BTW 0')}}</label>
                         {{$tax->zero}}
                     </div>
                     <div class="field">
-                        <label>BTW laag</label>
+                        <label>{{__('BTW laag')}}</label>
                         {{$tax->low}}
                     </div>
                     <div class="field">
-                        <label>BTW hoog</label>
+                        <label>{{__('BTW hoog')}}</label>
                         {{$tax->high}}
                     </div>
                 </div>

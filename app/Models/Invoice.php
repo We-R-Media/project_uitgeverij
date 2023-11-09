@@ -16,11 +16,10 @@ class Invoice extends BaseModel
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'id',
+
+     protected $fillable = [
         'title',
         'invoice_number',
-        'advertiser_id',
         'invoice_date',
         'post_method',
         'first_reminder',

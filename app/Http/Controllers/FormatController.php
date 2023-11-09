@@ -57,7 +57,7 @@ class FormatController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(FormatRequest $request)
     {
         try {
             DB::transaction(function () use($request) {
@@ -98,7 +98,7 @@ class FormatController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(FormatRequest $request, string $id)
     {
         try {
             DB::transaction(function () use($request,$id) {
