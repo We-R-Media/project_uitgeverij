@@ -42,6 +42,16 @@
                     </div>
 
                     <div class="field field-alt">
+                        <label for="project_id">{{__('Projectcode')}}</label>
+                        <input type="text" name="project_id" value="{{$order->project->id}}" id="" disabled>
+                        @error('project_id')
+                            <div class="form__message">
+                                <small>{{ $message }}</small>
+                            </div>
+                        @enderror
+                    </div>
+
+                    <div class="field field-alt">
                         <label for="po_box">{{__('Postadres')}}</label>
                         <input type="text" name="po_box" value="{{$order->advertiser->po_box}}" id="" disabled>
                         @error('po_box')
