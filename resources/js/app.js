@@ -8,4 +8,4 @@ select2(window, $);
 $('select').select2();
 
 import Dropzone from "dropzone";
-window.dropzone = Dropzone;
+window.Dropzone = Dropzone;

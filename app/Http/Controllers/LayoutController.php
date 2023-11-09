@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Layout;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class LayoutController extends Controller
 {
@@ -103,6 +104,19 @@ class LayoutController extends Controller
         });
 
         return redirect()->route('layouts.index');
+    }
+
+     /**
+     * Upload the logo in the public folder
+     */
+    public function upload(Request $request ) :  JsonResponse
+    {
+        $image = $request->file('file');
+     
+        $imageName = time().'.'.$image->extension();
+        $image->move(public_path('images/uploads'),$imageName);
+     
+        return response()->json(['success'=> 'images/uploads/'.$imageName]);
     }
 
     /**

@@ -152,6 +152,8 @@ Route::group(['middleware' => ['auth']], function() {
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijwerken', 'update')->name('update');
+
+            Route::post('/upload', 'upload')->name('upload');
         });
 
 

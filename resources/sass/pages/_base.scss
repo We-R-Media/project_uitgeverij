@@ -10,91 +10,6 @@
     }
 }
 
-.topbar__wrapper {
-    background: color.$secondary;
-    padding-top: 10px;
-
-    .UserInfo {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        padding: 0px 50px;
-        flex-direction: row;
-        justify-content: flex-end;
-        .userLoggedIn {
-            line-height: 1;
-            text-align: right;
-
-            span {
-                font-size: 11px;
-                color: color.$primary;
-                display: block;
-            }
-        }
-        .button-group {
-            margin-left: 20px;
-            a {
-                background: color.$primary;
-                line-height: 1;
-                padding: 5px 10px;
-                font-size: 12px;
-                border-radius: 50px;
-            }
-        }
-    }
-    .page__title,
-    .page__section {
-        padding: 0px 50px 0px;
-        &.page__title {
-            font-size: 30px;
-            padding-bottom: 25px;
-        }
-        &.page__section {
-            font-size: 25px;
-            font-weight: 300;
-            color: color.$primary;
-            @include mixin.breakpoint("max", "tablet") {
-                position: fixed;
-                top: 0px;
-                height: 50px;
-                background: color.$gradiant;
-                left: 0px;
-                width: 100%;
-                text-align: center;
-                font-weight: 500;
-                font-size: 18px;
-                color: #fff;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                letter-spacing: 1px;
-            }
-        }
-    }
-}
-
-.sub__pages {
-    background: color.$accent-light;
-    padding: 0px 50px;
-
-    a {
-        padding: 15px 0px;
-        display: inline-block;
-        line-height: 1;
-        margin-right: 30px;
-        border-bottom: 3px solid transparent;
-        &:hover {
-            //color:color.$primary;
-            border-color: color.$primary;
-        }
-    }
-
-    @include mixin.breakpoint("max", "tablet") {
-        white-space: nowrap;
-        overflow: scroll;
-    }
-}
-
 .grid__wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -178,6 +93,34 @@
         }
         * {
             box-sizing: border-box;
+        }
+        .current__logo {
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 50px;
+            border: 1px solid #000;
+            padding: 25px;
+            img {
+                width: 100%;
+                height: auto;
+            }
+        }
+        .dropzone {
+            border: 3px dashed color.$accent;
+            button {
+                span {
+                    display: inline-flex;
+                    padding: 5px 20px;
+                    border: 1px solid color.$primary;
+                    margin-bottom: 20px;
+                    transition: background-color 0.4s ease;
+                    border-radius: 50px;
+                    &:hover {
+                        background: color.$primary;
+                        color: #fff;
+                    }
+                }
+            }
         }
     }
     @include mixin.breakpoint("max", "laptop") {
@@ -273,6 +216,7 @@
                     color: color.$primary;
                     font-weight: 300;
                     padding: 0px 10px;
+
                     &:hover {
                         text-decoration: underline;
                     }
@@ -280,6 +224,7 @@
             }
             h3 {
                 font-size: 18px;
+
                 &:hover {
                     color: color.$primary;
                 }
