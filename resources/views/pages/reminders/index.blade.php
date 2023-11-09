@@ -3,7 +3,6 @@
 
 @section('seo_title', $pageTitleSection)
 @section('content')
-<<<<<<< HEAD
     <div class="page__wrapper">
 
         <div class="HeaderButtons">
@@ -25,11 +24,7 @@
                         </div>
                     </div>
                 </li>
-            @endforeach
+        @endforeach
         </ul>
     </div>
 @endsection
-=======
-
-@endsection
->>>>>>> a967dbd484035767f31367e19a0a133fa7da406e

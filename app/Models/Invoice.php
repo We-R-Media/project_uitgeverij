@@ -9,6 +9,8 @@ use Laravel\Scout\Searchable;
 
 class Invoice extends BaseModel
 {
+    use HasFactory, SoftDeletes, Searchable;
+
     protected $fillable = [
         'id',
         'advertiser_id',
@@ -23,8 +25,6 @@ class Invoice extends BaseModel
         'updated_ad',
     ];
 
-    use HasFactory, SoftDeletes;
-    use HasFactory, SoftDeletes, Searchable;
 
     /**
      * The attributes that are mass assignable.

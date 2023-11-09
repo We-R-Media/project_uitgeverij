@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 
-@section('title', $pageTitle)
+@section('seo_title', $pageTitleSection)
 @section('content')
     <div class="page__wrapper">
         <div class="items__view">
-            @foreach ($invoices as $invoice )
+            @foreach ($invoices as $invoice)
                 <li class="item">
                     <div class="item__content">
                         <a href="{{ route('invoices.edit', $invoice->id) }}">

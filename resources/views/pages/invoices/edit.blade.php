@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 
-@section('title', $pageTitle)
+@section('title', $pageTitleSection)
 @section('content')
 <div class="page__wrapper">
     <form action="#" method="post" class="formContainer">
