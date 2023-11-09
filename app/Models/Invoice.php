@@ -3,11 +3,11 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
-class Invoice extends Model
+class Invoice extends BaseModel
 {
     protected $fillable = [
         'id',
@@ -24,6 +24,13 @@ class Invoice extends Model
     ];
 
     use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
 
     /**
      * Get the phone associated with the user.

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 
-@section('title', $pageTitle)
+@section('seo_title', $pageTitleSection)
 @section('content')
 
 <div class="page__wrapper">
@@ -20,7 +20,7 @@
                     </span>
                 @enderror
                 </div>
-                
+
                 <div class="field field-alt">
                     <label for="city_name">{{__('Plaatsnaam')}}</label>
                     <input type="text" name="city_name" id="">

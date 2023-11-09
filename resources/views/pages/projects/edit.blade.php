@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
-@section('title',  $pageTitle)
+@section('seo_title',  $pageTitleSection)
 
 @section('content')
-    
+
     <div class="page__wrapper">
         <form class="formContainer" action="{{route('projects.edit', $project->id)}}" method="post">
             @csrf
             @method('post')
-    
+
             <div class="grid__wrapper">
                 <fieldset class="fields base">
                     <h3>{{ __('Algemeen') }}</h3>
@@ -21,7 +21,7 @@
                             </span>
                          @enderror
                     </div>
-        
+
                     <div class="field field-alt">
                         <label for="release_name">{{ __('Uitgave') }}</label>
                        <input id="" type="text" name="release_name" value="{{ $project->release_name }}">
@@ -31,7 +31,7 @@
                             </span>
                         @enderror
                     </div>
-    
+
                     <div class="field field-alt">
                         <label for="edition_name">{{ __('Editie') }}</label>
                        <input id="" type="text" name="edition_name" value="{{ $project->edition_name }}">
@@ -51,7 +51,7 @@
                             </span>
                         @enderror
                     </div>
-    
+
                     <div class="field field-alt">
                         <label for="print_edition">{{ __('Oplage') }}</label>
                        <input id="" type="text" name="print_edition" value="{{ $project->print_edition }}">
@@ -61,9 +61,9 @@
                             </span>
                         @enderror
                     </div>
-    
+
                 </fieldset>
-    
+
                 <fieldset class="fields page-details">
                     <h3>{{ __('Paginagegevens') }}</h3>
                     <div class="form__row-alt">
@@ -79,7 +79,7 @@
                                         </span>
                                     @enderror
                                 </div>
-    
+
                                 <div class="field">
                                     <label for="pages_adverts">{{ __('Advertenties') }}</label>
                                     <input id="pages_adverts" type="number" name="pages_adverts" value="{{ $project->pages_adverts }}">
@@ -147,10 +147,10 @@
                         </div>
                     </div>
                 </fieldset>
-    
+
                 <fieldset class="fields designer'">
                     <h3>{{ __('Vormgeving / drukker') }}</h3>
-    
+
                     <div class="field field-alt">
                         <label for="designer">{{ __('Vormgever') }}</label>
                         <input id="" type="text" name="designer" value="{{--$project->designer--}}">
@@ -160,7 +160,7 @@
                             </span>
                         @enderror
                     </div>
-    
+
                     <div class="field field-alt">
                         <label for="printer">{{ __('Drukker') }}</label>
                         <input id="" type="text" name="printer" value="{{--$project->printer--}}">
@@ -170,7 +170,7 @@
                             </span>
                         @enderror
                     </div>
-    
+
                     <div class="field field-alt">
                         <label for="client">{{ __('Opdrachtgever') }}</label>
                         <input id="" type="text" name="client" value="{{--$project->client--}}">
@@ -180,7 +180,7 @@
                             </span>
                         @enderror
                     </div>
-    
+
                     <div class="field field-alt">
                         <label for="distribution">{{ __('Verspreider') }}</label>
                         <input id="" type="text" name="distribution" value="{{--$project->distribution--}}">
@@ -190,7 +190,7 @@
                             </span>
                         @enderror
                     </div>
-    
+
                 </fieldset>
                 <fieldset class="fields financial'">
                     <h3>{{ __('Financieel') }}</h3>
@@ -199,7 +199,7 @@
                         <div class="dropdown">
                             <select title="layout" name="layout" id="layout">
                                 @if(empty($layouts))
-                                    <option value="" disabled selected>{{ __('Niet beschikbaar ...') }}</option> 
+                                    <option value="" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
                                 @else
                                 @foreach($layouts as $layout)
                                     <option value="{{$layout->id}}">{{$layout->layout_name}}</option>
@@ -208,7 +208,7 @@
                             </select>
                         </div>
                     </div>
-                    
+
                     <div class="field field-alt">
                         <label for="taxes">{{ __('BTW') }}</label>
                         <div class="dropdown">
@@ -234,7 +234,7 @@
                             </span>
                         @enderror
                     </div>
-    
+
                     <div class="field field-alt">
                         <label for="journal">{{ __('Dagboek') }}</label>
                         <input id="" type="text" name="journal" value="{{$project->journal}}">
@@ -244,7 +244,7 @@
                             </span>
                         @enderror
                     </div>
-    
+
                     <div class="field field-alt">
                         <label for="department">{{ __('Kostenplaats') }}</label>
                         <input id="" type="text" name="department" value="{{$project->department}}">
@@ -254,7 +254,7 @@
                             </span>
                         @enderror
                     </div>
-    
+
                     <div class="field field-alt">
                         <label for="year">{{ __('Jaar') }}</label>
                         <input id="" type="text" name="year" value="{{$project->year}}">
@@ -264,7 +264,7 @@
                             </span>
                         @enderror
                     </div>
-    
+
                     <div class="field field-alt">
                         <label for="revenue_goals">{{ __('Omzetdoelstelling') }}</label>
                         <input id="" type="text" name="revenue_goals" value="{{$project->revenue_goals}}">
@@ -274,9 +274,9 @@
                             </span>
                         @enderror
                     </div>
-    
+
                 </fieldset>
-    
+
                 <fieldset class="field notes full-width">
                     <label for="comments">{{ __('Opmerkingen') }}</label>
                     <textarea id="" cols="30" rows="10" name="comments" placeholder="Vul opmerkingen in...">{{$project->comments}}</textarea>
@@ -287,7 +287,7 @@
                     @enderror
                 </fieldset>
             </div>
-    
+
             <div class="ButtonGroup">
                 <div class="buttons">
                     <button type="submit" class="button button--action">

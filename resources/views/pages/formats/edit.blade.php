@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 
-@section('title', $pageTitle)
+@section('seo_title', $pageTitleSection)
 @section('content')
     <div class="page__wrapper">
         <form action="{{ route('formats.update', $format->id) }}" method="post">
@@ -40,7 +40,7 @@
                         @enderror
                     </div>
 
-                    
+
                     <div class="field field-alt">
                         <label for="measurement">{{__('Afmeting')}}</label>
                         <input type="text" value="{{ $format->measurement }}" name="measurement" id="">
@@ -78,5 +78,5 @@
                 </div>
             </div>
         </form>
-    </div>    
+    </div>
 @endsection

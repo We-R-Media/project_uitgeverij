@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    private static $page_title_singular = 'Order';
-    private static $page_title_plural = 'Orders';
+    private static $page_title = 'Order';
+    private static $page_title_section = 'Orders';
 
     public function __construct()
     {
@@ -27,12 +27,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::paginate(10);
-        
+        $orders = Order::with(['advertiser', 'project'])->paginate(10);
+
         return view('pages.orders.index', compact('orders'))
             ->with([
-                'pageTitle' => self::$page_title_singular,
-                'pageTitleSection' => self::$page_title_plural,
+                'pageTitleSection' => self::$page_title_section,
             ]);
     }
 
@@ -46,8 +45,7 @@ class OrderController extends Controller
 
         return view('pages.orders.create', compact('advertiser'))
         ->with([
-            'pageTitle' => self::$page_title_singular,
-            'pageTitleSection' => self::$page_title_plural,
+            'pageTitleSection' => self::$page_title_section,
             'subpages' => $subpages
         ]);
     }
@@ -65,15 +63,13 @@ class OrderController extends Controller
      */
     public function edit(string $id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::with('advertiser')->where('id', $id)->firstOrFail();
         $subpages = $this->getSubpages() ?? false;
-        $advertiser = Advertiser::where('order_id', $order->id)->first();
 
-
-        return view('pages.orders.edit', compact('order', 'advertiser'))
+        return view('pages.orders.edit', compact('order'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => 'Bewerk ' . self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
+                'pageTitle' => $order->title,
                 'subpages' => $subpages,
             ]);
     }
@@ -95,50 +91,54 @@ class OrderController extends Controller
     }
 
     public function delete() {
-        
+
     }
 
 
     public function requests(string $id)
     {
+        $order = Order::findOrFail($id);
         $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.orders.requests')->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => 'Verzoeken van ' . self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_section,
+            'pageTitle' => $order->title,
             'subpages' => $subpages
         ]);
     }
 
     public function print(string $id)
     {
+        $order = Order::findOrFail($id);
         $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.orders.print')->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => '??? ' . self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_section,
+            'pageTitle' => $order->title,
             'subpages' => $subpages
         ]);
     }
 
     public function articles(string $id)
     {
+        $order = Order::findOrFail($id);
         $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.orders.articles')->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_section,
+            'pageTitle' => $order->title,
             'subpages' => $subpages
         ]);
     }
 
     public function complaints(string $id)
     {
+        $order = Order::findOrFail($id);
         $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.orders.complaints')->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_section,
+            'pageTitle' => $order->title,
             'subpages' => $subpages
         ]);
     }

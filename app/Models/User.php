@@ -8,10 +8,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Scout\Attributes\SearchUsingFullText;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -29,6 +32,16 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at',
         'password',
         'role',
+    ];
+
+       /**
+     * An array of fields that should be included in the searchable data array for the model.
+     *
+     * @var array<string>
+     */
+    protected $searchableFields = [
+        'first_name',
+        'last_name'
     ];
 
     /**
@@ -50,4 +63,17 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($model) {
+            if (is_null($model->title)) {
+                $modelName = class_basename($model);
+                $token = fake()->uuid();
+                $model->title = "{$modelName} - {$token}";
+            }
+        });
+    }
 }

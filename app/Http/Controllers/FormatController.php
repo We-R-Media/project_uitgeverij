@@ -10,11 +10,10 @@ use Illuminate\Support\Facades\DB;
 class FormatController extends Controller
 
 {
-    private static $page_title_singular = 'Formaat';
-    private static $page_title_plural = 'Formaten';
+    private static $page_title_section = 'Formaten';
 
 
-    public function __construct() 
+    public function __construct()
     {
         $this->subpages = [
             'Formaten' => 'formats.index',
@@ -33,12 +32,11 @@ class FormatController extends Controller
     {
         $subpages = $this->getSubpages() ?? false;
 
-        $formats = Format::all();
+        $formats = Format::paginate(10);
 
         return view('pages.formats.index', compact('formats'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
                 'subpages' => $subpages,
             ]);
     }
@@ -52,8 +50,7 @@ class FormatController extends Controller
 
         return view('pages.formats.create')
         ->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_section,
             'subpages' => $subpages,
         ]);
     }
@@ -80,13 +77,14 @@ class FormatController extends Controller
      */
     public function edit(string $id)
     {
-        $subpages = $this->getSubpages() ?? false;
         $format = Format::findOrFail($id);
+        $subpages = $this->getSubpages() ?? false;
+
 
         return view('pages.formats.edit', compact('format'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
+                'pageTitle' => $format->title,
                 'subpages' => $subpages,
             ]);
     }

@@ -9,8 +9,8 @@ use Illuminate\Support\Facades\DB;
 
 class AdvertiserController extends Controller
 {
-    private static $page_title_singular = 'Relatie';
-    private static $page_title_plural = 'Relaties';
+    private static $page_title = 'Relatie';
+    private static $page_title_section = 'Relaties';
 
     public function __construct()
     {
@@ -30,8 +30,8 @@ class AdvertiserController extends Controller
 
         return view('pages.advertisers.index', compact('advertisers'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
+                'pageTitle' => self::$page_title
             ]);
     }
 
@@ -81,8 +81,8 @@ class AdvertiserController extends Controller
 
         return view('pages.advertisers.edit', compact('advertiser'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => 'Bewerk ' . self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
+                'pageTitle' => $advertiser->title,
                 'subpages' => $subpages
             ]);
     }
@@ -117,22 +117,24 @@ class AdvertiserController extends Controller
 
     public function contacts(string $id)
     {
+        $advertiser = Advertiser::findOrFail($id);
         $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.advertisers.contacts')->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_section,
+            'pageTitle' => $advertiser->title,
             'subpages' => $subpages
         ]);
     }
 
     public function orders(string $id)
     {
+        $advertiser = Advertiser::findOrFail($id);
         $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.advertisers.orders')->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => 'Contactpersonen van ' . self::$page_title_singular,
+            'pageTitleSection' => self::$page_title_section,
+            'pageTitle' => $advertiser->title,
             'subpages' => $subpages
         ]);
     }

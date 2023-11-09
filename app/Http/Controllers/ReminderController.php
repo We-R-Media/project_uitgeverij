@@ -9,8 +9,8 @@ use App\Models\Reminder;
 class ReminderController extends Controller
 {
 
-    private static $page_title_singular = 'Aanmaning';
-    private static $page_title_plural = 'Aanmaningen';
+    private static $page_title = 'Aanmaning';
+    private static $page_title_section = 'Aanmaningen';
 
     public function __construct() {
         $this->subpages = [
@@ -32,8 +32,7 @@ class ReminderController extends Controller
 
         return view('pages.reminders.index',compact('reminders'))
             ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
+                'pageTitleSection' => self::$page_title_section,
                 'subpages' => $subpages
             ]);
     }

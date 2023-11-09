@@ -12,6 +12,7 @@ use App\Http\Controllers\FormatController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\PDFController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 
@@ -175,9 +176,11 @@ Route::group(['middleware' => ['auth']], function() {
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijwerken', 'update')->name('update');
         });
+
+    Route::get('/search', [ SearchController::class, 'search'])->name('search');
+
 });
 
 Route::fallback(function () {
     abort(404);
 });
-

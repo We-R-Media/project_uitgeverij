@@ -8,8 +8,8 @@ use Illuminate\Http\Request;
 
 class InvoiceController extends Controller
 {
-    private static $page_title_singular = 'Factuur';
-    private static $page_title_plural = 'Facturen';
+    private static $page_title = 'Factuur';
+    private static $page_title_section = 'Facturen';
 
     /**
      * Display a listing of the resource.
@@ -19,9 +19,8 @@ class InvoiceController extends Controller
         $invoices = Invoice::paginate(10);
         $subpages = $this->getSubpages() ?? false;
 
-        return view('pages.invoices.index', compact('invoices'))->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => self::$page_title_singular,
+        return view('pages.invoices', compact('invoices'))->with([
+            'pageTitleSection' => self::$page_title_section,
             'subpages' => $subpages
         ]);
     }

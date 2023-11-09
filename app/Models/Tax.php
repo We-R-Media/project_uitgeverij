@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tax extends Model
 {
+    use HasFactory, SoftDeletes;
+
     protected $fillable = [
         'country',
         'zero',
@@ -16,8 +18,14 @@ class Tax extends Model
         'high',
     ];
 
-
-    use HasFactory, SoftDeletes;
+    /**
+     * An array of fields that should be included in the searchable data array for the model.
+     *
+     * @var array<string>
+     */
+    protected $searchableFields = [
+        'country',
+    ];
 
     /**
      * Get the project that owns the tax.

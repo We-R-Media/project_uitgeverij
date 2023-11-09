@@ -3,13 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
-class Contact extends Model
+class Contact extends BaseModel
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +23,16 @@ class Contact extends Model
         'insertion',
         'last_name',
         'email',
+    ];
+
+    /**
+     * An array of fields that should be included in the searchable data array for the model.
+     *
+     * @var array<string>
+     */
+    protected $searchableFields = [
+        'first_name',
+        'last_name',
     ];
 
     /**
@@ -43,5 +53,13 @@ class Contact extends Model
     public function reminders()
     {
         return $this->hasMany(Reminder::class);
+    }
+
+    /**
+     * Get the name of the index associated with the model.
+     */
+    public function searchableAs()
+    {
+        return 'contact_index';
     }
 }

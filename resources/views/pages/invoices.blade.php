@@ -4,8 +4,5 @@
 
 @section('content')
 
-<div class="page__wrapper">
-   <div class="">
-        Planning
-   </div>
+
 @endsection

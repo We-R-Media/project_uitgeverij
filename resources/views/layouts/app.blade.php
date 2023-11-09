@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>RON - @yield('title')</title>
+    <title>RON - @yield('seo_title')</title>
 
    <!-- Fonts -->
    <link rel="preconnect" href="https://use.typekit.net" crossorigin />
@@ -28,7 +28,8 @@
 
         <main class="pageContainer">
             @livewire('top-bar', [
-                'pageTitle' => $pageTitleSection ?? 'RON',
+                'pageTitleSection' => $pageTitleSection ?? 'RON',
+                'pageTitle' => $pageTitle ?? false,
                 'subpages' => $subpages ?? false
             ])
 

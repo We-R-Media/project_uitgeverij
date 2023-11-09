@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $pageTitle)
+@section('seo_title', $pageTitleSection)
 @section('content')
     <div class="page__wrapper">
         <form action="{{ route('tax.store') }}" method="post" class="formContainer">
@@ -49,7 +49,7 @@
                         @enderror
                     </div>
 
-                </fieldset>    
+                </fieldset>
             </div>
 
             <div class="ButtonGroup">

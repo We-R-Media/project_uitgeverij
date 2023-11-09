@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', $pageTitle)
+@section('seo_title', $pageTitleSection)
 
 @section('content')
 <div class="page__wrapper">
-    
+
     <div class="HeaderButtons">
         <div class="buttons">
             <a href="{{route('orders.create', $advertiser->id)}}" class="button button--action">+ {{ __('Nieuwe order') }}</a>
@@ -114,7 +114,7 @@
                         <select class="@error('contact_id') is-invalid @enderror" name="contact_id" id="">
                            {{-- @if($contacts->isEmpty()) --}}
                                 <option value="nvt" disabled selected>{{ __('Niet beschikbaar') }}</option>
-                            {{--    
+                            {{--
                             @else
                                 @foreach ($contacts as $contact )
                                     <option value="{{$contact->id}}">{{$contact->first_name}} {{$contact->last_name}}</option>
@@ -128,9 +128,9 @@
                     @endif
                 </div>
             </fieldset>
-          
+
             <fieldset class="fields notes">
-                <h3>{{ __('Vestiging') }}</h3> 
+                <h3>{{ __('Vestiging') }}</h3>
                 <div class="field field-alt">
                     <label for="company_adres">{{ __('Vestigingsadres') }}</label>
                     <input id="" type="text" name="company_adres" value="">
@@ -190,7 +190,7 @@
                         </span>
                     @enderror
                 </div>
-                
+
                 <div class="field">
                     <label for="comments">{{ __('Opmerkingen') }}</label>
                     <textarea id="" cols="30" rows="10" name="comments" placeholder="Vul opmerkingen in...">

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', $pageTitleSection)
+@section('seo_title', $pageTitleSection)
 
 @section('content')
 
@@ -83,7 +83,7 @@
                         @enderror
                     </div>
 
-                    
+
                     <div class="field field-alt">
                         <label for="phone_mobile">{{ __('Mobiel') }}</label>
                         <input type="text" name="phone_mobile" value="{{$advertiser->phone_mobile}}" disabled>

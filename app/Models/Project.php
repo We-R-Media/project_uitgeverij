@@ -3,14 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
-class Project extends Model
+class Project extends BaseModel
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -18,6 +18,7 @@ class Project extends Model
      * @var array<int, string>
      */
     protected $fillable = [
+        'title',
         'release_name',
         'edition_name',
         'print_edition',
@@ -34,6 +35,16 @@ class Project extends Model
         'year',
         'revenue_goals',
         'comments',
+    ];
+
+    /**
+     * An array of fields that should be included in the searchable data array for the model.
+     *
+     * @var array<string>
+     */
+    protected $searchableFields = [
+        'release_name',
+        'year',
     ];
 
     /**
@@ -114,5 +125,13 @@ class Project extends Model
     public function layout(): HasOne
     {
         return $this->hasOne(Layout::class);
+    }
+
+        /**
+     * Get the name of the index associated with the model.
+     */
+    public function searchableAs()
+    {
+        return 'project_index';
     }
 }

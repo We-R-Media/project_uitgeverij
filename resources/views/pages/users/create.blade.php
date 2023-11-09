@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 
-@section('title', $pageTitle)
+@section('seo_title', $pageTitleSection)
 @section('content')
     <div class="page__wrapper">
         <form class="formContainer" action="{{ route('users.store') }}" method="post">
@@ -68,10 +68,10 @@
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
-                        @enderror   
+                        @enderror
                     </div>
 
-            
+
                     <div class="field field-alt">
                         <label for="email">{{__('E-mailadres')}}</label>
                         <input type="email" name="email" id="">
@@ -93,7 +93,7 @@
                     </div>
 
                 </fieldset>
-                
+
             </div>
             <div class="ButtonGroup">
                 <div class="buttons">

@@ -8,22 +8,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
-class Order extends Model
+class Order extends BaseModel
 {
+    use HasFactory, SoftDeletes, Searchable;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
         'name',
     ];
-
-    public static function boot()
-    {
-        parent::boot();
-        static::creating(function ($post) {
-            $post->title = $post->name;
-        });
-    }
-
-    use HasFactory, SoftDeletes;
 
     /**
      * Get the project that owns the order.
@@ -32,7 +30,7 @@ class Order extends Model
      */
     public function project(): BelongsTo
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsTo(Project::class);
     }
 
     /**

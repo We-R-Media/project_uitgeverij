@@ -3,9 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class Reminder extends Model
+class Reminder extends BaseModel
 {
     use HasFactory;
 
@@ -21,7 +20,7 @@ class Reminder extends Model
     public function advertiser() {
         return $this->belongsTo(Advertiser::class);
     }
-    
+
     /**
      * Get the contact associated with the Reminder
      *

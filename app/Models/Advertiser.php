@@ -3,16 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Scout\Searchable;
 
-class Advertiser extends Model
+class Advertiser extends BaseModel
 {
-
-    use HasFactory, SoftDeletes;
+    use HasFactory, SoftDeletes, Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +20,7 @@ class Advertiser extends Model
      */
     protected $fillable = [
         'id',
+        'title',
         'name',
         'email',
         'phone_mobile',
@@ -34,6 +34,7 @@ class Advertiser extends Model
         'deactivated_at',
         'blacklisted_at',
     ];
+
 
     /**
      * Get all of the contacts for the Advertiser
@@ -62,7 +63,7 @@ class Advertiser extends Model
      */
     public function reminder(): HasOne
     {
-       return $this->hasOne(Reminder::class);
+        return $this->hasOne(Reminder::class);
     }
 
     /**
@@ -74,4 +75,6 @@ class Advertiser extends Model
     {
         return $this->belongsTo(Order::class);
     }
+
+
 }
