@@ -8,8 +8,6 @@ use App\Models\Reminder;
 
 class ReminderController extends Controller
 {
-
-    private static $page_title = 'Aanmaning';
     private static $page_title_section = 'Aanmaningen';
 
     public function __construct() {

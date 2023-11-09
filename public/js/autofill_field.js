@@ -1,6 +1,8 @@
 
 const nameInput = document.getElementById('name-field');
 
-nameInput.addEventListener('focus', function() {
-    console.log(true);
-});
+if(nameInput) {
+    nameInput.addEventListener('focus', function() {
+        console.log(true);
+    });
+}

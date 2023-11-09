@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    private static $page_title = 'Order';
     private static $page_title_section = 'Orders';
 
     public function __construct()
@@ -63,7 +62,7 @@ class OrderController extends Controller
      */
     public function edit(string $id)
     {
-        $order = Order::with('advertiser')->where('id', $id)->firstOrFail();
+        $order = Order::where('id', $id)->firstOrFail();
         $subpages = $this->getSubpages() ?? false;
 
         return view('pages.orders.edit', compact('order'))
@@ -85,15 +84,24 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function delete(string $id)
     {
-        //
+        $order = Order::find($id);
+
+        if($order) {
+            $order->delete();
+        }
+
+        return redirect()->back();
     }
 
-    public function delete() {
-
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function restore(string $id)
+    {
+        $order = Order::withTrashed()->where('id', $id)::restore();
     }
-
 
     public function requests(string $id)
     {

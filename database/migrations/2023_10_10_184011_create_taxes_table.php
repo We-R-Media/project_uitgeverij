@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('taxes', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->unique()->nullable();
+            $table->string('title')->nullable();
             $table->foreignId('project_id')->nullable();
             $table->string('country');
             $table->integer('zero');

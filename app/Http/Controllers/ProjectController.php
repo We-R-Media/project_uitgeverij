@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\DB;
 
 class ProjectController extends Controller
 {
-    private static $page_title = 'Project';
     private static $page_title_section = 'Projecten';
 
     public function __construct()

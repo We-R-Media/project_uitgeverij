@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Http;
 
 class SettingsController extends Controller
 {
-    private static $page_title = 'Instelling';
     private static $page_title_section = 'Instellingen';
 
 

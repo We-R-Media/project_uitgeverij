@@ -1,0 +1,285 @@
+@use "../mixins/" as mixin;
+@use "../base/colors" as color;
+
+.topbar__wrapper {
+    background: color.$secondary;
+    padding-top:0px;
+
+        .toolbar {
+            background:transparentize(color.$accent, 0.75);
+            padding:10px 50px;
+            margin-bottom:50px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            padding: 0px 50px;
+            flex-direction: row;
+            justify-content: flex-end;
+
+            .icon__group {
+                min-height: 60px;
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+
+                .icon {
+                    width:40px; 
+                    height:40px;
+                    position:relative;
+                    margin:0px 5px;
+                    transition: all 0.4s ease;
+
+                    .icon__svg {
+                        display:flex; 
+                        align-items: center;
+                        justify-content: center;
+                        width:100%; 
+                        height:100%;
+                        position:relative;
+
+                        svg {
+                            width:22px;
+                            height:22px;
+                        }
+                    }
+
+                    .controls__wrapper {
+                        position:absolute;
+                        bottom:0px;
+                        transform:translatey(calc(100% + 50px));
+                        right:-25px;
+                        opacity:0;
+                        visibility: hidden;
+                        transition:all 0.4s ease;
+                        padding-top:25px;
+
+                        .controls { 
+                            background:#fff;
+                            padding:25px;
+                            min-width:200px;
+                            border-radius:8px;
+                            box-shadow:0px 10px 20px rgba(0,0,0,0.1);
+                         }
+                    }
+
+                    &:hover {
+                        background:color.$accent;
+                        border-radius:100%;
+
+                        .controls__wrapper {
+                            opacity:1;
+                            visibility: visible;
+                            transform:translatey(100%);
+                        }
+
+                     }
+                }
+
+                .icon__notifications {
+
+                    .badge__counter { 
+                        width:15px; 
+                        height:15px; 
+                        background:color.$black; 
+                        border-radius:100%;
+                        color:#fff;
+                        display:flex;
+                        align-items: center;
+                        justify-content: center;
+                        font-size:10px;
+                        font-weight:500;
+                        position:absolute;
+                        right:5px;
+                        top:5px;
+                    }
+
+                    .controls__wrapper {
+                        z-index:10;
+
+                        .controls {
+                            min-width:500px;
+                            padding:0px;
+                            overflow:hidden;
+
+                            &.notifications {
+
+                                .notifications__header {
+                                    padding:25px;
+                                    font-size:16px; 
+                                    letter-spacing: 2px;
+                                    text-transform: uppercase;
+                                    text-align:center;
+                                    background:color.$gradiant;
+                                    color:#fff;
+                                }
+
+                                .notifications__list {
+
+                                    .notification__item {
+                                        padding:25px 25px;
+                                        background:#fff;
+
+                                        h4 { 
+                                            font-weight:500; 
+                                            font-size:16px;
+                                            margin-bottom:0px;
+                                        }
+
+                                        .date {
+                                            font-size:11px;
+                                            font-weight:300;
+                                        }
+
+                                        &:nth-child(even) {
+                                            background:color.$accent-light;
+                                        }
+                                    }
+                                }
+
+                                .notifications__footer {
+                                    font-size:14px;
+                                    font-weight:500;
+                                    letter-spacing:2px;
+                                    text-align:center;
+                                    background:color.$grey-lighter;
+                                    border-top:1px solid color.$accent;
+                                    a {
+                                        display:block;
+                                        padding:25px;
+                                    }
+                                    &:hover {
+                                        color:color.$primary;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .icon__search {
+                    .controls__wrapper {
+                        .controls {
+                            min-width:400px;
+                        }
+                    }
+                }
+
+                .icon__user {
+
+                    .thumbnail { 
+                        width:100%; 
+                        height:100%; 
+                        background:#fff; 
+                        border-radius:100%;
+                        overflow:hidden;
+
+                        img {
+                            width:100%;
+                            height:100%;
+                            object-fit: cover;;
+                        }
+                    }
+
+                    .UserInfo {
+                        display:flex; 
+                        flex-direction: column; 
+                        flex-wrap:wrap;
+
+                        .userLoggedIn {
+                            line-height: 1;
+                            text-align: center;
+            
+                            span {
+                                font-size: 14px;
+                                color: color.$primary;
+                                display: block;
+                            }
+                        }
+
+                        .button-group {
+                            margin-top: 20px;
+                            text-align: center;
+
+                            a {
+                                background: color.$gradiant;
+                                line-height: 1;
+                                padding: 5px 10px;
+                                font-size: 12px;
+                                border-radius: 50px;
+                                color:#fff;
+                            }
+                        }
+                    }
+                }
+            }
+            @include mixin.breakpoint("max", "laptop") {
+               position:relative;
+                .icon__group {
+                    .icon {
+                        position:inherit;
+                        .controls__wrapper {
+                            left:30px;
+                            width:calc(100% - 60px);
+                            .controls {
+
+                            }
+                        }
+                    }
+                }
+               
+            }
+        }
+        .page__title, .sub__title {
+            padding: 0px 50px 0px;
+
+            &.page__title {
+                font-size: 30px; padding-bottom:25px;
+            }
+
+            &.sub__title {
+                font-size: 25px;
+                font-weight: 300;
+                color: color.$primary;
+                @include mixin.breakpoint("max", "tablet") {
+                    position: fixed;
+                    top: 0px;
+                    height: 50px;
+                    background: color.$gradiant;
+                    left: 0px;
+                    width: 100%;
+                    text-align: center;
+                    font-weight: 500;
+                    font-size: 18px;
+                    color: #fff;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    letter-spacing: 1px;
+                }
+
+            }
+        }
+    .sub__pages {
+        background: color.$accent-light;
+        padding: 0px 50px;
+
+        a {
+            padding: 15px 0px;
+            display: inline-block;
+            line-height: 1;
+            margin-right: 30px;
+            border-bottom:3px solid transparent;
+
+            &:hover {
+                //color:color.$primary;
+                border-color:color.$primary;
+            }
+        }
+
+        @include mixin.breakpoint("max", "tablet") {
+            white-space: nowrap;
+            overflow: scroll;
+        }
+    }
+            
+}

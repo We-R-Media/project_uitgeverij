@@ -44,6 +44,8 @@ Route::group(['middleware' => ['auth']], function() {
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/bijwerken', 'update')->name('update');
+
+            Route::delete('/{id}', 'delete')->name('delete');
         });
 
     Route::name('orders.')
@@ -60,6 +62,8 @@ Route::group(['middleware' => ['auth']], function() {
 
             Route::post('/store', 'store')->name('store');
             Route::post('/update', 'update')->name('update');
+
+            Route::delete('/{id}', 'delete')->name('delete');
         });
 
 
@@ -97,8 +101,8 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/creëren', 'create')->name('create');
 
             Route::post('/opslaan', 'store')->name('store');
-            Route::post('/{id}/bijewerken', 'update')->name('update');
-            Route::delete('/{id}/verwijderen', 'destroy')->name('destroy');
+            Route::post('/{id}/bijwerken', 'update')->name('update');
+            Route::delete('/verwijderen', 'delete')->name('delete');
         });
 
     Route::name('invoices.')
@@ -162,6 +166,8 @@ Route::group(['middleware' => ['auth']], function() {
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijwerken', 'update')->name('update');
+
+            Route::post('/upload', 'upload')->name('upload');
         });
 
 

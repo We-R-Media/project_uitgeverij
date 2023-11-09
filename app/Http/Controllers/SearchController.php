@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 
 class SearchController extends Controller
 {
-    private static $page_title = 'Zoeken';
     private static $page_title_section = 'Zoeken';
 
     private static $searchable_models = [

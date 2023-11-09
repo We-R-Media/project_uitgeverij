@@ -24,6 +24,24 @@ class Order extends BaseModel
     ];
 
     /**
+     * An array of fields that should be included while generating the title.
+     *
+     * @var array<string>
+     */
+    protected $titleGenerationAttributes = [
+        'name',
+    ];
+
+    /**
+     * An array of fields that should be included in the searchable data array for the model.
+     *
+     * @var array<string>
+     */
+    protected $searchableFields = [
+        'name',
+    ];
+
+    /**
      * Get the project that owns the order.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
