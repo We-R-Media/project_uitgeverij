@@ -5,7 +5,10 @@
 @section('content')
 
 <div class="page__wrapper">
-    <form  class="formContainer" action="{{route('orders.edit', $order->id)}}" method="post">
+    <form  class="formContainer" action="{{route('orders.update', $order->id)}}" method="post">
+        @csrf
+        @method('post')
+        
         <div class="grid__wrapper">
             <fieldset class="fields base">
                 <h3>{{ __('Bevestigingsadres') }}</h3>

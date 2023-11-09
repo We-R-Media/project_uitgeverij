@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Advertiser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -79,7 +80,13 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        DB::transaction(function () use($request, $id) {
+            Order::where('id', $id)->update([
+
+            ]);
+        });
+
+        return redirect()->route('orders.index');
     }
 
     /**
