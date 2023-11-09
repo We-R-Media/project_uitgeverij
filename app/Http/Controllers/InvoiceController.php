@@ -47,12 +47,12 @@ class InvoiceController extends Controller
         $subpages = $this->getSubpages() ?? false;
 
 
-        return view('pages.invoices.edit', compact('invoice'))
-            ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => 'Bewerk ' . self::$page_title_singular,
-                'subpages' => $subpages,
-            ]);
+        // return view('pages.invoices.edit', compact('invoice'))
+        //     ->with([
+        //         'pageTitleSection' => self::$page_title_plural,
+        //         'pageTitle' => 'Bewerk ' . self::$page_title_singular,
+        //         'subpages' => $subpages,
+        //     ]);
     }
 
     /**

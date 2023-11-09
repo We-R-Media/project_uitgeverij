@@ -79,6 +79,8 @@ Route::group(['middleware' => ['auth']], function() {
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijwerken', 'update')->name('update');
+
+            Route::delete('/{id}', 'delete')->name('delete');
         });
 
     Route::name('contact.')
@@ -90,6 +92,8 @@ Route::group(['middleware' => ['auth']], function() {
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/bijwerken', 'update')->name('update');
+
+            Route::delete('/{id}', 'delete')->name('delete');
         });
 
     Route::name('tax.')
@@ -102,7 +106,8 @@ Route::group(['middleware' => ['auth']], function() {
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijwerken', 'update')->name('update');
-            Route::delete('/verwijderen', 'delete')->name('delete');
+
+            Route::delete('/{id}', 'delete')->name('delete');
         });
 
     Route::name('invoices.')
@@ -144,16 +149,14 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(UserController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-
             Route::get('/creëren', 'create')->name('create');
             Route::get('/{id}/bewerken', 'edit')->name('edit');
-
             Route::get('/{role?}', 'index')->name('index.role');
-
 
             Route::post('/{id}/bijwerken', 'update')->name('update');
             Route::post('/opslaan', 'store')->name('store');
 
+            Route::delete('/{id}', 'delete')->name('delete');
         });
 
     Route::name('layouts.')
@@ -166,8 +169,9 @@ Route::group(['middleware' => ['auth']], function() {
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijwerken', 'update')->name('update');
-
             Route::post('/upload', 'upload')->name('upload');
+
+            Route::delete('/{id}', 'delete')->name('delete');
         });
 
 
@@ -178,9 +182,12 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/', 'index')->name('index');
             Route::get('/creëren', 'create')->name('create');
             Route::get('/{id}/bewerken', 'edit')->name('edit');
+            Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{id}/bijwerken', 'update')->name('update');
+
+            Route::delete('/{id}/verwijderen', 'destroy')->name('destroy');
         });
 
     Route::get('/search', [ SearchController::class, 'search'])->name('search');

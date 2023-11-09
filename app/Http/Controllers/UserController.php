@@ -6,14 +6,14 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
 {
-
     private static $page_title_plural = 'Gebruikers';
     private static $page_title_singular = 'Gebruiker';
 
-    public function __construct() 
+    public function __construct()
     {
         $this->subpages = [
             'Formaten' => 'formats.index',
@@ -23,7 +23,6 @@ class UserController extends Controller
             'Gebruikers' => 'users.index',
         ];
     }
-
 
     /**
      * Display a listing of the resource.
@@ -45,7 +44,6 @@ class UserController extends Controller
             $users = User::where('role', 'supervisor')->get();
         } else {
             $users = User::all();
-
         }
 
         return view('pages.users.index', compact('users'))
@@ -56,7 +54,7 @@ class UserController extends Controller
                 'aliases' => $aliases,
             ]);
     }
-    
+
 
     /**
      * Show the form for creating a new resource.
@@ -78,19 +76,28 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        DB::transaction(function () use($request) {
-            User::create([
-                'first_name' => $request->input('first_name'),
-                'last_name' => $request->input('last_name'),
-                'initial' => $request->input('initial'),
-                'preposition' => $request->input('preposition'),
-                'gender' => $request->input('gender'),
-                'role' => $request->input('role'),
-                'email' => $request->input('email'),
-                'password' => Hash::make($request->input('password')),
-            ]);
-        });
-        return redirect()->route('users.index');
+        try {
+            DB::transaction(function () use($request) {
+                User::create([
+                    'first_name' => $request->input('first_name'),
+                    'last_name' => $request->input('last_name'),
+                    'initial' => $request->input('initial'),
+                    'preposition' => $request->input('preposition'),
+                    'gender' => $request->input('gender'),
+                    'role' => $request->input('role'),
+                    'email' => $request->input('email'),
+                    'password' => Hash::make($request->input('password')),
+                ]);
+            });
+
+            Alert::success('De gebruiker is succesvol aangemaakt');
+
+            return redirect()->route('users.index');
+        } catch (\Exception $e){
+            Alert::error('Er is iets fout gegaan');
+
+            return redirect()->route('users.index');
+        }
     }
 
     /**
@@ -120,28 +127,46 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, string $id)
     {
-        DB::transaction(function () use($request, $id) {
-            User::where('id', $id)->update([
-                'first_name' => $request->input('first_name'),
-                'last_name' => $request->input('last_name'),
-                'initial' => $request->input('initial'),
-                'preposition' => $request->input('preposition'),
-                'gender' => $request->input('gender'),
-                'role' => $request->input('role'),
-                'email' => $request->input('email'),
-                'password' => Hash::make($request->input('password')),
-            ]);
-        });
-        return redirect()->route('users.index');
+        try {
+
+            DB::transaction(function () use($request, $id) {
+                User::where('id', $id)->update([
+                    'first_name' => $request->input('first_name'),
+                    'last_name' => $request->input('last_name'),
+                    'initial' => $request->input('initial'),
+                    'preposition' => $request->input('preposition'),
+                    'gender' => $request->input('gender'),
+                    'role' => $request->input('role'),
+                    'email' => $request->input('email'),
+                    'password' => Hash::make($request->input('password')),
+                ]);
+            });
+
+            Alert::success('De gebruiker is succesvol aangepast');
+
+            return redirect()->route('users.index');
+        } catch (\Exception $e){
+            Alert::error('Er is iets fout gegaan');
+
+            return redirect()->route('users.index');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user)
+    public function destroy(string $id)
     {
-        //
+        $user = User::find($id);
+
+        if($user) {
+            $user->delete();
+
+            Alert::info('De gebruiker is verwijderd.');
+        }
+
+        return redirect()->route('users.index');
     }
 }

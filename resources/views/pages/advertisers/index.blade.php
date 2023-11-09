@@ -15,7 +15,7 @@
 
                     <div class="item__actions">
                         <a href="{{ route('advertisers.edit', $advertiser->id) }}">{{__('Bewerken')}}</a>
-                        <a href="#" class="delete" data-id="{{ $advertiser->id }}" data-action="route('advertisers.destroy', $advertiser->id)">Verwijderen</a>
+                        <a href="{{ route('formats.destroy', $format) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">Verwijderen</a>
                     </div>
                 </div>
                 <div class="item__summery">

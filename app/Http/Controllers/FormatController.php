@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Format;
 use Illuminate\Http\Request;
-use Illuminate\Http\Requests\FormatRequest;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class FormatController extends Controller
-
 {
     private static $page_title_section = 'Formaten';
-
+    private static $confirm_delete_title = 'Formaat verwijderen.';
+    private static $confirm_delete_text = "Weet je zeker dat je dit formaat wil verwijderen?";
 
     public function __construct()
     {
@@ -30,14 +30,13 @@ class FormatController extends Controller
      */
     public function index()
     {
-        $subpages = $this->getSubpages() ?? false;
-
         $formats = Format::paginate(10);
+
+        confirmDelete(self::$confirm_delete_title, self::$confirm_delete_text);
 
         return view('pages.formats.index', compact('formats'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
-                'subpages' => $subpages,
             ]);
     }
 
@@ -49,10 +48,10 @@ class FormatController extends Controller
         $subpages = $this->getSubpages() ?? false;
 
         return view('pages.formats.create')
-        ->with([
-            'pageTitleSection' => self::$page_title_section,
-            'subpages' => $subpages,
-        ]);
+            ->with([
+                'pageTitleSection' => self::$page_title_section,
+                'subpages' => $subpages,
+            ]);
     }
 
     /**
@@ -60,16 +59,24 @@ class FormatController extends Controller
      */
     public function store(Request $request)
     {
-        DB::transaction(function () use($request) {
-            Format::create([
-                'size' => $request->input('size'),
-                'measurement' => $request->input('measurement'),
-                'ratio' => $request->input('ratio'),
-                'price' => $request->input('price'),
-            ]);
-        });
+        try {
+            DB::transaction(function () use($request) {
+                Format::create([
+                    'size' => $request->input('size'),
+                    'measurement' => $request->input('measurement'),
+                    'ratio' => $request->input('ratio'),
+                    'price' => $request->input('price'),
+                ]);
+            });
 
-        return redirect()->back();
+            Alert::success('Het formaat is succesvol aangemaakt');
+
+            return redirect()->route('formats.index');
+        } catch (\Exception $e){
+            Alert::error('Er is iets fout gegaan');
+
+            return redirect()->route('formats.index');
+        }
     }
 
     /**
@@ -93,16 +100,24 @@ class FormatController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        DB::transaction(function () use($request,$id) {
-            Format::where('id', $id)->update([
-                'size' => $request->input('size'),
-                'measurement' => $request->input('measurement'),
-                'ratio' => $request->input('ratio'),
-                'price' => $request->input('price'),
-            ]);
-        });
+        try {
+            DB::transaction(function () use($request,$id) {
+                Format::where('id', $id)->update([
+                    'size' => $request->input('size'),
+                    'measurement' => $request->input('measurement'),
+                    'ratio' => $request->input('ratio'),
+                    'price' => $request->input('price'),
+                ]);
+            });
 
-        return redirect()->route('formats.index');
+            Alert::success('Het formaat is aangepast.');
+
+            return redirect()->route('formats.index');
+        } catch (\Exception $e){
+            Alert::error('Er is iets fout gegaaan.');
+
+            return redirect()->route('formats.index');
+        }
     }
 
     /**
@@ -110,6 +125,14 @@ class FormatController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $format = Format::find($id);
+
+        if($format) {
+            $format->delete();
+
+            Alert::info('Het formaat is verwijderd.');
+        }
+
+        return redirect()->route('formats.index');
     }
 }

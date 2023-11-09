@@ -17,10 +17,7 @@
    <link  as="style" rel="stylesheet preload prefetch"  href="https://use.typekit.net/aie2oyg.css" crossorigin />
 
     <!-- Scripts -->
-    @include('sweetalert::alert')
-
     @vite(['resources/sass/main.scss', 'resources/js/app.js'])
-
     @livewireStyles
 </head>
 <body>
@@ -41,8 +38,7 @@
         </main>
     </div>
 
+    @include('sweetalert::alert')
     @livewireScripts
-    {{-- <script src="{{asset('js/pages_calculate.js')}}" defer></script>
-    <script src="{{asset('js/autofill_field.js')}}" defer></script> --}}
 </body>
 </html>

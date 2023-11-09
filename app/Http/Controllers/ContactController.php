@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ContactController extends Controller
 {
@@ -29,17 +30,25 @@ class ContactController extends Controller
      */
     public function store(Request $request)
     {
-        $contact = DB::transaction(function () use($request) {
-            Contact::create([
-                'first_name' => $request->input('first_name'),
-                'initial' => $request->input('initial'),
-                'preposition' => $request->input('preposition'),
-                'last_name' => $request->input('last_name'),
-                'email' => $request->input('email'),
-            ]);
-        });
+        try {
+            $contact = DB::transaction(function () use($request) {
+                Contact::create([
+                    'first_name' => $request->input('first_name'),
+                    'initial' => $request->input('initial'),
+                    'preposition' => $request->input('preposition'),
+                    'last_name' => $request->input('last_name'),
+                    'email' => $request->input('email'),
+                ]);
+            });
 
-        return redirect()->back();
+            Alert::success('De adverteerder is succesvol bijgewerkt');
+
+            return redirect()->route('contacts.index');
+        } catch (\Exception $e){
+            Alert::error('Er is iets fout gegaan');
+
+            return redirect()->route('contacts.index');
+        }
     }
 
     /**

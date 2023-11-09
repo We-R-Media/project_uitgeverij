@@ -16,12 +16,12 @@
         @foreach ($formats as $format )
             <li class="item">
                 <div class="item__content">
-                    <a href="{{ route('formats.edit', $format->id) }}">
+                    <a href="{{ route('formats.edit', $format) }}">
                         <h3>{{ $format->id }}</h3>
                     </a>
                     <div class="item__actions">
-                        <a href="{{ route('formats.edit', $format->id) }}">{{__('Bewerken')}}</a>
-                        <a href="#" class="delete" data-id="{{ $format->id }}" data-action="{{--route('layouts.destroy', $layout->id) --}}">{{__('Verwijderen')}}</a>
+                        <a href="{{ route('formats.edit', $format) }}">{{__('Bewerken')}}</a>
+                        <a href="{{ route('formats.destroy', $format) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">Verwijderen</a>
                     </div>
                 </div>
 

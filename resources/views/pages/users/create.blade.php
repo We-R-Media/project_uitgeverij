@@ -63,11 +63,7 @@
 
                     <div class="field field-alt">
                         <label for="last_name">{{__('Achternaam')}}</label>
-<<<<<<< HEAD:resources/views/pages/sellers/edit.blade.php
-                        <input type="text" value="{{$seller->last_name}}" name="last_name" id="">
-=======
                         <input type="text" name="last_name" id="">
->>>>>>> a9e751d842859d15d7b9873cf0378a9e5ccebf48:resources/views/pages/users/create.blade.php
                         @error('last_name')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>

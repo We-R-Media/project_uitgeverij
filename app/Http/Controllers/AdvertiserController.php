@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Advertiser;
 use App\Models\Contact;
+use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 
 class AdvertiserController extends Controller
 {
@@ -48,25 +50,33 @@ class AdvertiserController extends Controller
     {
         $contactId = $request->input('contact_id');
 
-        DB::transaction(function () use ($request, $contactId) {
-            $advertiser = Advertiser::create([
-                'name' => $request->input('name'),
-                'email' => $request->input('email'),
-                'po_box' => $request->input('po_box'),
-                'postal_code' => $request->input('postal_code'),
-                'city' => $request->input('city'),
-                'province' => $request->input('province'),
-                'phone_mobile' => $request->input('phone_mobile'),
-                'phone' => $request->input('phone'),
-                'contact_id' => $request->input('contact_id'),
-                'comments' => $request->input('comments'),
-            ]);
-            $contact = Contact::find($contactId);
-            $contact->advertisers()->associate($advertiser);
-            $advertiser->save();
-        });
+        try {
+            DB::transaction(function () use ($request, $contactId) {
+                $advertiser = Advertiser::create([
+                    'name' => $request->input('name'),
+                    'email' => $request->input('email'),
+                    'po_box' => $request->input('po_box'),
+                    'postal_code' => $request->input('postal_code'),
+                    'city' => $request->input('city'),
+                    'province' => $request->input('province'),
+                    'phone_mobile' => $request->input('phone_mobile'),
+                    'phone' => $request->input('phone'),
+                    'contact_id' => $request->input('contact_id'),
+                    'comments' => $request->input('comments'),
+                ]);
+                $contact = Contact::find($contactId);
+                $contact->advertisers()->associate($advertiser);
+                $advertiser->save();
+            });
 
-        return redirect()->back();
+            Alert::success('De adverteerder is succesvol aangemaakt');
+
+            return redirect()->route('advertisers.index');
+        } catch (\Exception $e){
+            Alert::error('Er is iets fout gegaan');
+
+            return redirect()->route('advertisers.index');
+        }
     }
 
     /**
@@ -90,19 +100,28 @@ class AdvertiserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        DB::transaction(function () use($request, $id) {
-            Advertiser::where('id', $id)->update([
-                'name' => $request->input('name'),
-                'po_box' => $request->input('po_box'),
-                'postal_code' => $request->input('postal_code'),
-                'city' => $request->input('city'),
-                'province' => $request->input('province'),
-                'phone' => $request->input('phone'),
-                'phone_mobile' => $request->input('phone_mobile'),
-                'email' => $request->input('email'),
-            ]);
-        });
-        return redirect()->route('advertisers.index');
+        try {
+            DB::transaction(function () use($request, $id) {
+                Advertiser::where('id', $id)->update([
+                    'name' => $request->input('name'),
+                    'po_box' => $request->input('po_box'),
+                    'postal_code' => $request->input('postal_code'),
+                    'city' => $request->input('city'),
+                    'province' => $request->input('province'),
+                    'phone' => $request->input('phone'),
+                    'phone_mobile' => $request->input('phone_mobile'),
+                    'email' => $request->input('email'),
+                ]);
+            });
+
+            Alert::success('De adverteerder is succesvol bijgewerkt');
+
+            return redirect()->route('advertisers.index');
+        } catch (\Exception $e){
+            Alert::error('Er is iets fout gegaan');
+
+            return redirect()->route('advertisers.index');
+        }
     }
 
     /**
