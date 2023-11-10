@@ -11,10 +11,12 @@ use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\FormatController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReminderController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -62,7 +64,11 @@ Route::group(['middleware' => ['auth']], function() {
 
             Route::post('/store', 'store')->name('store');
             Route::post('/{id}/update', 'update')->name('update');
-            Route::post('/verzenden', 'approval')->name('approval');
+
+            Route::post('/{advertiser}/verzenden', 'approval')->name('approval');
+
+            Route::post('{id}/akkoord', 'approved')->name('approved');
+
             Route::delete('/{id}', 'delete')->name('delete');
         });
 
@@ -187,9 +193,18 @@ Route::group(['middleware' => ['auth']], function() {
             Route::post('/{id}/bijwerken', 'update')->name('update');
         });
 
+    Route::name('email.')
+    ->prefix('emails')
+    ->controller(EmailController::class)
+    ->group(function () {
+        Route::get('/{id}/akkoord', 'approval')->name('approval');
+    });
+
     Route::get('/search', [ SearchController::class, 'search'])->name('search');
 
 });
+
+
 
 Route::fallback(function () {
     abort(404);

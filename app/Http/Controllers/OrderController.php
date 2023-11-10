@@ -91,6 +91,18 @@ class OrderController extends Controller
         return redirect()->route('orders.index');
     }
 
+    public function approved(Request $request, $id) {
+
+        dd(true);
+
+        DB::transaction(function () use ($request, $id) {
+            Order::where('id', $id)->update([
+                'approved_at' => $request->dateTimeNow(),
+            ]);
+        });
+        return redirect()->route('orders.index');
+    }
+
     /**
      * Remove the specified resource from storage.
      */
@@ -159,9 +171,5 @@ class OrderController extends Controller
             'pageTitle' => $order->title,
             'subpages' => $subpages
         ]);
-    }
-
-    public function approval(Request $request) {
-        Mail::to('rolniels@gmail.com')->send(new SampleEmail());
     }
 }

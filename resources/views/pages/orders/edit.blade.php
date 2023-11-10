@@ -233,12 +233,13 @@
         <div class="ButtonGroup">
             <div class="buttons">
                 <a href="{{route('pdf.generate')}}" class="button button__secondary">{{ __('Genereer PDF') }}</a>
-                @if ($order->approved)
-                    <form action="{{ route('orders.approval', $order->id) }}" method="post">
+                @if ($order->approved_at)
+                    {{-- <form action="{{ route('email.approval', $order->id) }}" method="post">
                         @csrf
                         @method('post')
                         <button type="submit" class="button button--action">{{__('Verstuur akkoord')}}</button>
-                    </form>
+                    </form> --}}
+                    <a href="{{ route('email.approval', $order->id) }}">Verstuur akkoord</a>
                 @else 
                 <a href="{{ route('invoices.create', $order->id) }}" class="button button--action">{{__('Factureer order')}}</a>
                 @endif
