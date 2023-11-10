@@ -165,7 +165,6 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         Livewire\LivewireServiceProvider::class,
-
         RealRashid\SweetAlert\SweetAlertServiceProvider::class,
     ])->toArray(),
 

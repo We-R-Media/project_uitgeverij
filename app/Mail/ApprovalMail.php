@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Attachment;
 use App\Models\Advertiser;
 
 class ApprovalMail extends Mailable
@@ -17,10 +18,11 @@ class ApprovalMail extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public $order)
+    public function __construct($order, $pdf)
     {
 
         $this->order = $order;
+        $this->pdf = $pdf;
     }
 
     /**
@@ -42,6 +44,7 @@ class ApprovalMail extends Mailable
             view: 'emails.approval',
             with: [
                 'order' => $this->order,
+                'pdf' => $this->pdf,
             ],
         );
     }
@@ -54,7 +57,8 @@ class ApprovalMail extends Mailable
     public function attachments(): array
     {
         return [
-
+            Attachment::fromData(fn () => $this->pdf->output(), 'opdrachtbevestiging.pdf')
+                ->withMime('application/pdf'),
         ];
     }
 }

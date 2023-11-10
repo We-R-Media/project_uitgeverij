@@ -20,7 +20,7 @@
             Concept Plus B.V.
         </p>
 
-            <a onclick="event.preventDefault(); document.getElementById('approve-form').submit();" href="{{ route('orders.approved', $order->id) }}">Klik hier om akkoord te gaan.</a>
+            <a onclick="event.preventDefault(); document.getElementById('approve-form').submit();">Klik hier om akkoord te gaan.</a>
 
             <form action="{{ route('orders.approved', $order->id) }}" id="approve-form">
                 @csrf

@@ -127,7 +127,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('pdf')
         ->controller(PDFController::class)
         ->group(function () {
-            Route::get('/', 'PDFGenerate')->name('generate');
+            Route::get('/{id}', 'approval')->name('generate');
         });
 
     Route::name('reminders.')

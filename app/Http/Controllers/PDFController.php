@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Order;
 use App\Models\Layout;
 use PDF;
 // use Dompdf\Dompdf;
@@ -11,9 +12,9 @@ use PDF;
 class PDFController extends Controller
 {
 
-    public function PDFgenerate() {
+    public function approval($id) {
 
-        $layouts = Layout::find(1);
+        $order = Order::findOrFail($id);
 
 
         // $options = new Options();
@@ -37,10 +38,10 @@ class PDFController extends Controller
 
 
 
-        $pdf = PDF::loadView('pages.pdf', ['layouts' => $layouts]);
+        $pdf = PDF::loadView('pages.pdf.approval', compact('order'));
         // return $pdf->download('data.pdf');
 
-        return $pdf->stream('layouts.pdf');
+        return $pdf->stream('approval.pdf');
     }
  
   

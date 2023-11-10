@@ -232,7 +232,7 @@
         </div>
         <div class="ButtonGroup">
             <div class="buttons">
-                <a href="{{route('pdf.generate')}}" class="button button__secondary">{{ __('Genereer PDF') }}</a>
+                <a href="{{route('pdf.generate', $order->id)}}" class="button button__secondary">{{ __('Genereer PDF') }}</a>
                 @if ($order->approved_at)
                     {{-- <form action="{{ route('email.approval', $order->id) }}" method="post">
                         @csrf
