@@ -22,6 +22,8 @@ class Order extends BaseModel
     protected $fillable = [
         'name',
         'approved_at',
+        'order_date',
+        'order_total_price',
     ];
 
     /**
@@ -53,13 +55,13 @@ class Order extends BaseModel
     }
 
     /**
-     * Get the phone associated with the user.
+     * Get the advertiser that owns the Order
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function advertiser(): HasOne
+    public function advertiser(): BelongsTo
     {
-        return $this->hasOne(Advertiser::class);
+        return $this->belongsTo(Advertiser::class);
     }
 
     /**

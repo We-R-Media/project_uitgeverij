@@ -27,23 +27,42 @@ class ProjectSeeder extends Seeder
     {
         $randomNumberSmall = fake()->numberBetween(1, 4);
         $randomNumberLarge = fake()->numberBetween(6, 12);
-
+        
+        $advertisers = Advertiser::factory()
+            ->has(Invoice::factory()->count($randomNumberLarge))
+            ->count($randomNumberSmall);
+                    
         $projects = Project::factory()
-            ->has( Order::factory()
-                ->has( OrderLine::factory()->count( $randomNumberLarge ) )
-                ->has( Advertiser::factory()
-                    ->has(Invoice::factory()->count( $randomNumberLarge )
-                )->count( $randomNumberSmall ) )
-            )->count( $randomNumberSmall )
-            ->has( Format::factory()->count( $randomNumberSmall ) )
-            ->has( Client::factory() )
-            ->has( Printer::factory() )
-            ->has( Distributor::factory() )
-            ->has( Designer::factory() )
-            ->has( Layout::factory() )
-            ->has( Tax::factory() )
+            ->has(Order::factory()
+                ->has(OrderLine::factory()->count($randomNumberLarge))
+                ->has($advertisers->set('advertiser_id', 'id' ))
+                )
+            ->has(Format::factory()->count($randomNumberSmall))
+            ->has(Client::factory())
+            ->has(Printer::factory())
+            ->has(Distributor::factory())
+            ->has(Designer::factory())
+            ->has(Layout::factory())
+            ->has(Tax::factory())
             ->count($randomNumberSmall);
 
+        // $projects = Project::factory()
+        //     ->has( Order::factory()
+        //         ->has( OrderLine::factory()->count( $randomNumberLarge ) )
+        //         ->has( Advertiser::factory()
+        //             ->has(Invoice::factory()->count( $randomNumberLarge )
+        //         )->count( $randomNumberSmall ) )
+        //     )->count( $randomNumberSmall )
+        //     ->has( Format::factory()->count( $randomNumberSmall ) )
+        //     ->has( Client::factory() )
+        //     ->has( Printer::factory() )
+        //     ->has( Distributor::factory() )
+        //     ->has( Designer::factory() )
+        //     ->has( Layout::factory() )
+        //     ->has( Tax::factory() )
+        //     ->count($randomNumberSmall);
+
         $projects->create();
+        $advertisers->create();
     }
 }

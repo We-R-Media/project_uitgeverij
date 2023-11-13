@@ -27,7 +27,7 @@ class AdvertiserController extends Controller
      */
     public function index()
     {
-        $advertisers = Advertiser::paginate();
+        $advertisers = Advertiser::paginate(10);
 
         return view('pages.advertisers.index', compact('advertisers'))
             ->with([
