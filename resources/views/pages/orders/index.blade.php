@@ -10,24 +10,24 @@
             <li class="item">
                 <div class="item__content">
                     <a href="{{ route('orders.edit', $order->id) }}" class="">
-                        <h3>{{ $order->advertiser->name }}</h3>
+                        <h3>{{ $order->id }}</h3>
                     </a>
                     <div class="item__actions">
-                        <a href="{{ route('orders.edit', $order->id) }}">Bewerken</a>
+                        <a href="{{ route('orders.edit', $order->id) }}">{{__('Bewerken')}}</a>
                         <button type="button" wire:confirm.prompt="Are you sure you want to delete this post?" wire:click="delete">Verwijderen</button>
                     </div>
                 </div>
                 <div class="item__summery">
                     <div class="item__format field">
-                        <label>Prijs</label>
+                        <label>{{__('Prijs')}}</label>
                         {{$order->order_total_price}}
                     </div>
                     <div class="item__created field">
-                        <label>Aangemaakt op</label>
+                        <label>{{__('Aangemaakt op')}}</label>
                         {{$order->order_date}}
                     </div>
                     <div class="item__comments field">
-                        <label>Laatst geupdate op</label>
+                        <label>{{__('Laatst geupdate op')}}</label>
                         {{$order->updated_at}}
                     </div>
                 </div>

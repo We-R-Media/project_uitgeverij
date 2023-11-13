@@ -67,13 +67,13 @@ class Advertiser extends BaseModel
     }
 
     /**
-     * Get the order_line that owns the order line.
+     * Get all of the orders for the Advertiser
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function order(): BelongsTo
+    public function orders(): HasMany
     {
-        return $this->belongsTo(Order::class);
+        return $this->hasMany(Order::class);
     }
 
 

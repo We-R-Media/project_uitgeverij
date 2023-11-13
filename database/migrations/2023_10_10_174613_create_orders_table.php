@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->foreignID('project_id')->nullable();
+            $table->foreignID('advertiser_id')->nullable();
             $table->dateTime('order_date');
             $table->double('order_total_price');
             $table->dateTime('approved_at')->default(null);
