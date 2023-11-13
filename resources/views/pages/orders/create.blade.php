@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="page__wrapper">
-        <form action="{{ route('orders.store') }}" method="post">
+        <form action="{{ route('orders.store', $advertiser->id) }}" method="post">
             @csrf
             @method('post')
 
@@ -114,11 +114,5 @@
             </div>
 
         </form>
-    </div>
-
-    <div class="ButtonGroup">
-        <div class="buttons">
-            <a href="{{  route('pdf.generate') }}" class="button button--action">{{__('Genereer PDF')}}</a>
-        </div>
     </div>
 @endsection

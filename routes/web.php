@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\OrderLineController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\FormatController;
 use App\Http\Controllers\InvoiceController;
@@ -59,12 +60,19 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{id}/print', 'print')->name('print');
             Route::get('/{id}/klachten', 'complaints')->name('complaints');
 
-            Route::post('/store', 'store')->name('store');
+            Route::post('/{id}/store', 'store')->name('store');
             Route::post('/{id}/update', 'update')->name('update');
             Route::post('/{id}/verzenden', 'approval')->name('approval');
             Route::post('/{id}/akkoord', 'approved')->name('approved');
 
             Route::delete('/{id}', 'delete')->name('delete');
+        });
+
+    Route::name('orderlines.')
+        ->prefix('orderregels')
+        ->controller(OrderLineController::class)
+        ->group(function () {
+            Route::get('/{id}', 'index')->name('index');
         });
 
     Route::name('advertisers.')
