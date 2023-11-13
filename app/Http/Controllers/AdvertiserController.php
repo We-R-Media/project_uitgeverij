@@ -127,7 +127,7 @@ class AdvertiserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Advertiser $advertiser)
     {
         $advertiser = Advertiser::find($id);
 
@@ -144,7 +144,7 @@ class AdvertiserController extends Controller
     public function contacts(string $id)
     {
         $advertiser = Advertiser::findOrFail($id);
-        $subpages = $this->getSubpages( $id ) ?? false;
+        $subpages = $this->getSubpages( ) ?? false;
 
         return view('pages.advertisers.contacts')->with([
             'pageTitleSection' => self::$page_title_section,
@@ -156,7 +156,7 @@ class AdvertiserController extends Controller
     public function orders(string $id)
     {
         $advertiser = Advertiser::findOrFail($id);
-        $subpages = $this->getSubpages( $id ) ?? false;
+        $subpages = $this->getSubpages() ?? false;
 
         return view('pages.advertisers.orders')->with([
             'pageTitleSection' => self::$page_title_section,

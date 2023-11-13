@@ -60,5 +60,6 @@
                 </li>
             @endif
         </ul>
+        {{ $formats->links() }}
     </div>
 @endsection

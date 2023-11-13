@@ -31,5 +31,6 @@
                 </li>
             @endif
         </ul>
+        {{ $reminders->links() }}
     </div>
 @endsection

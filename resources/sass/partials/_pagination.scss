@@ -1,0 +1,47 @@
+@use "../mixins" as mixin;
+@use '../base/colors' as color;
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination__row {
+    display: flex;
+    list-style: none;
+    gap: 2px;
+    padding: 0;
+    margin: 0;
+
+
+    li.pagination-item {
+
+        a,
+        span {
+            @include mixin.flex($align-items: center, $justify-content: center);
+            font-size: clamp(1.2rem, 3vw, 1.4rem);
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            text-decoration: none;
+
+            &:hover,
+            &:focus,
+            &:active {
+                background-color: color.$gray-light;
+            }
+        }
+
+        &.active {
+            a {
+                background-color: color.$primary;
+                color: color.$white;
+            }
+        }
+
+        &.disabled {
+            opacity: .2;
+        }
+    }
+}

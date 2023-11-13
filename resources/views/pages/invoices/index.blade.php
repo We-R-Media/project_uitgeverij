@@ -61,5 +61,6 @@
                 </li>
             @endif
         </div>
+        {{ $invoices->links() }}
     </div>
 @endsection

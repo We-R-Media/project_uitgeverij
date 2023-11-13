@@ -88,6 +88,6 @@ class InvoiceController extends Controller
             Alert::toast('De factuur is verwijderd.', 'info');
         }
 
-        return redirect()->route('orders.index');
+        return redirect()->route('invoices.index');
     }
 }

@@ -232,8 +232,12 @@
         </div>
         <div class="ButtonGroup">
             <div class="buttons">
-                <a href="{{-- route('pdf.generate') --}}" class="button button__secondary">{{ __('Genereer PDF') }}</a>
-                <a href="{{-- route('invoices.create', $order->id) --}}" class="button button--action">Factureer order</a>
+                <a href="{{route('pdf.generate', $order->id)}}" class="button button__secondary">{{ __('Genereer PDF') }}</a>
+                @if ($order->approved_at)
+                    <a href="{{ route('email.approval', $order->id) }}">Verstuur akkoord</a>
+                @else
+                    <a href="{{ route('invoices.create', $order->id) }}" class="button button--action">{{__('Factureer order')}}</a>
+                @endif
                 <button type="submit" class="button button--action">{{ __('Opslaan') }}</button>
             </div>
         </div>

@@ -60,5 +60,6 @@
                 </li>
             @endif
         </ul>
+        {{ $sellers->links() }}
     </div>
 @endsection

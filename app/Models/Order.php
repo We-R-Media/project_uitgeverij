@@ -21,6 +21,7 @@ class Order extends BaseModel
      */
     protected $fillable = [
         'name',
+        'approved_at',
     ];
 
     /**

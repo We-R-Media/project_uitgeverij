@@ -64,5 +64,6 @@
                 </li>
             @endif
         </ul>
+        {{ $layouts->links() }}
     </div>
 @endsection

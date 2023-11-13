@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SampleEmail;
 
 class OrderController extends Controller
 {
@@ -74,6 +76,32 @@ class OrderController extends Controller
                 'pageTitle' => $order->title,
                 'subpages' => $subpages,
             ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        DB::transaction(function () use($request, $id) {
+            Order::where('id', $id)->update([
+
+            ]);
+        });
+
+        return redirect()->route('orders.index');
+    }
+
+    public function approved(Request $request, $id) {
+
+        dd(true);
+
+        DB::transaction(function () use ($request, $id) {
+            Order::where('id', $id)->update([
+                'approved_at' => $request->dateTimeNow(),
+            ]);
+        });
+        return redirect()->route('orders.index');
     }
 
     /**

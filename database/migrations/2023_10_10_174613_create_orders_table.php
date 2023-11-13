@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignID('project_id')->nullable();
             $table->dateTime('order_date');
             $table->double('order_total_price');
+            $table->dateTime('approved_at')->default(null);
             $table->text('comment_confirmation')->nullable();
             $table->text('comment_facturation')->nullable();
             $table->text('comment_reference')->nullable();

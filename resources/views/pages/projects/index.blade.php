@@ -52,6 +52,6 @@
                 </li>
             @endif
         </ul>
+        {{ $projects->links() }}
     </div>
-    {{ $projects->links() }}
 @endsection

@@ -60,6 +60,6 @@
                 </li>
             @endif
         </ul>
+        {{ $orders->links() }}
     </div>
-    {{ $orders->links() }}
 @endsection

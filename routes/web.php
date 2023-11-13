@@ -11,11 +11,13 @@ use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\FormatController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReminderController;
+use App\Http\Controllers\EmailController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Redirect;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -59,8 +61,12 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{id}/print', 'print')->name('print');
             Route::get('/{id}/klachten', 'complaints')->name('complaints');
 
-            Route::post('/store', 'store')->name('store'); // FIX
-            Route::post('update', 'update')->name('update'); // FIX
+            Route::post('/store', 'store')->name('store');
+            Route::post('/{id}/update', 'update')->name('update');
+            Route::post('/{advertiser}/verzenden', 'approval')->name('approval');
+            Route::post('/{id}/akkoord', 'approved')->name('approved');
+
+            Route::delete('/{id}', 'delete')->name('delete');
         });
 
     Route::name('advertisers.')
@@ -172,12 +178,21 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('pdf')
         ->controller(PDFController::class)
         ->group(function () {
-            Route::get('/', 'PDFGenerate')->name('generate');
+            Route::get('/{id}', 'approval')->name('generate');
+        });
+
+    Route::name('email.')
+        ->prefix('emails')
+        ->controller(EmailController::class)
+        ->group(function () {
+            Route::get('/{id}/akkoord', 'approval')->name('approval');
         });
 
     Route::get('/search', [ SearchController::class, 'search'])->name('search');
 
 });
+
+
 
 Route::fallback(function () {
     abort(404);
