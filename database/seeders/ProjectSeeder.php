@@ -27,16 +27,20 @@ class ProjectSeeder extends Seeder
     {
         $randomNumberSmall = fake()->numberBetween(1, 4);
         $randomNumberLarge = fake()->numberBetween(6, 12);
-        
+
         $advertisers = Advertiser::factory()
             ->has(Invoice::factory()->count($randomNumberLarge))
-            ->count($randomNumberSmall);
-                    
+            ->count($randomNumberSmall)
+            ->create();
+
         $projects = Project::factory()
             ->has(Order::factory()
                 ->has(OrderLine::factory()->count($randomNumberLarge))
-                ->has($advertisers->set('advertiser_id', 'id' ))
-                )
+                ->afterCreating(function (Order $order) use ($advertisers) {
+                    $advertiser = $advertisers->random();
+                    $order->advertiser()->associate($advertiser)->save();
+                })
+            )
             ->has(Format::factory()->count($randomNumberSmall))
             ->has(Client::factory())
             ->has(Printer::factory())
@@ -44,25 +48,7 @@ class ProjectSeeder extends Seeder
             ->has(Designer::factory())
             ->has(Layout::factory())
             ->has(Tax::factory())
-            ->count($randomNumberSmall);
-
-        // $projects = Project::factory()
-        //     ->has( Order::factory()
-        //         ->has( OrderLine::factory()->count( $randomNumberLarge ) )
-        //         ->has( Advertiser::factory()
-        //             ->has(Invoice::factory()->count( $randomNumberLarge )
-        //         )->count( $randomNumberSmall ) )
-        //     )->count( $randomNumberSmall )
-        //     ->has( Format::factory()->count( $randomNumberSmall ) )
-        //     ->has( Client::factory() )
-        //     ->has( Printer::factory() )
-        //     ->has( Distributor::factory() )
-        //     ->has( Designer::factory() )
-        //     ->has( Layout::factory() )
-        //     ->has( Tax::factory() )
-        //     ->count($randomNumberSmall);
-
-        $projects->create();
-        $advertisers->create();
+            ->count($randomNumberSmall)
+            ->create();
     }
 }
