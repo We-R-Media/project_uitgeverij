@@ -29,15 +29,15 @@
                         </div>
                         <div class="item__summary">
                             <div class="item__format field">
-                                <label>Prijs</label>
+                                <label>{{__('Prijs')}}</label>
                                 {{$order->order_total_price}}
                             </div>
                             <div class="item__created field">
-                                <label>Aangemaakt op</label>
+                                <label>{{__('Aangemaakt op')}}</label>
                                 {{$order->order_date}}
                             </div>
                             <div class="item__comments field">
-                                <label>Laatst geupdate op</label>
+                                <label>{{__('Laatst geupdate op')}}</label>
                                 {{$order->updated_at}}
                             </div>
                         </div>

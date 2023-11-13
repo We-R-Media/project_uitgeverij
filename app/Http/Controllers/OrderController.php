@@ -20,8 +20,8 @@ class OrderController extends Controller
         $this->subpages = [
             'Ordergegevens' => 'orders.edit',
             'Print' => 'orders.print',
-            'Artikel' => 'orders.articles',
             'Klachten' => 'orders.complaints',
+            'Orderregels' => 'orderlines.index',
         ];
     }
 
@@ -58,8 +58,20 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request,  $id)
     {
+        DB::transaction(function () use($request, $id) {
+
+            $advertiser = Advertiser::findOrFail($id);
+            $order = Order::create([
+                'order_date' => now(),
+                'approved_at' => now(),
+                'order_total_price' => 0.00,
+            ]);
+
+            $order->advertiser()->associate($advertiser);
+            $order->save();
+        });
         return redirect()->route('orders.index');
     }
 
@@ -68,7 +80,7 @@ class OrderController extends Controller
      */
     public function edit(string $id)
     {
-        $order = Order::where('id', $id)->firstOrFail();
+        $order = Order::findOrFail($id);
         $subpages = $this->getSubpages() ?? false;
 
         return view('pages.orders.edit', compact('order'))

@@ -6,12 +6,30 @@ use Illuminate\Http\Request;
 
 class OrderLineController extends Controller
 {
+    private static $page_title_section = 'Orderregels';
+
+    public function __construct()
+    {
+        $this->subpages = [
+            'Ordergegevens' => 'orders.edit',
+            'Print' => 'orders.print',
+            'Klachten' => 'orders.complaints',
+            'Orderregels' => 'orderlines.index',
+        ];
+    }
+
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $subpages = $this->getSubpages() ?? false;
+
+        return view('pages.orderlines.index')->with([
+            'subpages' => $subpages,
+            'pageTitleSection' => self::$page_title_section,
+        ]);
     }
 
     /**
