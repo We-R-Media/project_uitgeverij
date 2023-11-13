@@ -20,7 +20,6 @@ class OrderController extends Controller
         $this->subpages = [
             'Ordergegevens' => 'orders.edit',
             'Print' => 'orders.print',
-            'Artikel' => 'orders.articles',
             'Klachten' => 'orders.complaints',
         ];
     }
@@ -28,14 +27,23 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, $filter = null)
     {
-        // $orders = Order::with(['advertiser', 'project'])->paginate(10);
-        $orders = Order::paginate(10);
+        if ( $filter == 'gedeactiveerd' ) {
+            $orders = Order::whereNotNull('deactivated_at')->paginate(10);
+        } else {
+            $orders = Order::latest()->paginate(10);
+        }
+
+        $subpages_root = [
+            'Actueel' => '/orders',
+            'Gedeactiveerd' => '/orders/gedeactiveerd',
+        ];
 
         return view('pages.orders.index', compact('orders'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
+                'subpages' => $subpages_root
             ]);
     }
 

@@ -28,8 +28,7 @@ class LayoutController extends Controller
      */
     public function index()
     {
-        $layouts = Layout::paginate(10);
-
+        $layouts = Layout::latest()->paginate(10);
         $subpages = $this->getSubpages() ?? false;
 
         return view('pages.layouts.index', compact('layouts'))->with([

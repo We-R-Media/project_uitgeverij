@@ -7,7 +7,7 @@ use Livewire\Component;
 class TopBar extends Component
 {
 
-    public $pageTitleSection, $pageTitle, $subpages, $pageID;
+    public $pageTitleSection, $pageTitle, $root, $subpages, $pageID;
 
     public function render()
     {

@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Http\Requests\ProjectRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ProjectController extends Controller
@@ -24,9 +25,13 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, $filter = null) : View
     {
-        $projects = Project::paginate(10);
+        if ( $filter ) {
+            $projects = Project::where( $filter )->get();
+        } else {
+            $projects = Project::latest()->paginate(10);
+        }
 
         return view('pages.projects.index', compact('projects'))
             ->with([
