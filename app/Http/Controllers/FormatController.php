@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormatRequest;
 use App\Models\Format;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -69,11 +70,11 @@ class FormatController extends Controller
                 ]);
             });
 
-            Alert::success('Het formaat is succesvol aangemaakt');
+            Alert::toast('Het formaat is succesvol aangemaakt', 'success');
 
             return redirect()->route('formats.index');
         } catch (\Exception $e){
-            Alert::error('Er is iets fout gegaan');
+            Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('formats.index');
         }
@@ -110,11 +111,11 @@ class FormatController extends Controller
                 ]);
             });
 
-            Alert::success('Het formaat is aangepast.');
+            Alert::toast('Het formaat is aangepast.', 'success');
 
             return redirect()->route('formats.index');
         } catch (\Exception $e){
-            Alert::error('Er is iets fout gegaaan.');
+            Alert::toast('Er is iets fout gegaaan.', 'error');
 
             return redirect()->route('formats.index');
         }
@@ -130,7 +131,7 @@ class FormatController extends Controller
         if($format) {
             $format->delete();
 
-            Alert::info('Het formaat is verwijderd.');
+            Alert::toast('Het formaat is verwijderd.', 'info');
         }
 
         return redirect()->route('formats.index');

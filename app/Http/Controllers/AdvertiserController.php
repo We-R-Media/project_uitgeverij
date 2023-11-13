@@ -69,11 +69,11 @@ class AdvertiserController extends Controller
                 $advertiser->save();
             });
 
-            Alert::success('De adverteerder is succesvol aangemaakt');
+            Alert::toast('De adverteerder is succesvol aangemaakt', 'success');
 
             return redirect()->route('advertisers.index');
         } catch (\Exception $e){
-            Alert::error('Er is iets fout gegaan');
+            Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('advertisers.index');
         }
@@ -114,11 +114,11 @@ class AdvertiserController extends Controller
                 ]);
             });
 
-            Alert::success('De adverteerder is succesvol bijgewerkt');
+            Alert::toast('De adverteerder is succesvol bijgewerkt', 'success');
 
             return redirect()->route('advertisers.index');
         } catch (\Exception $e){
-            Alert::error('Er is iets fout gegaan');
+            Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('advertisers.index');
         }
@@ -129,8 +129,17 @@ class AdvertiserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $advertiser = Advertiser::find($id);
+
+        if( $advertiser ) {
+            $advertiser->delete();
+
+            Alert::toast('De relatie is verwijderd.', 'info');
+        }
+
+        return redirect()->route('advertisers.index');
     }
+
 
     public function contacts(string $id)
     {

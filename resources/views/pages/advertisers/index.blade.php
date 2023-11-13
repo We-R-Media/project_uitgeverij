@@ -1,70 +1,61 @@
 @extends('layouts.app')
 
 @section('seo_title',  $pageTitleSection)
-
 @section('content')
-
-<div class="page__wrapper">
-
-    <div class="items__head">
-        <div class="item item__head">
-            <div class="item__content">
-                <div>{{__('Titel')}}</div>
-            </div>
-            <div class="item__summery">
-                <div>{{__('E-mailadres')}}</div>
-                <div>{{__('Aangemaakt op')}}</div>
-                <div>{{__('Blacklisted')}}</div>
-            </div>
-            <div class="item__actions">
-                <div>{{--__('Actions')--}}</div>
-            </div>
-        </div>
-    </div>
-
-    <ul class="items__view">
-
-        @foreach ($advertisers as $advertiser)
-            <li class="item">
+    <div class="page__wrapper">
+        <div class="items__head">
+            <div class="item item__head">
                 <div class="item__content">
-                    <a href="{{ route('advertisers.edit', $advertiser->id) }}" class="">
-                        <h3>{{ $advertiser->name }}</h3>
-                    </a>
+                    <div>{{__('Titel')}}</div>
                 </div>
-                <div class="item__summery">
-                    <div class="item__format field">
-                        <label>{{__('E-mailadres')}}</label>
-                        {{$advertiser->email}}
-                    </div>
-                    <div class="item__pages field">
-                        <Label>{{__('Aangemaakt op')}}</label>
-                        {{$advertiser->created_at}}
-                    </div>
-                    <div class="blacklisted field">
-                        <label>{{__('Blacklisted')}}</label>
-                        @if(!empty($advertiser->blacklisted_at))
-                            {{__('Ja')}}
-                        @else
-                            {{__('Nee')}}
-                        @endif
-                    </div>
+                <div class="item__summary">
+                    <div>{{__('E-mailadres')}}</div>
+                    <div>{{__('Adresgegevens')}}</div>
                 </div>
                 <div class="item__actions">
-                    <div class="actions__button">
-                        <div class="icon">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 128 512"><path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z"/></svg>
-                        </div>
-                        <div class="actions__group">
-                            <a href="{{route('advertisers.edit', $advertiser->id)}}">{{__('Bewerken')}}</a>
-                            {{-- <a href="{{ route('formats.destroy', $format) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">Verwijderen</a> --}}
-                        </div>
-                    </div>
+                    <div>{{--__('Actions')--}}</div>
                 </div>
-            </li>
-        @endforeach
-    </ul>
-</div>
-
-{{ $advertisers->links() }}
-
+            </div>
+        </div>
+        <ul class="items__view">
+            @if ($advertisers->count() > 0)
+                @foreach ($advertisers as $advertiser)
+                    <li class="item">
+                        <div class="item__content">
+                            <a href="{{ route('advertisers.edit', $advertiser->id) }}" class="">
+                                <h3>{{ $advertiser->name }}</h3>
+                            </a>
+                        </div>
+                        <div class="item__summary">
+                            <div class="item__format field">
+                                <label>{{__('E-mailadres')}}</label>
+                                {{$advertiser->email}}
+                            </div>
+                            <div class="item__pages field">
+                                <Label>{{__('Adresgegevens')}}</label>
+                                {{$advertiser->address}} <br />
+                                {{$advertiser->postal_code}}, {{$advertiser->city}}
+                            </div>
+                        </div>
+                        <div class="item__actions">
+                            <div class="actions__button">
+                                <div class="icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 128 512"><path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z"/></svg>
+                                </div>
+                                <div class="actions__group">
+                                    <a href="{{route('advertisers.edit', $advertiser->id)}}">{{__('Bewerken')}}</a>
+                                    <a href="{{ route('advertisers.destroy', $advertiser->id) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">Verwijderen</a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                @endforeach
+            @else
+                <li class="item">
+                    <p>Geen relaties gevonden</p>
+                </li>
+            @endif
+        </ul>
+    </div>
+    {{ $advertisers->links() }}
 @endsection

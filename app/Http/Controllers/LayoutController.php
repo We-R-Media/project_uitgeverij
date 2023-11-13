@@ -6,6 +6,7 @@ use App\Models\Layout;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class LayoutController extends Controller
 {
@@ -93,9 +94,9 @@ class LayoutController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Layout $layout, $id)
+    public function update(Request $request, $id)
     {
-        DB::transaction(function () use($request, $id, $layout) {
+        DB::transaction(function () use($request, $id) {
             Layout::where('id', $id)->update([
                 'layout_name' => $request->input('layout_name'),
                 'city_name' => $request->input('city_name'),
@@ -112,18 +113,26 @@ class LayoutController extends Controller
     public function upload(Request $request ) :  JsonResponse
     {
         $image = $request->file('file');
-     
+
         $imageName = time().'.'.$image->extension();
         $image->move(public_path('images/uploads'),$imageName);
-     
+
         return response()->json(['success'=> 'images/uploads/'.$imageName]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Layout $layout)
+    public function destroy(string $id)
     {
-        //
+        $layout = Layout::find($id);
+
+        if( $layout ) {
+            $layout->delete();
+
+            Alert::toast('De layout is verwijderd.', 'info');
+        }
+
+        return redirect()->route('layouts.index');
     }
 }

@@ -8,7 +8,7 @@
     <form  class="formContainer" action="{{route('orders.update', $order->id)}}" method="post">
         @csrf
         @method('post')
-        
+
         <div class="grid__wrapper">
             <fieldset class="fields base">
                 <h3>{{ __('Bevestigingsadres') }}</h3>
@@ -119,7 +119,7 @@
 
                 <div class="field field-alt">
                     <label for="project_id">{{ __('Projectcode') }}</label>
-                    <input id="" type="text" name="project_id" value="{{ $order->project->id }}" disabled>
+                    <input id="" type="text" name="project_id" value="{{-- $order->project->id --}}" disabled>
                     @error('project_id')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -232,8 +232,8 @@
         </div>
         <div class="ButtonGroup">
             <div class="buttons">
-                <a href="{{route('pdf.generate')}}" class="button button__secondary">{{ __('Genereer PDF') }}</a>
-                <a href="{{ route('invoices.create', $order->id) }}" class="button button--action">Factureer order</a>
+                <a href="{{-- route('pdf.generate') --}}" class="button button__secondary">{{ __('Genereer PDF') }}</a>
+                <a href="{{-- route('invoices.create', $order->id) --}}" class="button button--action">Factureer order</a>
                 <button type="submit" class="button button--action">{{ __('Opslaan') }}</button>
             </div>
         </div>

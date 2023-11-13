@@ -41,11 +41,11 @@ class ContactController extends Controller
                 ]);
             });
 
-            Alert::success('De adverteerder is succesvol bijgewerkt');
+            Alert::toast('De adverteerder is succesvol bijgewerkt', 'success');
 
             return redirect()->route('contacts.index');
         } catch (\Exception $e){
-            Alert::error('Er is iets fout gegaan');
+            Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('contacts.index');
         }

@@ -7,6 +7,7 @@ use App\Models\Order;
 use App\Models\Advertiser;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class InvoiceController extends Controller
 {
@@ -77,8 +78,16 @@ class InvoiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Invoice $invoice)
+    public function destroy(string $id)
     {
-        //
+        $invoice = Invoice::find($id);
+
+        if( $invoice ) {
+            $invoice->delete();
+
+            Alert::toast('De factuur is verwijderd.', 'info');
+        }
+
+        return redirect()->route('orders.index');
     }
 }

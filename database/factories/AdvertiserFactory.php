@@ -21,9 +21,10 @@ class AdvertiserFactory extends Factory
             'email' => fake()->email(),
             'phone_mobile' => fake()->optional()->phoneNumber(),
             'phone' => fake()->phoneNumber(),
-            'po_box' => fake()->address(),
+            'address' => fake()->address(),
             'postal_code' => fake()->postcode(),
             'city' => fake()->city(),
+            'po_box' => fake()->optional()->address(),
             'comments' => fake()->optional()->paragraph(),
             'deactivated_at' => fake()->optional()->dateTimeThisCentury(),
             'blacklisted_at' => fake()->optional()->dateTimeThisCentury()

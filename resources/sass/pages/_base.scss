@@ -216,7 +216,7 @@
                 &:hover { color:color.$primary; }
             }
         }
-        .item__summery {
+        .item__summary {
             flex:0 0 55%;
             max-width:55%;
             display:flex;
@@ -288,7 +288,7 @@
             background: color.$grey-lighter;
         }
         @include mixin.breakpoint("min", "laptop") {
-            .item__summery {
+            .item__summary {
                 .field {
                     label { display:none; }
                 }
@@ -299,12 +299,12 @@
             border:1px solid color.$grey-lighter;
             position:relative;
             padding:20px;
-            .item__content, .item__summery { flex:0 0 100%; max-width:100%; }
-            .item__summery {
+            .item__content, .item__summary { flex:0 0 100%; max-width:100%; }
+            .item__summary {
                 flex: 0 0 100%;
                 max-width: 100%;
             }
-            .item__summery {
+            .item__summary {
                 margin-top: 25px;
                 > div {
                     flex: 0 0 50%;

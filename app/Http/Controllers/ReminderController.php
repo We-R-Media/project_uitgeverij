@@ -41,7 +41,7 @@ class ReminderController extends Controller
     public function create()
     {
         $subpages = $this->getSubpages() ?? false;
-        
+
         return view('pages.reminders.create')
             ->with([
                 'pageTitleSection' => self::$page_title_section,
@@ -107,6 +107,7 @@ class ReminderController extends Controller
                 'contact_debtor' => $request->input('contact_debtor'),
             ]);
         });
+
         return redirect()->route('reminders.index');
     }
 

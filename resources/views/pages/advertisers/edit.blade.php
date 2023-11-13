@@ -39,8 +39,8 @@
                 </div>
 
                 <div class="field field-alt">
-                    <label for="po_box">{{ __('Postadres') }}</label>
-                    <input id="" type="text" name="po_box" value="{{ $advertiser->po_box }}">
+                    <label for="po_box">{{ __('Adres') }}</label>
+                    <input id="" type="text" name="po_box" value="{{ $advertiser->address }}">
                     @error('po_box')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -77,6 +77,18 @@
                         </span>
                     @enderror
                 </div>
+
+                @if ($advertiser->po_box)
+                    <div class="field field-alt">
+                        <label for="po_box">{{ __('Postbus') }}</label>
+                        <input id="" type="text" name="po_box" value="{{ $advertiser->po_box }}">
+                        @error('po_box')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
+                @endif
 
                 <div class="field field-alt">
                     <label for="phone">{{ __('Telefoonnummer') }}</label>

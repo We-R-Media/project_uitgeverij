@@ -20,9 +20,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone_mobile')->nullable();
             $table->string('phone');
-            $table->string('po_box');
+            $table->string('address');
             $table->string('postal_code');
             $table->string('city');
+            $table->string('po_box')->nullable();
             $table->string('province')->nullable();
             $table->longText('comments')->nullable();
             $table->date('deactivated_at')->nullable();

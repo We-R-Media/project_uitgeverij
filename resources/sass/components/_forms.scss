@@ -40,6 +40,28 @@
         min-height: 10rem;
     }
 }
+.field__row {
+    @include mixin.flex($flex-direction: row);
+    gap: 1rem;
+
+    input[type='text'] {
+        flex: 1;
+    }
+
+    .button--submit {
+        @include mixin.flex($align-items: center, $justify-content: center);
+        flex: 0 0 5rem;
+        width: 5rem;
+        height: 5rem;
+        cursor: pointer;
+
+        .button__icon {
+            @include mixin.flex($align-items: center, $justify-content: center);
+            width: 3rem;
+            height: 3rem;
+        }
+    }
+}
 
 label{
     text-justify: distribute-all-lines;

@@ -7,6 +7,7 @@ use App\Models\Project;
 use App\Http\Requests\ProjectRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class ProjectController extends Controller
 {
@@ -17,7 +18,6 @@ class ProjectController extends Controller
         $this->subpages = [
             'Projectgegevens' => 'projects.edit',
             'Planning' => 'projects.planning',
-            'Calculatie' => 'projects.calculation',
         ];
     }
 
@@ -109,12 +109,20 @@ class ProjectController extends Controller
         //
     }
 
-    /**
+     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $project = Project::findOrFail($id);
+
+        if( $project ) {
+            $project->delete();
+
+            Alert::toast('Het project is verwijderd.', 'info');
+        }
+
+        return redirect()->route('projects.index');
     }
 
 
@@ -124,18 +132,6 @@ class ProjectController extends Controller
         $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.projects.planning')->with([
-            'pageTitleSection' => self::$page_title_section,
-            'pageTitle' => $project->title,
-            'subpages' => $subpages
-        ]);
-    }
-
-    public function calculation(string $id)
-    {
-        $project = Project::findOrFail($id);
-        $subpages = $this->getSubpages( $id ) ?? false;
-
-        return view('pages.projects.calculation')->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $project->title,
             'subpages' => $subpages

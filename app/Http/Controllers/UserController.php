@@ -90,11 +90,11 @@ class UserController extends Controller
                 ]);
             });
 
-            Alert::success('De gebruiker is succesvol aangemaakt');
+            Alert::toast('De gebruiker is succesvol aangemaakt', 'success');
 
             return redirect()->route('users.index');
         } catch (\Exception $e){
-            Alert::error('Er is iets fout gegaan');
+            Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('users.index');
         }
@@ -144,11 +144,11 @@ class UserController extends Controller
                 ]);
             });
 
-            Alert::success('De gebruiker is succesvol aangepast');
+            Alert::toast('De gebruiker is succesvol aangepast', 'success');
 
             return redirect()->route('users.index');
         } catch (\Exception $e){
-            Alert::error('Er is iets fout gegaan');
+            Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('users.index');
         }
@@ -164,7 +164,7 @@ class UserController extends Controller
         if($user) {
             $user->delete();
 
-            Alert::info('De gebruiker is verwijderd.');
+            Alert::toast('De gebruiker is verwijderd.', 'info');
         }
 
         return redirect()->route('users.index');

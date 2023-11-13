@@ -4,5 +4,5 @@
 @section('seo_title',  $pageTitleSection)
 
 @section('content')
-
+    {{-- weird index.. --}}
 @endsection

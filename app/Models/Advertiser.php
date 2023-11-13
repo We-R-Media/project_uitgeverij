@@ -25,6 +25,7 @@ class Advertiser extends BaseModel
         'email',
         'phone_mobile',
         'phone',
+        'address',
         'po_box',
         'postal_code',
         'province',

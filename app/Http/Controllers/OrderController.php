@@ -6,6 +6,8 @@ use App\Models\Order;
 use App\Models\Advertiser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class OrderController extends Controller
 {
@@ -18,7 +20,6 @@ class OrderController extends Controller
             'Print' => 'orders.print',
             'Artikel' => 'orders.articles',
             'Klachten' => 'orders.complaints',
-            'Verzoeken' => 'orders.requests',
         ];
     }
 
@@ -76,51 +77,19 @@ class OrderController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        DB::transaction(function () use($request, $id) {
-            Order::where('id', $id)->update([
-
-            ]);
-        });
-
-        return redirect()->route('orders.index');
-    }
-
-    /**
      * Remove the specified resource from storage.
      */
-    public function delete(string $id)
+    public function destroy(string $id)
     {
         $order = Order::find($id);
 
-        if($order) {
+        if( $order ) {
             $order->delete();
+
+            Alert::toast('De order is verwijderd.', 'info');
         }
 
-        return redirect()->back();
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function restore(string $id)
-    {
-        $order = Order::withTrashed()->where('id', $id)::restore();
-    }
-
-    public function requests(string $id)
-    {
-        $order = Order::findOrFail($id);
-        $subpages = $this->getSubpages( $id ) ?? false;
-
-        return view('pages.orders.requests')->with([
-            'pageTitleSection' => self::$page_title_section,
-            'pageTitle' => $order->title,
-            'subpages' => $subpages
-        ]);
+        return redirect()->route('orders.index');
     }
 
     public function print(string $id)

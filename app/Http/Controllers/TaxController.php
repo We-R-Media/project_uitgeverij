@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\TaxRequest;
 use App\Models\Tax;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class TaxController extends Controller
 {
@@ -114,15 +115,19 @@ class TaxController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function delete(string $id)
+      /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
     {
-        $tax = Tax::where('id', $id)->get();
+        $tax = Tax::findOrFail($id);
 
-        if($tax) {
+        if( $tax ) {
             $tax->delete();
-            return redirect()->route('tax.index')->with('success', 'Tax record is deleted');
-        } else {
-            return redirect()->route('tax.index')->with('error', 'Tax record is not deleted');
+
+            Alert::toast('Het project is verwijderd.', 'info');
         }
+
+        return redirect()->route('tax.index');
     }
 }
