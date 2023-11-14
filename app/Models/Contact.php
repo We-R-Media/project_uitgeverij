@@ -17,12 +17,15 @@ class Contact extends BaseModel
      * @var array<int, string>
      */
     protected $fillable = [
-        'id',
+        'salutation',
         'first_name',
-        'initial',
-        'insertion',
         'last_name',
+        'advertiser_id',
+        'initial',
+        'preposition',
+        'phone',
         'email',
+        'role',
     ];
 
     /**

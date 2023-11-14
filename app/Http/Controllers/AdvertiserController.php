@@ -6,6 +6,8 @@ use App\Models\Advertiser;
 use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class AdvertiserController extends Controller
 {
@@ -48,7 +50,6 @@ class AdvertiserController extends Controller
      */
     public function create()
     {
-
         return view('pages.advertisers.create')->with([
             'pageTitleSection'=> self::$page_title_section,
         ]);
@@ -59,27 +60,23 @@ class AdvertiserController extends Controller
      */
     public function store(Request $request)
     {
-        $contactId = $request->input('contact_id');
-
-        DB::transaction(function () use ($request, $contactId) {
+        DB::transaction(function () use ($request) {
             $advertiser = Advertiser::create([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
+                'address' => $request->input('address'),
                 'po_box' => $request->input('po_box'),
                 'postal_code' => $request->input('postal_code'),
                 'city' => $request->input('city'),
                 'province' => $request->input('province'),
                 'phone_mobile' => $request->input('phone_mobile'),
                 'phone' => $request->input('phone'),
-                'contact_id' => $request->input('contact_id'),
                 'comments' => $request->input('comments'),
             ]);
-            $contact = Contact::find($contactId);
-            $contact->advertisers()->associate($advertiser);
             $advertiser->save();
         });
 
-        return redirect()->back();
+        return redirect()->route('advertisers.index');
     }
 
     /**
@@ -123,7 +120,14 @@ class AdvertiserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $advertiser = Advertiser::findOrFail($id);
+        
+        if($advertiser) {
+            $advertiser->delete();
+
+            Alert::toast('De relatie is verwijderd.', 'info');
+        }
+        return redirect()->route('advertisers.index');
     }
 
     public function contacts(string $id)
@@ -131,11 +135,39 @@ class AdvertiserController extends Controller
         $advertiser = Advertiser::findOrFail($id);
         $subpages = $this->getSubpages( $id ) ?? false;
 
-        return view('pages.advertisers.contacts')->with([
+        $aliases = [
+            1 => 'Primair',
+        ];
+
+
+        return view('pages.advertisers.contacts', compact('advertiser'))->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $advertiser->title,
-            'subpages' => $subpages
+            'subpages' => $subpages,
+            'aliases' => $aliases,
         ]);
+    }
+
+    public function contacts__store(Request $request, string $id)
+    {
+        DB::transaction(function () use ($request, $id) {
+            $advertiser = Advertiser::findOrFail($id);
+    
+            $contact = new Contact([
+                'salutation' => $request->input('salutation'),
+                'initial' => $request->input('initial'),
+                'preposition' => $request->input('preposition'),
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'phone' => $request->input('phone'),
+                'email' => $request->input('email'),
+                'comments' => $request->input('comments'),
+                'role' => $request->input('role'),
+            ]);
+    
+            $advertiser->contacts()->save($contact);
+        });
+        return redirect()->route('advertisers.contacts', $id);
     }
 
     public function orders(string $id)

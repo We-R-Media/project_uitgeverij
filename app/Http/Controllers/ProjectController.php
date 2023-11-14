@@ -44,7 +44,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.projects.create')->with([
+            'pageTitleSection' => self::$page_title_section,
+        ]);
     }
 
     /**

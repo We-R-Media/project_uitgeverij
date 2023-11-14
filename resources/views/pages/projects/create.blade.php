@@ -213,7 +213,7 @@
                 <div class="field field-alt">
                     <label for="taxes">{{ __('BTW') }}</label>
                     <div class="dropdown">
-                        <select title="taxes" name="taxes" id="taxes">
+                        {{-- <select title="taxes" name="taxes" id="taxes">
                             @if($taxes->isEmpty())
                                 <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
                             @else
@@ -221,7 +221,7 @@
                                 <option value="{{$tax->id}}">{{$tax->country}}</option>
                             @endforeach
                             @endif
-                    </select>
+                    </select> --}}
                     </div>
                 </div>
 

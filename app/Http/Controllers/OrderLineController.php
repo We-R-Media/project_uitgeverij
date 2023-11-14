@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Order;
+use App\Models\OrderLine;
 
 class OrderLineController extends Controller
 {
@@ -22,11 +25,12 @@ class OrderLineController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $id)
     {
         $subpages = $this->getSubpages() ?? false;
+        $order = Order::findOrFail($id);
 
-        return view('pages.orderlines.index')->with([
+        return view('pages.orderlines.index', compact('order'))->with([
             'subpages' => $subpages,
             'pageTitleSection' => self::$page_title_section,
         ]);
@@ -35,17 +39,26 @@ class OrderLineController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(string $id)
     {
-        //
+        $order = Order::findOrFail($id);
+
+        return view('pages.orderlines.create', compact('order'))->with([
+            'pageTitleSection' => self::$page_title_section,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, string $id)
     {
-        //
+        DB::transaction(function () use($id, $request) {
+            OrderLine::create([
+
+            ]);
+        });
+        return redirect()->route('orderlines.index');
     }
 
     /**

@@ -73,6 +73,8 @@ Route::group(['middleware' => ['auth']], function() {
     ->controller(OrderLineController::class)
     ->group(function () {
         Route::get('/{id}/orderregels', 'index')->name('index');
+        Route::get('/{id}/orderregels/nieuw', 'create')->name('create');
+        Route::post('/{id}/orderregels/opslaan', 'store')->name('store');
     });
 
     Route::name('advertisers.')
@@ -84,11 +86,15 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/nieuw', 'create')->name('create');
             Route::get('/{id}/bewerken', 'edit')->name('edit');
             Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
+
+
             Route::get('/{id}/contacten', 'contacts')->name('contacts');
+            Route::post('{id}/contacten/opslaan', 'contacts__store')->name('contacts.store');
+
             Route::get('/{id}/orders', 'orders')->name('orders');
 
             Route::post('/store', 'store')->name('store'); // FIX
-            Route::post('/update', 'update')->name('update'); // FIX
+            Route::post('/{id}/update', 'update')->name('update'); // FIX
         });
 
     Route::name('invoices.')

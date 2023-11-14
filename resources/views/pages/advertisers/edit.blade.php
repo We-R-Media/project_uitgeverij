@@ -7,8 +7,8 @@
 
     <div class="HeaderButtons">
         <div class="buttons">
-            <a href="{{route('orders.create', $advertiser->id)}}" class="button button--action">+ {{ __('Nieuwe order') }}</a>
-        </div>
+            <a href="{{ route('orders.create', $advertiser->id) }}" class="button button--action">+ {{ __('Nieuwe order') }}</a>
+    </div>
     </div>
 
     <form class="formContainer" action="{{ route('advertisers.update', $advertiser->id) }}" method="post">
@@ -118,27 +118,7 @@
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
-                </div>
-
-                    <div class="field field-alt">
-                    <label for="contacts">{{ __('Contactpersoon') }}</label>
-                    <div class="dropdown">
-                        <select class="@error('contact_id') is-invalid @enderror" name="contact_id" id="">
-                           {{-- @if($contacts->isEmpty()) --}}
-                                <option value="nvt" disabled selected>{{ __('Niet beschikbaar') }}</option>
-                            {{--
-                            @else
-                                @foreach ($contacts as $contact )
-                                    <option value="{{$contact->id}}">{{$contact->first_name}} {{$contact->last_name}}</option>
-                                @endforeach
-                            @endif
-                            --}}
-                        </select>
                     </div>
-                    @if($errors->has('contact_id'))
-                        <p class="error-message">{{$errors->first('contact_id')}}</p>
-                    @endif
-                </div>
             </fieldset>
 
             <fieldset class="fields notes">

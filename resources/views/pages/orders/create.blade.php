@@ -104,6 +104,19 @@
                         @enderror
                     </div>
 
+                    <div class="field field-alt">
+                        <label for="contact">{{__('Contactpersoon')}}</label>
+                        <select name="contact" id="">
+                            @foreach ($advertiser->contacts as $contact )
+                                <option value="{{$contact->id}}">
+                                    {{$contact->salutation}}
+                                     {{$contact->initial}} 
+                                     {{$contact->last_name}}
+                                    </option>
+                            @endforeach
+                        </select>
+                    </div>
+
                 </fieldset>
             </div>
 

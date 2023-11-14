@@ -9,6 +9,7 @@ use App\Models\Distributor;
 use App\Models\Format;
 use App\Models\Invoice;
 use App\Models\Order;
+use App\Models\Contact;
 use App\Models\OrderLine;
 use App\Models\Printer;
 use Illuminate\Database\Seeder;
@@ -30,6 +31,7 @@ class ProjectSeeder extends Seeder
 
         $advertisers = Advertiser::factory()
             ->has(Invoice::factory()->count($randomNumberLarge))
+            ->has(Contact::factory()->count($randomNumberLarge))
             ->count($randomNumberSmall)
             ->create();
 

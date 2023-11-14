@@ -5,7 +5,7 @@
     <div class="page__wrapper">
         <div class="HeaderButtons">
             <div class="buttons">
-                <a href="{{ route('advertisers.create') }}" class="button button--action">{{__('Nieuw')}}</a>
+                <a href="{{ route('advertisers.create') }}" class="button button--action">{{__('Nieuwe relatie')}}</a>
             </div>
         </div>
         <div class="items__head">

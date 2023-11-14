@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Contact;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Contacts>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Contact>
  */
-class ContactsFactory extends Factory
+class ContactFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,12 +18,14 @@ class ContactsFactory extends Factory
     public function definition(): array
     {
         return [
+            'salutation' => strtoupper(fake()->randomLetter() . fake()->randomLetter()),
             'initial' => strtoupper(fake()->randomLetter() . fake()->randomLetter()),
-            'first_name' => fake()->firstName(),
+            'name' => fake()->name(),
             'preposition' => fake()->optional()->firstName(),
-            'last_name' => fake()->lastName(),
+            'phone' => fake()->phoneNumber(),
+            'role' => fake()->numberBetween(0, 1),
             'email' => fake()->email(),
-            'deactivated_at' => fake()->optional()->dateTimeThisCentury(),
+            // 'deactivated_at' => fake()->optional()->dateTimeThisCentury(),
         ];
     }
 }

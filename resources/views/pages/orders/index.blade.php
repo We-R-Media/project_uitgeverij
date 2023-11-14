@@ -56,7 +56,7 @@
                 @endforeach
             @else
                 <li class="item">
-                    <p>Geen projecten gevonden</p>
+                    <p>{{__('Geen projecten gevonden')}}</p>
                 </li>
             @endif
         </ul>

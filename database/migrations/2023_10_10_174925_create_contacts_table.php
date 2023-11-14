@@ -13,12 +13,17 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-             $table->string('title')->nullable();
+            $table->foreignId('advertiser_id');
+            $table->string('title')->nullable();
+            $table->string('salutation');
             $table->char('initial');
             $table->string('first_name');
-            $table->string('preposition')->nullable();
             $table->string('last_name');
+            $table->string('preposition')->nullable();
             $table->string('email');
+            $table->string('phone');
+            $table->boolean('role')->nullable();
+            $table->longText('comments')->nullable();
             $table->timestamp('deactivated_at');
             $table->softDeletes();
             $table->timestamps();

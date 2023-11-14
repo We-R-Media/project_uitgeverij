@@ -5,11 +5,14 @@
 @section('content')
 
 <div class="page__wrapper">
+
+
+
     <form  class="formContainer" action="{{route('orders.update', $order->id)}}" method="post">
         @csrf
         @method('post')
 
-        <div class="grid__wrapper">
+    <div class="grid__wrapper">
             <fieldset class="fields base">
                 <h3>{{ __('Bevestigingsadres') }}</h3>
 
@@ -166,9 +169,9 @@
                     <label for="incasso">{{ __('Incasso') }}</label>
                     <div class="radio__group">
                         <input id="" type="radio" name="incasso" value="1">
-                        <label>Ja</label>
+                        <label>{{__('Ja')}}</label>
                         <input id="" type="radio" name="incasso" value="0">
-                        <label>Nee</label>
+                        <label>{{__('Nee')}}</label>
                     </div>
                     @error('incasso')
                         <span class="form__message" role="alert">

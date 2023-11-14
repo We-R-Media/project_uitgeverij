@@ -6,7 +6,7 @@
     <div class="page__wrapper">
         <div class="HeaderButtons">
             <div class="buttons">
-                <a href="" class="button button--action">{{__('Nieuwe Regel')}}</a>
+                <a href="{{ route('orderlines.create', $order->id) }}" class="button button--action">{{__('Nieuwe Regel')}}</a>
             </div>
         </div>
     </div>
