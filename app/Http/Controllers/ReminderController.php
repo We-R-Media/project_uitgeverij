@@ -25,7 +25,7 @@ class ReminderController extends Controller
      */
     public function index()
     {
-        $reminders = Reminder::all();
+        $reminders = Reminder::paginate(12);
 
         return view('pages.reminders.index',compact('reminders'))
             ->with([

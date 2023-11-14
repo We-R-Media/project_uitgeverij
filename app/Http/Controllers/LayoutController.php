@@ -28,7 +28,7 @@ class LayoutController extends Controller
      */
     public function index()
     {
-        $layouts = Layout::latest()->paginate(10);
+        $layouts = Layout::latest()->paginate(12);
 
         return view('pages.layouts.index', compact('layouts'))->with([
             'pageTitleSection' => self::$page_title_section,

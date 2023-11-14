@@ -30,7 +30,7 @@ class FormatController extends Controller
      */
     public function index()
     {
-        $formats = Format::latest()->paginate(10);
+        $formats = Format::latest()->paginate(12);
 
         return view('pages.formats.index', compact('formats'))
             ->with([
