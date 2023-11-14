@@ -38,7 +38,12 @@ class AdvertiserController extends Controller
      */
     public function create()
     {
-        //
+        $subpages = $this->getSubpages() ?? false;
+
+        return view('pages.advertisers.create')->with([
+            'pageTitleSection'=> self::$page_title_section,
+            'subpages'=> $subpages,
+        ]);
     }
 
     /**

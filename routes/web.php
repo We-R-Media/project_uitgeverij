@@ -55,6 +55,8 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('orders')
         ->controller(OrderController::class)
         ->group(function () {
+
+
             Route::get('/', 'index')->name('index');
             Route::get('/{id}/nieuw', 'create')->name('create');
             Route::get('/{id}/bewerken', 'edit')->name('edit');
@@ -64,18 +66,18 @@ Route::group(['middleware' => ['auth']], function() {
 
             Route::post('/{id}/store', 'store')->name('store');
             Route::post('/{id}/update', 'update')->name('update');
-            Route::post('/{advertiser}/verzenden', 'approval')->name('approval');
+            Route::post('/{id}/verzenden', 'approval')->name('approval');
             Route::post('/{id}/akkoord', 'approved')->name('approved');
 
             Route::delete('/{id}', 'delete')->name('delete');
         });
 
     Route::name('orderlines.')
-        ->prefix('orderregels')
-        ->controller(OrderLineController::class)
-        ->group(function () {
-            Route::get('/{id}', 'index')->name('index');
-        });
+    ->prefix('orders')
+    ->controller(OrderLineController::class)
+    ->group(function () {
+        Route::get('/{id}/orderregels', 'index')->name('index');
+    });
 
     Route::name('advertisers.')
         ->prefix('relaties')

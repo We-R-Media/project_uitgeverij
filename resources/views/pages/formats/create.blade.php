@@ -55,7 +55,7 @@
 
             <div class="buttonGroup">
                 <div class="buttons">
-                    <button type="submit" class="button button--action">Opslaan</button>
+                    <button type="submit" class="button button--action">{{__('Opslaan')}}</button>
                 </div>
             </div>
 
