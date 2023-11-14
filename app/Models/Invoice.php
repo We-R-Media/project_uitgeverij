@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\DB;
 use Laravel\Scout\Searchable;
 
 class Invoice extends BaseModel
@@ -57,15 +58,6 @@ class Invoice extends BaseModel
     public static function boot()
     {
         parent::boot();
-
-        static::creating(function ($model) {
-            if (empty($model->invoice_number)) {
-                $model->invoice_number = $model->generateInvoiceNumber();
-            }
-            if (empty($model->title)) {
-                $model->title = 'Factuur ' . $model->generateInvoiceNumber();
-            }
-        });
     }
 
     /**
@@ -85,13 +77,21 @@ class Invoice extends BaseModel
      */
     public function generateInvoiceNumber()
     {
-        $year = date('Y');
-        $prefix = $year . '00';
+        return DB::transaction(function () {
+            $year = date('Y');
+            $prefix = $year;
 
-        $maxNumber = self::where('invoice_number', 'like', $prefix . '%')->max('invoice_number') ?: $prefix . '00';
+            self::lockForUpdate()->get();
 
-        $autoIncrementedPart = str_pad((int)substr($maxNumber, strlen($prefix)) + 1, 3, '0', STR_PAD_LEFT);
+            $maxNumber = self::where('invoice_number', 'like', $prefix . '%')->max('invoice_number') ?: $prefix . '0000';
 
-        return $prefix . $autoIncrementedPart;
+            $autoIncrementedPart = str_pad((int)substr($maxNumber, strlen($prefix)) + 1, 4, '0', STR_PAD_LEFT);
+
+            $newInvoiceNumber = $prefix . $autoIncrementedPart;
+
+            self::create(['invoice_number' => $newInvoiceNumber]);
+
+            return $newInvoiceNumber;
+        });
     }
 }

@@ -27,34 +27,62 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-
     public function index(string $role = null)
     {
-        $subpages = $this->getSubpages() ?? false;
+        $users = User::all();
 
-        $aliases = [
-            'admin' => 'Beheerder',
-            'seller' => 'Verkoper',
-            'supervisor' => 'Administratie',
+        $this->subpages = [
+            'Admin' => [
+                'name' => 'users.role',
+                'parameters' => ['admin'],
+            ],
+            'Verkoper' => [
+                'name' => 'users.role',
+                'parameters' => ['seller'],
+            ],
+            'Supervisor' => [
+                'name' => 'users.role',
+                'parameters' => ['supervisor'],
+            ],
         ];
-
-        if ($role === 'seller') {
-            $users = User::where('role', 'seller')->get();
-        } elseif ($role === 'supervisor') {
-            $users = User::where('role', 'supervisor')->get();
-        } else {
-            $users = User::all();
-        }
 
         return view('pages.users.index', compact('users'))
             ->with([
                 'pageTitleSection' => self::$page_title_plural,
                 'pageTitle' => self::$page_title_singular,
-                'subpages' => $subpages,
-                'aliases' => $aliases,
+                'subpagesData' => $this->getSubpages(),
             ]);
     }
 
+        /**
+     * Display a filtered listing on role of the resource.
+     */
+    public function role(string $role = null)
+    {
+        $users = User::where('role', $role)->get();
+
+        $this->subpages = [
+            'Admin' => [
+                'name' => 'users.role',
+                'parameters' => ['admin'],
+            ],
+            'Verkoper' => [
+                'name' => 'users.role',
+                'parameters' => ['seller'],
+            ],
+            'Supervisor' => [
+                'name' => 'users.role',
+                'parameters' => ['supervisor'],
+            ],
+        ];
+
+        return view('pages.users.index', compact('users'))
+            ->with([
+                'pageTitleSection' => self::$page_title_plural,
+                'pageTitle' => self::$page_title_singular,
+                'subpagesData' => $this->getSubpages(),
+            ]);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -113,8 +141,9 @@ class UserController extends Controller
      */
     public function edit(User $user, string $id)
     {
-        $subpages = $this->getSubpages();
         $user = User::findOrFail($id);
+
+        $subpages = $this->getSubpages() ?? false;
 
         return view('pages.users.edit', compact('user'))
         ->with([

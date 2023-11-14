@@ -23,7 +23,7 @@ class OrderFactory extends Factory
             'comment_confirmation' => fake()->optional()->paragraph(),
             'comment_facturation' => fake()->optional()->paragraph(),
             'comment_reference' => fake()->optional()->paragraph(),
-            'cancelled_at' => fake()->optional()->dateTimeThisCentury(),
+            'deactivated_at' => fake()->optional()->dateTimeThisCentury(),
         ];
     }
 }

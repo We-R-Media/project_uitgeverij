@@ -232,7 +232,6 @@
         </div>
         <div class="ButtonGroup">
             <div class="buttons">
-                <a href="{{route('pdf.generate', $order->id)}}" class="button button__secondary">{{ __('Genereer PDF') }}</a>
                 @if ($order->approved_at)
                     <a href="{{ route('email.approval', $order->id) }}">Verstuur akkoord</a>
                 @else

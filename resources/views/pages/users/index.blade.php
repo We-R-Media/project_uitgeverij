@@ -5,12 +5,8 @@
     <div class="page__wrapper">
         <div class="HeaderButtons">
             <div class="buttons">
-                <a href="{{ route('users.index.role', 'supervisor')  }}" class="button button--action">{{__('Administratie')}}</a>
-                <a href="{{ route('users.index.role', 'seller')  }}" class="button button--action">{{__('Verkopers')}}</a>
-                <a href="{{ route('users.index.role', 'admin')  }}" class="button button--action">{{__('Beheerder')}}</a>
                 <a href="{{ route('users.create') }}" class="button button--action">{{__('Nieuwe gebruiker')}}</a>
             </div>
-
         </div>
         <ul class="items__view">
             @if ( $users->count() > 0 )
@@ -26,10 +22,10 @@
                                 <label>{{__('E-mailadres')}}</label>
                                 {{$user->email}}
                             </div>
-                            <div class="item__format field">
+                            {{-- <div class="item__format field">
                                 <label>{{__('Rol')}}</label>
                                 {{$aliases[$user->role]}}
-                            </div>
+                            </div> --}}
                             <div class="item__pages field">
                                 <label>{{__('Aangemaakt op')}}</label>
                                 {{$user->created_at}}

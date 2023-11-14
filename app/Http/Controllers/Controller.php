@@ -17,8 +17,11 @@ class Controller extends BaseController
      *
      * @return void
      */
-    public function getSubpages()
+    public function getSubpages( $id = null )
     {
-        return $this->subpages;
+        return [
+            'subpages' => $this->subpages,
+            'id' => $id,
+        ];
     }
 }

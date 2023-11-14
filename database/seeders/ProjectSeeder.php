@@ -25,8 +25,8 @@ class ProjectSeeder extends Seeder
      */
     public function run()
     {
-        $randomNumberSmall = fake()->numberBetween(1, 4);
-        $randomNumberLarge = fake()->numberBetween(6, 12);
+        $randomNumberSmall = fake()->numberBetween(22, 78);
+        $randomNumberLarge = fake()->numberBetween(78, 127);
 
         $advertisers = Advertiser::factory()
             ->has(Invoice::factory()->count($randomNumberLarge))

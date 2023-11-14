@@ -30,12 +30,11 @@ class InvoiceController extends Controller
      */
     public function create($id)
     {
-        $subpages = $this->getSubpages() ?? false;
         $order = Order::findOrFail($id);
 
         return view('pages.invoices.create', compact('order'))->with([
             'pageTitleSection' => self::$page_title_section,
-            'subpages' => $subpages
+            'subpagesData' => $this->getSubpages(),
         ]);
     }
 
@@ -53,13 +52,11 @@ class InvoiceController extends Controller
     public function edit(string $id)
     {
         $invoice = Invoice::FindOrFail($id);
-        $subpages = $this->getSubpages() ?? false;
-
 
         return view('pages.invoices.edit', compact('invoice'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
-                'subpages' => $subpages,
+                'subpagesData' => $this->getSubpages(),
             ]);
     }
 

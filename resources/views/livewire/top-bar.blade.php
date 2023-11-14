@@ -51,19 +51,30 @@
         @endif
     </div>
 
-     <!--- Subpages ---->
     <div class="sub__pages">
-
-        @if($subpages)
-            @if( request('id') )
+        {{-- @if (isset($route['parameters'])
+            <a href="{{ route($route['name'], $route['parameters']) }}">{{ $pageName }}</a>
+        @else
+            @if( ! is_null($id) )
                 @foreach ($subpages as $pageName => $route)
-                    <a href="{{ route( $route, request('id') ) }}">{{ $pageName }}</a>
+                    <a href="{{ route( $route, $id ) }}">{{ $pageName }}</a>
                 @endforeach
             @else
                 @foreach ($subpages as $pageName => $route)
-                    <a href="{{ $route }}">{{ $pageName }}</a>
+                    <a href="{{ route( $route ) }}">{{ $pageName }}</a>
                 @endforeach
             @endif
-        @endif
+        @endif --}}
+
+
+        @foreach ($subpages as $pageName => $route)
+            @if (isset($route['parameters']))
+                <a href="{{ route($route['name'], $route['parameters']) }}">{{ $pageName }}</a>
+            @elseif (!is_null($id))
+                <a href="{{ route( $route, $id ) }}">{{ $pageName }}</a>
+            @else
+                <a href="{{ route($route) }}">{{ $pageName }}</a>
+            @endif
+        @endforeach
     </div>
 </div>

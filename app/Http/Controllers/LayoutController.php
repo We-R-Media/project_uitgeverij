@@ -29,11 +29,10 @@ class LayoutController extends Controller
     public function index()
     {
         $layouts = Layout::latest()->paginate(10);
-        $subpages = $this->getSubpages() ?? false;
 
         return view('pages.layouts.index', compact('layouts'))->with([
             'pageTitleSection' => self::$page_title_section,
-            'subpages' => $subpages
+            'subpagesData' => $this->getSubpages(),
         ]);
     }
 
@@ -42,12 +41,11 @@ class LayoutController extends Controller
      */
     public function create()
     {
-        $subpages = $this->getSubpages() ?? false;
-
         return view('pages.layouts.create')
             ->with([
                 'pageTitleSection' => self::$page_title_section,
-                'subpages' => $subpages
+                'subpagesData' => $this->getSubpages(),
+
             ]);
     }
 
@@ -80,13 +78,12 @@ class LayoutController extends Controller
     public function edit(Layout $layout, string $id)
     {
         $layout = Layout::findOrFail($id);
-        $subpages = $this->getSubpages() ?? false;
 
         return view('pages.layouts.edit', compact('layout'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'pageTitle' => $layout->title,
-                'subpages' => $subpages
+                'subpagesData' => $this->getSubpages(),
             ]);
     }
 

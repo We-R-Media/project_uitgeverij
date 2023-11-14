@@ -6,10 +6,8 @@ use App\Models\Order;
 use App\Models\Advertiser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\SampleEmail;
+
 
 class OrderController extends Controller
 {
@@ -20,7 +18,7 @@ class OrderController extends Controller
         $this->subpages = [
             'Ordergegevens' => 'orders.edit',
             'Print' => 'orders.print',
-            'Klachten' => 'orders.complaints',
+            'Klachten' =>  'orders.complaints',
             'Orderregels' => 'orderlines.index',
         ];
     }
@@ -28,23 +26,38 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, $filter = null)
+    public function index()
     {
-        if ( $filter == 'gedeactiveerd' ) {
-            $orders = Order::whereNotNull('deactivated_at')->paginate(10);
-        } else {
-            $orders = Order::latest()->paginate(10);
-        }
+        $orders = Order::latest()->whereNull( 'deactivated_at' )->paginate(10);
 
-        $subpages_root = [
-            'Actueel' => '/orders',
-            'Gedeactiveerd' => '/orders/gedeactiveerd',
+        $this->subpages = [
+            'Actueel' => 'orders.index',
+            'Gedeactiveerd' => 'orders.deactivated',
         ];
 
         return view('pages.orders.index', compact('orders'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
-                'subpages' => $subpages_root
+                'subpagesData' => $this->getSubpages(),
+            ]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function deactivated()
+    {
+        $orders = Order::whereNotNull('deactivated_at')->paginate(10);
+
+        $this->subpages = [
+            'Actueel' => 'orders.index',
+            'Gedeactiveerd' => 'orders.deactivated',
+        ];
+
+        return view('pages.orders.index', compact('orders'))
+            ->with([
+                'pageTitleSection' => self::$page_title_section,
+                'subpagesData' => $this->getSubpages(),
             ]);
     }
 
@@ -53,15 +66,14 @@ class OrderController extends Controller
      */
     public function create(string $id)
     {
-        $subpages = $this->getSubpages() ?? false;
         $advertiser = Advertiser::findOrFail($id);
         $order = Order::findOrFail($id);
 
         return view('pages.orders.create', compact('advertiser','order'))
-        ->with([
-            'pageTitleSection' => self::$page_title_section,
-            'subpages' => $subpages
-        ]);
+            ->with([
+                'pageTitleSection' => self::$page_title_section,
+                'subpagesData' => $this->getSubpages(),
+            ]);
     }
 
     /**
@@ -69,19 +81,21 @@ class OrderController extends Controller
      */
     public function store(Request $request,  $id)
     {
-        DB::transaction(function () use($request, $id) {
-
+        $order = DB::transaction(function () use($request, $id) {
             $advertiser = Advertiser::findOrFail($id);
             $order = Order::create([
                 'order_date' => now(),
                 'approved_at' => now(),
-                'order_total_price' => 0.00,
+                'order_total_price' => 0.0,
             ]);
 
             $order->advertiser()->associate($advertiser);
             $order->save();
         });
-        return redirect()->route('orders.index');
+
+        dd( $order );
+
+        return redirect()->view('orders.edit', $order->id);
     }
 
     /**
@@ -90,13 +104,12 @@ class OrderController extends Controller
     public function edit(string $id)
     {
         $order = Order::findOrFail($id);
-        $subpages = $this->getSubpages() ?? false;
 
         return view('pages.orders.edit', compact('order'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'pageTitle' => $order->title,
-                'subpages' => $subpages,
+                'subpagesData' =>  $this->getSubpages( $id )
             ]);
     }
 
@@ -111,7 +124,7 @@ class OrderController extends Controller
             ]);
         });
 
-        return redirect()->route('orders.index');
+        return redirect()->view('orders.index');
     }
 
     public function approved(Request $request, $id) {
@@ -123,7 +136,7 @@ class OrderController extends Controller
                 'approved_at' => $request->dateTimeNow(),
             ]);
         });
-        return redirect()->route('orders.index');
+        return redirect()->view('orders.index');
     }
 
     /**
@@ -139,42 +152,40 @@ class OrderController extends Controller
             Alert::toast('De order is verwijderd.', 'info');
         }
 
-        return redirect()->route('orders.index');
+        return redirect()->view('orders.index');
     }
 
     public function print(string $id)
     {
         $order = Order::findOrFail($id);
-        $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.orders.print')->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $order->title,
-            'subpages' => $subpages
+            'subpagesData' => $this->getSubpages($id),
         ]);
     }
 
     public function articles(string $id)
     {
         $order = Order::findOrFail($id);
-        $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.orders.articles')->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $order->title,
-            'subpages' => $subpages
+            'subpagesData' => $this->getSubpages($id),
         ]);
     }
 
     public function complaints(string $id)
     {
         $order = Order::findOrFail($id);
-        $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.orders.complaints')->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $order->title,
-            'subpages' => $subpages
+            'subpagesData' => $this->getSubpages($id),
+
         ]);
     }
 }

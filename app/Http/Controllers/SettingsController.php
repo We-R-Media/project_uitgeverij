@@ -12,7 +12,6 @@ class SettingsController extends Controller
 {
     private static $page_title_section = 'Instellingen';
 
-
     public function __construct()
     {
         $this->subpages = [
@@ -25,12 +24,10 @@ class SettingsController extends Controller
     }
 
     public function index() {
-
-        $subpages = $this->getSubpages() ?? false;
-
-        return view('pages.settings', compact('subpages'))
+        return view('pages.settings')
             ->with([
                 'pageTitleSection' => self::$page_title_section,
+                'subpagesData' => $this->getSubpages(),
             ]);
     }
 }
