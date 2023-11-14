@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\FormatRequest;
 use App\Models\Format;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -33,11 +32,10 @@ class FormatController extends Controller
     {
         $formats = Format::latest()->paginate(10);
 
-        confirmDelete(self::$confirm_delete_title, self::$confirm_delete_text);
-
         return view('pages.formats.index', compact('formats'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
+                'subpagesData' => $this->getSubpages(),
             ]);
     }
 
@@ -46,12 +44,10 @@ class FormatController extends Controller
      */
     public function create()
     {
-        $subpages = $this->getSubpages() ?? false;
-
         return view('pages.formats.create')
             ->with([
                 'pageTitleSection' => self::$page_title_section,
-                'subpages' => $subpages,
+                'subpagesData' => $this->getSubpages(),
             ]);
     }
 
@@ -86,13 +82,12 @@ class FormatController extends Controller
     public function edit(string $id)
     {
         $format = Format::findOrFail($id);
-        $subpages = $this->getSubpages() ?? false;
 
         return view('pages.formats.edit', compact('format'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'pageTitle' => $format->title,
-                'subpages' => $subpages,
+                'subpagesData' => $this->getSubpages(),
             ]);
     }
 

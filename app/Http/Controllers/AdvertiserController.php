@@ -25,25 +25,41 @@ class AdvertiserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, $filter = null)
+    public function index()
     {
-        if ( $filter == 'blacklisted' ) {
-            $advertisers = Advertiser::whereNotNull('blacklisted_at')->paginate(10);
-        } else {
-            $advertisers = Advertiser::latest()->paginate(10);
-        }
+        $advertisers = Advertiser::latest()->paginate(10);
 
-        $subpages_root = [
-            'Actueel' => '/relaties',
-            'Geannuleerd' => '/relaties/blacklisted',
+        $this->subpages = [
+            'Actueel' => 'advertisers.index',
+            'Zwarte lijst' => 'advertisers.blacklist',
         ];
 
         return view('pages.advertisers.index', compact('advertisers'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
-                'subpages' => $subpages_root
+                'subpagesData' => $this->getSubpages(),
             ]);
     }
+
+        /**
+     * Display a blacklist of the resource.
+     */
+    public function blacklist()
+    {
+        $advertisers = Advertiser::whereNotNull('blacklisted_at')->paginate(10);
+
+        $this->subpages = [
+            'Actueel' => 'advertisers.index',
+            'Zwarte lijst' => 'advertisers.blacklist',
+        ];
+
+        return view('pages.advertisers.index', compact('advertisers'))
+            ->with([
+                'pageTitleSection' => self::$page_title_section,
+                'subpagesData' => $this->getSubpages(),
+            ]);
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -85,13 +101,12 @@ class AdvertiserController extends Controller
     public function edit(string $id)
     {
         $advertiser = Advertiser::findOrFail($id);
-        $subpages = $this->getSubpages() ?? false;
 
         return view('pages.advertisers.edit', compact('advertiser'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'pageTitle' => $advertiser->title,
-                'subpages' => $subpages
+                'subpagesData' => $this->getSubpages( $id ),
             ]);
     }
 
@@ -112,6 +127,7 @@ class AdvertiserController extends Controller
                 'email' => $request->input('email'),
             ]);
         });
+
         return redirect()->route('advertisers.index');
     }
 
@@ -133,7 +149,6 @@ class AdvertiserController extends Controller
     public function contacts(string $id)
     {
         $advertiser = Advertiser::findOrFail($id);
-        $subpages = $this->getSubpages( $id ) ?? false;
 
         $aliases = [
             1 => 'Primair',
@@ -143,8 +158,7 @@ class AdvertiserController extends Controller
         return view('pages.advertisers.contacts', compact('advertiser'))->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $advertiser->title,
-            'subpages' => $subpages,
-            'aliases' => $aliases,
+            'subpagesData' => $this->getSubpages( $id ),
         ]);
     }
 
@@ -177,12 +191,11 @@ class AdvertiserController extends Controller
 
         // dd($advertiser);
 
-        $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.advertisers.orders', compact('advertiser'))->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $advertiser->title,
-            'subpages' => $subpages
+            'subpagesData' => $this->getSubpages( $id ),
         ]);
     }
 }

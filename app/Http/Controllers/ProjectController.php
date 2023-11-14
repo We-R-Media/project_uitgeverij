@@ -25,13 +25,9 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request, $filter = null) : View
+    public function index() : View
     {
-        if ( $filter ) {
-            $projects = Project::where( $filter )->get();
-        } else {
-            $projects = Project::latest()->paginate(10);
-        }
+        $projects = Project::latest()->paginate(10);
 
         return view('pages.projects.index', compact('projects'))
             ->with([
@@ -95,7 +91,6 @@ class ProjectController extends Controller
     public function edit(string $id)
     {
         $project = Project::findOrFail($id);
-        $subpages = $this->getSubpages() ?? false;
 
         $layouts = Layout::all();
 
@@ -103,7 +98,7 @@ class ProjectController extends Controller
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'pageTitle' => $project->title,
-                'subpages' => $subpages,
+                'subpagesData' => $this->getSubpages( $id ),
                 'layouts' => $layouts,
             ]);
     }
@@ -136,12 +131,11 @@ class ProjectController extends Controller
     public function planning(string $id)
     {
         $project = Project::findOrFail($id);
-        $subpages = $this->getSubpages( $id ) ?? false;
 
         return view('pages.projects.planning')->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $project->title,
-            'subpages' => $subpages
+            'subpagesData' => $this->getSubpages( $id )
         ]);
     }
 }

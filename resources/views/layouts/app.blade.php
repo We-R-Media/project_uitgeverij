@@ -29,7 +29,8 @@
             @livewire('top-bar', [
                 'pageTitleSection' => $pageTitleSection ?? 'RON',
                 'pageTitle' => $pageTitle ?? false,
-                'subpages' => $subpages ?? false
+                'subpages' => isset($subpagesData['subpages']) ? $subpagesData['subpages'] : [],
+                'id' => isset($subpagesData['id']) ? $subpagesData['id'] : null,
             ])
 
             <div class="mainContent">

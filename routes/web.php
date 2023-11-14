@@ -13,12 +13,10 @@ use App\Http\Controllers\FormatController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\EmailController;
-use App\Http\Controllers\PDFController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Redirect;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +51,9 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('orders')
         ->controller(OrderController::class)
         ->group(function () {
-            Route::get('/{filter?}', 'index')->name('index');
+            Route::get('/', 'index')->name('index');
+            Route::get('/gedeactiveerd', 'deactivated')->name('deactivated');
+
             Route::get('/{id}/nieuw', 'create')->name('create');
             Route::get('/{id}/bewerken', 'edit')->name('edit');
             Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
@@ -81,8 +81,9 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('relaties')
         ->controller(AdvertiserController::class)
         ->group(function () {
-            // Route::get('/{filer?}', 'index')->name('index');
             Route::get('/', 'index')->name('index');
+            Route::get('/zwarte-lijst', 'blacklist')->name('blacklist');
+
             Route::get('/nieuw', 'create')->name('create');
             Route::get('/{id}/bewerken', 'edit')->name('edit');
             Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
@@ -132,7 +133,6 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::post('/update', 'update')->name('update');
             });
 
-
         Route::name('reminders.')
             ->prefix('aanmaningen')
             ->controller(ReminderController::class)
@@ -149,8 +149,9 @@ Route::group(['middleware' => ['auth']], function() {
             ->prefix('gebruikers')
             ->controller(UserController::class)
             ->group(function () {
-                // Route::get('/', 'index')->name('index');
-                Route::get('/{role?}', 'index')->name('index.role');
+                Route::get('/', 'index')->name('index');
+                Route::get('/rol/{role?}', 'role')->name('role');
+
                 Route::get('/nieuw', 'create')->name('create');
                 Route::get('/{id}/bewerken', 'edit')->name('edit');
                 Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
@@ -186,13 +187,6 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::post('/update', 'update')->name('update');
             });
     });
-
-    Route::name('pdf.')
-        ->prefix('pdf')
-        ->controller(PDFController::class)
-        ->group(function () {
-            Route::get('/{id}', 'approval')->name('generate');
-        });
 
     Route::name('email.')
         ->prefix('emails')

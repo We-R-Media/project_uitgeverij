@@ -6,8 +6,13 @@ use Livewire\Component;
 
 class TopBar extends Component
 {
+    public $pageTitleSection, $pageTitle, $subpages, $id;
 
-    public $pageTitleSection, $pageTitle, $root, $subpages, $pageID;
+    public function mount($subpages, $id)
+    {
+        $this->id = $id;
+        $this->subpages = $subpages;
+    }
 
     public function render()
     {

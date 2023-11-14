@@ -24,7 +24,7 @@ class Order extends BaseModel
         'approved_at',
         'order_date',
         'order_total_price',
-        'cancelled_at',
+        'deactivated_at',
     ];
 
     /**

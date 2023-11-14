@@ -25,13 +25,12 @@ class ReminderController extends Controller
      */
     public function index()
     {
-        $subpages = $this->getSubpages() ?? false;
         $reminders = Reminder::all();
 
         return view('pages.reminders.index',compact('reminders'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
-                'subpages' => $subpages
+                'subpagesData' => $this->getSubpages(),
             ]);
     }
 
@@ -40,12 +39,10 @@ class ReminderController extends Controller
      */
     public function create()
     {
-        $subpages = $this->getSubpages() ?? false;
-
         return view('pages.reminders.create')
             ->with([
                 'pageTitleSection' => self::$page_title_section,
-                'subpages' => $subpages
+                'subpagesData' => $this->getSubpages(),
             ]);
     }
 
@@ -82,12 +79,11 @@ class ReminderController extends Controller
     public function edit(string $id)
     {
         $reminder = Reminder::findOrFail($id);
-        $subpages = $this->getSubpages() ?? false;
 
         return view('pages.reminders.edit', compact('reminder'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
-                'subpages' => $subpages,
+                'subpagesData' => $this->getSubpages(),
             ]);
     }
 

@@ -27,12 +27,9 @@ class OrderLineController extends Controller
      */
     public function index(string $id)
     {
-        $subpages = $this->getSubpages() ?? false;
-        $order = Order::findOrFail($id);
-
-        return view('pages.orderlines.index', compact('order'))->with([
-            'subpages' => $subpages,
+        return view('pages.orderlines.index')->with([
             'pageTitleSection' => self::$page_title_section,
+            'subpagesData' => $this->getSubpages(),
         ]);
     }
 
