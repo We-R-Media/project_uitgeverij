@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="page__wrapper">
-        <form class="formContainer" action="{{route('projects.edit', $project->id)}}" method="post">
+        <form class="formContainer" action="{{route('projects.update', $project->id)}}" method="post">
             @csrf
             @method('post')
 
@@ -14,7 +14,7 @@
                     <h3>{{ __('Algemeen') }}</h3>
                     <div class="field field-alt">
                         <label for="project_code">{{ __('Projectcode') }}</label>
-                        <input id="" type="text" name="project_code" value="{{ $project->project_code }}">
+                        <input id="" type="text" name="project_code" value="{{ $project->id }}">
                         @error('project_code')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>

@@ -143,13 +143,11 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $subpages = $this->getSubpages() ?? false;
-
         return view('pages.users.edit', compact('user'))
         ->with([
             'pageTitleSection' => self::$page_title_plural,
             'pageTitle' => self::$page_title_singular,
-            'subpages' => $subpages,
+            'subpages' =>$this->getSubpages($id),
         ]);
     }
 

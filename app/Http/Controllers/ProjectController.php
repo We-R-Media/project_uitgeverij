@@ -88,9 +88,9 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $project_id)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::findOrFail($project_id);
 
         $layouts = Layout::all();
 
@@ -98,7 +98,7 @@ class ProjectController extends Controller
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'pageTitle' => $project->title,
-                'subpagesData' => $this->getSubpages( $id ),
+                'subpagesData' => $this->getSubpages( $project_id ),
                 'layouts' => $layouts,
             ]);
     }
@@ -106,17 +106,22 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $project_id)
     {
-        //
+        DB::transaction(function () use($request, $project_id) {
+            Project::where('id', $project_id)->update([
+
+            ]);
+        });
+        return redirect()->route('projects.index');
     }
 
      /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $project_id)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::findOrFail($project_id);
 
         if( $project ) {
             $project->delete();
@@ -128,14 +133,14 @@ class ProjectController extends Controller
     }
 
 
-    public function planning(string $id)
+    public function planning(string $project_id)
     {
-        $project = Project::findOrFail($id);
+        $project = Project::findOrFail($project_id);
 
         return view('pages.projects.planning')->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $project->title,
-            'subpagesData' => $this->getSubpages( $id )
+            'subpagesData' => $this->getSubpages( $project_id )
         ]);
     }
 }

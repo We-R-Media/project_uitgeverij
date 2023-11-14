@@ -117,7 +117,7 @@
                   {{$contact->email}}
                </div>
                <div class="field">
-                  <label>{{__('E-mailadres')}}</label>
+                  <label>{{__('Rol')}}</label>
                      @if ($contact->role == 1)
                       {{$aliases[$contact->role]}}
                      @else

@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderLine extends Model
 {
+    protected $fillable = [
+        'base_price',
+        'discount',
+    ];
+
     use HasFactory, SoftDeletes;
 
     /**

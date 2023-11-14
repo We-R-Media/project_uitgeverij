@@ -20,7 +20,8 @@ class ContactFactory extends Factory
         return [
             'salutation' => strtoupper(fake()->randomLetter() . fake()->randomLetter()),
             'initial' => strtoupper(fake()->randomLetter() . fake()->randomLetter()),
-            'name' => fake()->name(),
+            'first_name' => fake()->name(),
+            'last_name' => fake()->name(),
             'preposition' => fake()->optional()->firstName(),
             'phone' => fake()->phoneNumber(),
             'role' => fake()->numberBetween(0, 1),

@@ -63,9 +63,9 @@
                     <div class="field field-alt">
                         <label for="role">{{__('Rol')}}</label>
                         <select name="role" id="">
-                            <option value="seller">Verkoper</option>
-                            <option value="supervisor">Administratie</option>
-                            <option value="admin">Beheerder</option>
+                            <option value="seller">{{__('Verkoper')}}</option>
+                            <option value="supervisor">{{__('Administratie')}}</option>
+                            <option value="admin">{{__('Beheerder')}}</option>
                         </select>
                     </div>
 

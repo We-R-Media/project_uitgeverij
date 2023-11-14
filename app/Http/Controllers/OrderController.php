@@ -64,14 +64,14 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(string $id)
+    public function create(string $advertiser_id)
     {
-        $advertiser = Advertiser::findOrFail($id);
+        $advertiser = Advertiser::findOrFail($advertiser_id);
 
-        return view('pages.orders.create', compact('advertiser','order'))
+        return view('pages.orders.create', compact('advertiser'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
-                'subpagesData' => $this->getSubpages(),
+                'subpagesData' => $this->getSubpages($advertiser_id),
             ]);
     }
 
@@ -80,7 +80,7 @@ class OrderController extends Controller
      */
     public function store(Request $request,  $id)
     {
-        $order = DB::transaction(function () use($request, $id) {
+        DB::transaction(function () use($request, $id) {
             $advertiser = Advertiser::findOrFail($id);
             $order = Order::create([
                 'order_date' => now(),
@@ -92,58 +92,55 @@ class OrderController extends Controller
             $order->save();
         });
 
-        dd( $order );
 
-        return redirect()->view('orders.edit', $order->id);
+        return redirect()->route('orders.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $order_id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::findOrFail($order_id);
 
         return view('pages.orders.edit', compact('order'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'pageTitle' => $order->title,
-                'subpagesData' =>  $this->getSubpages( $id )
+                'subpagesData' =>  $this->getSubpages( $order_id )
             ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $order_id)
     {
-        DB::transaction(function () use($request, $id) {
-            Order::where('id', $id)->update([
+        DB::transaction(function () use($request, $order_id) {
+            Order::where('id', $order_id)->update([
 
             ]);
         });
 
-        return redirect()->view('orders.index');
+        return redirect()->route('orders.index');
     }
 
     public function approved(Request $request, $id) {
 
-        dd(true);
-
-        DB::transaction(function () use ($request, $id) {
-            Order::where('id', $id)->update([
+        DB::transaction(function () use ($request, $order_id) {
+            Order::where('id', $order_id)->update([
                 'approved_at' => $request->dateTimeNow(),
             ]);
         });
-        return redirect()->view('orders.index');
+        return redirect()->route('orders.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $order_id)
     {
-        $order = Order::find($id);
+        $order = Order::find($order_id);
 
         if( $order ) {
             $order->delete();
@@ -151,39 +148,39 @@ class OrderController extends Controller
             Alert::toast('De order is verwijderd.', 'info');
         }
 
-        return redirect()->view('orders.index');
+        return redirect()->route('orders.index');
     }
 
-    public function print(string $id)
+    public function print(string $order_id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::findOrFail($order_id);
 
         return view('pages.orders.print')->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $order->title,
-            'subpagesData' => $this->getSubpages($id),
+            'subpagesData' => $this->getSubpages($order_id),
         ]);
     }
 
-    public function articles(string $id)
+    public function articles(string $order_id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::findOrFail($order_id);
 
         return view('pages.orders.articles')->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $order->title,
-            'subpagesData' => $this->getSubpages($id),
+            'subpagesData' => $this->getSubpages($order_id),
         ]);
     }
 
-    public function complaints(string $id)
+    public function complaints(string $order_id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::findOrFail($order_id);
 
         return view('pages.orders.complaints')->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $order->title,
-            'subpagesData' => $this->getSubpages($id),
+            'subpagesData' => $this->getSubpages($order_id),
 
         ]);
     }

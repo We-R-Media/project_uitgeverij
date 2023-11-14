@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Order;
+use App\Models\Format;
 use App\Models\OrderLine;
 
 class OrderLineController extends Controller
@@ -25,22 +26,25 @@ class OrderLineController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $id)
+    public function index(string $order_id)
     {
-        return view('pages.orderlines.index')->with([
+        $order = Order::findOrFail($order_id);
+
+        return view('pages.orderlines.index', compact('order'))->with([
             'pageTitleSection' => self::$page_title_section,
-            'subpagesData' => $this->getSubpages(),
+            'subpagesData' => $this->getSubpages($order_id),
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(string $id)
+    public function create(string $order_id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::findOrFail($order_id);
+        $formats = Format::all();
 
-        return view('pages.orderlines.create', compact('order'))->with([
+        return view('pages.orderlines.create', compact('order', 'formats'))->with([
             'pageTitleSection' => self::$page_title_section,
         ]);
     }
@@ -48,14 +52,23 @@ class OrderLineController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, string $id)
+    public function store(Request $request, string $order_id)
     {
-        DB::transaction(function () use($id, $request) {
-            OrderLine::create([
 
+
+         DB::transaction(function () use($request, $order_id) {
+
+            $order = Order::findOrFail($order_id);
+
+            $orderline = OrderLine::create([
+                'base_price' => $request->input('base_price'),
+                'discount' => $request->input('discount'),
             ]);
+
+            // $order->orderlines()->save($orderline);
+            $orderline->order()->associate($order);
         });
-        return redirect()->route('orderlines.index');
+        return redirect()->route('orderlines.index', $order_id);
     }
 
     /**

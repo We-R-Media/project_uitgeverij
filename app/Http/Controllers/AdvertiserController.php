@@ -98,25 +98,25 @@ class AdvertiserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $advertiser_id)
     {
-        $advertiser = Advertiser::findOrFail($id);
+        $advertiser = Advertiser::findOrFail($advertiser_id);
 
         return view('pages.advertisers.edit', compact('advertiser'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'pageTitle' => $advertiser->title,
-                'subpagesData' => $this->getSubpages( $id ),
+                'subpagesData' => $this->getSubpages( $advertiser_id ),
             ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $advertiser_id)
     {
-        DB::transaction(function () use($request, $id) {
-            Advertiser::where('id', $id)->update([
+        DB::transaction(function () use($request, $advertiser_id) {
+            Advertiser::where('id', $advertiser_id)->update([
                 'name' => $request->input('name'),
                 'po_box' => $request->input('po_box'),
                 'postal_code' => $request->input('postal_code'),
@@ -134,9 +134,9 @@ class AdvertiserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $advertiser_id)
     {
-        $advertiser = Advertiser::findOrFail($id);
+        $advertiser = Advertiser::findOrFail($advertiser_id);
         
         if($advertiser) {
             $advertiser->delete();
@@ -146,26 +146,26 @@ class AdvertiserController extends Controller
         return redirect()->route('advertisers.index');
     }
 
-    public function contacts(string $id)
+    public function contacts(string $advertiser_id)
     {
-        $advertiser = Advertiser::findOrFail($id);
+        $advertiser = Advertiser::findOrFail($advertiser_id);
 
         $aliases = [
             1 => 'Primair',
         ];
 
 
-        return view('pages.advertisers.contacts', compact('advertiser'))->with([
+        return view('pages.advertisers.contacts', compact('advertiser','aliases'))->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $advertiser->title,
-            'subpagesData' => $this->getSubpages( $id ),
+            'subpagesData' => $this->getSubpages( $advertiser_id ),
         ]);
     }
 
-    public function contacts__store(Request $request, string $id)
+    public function contacts__store(Request $request, string $advertiser_id)
     {
-        DB::transaction(function () use ($request, $id) {
-            $advertiser = Advertiser::findOrFail($id);
+        DB::transaction(function () use ($request, $advertiser_id) {
+            $advertiser = Advertiser::findOrFail($advertiser_id);
     
             $contact = new Contact([
                 'salutation' => $request->input('salutation'),
@@ -181,12 +181,12 @@ class AdvertiserController extends Controller
     
             $advertiser->contacts()->save($contact);
         });
-        return redirect()->route('advertisers.contacts', $id);
+        return redirect()->route('advertisers.contacts', $advertiser_id);
     }
 
-    public function orders(string $id)
+    public function orders(string $advertiser_id)
     {
-        $advertiser = Advertiser::findOrFail($id);
+        $advertiser = Advertiser::findOrFail($advertiser_id);
         // $orders = Advertiser::with('orders')->get();
 
         // dd($advertiser);
@@ -195,7 +195,7 @@ class AdvertiserController extends Controller
         return view('pages.advertisers.orders', compact('advertiser'))->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $advertiser->title,
-            'subpagesData' => $this->getSubpages( $id ),
+            'subpagesData' => $this->getSubpages( $advertiser_id ),
         ]);
     }
 }

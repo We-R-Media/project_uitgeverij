@@ -22,10 +22,10 @@ class ProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_code' => 'required|unique:projects|string|max:10',
-            'release_name' => 'required|unique:projects|string|max:25',
-            'edition_name' => 'required|unique:projects|string|max:2',
-            'print_edition' => 'required|unique:projects',
+            'project_code' => 'required|string|max:10',
+            'release_name' => 'required|string|max:25',
+            'edition_name' => 'required|string|max:2',
+            'print_edition' => 'required',
             'pages_redaction' => 'required',
             'pages_adverts' => 'required',
             'total_pages' => 'required',

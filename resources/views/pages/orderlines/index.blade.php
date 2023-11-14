@@ -8,6 +8,12 @@
             <div class="buttons">
                 <a href="{{ route('orderlines.create', $order->id) }}" class="button button--action">{{__('Nieuwe Regel')}}</a>
             </div>
+
+            <ul class="items__view">
+                <li class="item">
+                </li>
+            </ul>
+
         </div>
     </div>
 @endsection
