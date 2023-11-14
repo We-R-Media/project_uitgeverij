@@ -81,7 +81,6 @@ class ReminderController extends Controller
      */
     public function edit(string $id)
     {
-
         $reminder = Reminder::findOrFail($id);
         $subpages = $this->getSubpages() ?? false;
 

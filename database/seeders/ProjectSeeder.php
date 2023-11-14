@@ -36,7 +36,7 @@ class ProjectSeeder extends Seeder
         $projects = Project::factory()
             ->has(Order::factory()
                 ->has(OrderLine::factory()->count($randomNumberLarge))
-                ->afterCreating(function (Order $order) use ($advertisers) {
+                ->afterCreating( function (Order $order) use ( $advertisers ) {
                     $advertiser = $advertisers->random();
                     $order->advertiser()->associate($advertiser)->save();
                 })

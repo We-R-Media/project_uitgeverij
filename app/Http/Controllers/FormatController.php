@@ -31,7 +31,7 @@ class FormatController extends Controller
      */
     public function index()
     {
-        $formats = Format::paginate(10);
+        $formats = Format::latest()->paginate(10);
 
         confirmDelete(self::$confirm_delete_title, self::$confirm_delete_text);
 

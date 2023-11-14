@@ -23,13 +23,23 @@ class AdvertiserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request, $filter = null)
     {
-        $advertisers = Advertiser::paginate(10);
+        if ( $filter == 'blacklisted' ) {
+            $advertisers = Advertiser::whereNotNull('blacklisted_at')->paginate(10);
+        } else {
+            $advertisers = Advertiser::latest()->paginate(10);
+        }
+
+        $subpages_root = [
+            'Actueel' => '/relaties',
+            'Geannuleerd' => '/relaties/blacklisted',
+        ];
 
         return view('pages.advertisers.index', compact('advertisers'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
+                'subpages' => $subpages_root
             ]);
     }
 
@@ -38,11 +48,9 @@ class AdvertiserController extends Controller
      */
     public function create()
     {
-        $subpages = $this->getSubpages() ?? false;
 
         return view('pages.advertisers.create')->with([
             'pageTitleSection'=> self::$page_title_section,
-            'subpages'=> $subpages,
         ]);
     }
 

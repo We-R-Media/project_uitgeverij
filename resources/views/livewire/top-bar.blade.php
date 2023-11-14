@@ -53,10 +53,17 @@
 
      <!--- Subpages ---->
     <div class="sub__pages">
+
         @if($subpages)
-            @foreach ($subpages as $pageName => $route)
-                <a href="{{ route( $route, request('id') ) }}">{{ $pageName }}</a>
-            @endforeach
+            @if( request('id') )
+                @foreach ($subpages as $pageName => $route)
+                    <a href="{{ route( $route, request('id') ) }}">{{ $pageName }}</a>
+                @endforeach
+            @else
+                @foreach ($subpages as $pageName => $route)
+                    <a href="{{ $route }}">{{ $pageName }}</a>
+                @endforeach
+            @endif
         @endif
     </div>
 </div>

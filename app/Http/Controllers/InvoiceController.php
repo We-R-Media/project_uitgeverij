@@ -18,7 +18,7 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $invoices = Invoice::paginate(10);
+        $invoices = Invoice::latest()->paginate(10);
 
         return view('pages.invoices.index', compact('invoices'))->with([
             'pageTitleSection' => self::$page_title_section,

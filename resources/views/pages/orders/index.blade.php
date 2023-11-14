@@ -11,7 +11,7 @@
                 <div class="item__summary">
                     <div>{{__('Prijs')}}</div>
                     <div>{{__('Aangemaakt op')}}</div>
-                    <div>{{__('Laatst geupdate op')}}</div>
+                    <div>{{__('Laatst bijgewerkt op')}}</div>
                 </div>
                 <div class="item__actions">
                     <div>{{--__('Actions')--}}</div>
@@ -37,7 +37,7 @@
                                 {{$order->order_date}}
                             </div>
                             <div class="item__comments field">
-                                <label>{{__('Laatst geupdate op')}}</label>
+                                <label>Laatst bijgewerkt op</label>
                                 {{$order->updated_at}}
                             </div>
                         </div>

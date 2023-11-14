@@ -12,6 +12,18 @@ class Project extends BaseModel
 {
     use HasFactory, SoftDeletes, Searchable;
 
+    protected $primaryKey = 'id';
+
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'id';
+    }
+
     /**
      * The attributes that are mass assignable.
      *

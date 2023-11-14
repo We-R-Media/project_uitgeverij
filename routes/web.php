@@ -29,8 +29,6 @@ use Illuminate\Support\Facades\Redirect;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 */
-
-
 Route::group(['middleware' => ['auth']], function() {
     Route::get('/', [
         HomeController::class, 'index'
@@ -48,16 +46,14 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
 
             Route::post('/store', 'store')->name('store');
-            Route::post('/update', 'update')->name('update');
+            Route::post('/{id}/update', 'update')->name('update');
     });
 
     Route::name('orders.')
         ->prefix('orders')
         ->controller(OrderController::class)
         ->group(function () {
-
-
-            Route::get('/', 'index')->name('index');
+            Route::get('/{filter?}', 'index')->name('index');
             Route::get('/{id}/nieuw', 'create')->name('create');
             Route::get('/{id}/bewerken', 'edit')->name('edit');
             Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
@@ -83,6 +79,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('relaties')
         ->controller(AdvertiserController::class)
         ->group(function () {
+            // Route::get('/{filer?}', 'index')->name('index');
             Route::get('/', 'index')->name('index');
             Route::get('/nieuw', 'create')->name('create');
             Route::get('/{id}/bewerken', 'edit')->name('edit');
@@ -146,7 +143,7 @@ Route::group(['middleware' => ['auth']], function() {
             ->prefix('gebruikers')
             ->controller(UserController::class)
             ->group(function () {
-                Route::get('/', 'index')->name('index');
+                // Route::get('/', 'index')->name('index');
                 Route::get('/{role?}', 'index')->name('index.role');
                 Route::get('/nieuw', 'create')->name('create');
                 Route::get('/{id}/bewerken', 'edit')->name('edit');
@@ -161,8 +158,8 @@ Route::group(['middleware' => ['auth']], function() {
             ->controller(LayoutController::class)
             ->group(function () {
                 Route::get('/', 'index')->name('index');
-                Route::get('/{id}/bewerken', 'edit')->name('edit');
                 Route::get('/nieuw', 'create')->name('create');
+                Route::get('/{id}/bewerken', 'edit')->name('edit');
                 Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
 
                 Route::post('/store', 'store')->name('store');
