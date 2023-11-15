@@ -139,9 +139,9 @@ Route::group(['middleware' => ['auth']], function() {
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/nieuw', 'create')->name('create');
-                Route::get('/{id}/bewerken', 'edit')->name('edit');
+                Route::get('/{tax_id}/bewerken', 'edit')->name('edit');
 
-                Route::post('/{id}/bijwerken', 'update')->name('update');
+                Route::post('/{tax_id}/bijwerken', 'update')->name('update');
                 Route::post('/opslaan', 'store')->name('store');
             });
 
@@ -166,11 +166,11 @@ Route::group(['middleware' => ['auth']], function() {
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/nieuw', 'create')->name('create');
-                Route::get('/{id}/bewerken', 'edit')->name('edit');
-                Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
+                Route::get('/{user_id}/bewerken', 'edit')->name('edit');
+                Route::get('/{user_id}/verwijderen', 'destroy')->name('destroy');
 
                 Route::post('/store', 'store')->name('store');
-                Route::post('/update', 'update')->name('update');
+                Route::post('/{user_id}/update', 'update')->name('update');
                 Route::post('/upload', 'upload')->name('upload');
             });
 
@@ -180,11 +180,11 @@ Route::group(['middleware' => ['auth']], function() {
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/nieuw', 'create')->name('create');
-                Route::get('/{id}/bewerken', 'edit')->name('edit');
-                Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
+                Route::get('/{format_id}/bewerken', 'edit')->name('edit');
+                Route::get('/{format_id}/verwijderen', 'destroy')->name('destroy');
 
                 Route::post('/store', 'store')->name('store');
-                Route::post('/update', 'update')->name('update');
+                Route::post('/{format_id}/update', 'update')->name('update');
             });
     });
 

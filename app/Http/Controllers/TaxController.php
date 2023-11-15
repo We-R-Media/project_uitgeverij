@@ -82,9 +82,9 @@ class TaxController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $tax_id)
     {
-        $tax = Tax::findOrFail($id);
+        $tax = Tax::findOrFail($tax_id);
 
         $subpages = $this->getSubpages() ?? false;
 
@@ -99,9 +99,9 @@ class TaxController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(TaxRequest $request, string $id)
+    public function update(TaxRequest $request, string $tax_id)
     {
-        DB::transaction(function () use($request, $id) {
+        DB::transaction(function () use($request, $tax_id) {
             Tax::where('id', $id)->update([
                 'country' => $request->input('country'),
                 'zero' => $request->input('zero'),
@@ -118,9 +118,9 @@ class TaxController extends Controller
       /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $tax_id)
     {
-        $tax = Tax::findOrFail($id);
+        $tax = Tax::findOrFail($tax_id);
 
         if( $tax ) {
             $tax->delete();
