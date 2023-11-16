@@ -24,33 +24,42 @@ class ProjectSeeder extends Seeder
      *
      * @return void
      */
-    public function run()
-    {
-        $randomNumberSmall = fake()->numberBetween(10, 40);
-        $randomNumberLarge = fake()->numberBetween(20, 30);
 
-        $advertisers = Advertiser::factory()
-            ->has(Invoice::factory()->count($randomNumberLarge))
-            ->has(Contact::factory()->count($randomNumberLarge))
-            ->count($randomNumberSmall)
-            ->create();
-
-        $projects = Project::factory()
-            ->has(Order::factory()
-                ->has(OrderLine::factory()->count($randomNumberLarge))
-                ->afterCreating( function (Order $order) use ( $advertisers ) {
-                    $advertiser = $advertisers->random();
-                    $order->advertiser()->associate($advertiser)->save();
-                })
-            )
-            ->has(Format::factory()->count($randomNumberSmall))
-            ->has(Client::factory())
-            ->has(Printer::factory())
-            ->has(Distributor::factory())
-            ->has(Designer::factory())
-            ->has(Layout::factory())
-            ->has(Tax::factory())
-            ->count($randomNumberSmall)
-            ->create();
-    }
+     public function run()
+     {
+         $randomNumberSmall = fake()->numberBetween(4, 8);
+         $randomNumberLarge = fake()->numberBetween(6, 12);
+     
+         $advertisers = Advertiser::factory()
+             ->has(Invoice::factory()->count($randomNumberLarge))
+             ->has(Contact::factory()->count($randomNumberLarge))
+             ->count($randomNumberSmall)
+             ->create();
+     
+         $tax = Tax::factory()->times($randomNumberSmall)->create();
+         $layout = Layout::factory()->times($randomNumberSmall)->create();
+     
+         $projects = Project::factory()
+             ->has(Order::factory()
+                 ->has(OrderLine::factory()->count($randomNumberLarge))
+                 ->afterCreating(function (Order $order) use ($advertisers) {
+                     $advertiser = $advertisers->random();
+                     $order->advertiser()->associate($advertiser)->save();
+                 })
+             )
+             ->has(Format::factory()->count($randomNumberSmall))
+             ->has(Client::factory())
+             ->has(Printer::factory())
+             ->has(Distributor::factory())
+             ->has(Designer::factory())
+             ->count($randomNumberSmall)
+             ->create();
+     
+         // Set the tax_id and layout_id directly for each project
+         foreach ($projects as $key => $project) {
+             $project->tax_id = $tax[$key]->id; // Access individual tax instance
+             $project->layout_id = $layout[$key]->id; // Access individual layout instance
+             $project->save();
+         }
+     }
 }

@@ -23,6 +23,15 @@
                     </div>
 
                     <div class="field field-alt">
+                        <label for="format">{{__('Formaat')}}</label>
+                        <select name="format" id="">
+                            @foreach ($formats as $format )
+                                <option value="{{$format->price}}"></option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="field field-alt">
                         <label for="discount">{{__('Korting')}}</label>
                         <input type="text" name="discount" id="">
                         @error('discount')

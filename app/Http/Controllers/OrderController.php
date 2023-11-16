@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Advertiser;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -67,8 +68,9 @@ class OrderController extends Controller
     public function create(string $advertiser_id)
     {
         $advertiser = Advertiser::findOrFail($advertiser_id);
+        $projects = Project::all();
 
-        return view('pages.orders.create', compact('advertiser'))
+        return view('pages.orders.create', compact('advertiser', 'projects'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'subpagesData' => $this->getSubpages($advertiser_id),
@@ -78,16 +80,24 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,  $id)
+    public function store(Request $request,  $advertiser_id)
     {
-        DB::transaction(function () use($request, $id) {
-            $advertiser = Advertiser::findOrFail($id);
+        DB::transaction(function () use($request, $advertiser_id) {
+            $project_id = $request->input('project_id');
+
             $order = Order::create([
+                'project_id' => $project_id,
                 'order_date' => now(),
                 'approved_at' => now(),
                 'order_total_price' => 0.0,
             ]);
 
+
+            $project = Project::findOrFail($project_id);
+            $order->project()->associate($project);
+            $order->save();
+            
+            $advertiser = Advertiser::findOrFail($advertiser_id);
             $order->advertiser()->associate($advertiser);
             $order->save();
         });
@@ -118,7 +128,7 @@ class OrderController extends Controller
     {
         DB::transaction(function () use($request, $order_id) {
             Order::where('id', $order_id)->update([
-
+                
             ]);
         });
 

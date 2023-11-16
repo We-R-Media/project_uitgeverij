@@ -31,9 +31,16 @@ class Project extends BaseModel
      */
     protected $fillable = [
         'title',
+        'layout_id',
+        'tax_id',
+        'designer',
+        'printer',
+        'client',
+        'distribution',
         'release_name',
         'edition_name',
         'print_edition',
+        'paper_format',
         'pages_redaction',
         'pages_adverts',
         'pages_total',
@@ -119,7 +126,7 @@ class Project extends BaseModel
     }
 
     /**
-     * Get the distributor associated with the user.
+     * Get the distributor associated with the project.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -129,7 +136,7 @@ class Project extends BaseModel
     }
 
     /**
-     * Get the client associated with the user.
+     * Get the client associated with the project.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
@@ -139,7 +146,7 @@ class Project extends BaseModel
     }
 
     /**
-     * Get the layout associated with the user.
+     * Get the layout associated with the project.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */

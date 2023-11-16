@@ -122,12 +122,26 @@
 
                 <div class="field field-alt">
                     <label for="project_id">{{ __('Projectcode') }}</label>
-                    <input id="" type="text" name="project_id" value="{{-- $order->project->id --}}" disabled>
+                    <input id="" type="text" name="project_id" value="{{$order->project->id}}" disabled>
                     @error('project_id')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="layout_name">{{ __('Layout') }}</label>
+                    @if($order->project->layout->count() == 0)
+                    {{__('Layout niet beschikbaar...')}}
+                    @else
+                    <input id="" type="text" name="layout_name" value="{{$order->project->layout->layout_name}}" disabled>
+                    @error('layout_name')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                    @endif
                 </div>
 
                 <div class="field field-alt">
@@ -144,9 +158,9 @@
                     <label for="canceled">{{ __('Geannuleerd') }}</label>
                     <div class="radio__group">
                         <input id="" type="radio" name="canceled" value="1">
-                        <label for="canceled">Ja</label>
+                        <label for="canceled">{{__('Ja')}}</label>
                         <input id="" type="radio" name="canceled" value="0">
-                        <label for="canceled">Nee</label>
+                        <label for="canceled">{{__('Nee')}}</label>
                     </div>
                     @error('canceled')
                         <span class="form__message" role="alert">
@@ -230,6 +244,7 @@
                         <small>{{ $message }}</small>
                     </span>
                 @enderror
+
             </fieldset>
 
         </div>

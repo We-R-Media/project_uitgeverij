@@ -13,7 +13,13 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-             $table->string('title')->nullable();
+            $table->foreignId('layout_id')->nullable();
+            $table->foreignId('tax_id')->nullable();
+            $table->string('title')->nullable();
+            $table->string('designer');
+            $table->string('printer');
+            $table->string('client');
+            $table->string('distribution');
             $table->string('release_name');
             $table->string('edition_name');
             $table->string('print_edition');
@@ -28,7 +34,7 @@ return new class extends Migration
             $table->integer('ledger');
             $table->integer('journal');
             $table->integer('department');
-            $table->timestamp('year');
+            $table->timestamp('year')->default(now());
             $table->double('revenue_goals');
             $table->longText('comments')->nullable();
             $table->softDeletes();
@@ -38,7 +44,7 @@ return new class extends Migration
 
     /**
      * Reverse the migrations.
-     */
+    */
     public function down(): void
     {
         Schema::dropIfExists('projects');

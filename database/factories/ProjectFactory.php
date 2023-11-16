@@ -18,6 +18,10 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         return [
+            'designer' => fake()->word(),
+            'printer' => fake()->word(),
+            'client' => fake()->word(),
+            'distribution' => fake()->word(),
             'release_name' => fake()->word(),
             'edition_name' => fake()->word(),
             'print_edition' => fake()->word(),

@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="page__wrapper">
-    <form class="formContainer" action="{{route('projects.create')}}" method="post">
+    <form class="formContainer" action="{{route('projects.store')}}" method="post">
         @csrf
         @method('post')
 
@@ -24,7 +24,7 @@
 
                 <div class="field field-alt">
                     <label for="format">{{ __('Formaat') }}</label>
-                   <input id="" type="text" name="format" value="{{ old('format') }}">
+                   <input id="" type="text" name="paper_format" value="{{ old('format') }}">
                     @error('format')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -67,7 +67,7 @@
             <fieldset class="fields page-details">
                 <h3>{{ __('Paginagegevens') }}</h3>
                 <div class="form__row-alt">
-                    <label>Aantal pagina's</label>
+                    <label>{{__("Aantal pagina's")}}</label>
                     <div class="field__row">
                         <div class="form__row">
                             <div class="field">
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                 </div>
-                <p name="total_pages" id="sum">Totaal aantal pagina's:</p>
+                <p name="total_pages" id="sum">{{__("Totaal aantal pagina's:")}}</p>
                 <div class="form__row-alt">
                     <label>Cover</label>
                     <div class="field__row">
@@ -193,8 +193,8 @@
             <fieldset class="fields financial'">
                 <h3>{{ __('Financieel') }}</h3>
 
-                {{--
-                    <div class="field field-alt">
+                
+                <div class="field field-alt">
                     <label for="layout">{{ __('Layout') }}</label>
                     <div class="dropdown">
                         <select title="layout" name="layout" id="layout">
@@ -202,18 +202,18 @@
                                 <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
                             @else
                             @foreach($layouts as $layout)
-                                <option value="{{$layout->id}}">{{$layout->layout_name}}</option>
+                                <option value="{{$layout->id}}"> {{$layout->layout_name}}</option>
                             @endforeach
                             @endif
                         </select>
                     </div>
                 </div>
-                --}}
 
+                                
                 <div class="field field-alt">
-                    <label for="taxes">{{ __('BTW') }}</label>
+                    <label for="layout">{{ __('BTW') }}</label>
                     <div class="dropdown">
-                        {{-- <select title="taxes" name="taxes" id="taxes">
+                        <select title="tax" name="tax" id="tax">
                             @if($taxes->isEmpty())
                                 <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
                             @else
@@ -221,9 +221,10 @@
                                 <option value="{{$tax->id}}">{{$tax->country}}</option>
                             @endforeach
                             @endif
-                    </select> --}}
+                        </select>
                     </div>
                 </div>
+            
 
                 <div class="field field-alt">
                     <label for="ledger">{{ __('Grootboek') }}</label>
