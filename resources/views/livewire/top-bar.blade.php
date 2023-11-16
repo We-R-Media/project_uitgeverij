@@ -47,26 +47,11 @@
         <h1 class="page__section">{{ __($pageTitleSection) }}</h1>
 
         @if ( $pageTitle )
-            <h2 class="page__title">{{ __($pageTitle)  }}</h2>
+            <h2 class="page__title">{{ __($pageTitle)  }} </h2>
         @endif
     </div>
 
     <div class="sub__pages">
-        {{-- @if (isset($route['parameters'])
-            <a href="{{ route($route['name'], $route['parameters']) }}">{{ $pageName }}</a>
-        @else
-            @if( ! is_null($id) )
-                @foreach ($subpages as $pageName => $route)
-                    <a href="{{ route( $route, $id ) }}">{{ $pageName }}</a>
-                @endforeach
-            @else
-                @foreach ($subpages as $pageName => $route)
-                    <a href="{{ route( $route ) }}">{{ $pageName }}</a>
-                @endforeach
-            @endif
-        @endif --}}
-
-
         @foreach ($subpages as $pageName => $route)
             @if (isset($route['parameters']))
                 <a href="{{ route($route['name'], $route['parameters']) }}" {{App\Helpers\RouteHelper::isActiveSubpage($route['name'], $route['parameters'], $id)}}>

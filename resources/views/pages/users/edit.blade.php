@@ -33,7 +33,7 @@
 
                     <div class="field field-alt">
                         <label for="initial">{{__('Initiaal')}}</label>
-                        <input value="{{ $user->initial }}" type="text" name="initial">    
+                        <input value="{{ $user->initial }}" type="text" name="initial">
                         @error('initial')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -43,7 +43,7 @@
 
                     <div class="field field-alt">
                         <label for="preposition">{{__('Tussenvoegsel')}}</label>
-                        <input value="{{ $user->preposition }}" type="text" name="preposition">    
+                        <input value="{{ $user->preposition }}" type="text" name="preposition">
                         @error('preposition')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -53,7 +53,7 @@
 
                     <div class="field field-alt">
                         <label for="gender">{{__('Gender')}}</label>
-                        <select name="gender" id="">
+                        <select class="select2" name="gender" id="">
                             <option value="male">Man</option>
                             <option value="female">Vrouw</option>
                             <option value="other">Zeg ik liever niet</option>
@@ -62,7 +62,7 @@
 
                     <div class="field field-alt">
                         <label for="role">{{__('Rol')}}</label>
-                        <select name="role" id="">
+                        <select class="select2" name="role" id="">
                             <option value="seller">Verkoper</option>
                             <option value="supervisor">Administratie</option>
                             <option value="admin">Beheerder</option>
@@ -73,15 +73,15 @@
 
                     <div class="field field-alt">
                         <label for="last_name">{{__('Achternaam')}}</label>
-                        <input value="{{ $user->last_name }}" type="text" name="last_name" id=""> 
+                        <input value="{{ $user->last_name }}" type="text" name="last_name" id="">
                         @error('last_name')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
-                        @enderror   
+                        @enderror
                     </div>
 
-            
+
                     <div class="field field-alt">
                         <label for="email">{{__('E-mailadres')}}</label>
                         <input value="{{ $user->email }}" type="email" name="email" id="">
@@ -103,7 +103,7 @@
                     </div>
 
                 </fieldset>
-                
+
             </div>
             <div class="ButtonGroup">
                 <div class="buttons">

@@ -15,7 +15,7 @@
 
                 <div class="field field-alt">
                     <label for="advertiser">{{ __('Klantnummer') }}</label>
-                    <input id="" type="text" name="advertiser" value="{{$order->advertiser->id}}">
+                    <input id="" type="text" name="advertiser" value="{{$order->advertiser->id}}" readonly>
                     @error('advertiser')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -25,7 +25,7 @@
 
                 <div class="field field-alt">
                     <label for="company">{{ __('Bedrijfsnaam') }}</label>
-                    <input id="" type="text" name="company" value="">
+                    <input id="" type="text" name="company" value="{{$order->advertiser->title}}" readonly>
                     @error('company')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -35,7 +35,7 @@
 
                 <div class="field field-alt">
                     <label for="contact">{{ __('Contactpersoon') }}</label>
-                    <input id="" type="text" name="contact" value="{{ $order->advertiser->name }}">
+                    <input id="" type="text" name="contact" value="{{-- $order->advertiser->contacts --}}" readonly>
                     @error('contact')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -45,7 +45,7 @@
 
                 <div class="field field-alt">
                     <label for="po_box">{{ __('Postadres') }}</label>
-                    <input id="" type="text" name="po_box" value="{{ $order->advertiser->po_box }}">
+                    <input id="" type="text" name="po_box" value="{{ $order->advertiser->po_box }}" readonly>
                     @error('po_box')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -55,7 +55,7 @@
 
                 <div class="field field-alt">
                     <label for="postal_code">{{ __('Postcode') }}</label>
-                    <input id="" type="text" name="postal_code" value="{{ $order->advertiser->postal_code }}">
+                    <input id="" type="text" name="postal_code" value="{{ $order->advertiser->postal_code }}" readonly>
                     @error('postal_code')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -65,7 +65,7 @@
 
                 <div class="field field-alt">
                     <label for="city">{{ __('Woonplaats') }}</label>
-                    <input id="" type="text" name="city" value="{{ $order->advertiser->city }}">
+                    <input id="" type="text" name="city" value="{{ $order->advertiser->city }}" readonly>
                     @error('city')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -75,7 +75,7 @@
 
                 <div class="field field-alt">
                     <label for="province">{{ __('Provincie') }}</label>
-                    <input id="" type="text" name="province" value="{{ $order->advertiser->province }}">
+                    <input id="" type="text" name="province" value="{{ $order->advertiser->province }}" readonly>
                     @error('province')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -85,7 +85,7 @@
 
                 <div class="field field-alt">
                     <label for="country">{{ __('Land') }}</label>
-                    <input id="" type="text" name="country" value="">
+                    <input id="" type="text" name="country" value="{{ $order->advertiser->province }}" readonly>
                     @error('country')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -95,7 +95,7 @@
 
                 <div class="field field-alt">
                     <label for="phone">{{ __('Telefoonnummer') }}</label>
-                    <input id="" type="text" name="phone" value="{{$order->advertiser->phone}}">
+                    <input id="" type="text" name="phone" value="{{$order->advertiser->phone}}" readonly>
                     @error('phone')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -105,7 +105,7 @@
 
                 <div class="field field-alt">
                     <label for="email">{{ __('E-mailadres') }}</label>
-                    <input id="" type="email" name="email" value="{{$order->advertiser->email}}">
+                    <input id="" type="email" name="email" value="{{$order->advertiser->email}}" readonly>
                     @error('email')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -118,8 +118,43 @@
                 <h3>{{ __('Opties') }}</h3>
 
                 <div class="field field-alt">
+                    <label for="approved_at">{{ __('Goedgekeurd') }}</label>
+                    <div class="radio__group">
+                        <input id="approved_at_true" type="radio" name="approved_at" value="1" @if($order->approved_at) checked @endif>
+                        <label for="approved_at_true">Ja</label>
+                        <input id="approved_at_false" type="radio" name="approved_at" value="0" @if(!$order->approved_at) checked @endif>
+                        <label for="approved_at_false">Nee</label>
+                    </div>
+                    @error('approved_at')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="order_date">{{ __('Order datum') }}</label>
+                    <input id="order_date" type="text" name="order_date" value="{{ old('order_date') }}" >
+                    @error('order_date')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="deactivated_at">{{ __('Annuleringsdatum') }}</label>
+                    <input id="deactivated_at" type="text" name="deactivated_at">
+                    @error('deactivated_at')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
                     <label for="project_id">{{ __('Projectcode') }}</label>
-                    <input id="" type="text" name="project_id" value="{{-- $order->project->id --}}" disabled>
+                    <input id="" type="text" name="project_id" value="{{-- $order->project->id --}}" readonly>
                     @error('project_id')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -129,7 +164,7 @@
 
                 <div class="field field-alt">
                     <label for="invoiced">{{ __('Gefactureerd') }}</label>
-                    <input id="" type="text" name="invoiced" value="">
+                    <input id="" type="text" name="invoiced" value="" readonly>
                     @error('invoiced')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -137,49 +172,24 @@
                     @enderror
                 </div>
 
-                <div class="field field-alt">
-                    <label for="canceled">{{ __('Geannuleerd') }}</label>
-                    <div class="radio__group">
-                        <input id="" type="radio" name="canceled" value="1">
-                        <label for="canceled">Ja</label>
-                        <input id="" type="radio" name="canceled" value="0">
-                        <label for="canceled">Nee</label>
-                    </div>
-                    @error('canceled')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field field-alt">
-                    <label for="canceldate">{{ __('Annuleringsdatum') }}</label>
-                    <input id="" type="text" name="canceldate" value="">
-                    @error('canceldate')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field field-alt">
+                {{-- <div class="field field-alt">
                     <label for="incasso">{{ __('Incasso') }}</label>
                     <div class="radio__group">
-                        <input id="" type="radio" name="incasso" value="1">
-                        <label>Ja</label>
-                        <input id="" type="radio" name="incasso" value="0">
-                        <label>Nee</label>
+                        <input id="incasso_true" type="radio" name="incasso" value="1" @if($order->incasso) checked @endif>
+                        <label for="incasso_true">Ja</label>
+                        <input id="incasso_false" type="radio" name="incasso" value="0" @if(!$order->incasso) checked @endif>
+                        <label for="incasso_false">Nee</label>
                     </div>
                     @error('incasso')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
-                </div>
+                </div> --}}
 
                 <div class="field field-alt">
                     <label for="order_number">{{ __('Ordernummer') }}</label>
-                    <input id="" type="text" name="order_number" value="{{ $order->id }}">
+                    <input id="" type="text" name="order_number" value="{{ $order->id }}" readonly>
                     @error('po_box')
                         <span class="order_number" role="alert">
                             <small>{{ $message }}</small>
@@ -189,7 +199,7 @@
 
                 <div class="field field-alt">
                     <label for="order_total">{{ __('Ordertotaal') }}</label>
-                    <input id="" type="text" name="order_total" value="{{$order->order_total_price}}">
+                    <input id="" type="text" name="order_total" value="{{$order->order_total_price}}" readonly>
                     @error('order_total')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -199,7 +209,7 @@
 
                 <div class="field field-alt">
                     <label for="order_rule">{{ __('Orderregels') }}</label>
-                    <input id="" type="text" name="order_rule" value="">
+                    <input id="" type="text" name="order_rule" value="" readonly>
                     @error('order_rule')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -209,7 +219,7 @@
 
                 <div class="field field-alt">
                     <label for="invoiced">{{ __('Gefactureerd') }}</label>
-                    <input id="" type="text" name="invoiced" value="">
+                    <input id="" type="text" name="invoiced" value="" readonly>
                     @error('invoiced')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>

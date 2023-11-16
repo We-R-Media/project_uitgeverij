@@ -17,11 +17,10 @@ class RouteHelper
      */
     public static function isActivePage($routeName, $dynamicPath = null)
     {
-        $isActive = Route::currentRouteName() == $routeName || request()->routeIs([$dynamicPath]);
+        $isActive = Route::currentRouteName() == $routeName || request()->routeIs([ $dynamicPath ]);
 
         return $isActive ? 'navigation__link--active' : '';
     }
-
 
     /**
      * Check if a given route is currently active.

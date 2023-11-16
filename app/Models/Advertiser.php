@@ -44,7 +44,7 @@ class Advertiser extends BaseModel
      */
     public function contacts(): HasMany
     {
-        return $this->hasMany(Comment::class);
+        return $this->hasMany(Contact::class);
     }
 
     /**
@@ -76,6 +76,4 @@ class Advertiser extends BaseModel
     {
         return $this->hasMany(Order::class);
     }
-
-
 }

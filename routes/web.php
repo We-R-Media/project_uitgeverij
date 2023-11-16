@@ -88,8 +88,8 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{id}/contacten', 'contacts')->name('contacts');
             Route::get('/{id}/orders', 'orders')->name('orders');
 
-            Route::post('/store', 'store')->name('store'); // FIX
-            Route::post('/update', 'update')->name('update'); // FIX
+            Route::post('/{id}/store', 'store')->name('store');
+            Route::post('/{id}/update', 'update')->name('update');
         });
 
     Route::name('invoices.')

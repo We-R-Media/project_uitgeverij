@@ -136,13 +136,15 @@
 
 .page__wrapper {
     padding-bottom: 100px;
+
     .ButtonGroup {
         width: 100%;
-        padding: 50px;
+        padding: 20px 50px;
         bottom: 50px;
         left: 0px;
         display: flex;
         justify-content: flex-end;
+
         @include mixin.breakpoint("min", "tablet") {
             left: 50px;
             width: calc(100% - 50px);

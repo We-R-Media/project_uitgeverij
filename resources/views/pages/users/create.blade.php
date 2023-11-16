@@ -43,7 +43,7 @@
 
                     <div class="field field-alt">
                         <label for="gender">{{__('Gender')}}</label>
-                        <select name="gender" id="">
+                        <select class="select2" name="gender" id="">
                             <option value="male">Man</option>
                             <option value="female">Vrouw</option>
                             <option value="other">Zeg ik liever niet</option>
@@ -52,7 +52,7 @@
 
                     <div class="field field-alt">
                         <label for="role">{{__('Rol')}}</label>
-                        <select name="role" id="">
+                        <select class="select2" name="role" id="">
                             <option value="seller">Verkoper</option>
                             <option value="supervisor">Administratie</option>
                             <option value="admin">Beheerder</option>

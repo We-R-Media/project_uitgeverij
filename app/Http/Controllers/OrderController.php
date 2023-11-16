@@ -95,7 +95,7 @@ class OrderController extends Controller
 
         dd( $order );
 
-        return redirect()->view('orders.edit', $order->id);
+        return redirect()->route('orders.edit', $order->id);
     }
 
     /**
@@ -103,7 +103,7 @@ class OrderController extends Controller
      */
     public function edit(string $id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::findOrFail( $id );
 
         return view('pages.orders.edit', compact('order'))
             ->with([
@@ -118,25 +118,35 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        DB::transaction(function () use($request, $id) {
-            Order::where('id', $id)->update([
+        try {
+            DB::transaction(function () use($request, $id) {
 
-            ]);
-        });
+                dd($request);
 
-        return redirect()->view('orders.index');
+                Order::where('id', $id)->update([
+                    'order_date' => $request->input('order_date'),
+                    'approved_at' => $request->input('approved_at') ? $request->input('approved_at') : null,
+                    'deactivated_at' => $request->input('deactivated_at') ? now() : null,
+                ]);
+            });
+
+            Alert::toast('De order is succesvol bijgewerkt', 'success');
+
+            return redirect()->route('orders.index');
+        } catch (\Exception $e){
+            Alert::toast('Er is iets fout gegaan', 'error');
+
+            return redirect()->route('orders.index');
+        }
     }
 
     public function approved(Request $request, $id) {
-
-        dd(true);
-
         DB::transaction(function () use ($request, $id) {
             Order::where('id', $id)->update([
                 'approved_at' => $request->dateTimeNow(),
             ]);
         });
-        return redirect()->view('orders.index');
+        return redirect()->route('orders.index');
     }
 
     /**
@@ -152,7 +162,7 @@ class OrderController extends Controller
             Alert::toast('De order is verwijderd.', 'info');
         }
 
-        return redirect()->view('orders.index');
+        return redirect()->route('orders.index');
     }
 
     public function print(string $id)

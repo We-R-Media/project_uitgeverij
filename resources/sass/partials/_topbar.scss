@@ -228,19 +228,25 @@
 
             }
         }
-        .page__section,
-        .page__title {
-            padding: 0px 50px 0px;
+        .page__section {
+            padding: 0 50px;
 
-            &.page__title {
-                font-size: 30px;
-                padding-bottom:25px;
-            }
+            font-size: clamp(1.6rem, 2vw, 2rem);
+
+            font-weight: 300;
+            color: color.$primary;
+        }
+        .page__title {
+            margin-top: 10px;
+            padding: 0 50px;
+            font-size: clamp(1.8rem, 3vw, 2.4rem);
+            font-weight: 500;
 
             &.sub__title {
-                font-size: 25px;
-                font-weight: 300;
-                color: color.$primary;
+                // font-size: 25px;
+                // font-weight: 300;
+                // color: color.$primary;
+
                 @include mixin.breakpoint("max", "tablet") {
                     position: fixed;
                     top: 0px;

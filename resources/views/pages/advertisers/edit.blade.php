@@ -123,7 +123,7 @@
                     <div class="field field-alt">
                     <label for="contacts">{{ __('Contactpersoon') }}</label>
                     <div class="dropdown">
-                        <select class="@error('contact_id') is-invalid @enderror" name="contact_id" id="">
+                        <select class="select2 @error('contact_id') is-invalid @enderror" name="contact_id" id="">
                            {{-- @if($contacts->isEmpty()) --}}
                                 <option value="nvt" disabled selected>{{ __('Niet beschikbaar') }}</option>
                             {{--
@@ -209,6 +209,25 @@
                         {{ $advertiser->comments }}
                     </textarea>
                     @error('comments')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+            </fieldset>
+
+            <fieldset class="fields base">
+                <h3>{{ __('Opties') }}</h3>
+
+                <div class="field field-alt">
+                    <label>{{ __('Zwarte lijst') }}</label>
+                    <div class="radio__group">
+                        <input id="blacklisted_true" type="radio" name="blacklisted" value="1" @if($advertiser->blacklisted_at) checked @endif>
+                        <label for="blacklisted_true">Ja</label>
+                        <input id="blacklisted_false" type="radio" name="blacklisted" value="0" @if(!$advertiser->blacklisted_at) checked @endif>
+                        <label for="blacklisted_false">Nee</label>
+                    </div>
+                    @error('blacklisted_at')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>

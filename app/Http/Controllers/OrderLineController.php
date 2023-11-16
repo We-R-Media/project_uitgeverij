@@ -22,11 +22,11 @@ class OrderLineController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(string $id)
     {
         return view('pages.orderlines.index')->with([
             'pageTitleSection' => self::$page_title_section,
-            'subpagesData' => $this->getSubpages(),
+            'subpagesData' => $this->getSubpages($id),
         ]);
     }
 
