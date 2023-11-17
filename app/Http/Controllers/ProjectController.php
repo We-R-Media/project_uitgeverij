@@ -54,46 +54,58 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        DB::transaction(function () use ($request) {
+        try {
+            DB::transaction(function () use ($request) {
 
 
-            $layout_id = $request->input('layout');
-            $tax_id = $request->input('tax');
+                $layout_id = $request->input('layout');
+                $tax_id = $request->input('tax');
+    
+                $project = Project::create([
+                    'id' => $request->input('project_code'),
+                    'layout_id' => $layout_id,
+                    'tax_id' => $tax_id,
+                    'designer' => $request->input('designer'),
+                    'printer' => $request->input('printer'),
+                    'client' => $request->input('client'),
+                    'distribution' => $request->input('distribution'),
+                    'release_name' => $request->input('release_name'),
+                    'edition_name' => $request->input('edition_name'),
+                    'print_edition' => $request->input('print_edition'),
+                    'paper_format' => $request->input('paper_format'),
+                    'pages_redaction' => $request->input('pages_redaction'),
+                    'pages_adverts' => $request->input('pages_adverts'),
+                    'pages_total' => $request->input('pages_total'),
+                    'paper_type_cover' => $request->input('paper_type_cover'),
+                    'paper_type_interior' => $request->input('paper_type_interior'),
+                    'color_cover' => $request->input('color_cover'),
+                    'color_interior' => $request->input('color_interior'),
+                    'ledger' => $request->input('ledger'),
+                    'journal' => $request->input('journal'),
+                    'department' => $request->input('department'),
+                    // 'year' => $request->input('year'),
+                    'revenue_goals' => $request->input('revenue_goals'),
+                    'comments' => $request->input('comments'),
+                ]);            
+                $layout = Layout::findOrFail($layout_id);
+                $layout->project()->associate($project);
+                $layout->save();
+    
+                $tax = Tax::findOrFail($tax_id);
+                $tax->project()->associate($project);
+                $tax->save();
+            });
 
-            $project = Project::create([
-                'id' => $request->input('project_code'),
-                'layout_id' => $layout_id,
-                'tax_id' => $tax_id,
-                'designer' => $request->input('designer'),
-                'printer' => $request->input('printer'),
-                'client' => $request->input('client'),
-                'distribution' => $request->input('distribution'),
-                'release_name' => $request->input('release_name'),
-                'edition_name' => $request->input('edition_name'),
-                'print_edition' => $request->input('print_edition'),
-                'paper_format' => $request->input('paper_format'),
-                'pages_redaction' => $request->input('pages_redaction'),
-                'pages_adverts' => $request->input('pages_adverts'),
-                'pages_total' => $request->input('pages_total'),
-                'paper_type_cover' => $request->input('paper_type_cover'),
-                'paper_type_interior' => $request->input('paper_type_interior'),
-                'color_cover' => $request->input('color_cover'),
-                'color_interior' => $request->input('color_interior'),
-                'ledger' => $request->input('ledger'),
-                'journal' => $request->input('journal'),
-                'department' => $request->input('department'),
-                // 'year' => $request->input('year'),
-                'revenue_goals' => $request->input('revenue_goals'),
-                'comments' => $request->input('comments'),
-            ]);            
-            $layout = Layout::findOrFail($layout_id);
-            $layout->project()->associate($project);
-            $layout->save();
+            Alert::toast('Het project is succesvol aangemaakt', 'success');
 
-            $tax = Tax::findOrFail($tax_id);
-            $tax->project()->associate($project);
-            $tax->save();
-        });
+            return redirect()->route('projects.index');
+
+        } catch (\Exception $e) {
+            Alert::toast('Er is iets fout gegaan', 'error');
+
+            return redirect()->route('projects.index');
+        }
+
 
         return redirect()->route('projects.index');
     }
@@ -122,47 +134,58 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $project_id)
     {
-        DB::transaction(function () use($request, $project_id) {
+        try {
 
-            $layout_id = $request->input('layout');
-            $tax_id = $request->input('tax');
 
-            Project::where('id', $project_id)->update([
-                'id' => $request->input('project_code'),
-                'layout_id' => $layout_id,
-                'tax_id' => $tax_id,
-                'designer' => $request->input('designer'),
-                'printer' => $request->input('printer'),
-                'client' => $request->input('client'),
-                'distribution' => $request->input('distribution'),
-                'release_name' => $request->input('release_name'),
-                'edition_name' => $request->input('edition_name'),
-                'print_edition' => $request->input('print_edition'),
-                'paper_format' => $request->input('paper_format'),
-                'pages_redaction' => $request->input('pages_redaction'),
-                'pages_adverts' => $request->input('pages_adverts'),
-                'pages_total' => $request->input('pages_total'),
-                'paper_type_cover' => $request->input('paper_type_cover'),
-                'paper_type_interior' => $request->input('paper_type_interior'),
-                'color_cover' => $request->input('color_cover'),
-                'color_interior' => $request->input('color_interior'),
-                'ledger' => $request->input('ledger'),
-                'journal' => $request->input('journal'),
-                'department' => $request->input('department'),
-                // 'year' => $request->input('year'),
-                'revenue_goals' => $request->input('revenue_goals'),
-                'comments' => $request->input('comments'),
-            ]);
+            DB::transaction(function () use($request, $project_id) {
 
-            $layout = Layout::findOrFail($layout_id);
-            $layout->project()->associate($project);
-            $layout->save();
+                $layout_id = $request->input('layout');
+                $tax_id = $request->input('tax');
+    
+                Project::where('id', $project_id)->update([
+                    'id' => $request->input('project_code'),
+                    'layout_id' => $layout_id,
+                    'tax_id' => $tax_id,
+                    'designer' => $request->input('designer'),
+                    'printer' => $request->input('printer'),
+                    'client' => $request->input('client'),
+                    'distribution' => $request->input('distribution'),
+                    'release_name' => $request->input('release_name'),
+                    'edition_name' => $request->input('edition_name'),
+                    'print_edition' => $request->input('print_edition'),
+                    'paper_format' => $request->input('format'),
+                    'pages_redaction' => $request->input('pages_redaction'),
+                    'pages_adverts' => $request->input('pages_adverts'),
+                    'pages_total' => $request->input('pages_total'),
+                    'paper_type_cover' => $request->input('paper_type_cover'),
+                    'paper_type_interior' => $request->input('paper_type_interior'),
+                    'color_cover' => $request->input('color_cover'),
+                    'color_interior' => $request->input('color_interior'),
+                    'ledger' => $request->input('ledger'),
+                    'journal' => $request->input('journal'),
+                    'department' => $request->input('department'),
+                    // 'year' => $request->input('year'),
+                    'revenue_goals' => $request->input('revenue_goals'),
+                    'comments' => $request->input('comments'),
+                ]);
+    
+                $layout = Layout::findOrFail($layout_id);
+                $layout->project()->associate($project);
+                $layout->save();
+    
+                $tax = Tax::findOrFail($tax_id);
+                $tax->project()->associate($project);
+                $tax->save();
+            });
 
-            $tax = Tax::findOrFail($tax_id);
-            $tax->project()->associate($project);
-            $tax->save();
-        });
-        return redirect()->route('projects.index');
+            Alert::toast('Het project is successvol bijgewerkt!', 'success');
+
+            return redirect()->route('projects.index');
+        } catch (\Exception $e) {
+            Alert::toast('Er is iets fout gegaan', 'error');
+
+            return redirect()->route('projects.index');
+        }
     }
 
      /**

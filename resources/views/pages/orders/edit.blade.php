@@ -130,7 +130,7 @@
                     @enderror
                 </div>
 
-                <div class="field field-alt">
+                {{-- <div class="field field-alt">
                     <label for="layout_name">{{ __('Layout') }}</label>
                     @if($order->project->layout->count() == 0)
                     {{__('Layout niet beschikbaar...')}}
@@ -142,7 +142,7 @@
                         </span>
                     @enderror
                     @endif
-                </div>
+                </div> --}}
 
                 <div class="field field-alt">
                     <label for="invoiced">{{ __('Gefactureerd') }}</label>
@@ -251,7 +251,7 @@
         <div class="ButtonGroup">
             <div class="buttons">
                 @if ($order->approved_at)
-                    <a href="{{ route('email.approval', $order->id) }}">Verstuur akkoord</a>
+                    <a href="{{ route('email.approval', $order->id) }}" class="button button--action">{{__('Verstuur akkoord')}}</a>
                 @else
                     <a href="{{ route('invoices.create', $order->id) }}" class="button button--action">{{__('Factureer order')}}</a>
                 @endif

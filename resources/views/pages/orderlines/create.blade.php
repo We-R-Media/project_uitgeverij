@@ -25,8 +25,8 @@
                     <div class="field field-alt">
                         <label for="format">{{__('Formaat')}}</label>
                         <select name="format" id="">
-                            @foreach ($formats as $format )
-                                <option value="{{$format->price}}"></option>
+                            @foreach ($order->project->formats as $format)
+                                <option value="{{$format->paper_type}}">{{$format->size}}</option>
                             @endforeach
                         </select>
                     </div>

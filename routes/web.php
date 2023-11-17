@@ -8,6 +8,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderLineController;
+use App\Http\Controllers\FormatGroupController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\FormatController;
 use App\Http\Controllers\InvoiceController;
@@ -73,7 +74,7 @@ Route::group(['middleware' => ['auth']], function() {
     ->controller(OrderLineController::class)
     ->group(function () {
         Route::get('/{order_id}/orderregels', 'index')->name('index');
-        Route::get('/{order_id}/orderregels/nieuw', 'create')->name('create');
+        Route::get('/{order_id}/{project_id}/orderregels/nieuw', 'create')->name('create');
         Route::post('/{order_id}/orderregels/opslaan', 'store')->name('store');
     });
 
@@ -187,6 +188,16 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::post('/{format_id}/update', 'update')->name('update');
             });
     });
+
+        Route::name('formatgroup.')
+            ->prefix('formaatgroep')
+            ->controller(FormatGroupController::class)
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/nieuw', 'create')->name('create');
+                
+                Route::post('/opslaan', 'store')->name('store');
+            });
 
     Route::name('email.')
         ->prefix('emails')

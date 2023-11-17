@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FormatRequest;
+use Illuminate\Http\Request;
 use App\Models\Format;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -54,11 +55,14 @@ class FormatController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(FormatRequest $request)
+    public function store(Request $request)
     {
+        dd($request);
+
         try {
             DB::transaction(function () use($request) {
                 Format::create([
+                    'paper_type' => $request->input('paper_type'),
                     'size' => $request->input('size'),
                     'measurement' => $request->input('measurement'),
                     'ratio' => $request->input('ratio'),

@@ -18,7 +18,8 @@ class FormatFactory extends Factory
     public function definition(): array
     {
         return [
-            'size' => fake()->word(),
+            'paper_type' => fake()->randomElement(['A5','A4','A3']),
+            'size' => fake()->randomElement(['1/1 pagina', '1/2 pagina', '1/3 pagina', '1/4 pagina']),
             'measurement' => fake()->word(),
             'ratio' => fake()->randomFloat(2, 10, 100),
             'price' => fake()->randomFloat(2, 10, 1000),

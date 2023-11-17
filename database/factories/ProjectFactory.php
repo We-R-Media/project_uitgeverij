@@ -25,7 +25,7 @@ class ProjectFactory extends Factory
             'release_name' => fake()->word(),
             'edition_name' => fake()->word(),
             'print_edition' => fake()->word(),
-            'paper_format' => fake()->word(),
+            'paper_format' => fake()->randomElement(['A5','A4','A3']),
             'pages_redaction' => fake()->numberBetween(1, 100),
             'pages_adverts' => fake()->numberBetween(1, 100),
             'pages_total' => fake()->optional()->numberBetween(1, 100),

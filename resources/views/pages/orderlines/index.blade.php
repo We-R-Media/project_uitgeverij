@@ -6,7 +6,7 @@
     <div class="page__wrapper">
         <div class="HeaderButtons">
             <div class="buttons">
-                <a href="{{ route('orderlines.create', $order->id) }}" class="button button--action">{{__('Nieuwe regel')}}</a>
+                <a href="{{ route('orderlines.create', [$order->project->id, $order->id]) }}" class="button button--action">{{__('Nieuwe regel')}}</a>
             </div>
         </div>
         <div class="items__head">
@@ -20,7 +20,6 @@
                 </div>
             </div>
         </div>
-
             <ul class="items__view">
                 @if ($order->orderLines->count() > 0)
                     @foreach ($order->orderLines as $orderLine)

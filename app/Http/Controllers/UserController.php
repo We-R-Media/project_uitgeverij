@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
@@ -29,6 +30,8 @@ class UserController extends Controller
      */
     public function index(string $role = null)
     {
+
+
         $users = User::all();
 
         $this->subpages = [
