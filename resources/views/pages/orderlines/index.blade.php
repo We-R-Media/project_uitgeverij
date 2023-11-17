@@ -15,10 +15,16 @@
                     <div>{{__('Titel')}}</div>
                 </div>
                 <div class="item__summary">
-                    {{__('Basisbedrag')}}
-                    {{__('Korting')}}
+                    <div>{{__('Editie')}}</div>
+                    <div>{{__('Basisprijs')}}</div>
+                    <div>{{__('Korting')}}</div>
+                    <div>{{__('Prijs met korting')}}</div>
+                </div>
+                <div class="item__actions">
+                    <div>{{--__('Actions')--}}</div>
                 </div>
             </div>
+        </div>
         </div>
             <ul class="items__view">
                 @if ($order->orderLines->count() > 0)
@@ -29,10 +35,16 @@
                             </div>
                             <div class="item__summary">
                                 <div class="item__format field">
-                                    {{$orderLine->base_price}}
+                                    {{ $orderLine->order->project->edition_name }}
+                                </div>
+                                <div class="item__format field">
+                                    {{ number_format($orderLine->base_price, 2)}}
                                 </div>
                                 <div class="item__format field">
                                     {{$orderLine->discount}}%
+                                </div>
+                                <div class="item__format field">
+                                    {{ number_format($orderLine->price_with_discount, 2) }}
                                 </div>
                             </div>
                         </li>
@@ -43,3 +55,4 @@
         </div>
     </div>
 @endsection
+

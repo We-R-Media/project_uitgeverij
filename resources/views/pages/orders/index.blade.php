@@ -30,7 +30,7 @@
                         <div class="item__summary">
                             <div class="item__format field">
                                 <label>{{__('Prijs')}}</label>
-                                {{$order->order_total_price}}
+                                {{ number_format($order->order_total_price, 2) }}
                             </div>
                             <div class="item__created field">
                                 <label>{{__('Aangemaakt op')}}</label>

@@ -113,6 +113,11 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($order_id);
 
+        // $total = $order->orderLines->sum('base_price');
+
+        // $result = $order->order_total_price = (double) $total;
+
+
         return view('pages.orders.edit', compact('order'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,

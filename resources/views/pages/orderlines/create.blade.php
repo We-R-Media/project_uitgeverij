@@ -13,6 +13,12 @@
                     <h3>{{__('Orderregel')}}</h3>
 
                     <div class="field field-alt">
+                        <label for="project">{{__('Editie')}}</label>
+                        <select name="project" id="">
+                            <option value="{{$project->id}}">{{$project->edition_name}}</option>
+                        </select>
+                    </div>
+                    <div class="field field-alt">
                         <label for="base_price">{{__('Basisbedrag')}}</label>
                         <input type="text" name="base_price" id="">
                         @error('base_price')

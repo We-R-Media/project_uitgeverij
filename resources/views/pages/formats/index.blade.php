@@ -5,7 +5,7 @@
     <div class="page__wrapper">
         <div class="HeaderButtons">
             <div class="buttons">
-                <a href="{{ route('formats.create') }}" class="button button--action">Nieuw formaat</a>
+                <a href="{{ route('formats.create') }}" class="button button--action">{{__('Nieuw formaat')}}</a>
             </div>
         </div>
         <div class="items__head">
@@ -43,7 +43,7 @@
                             </div>
                             <div class="item__pages field">
                                 <label>{{__('Prijs')}}</label>
-                                {{$format->price}}
+                                {{ number_format($format->price, 2)}}
                             </div>
                         </div>
                         <div class="item__actions">

@@ -16,6 +16,7 @@ return new class extends Migration
              $table->string('title')->nullable();
             $table->foreignId('order_id')->nullable();
             $table->double('base_price')->nullable();
+            $table->double('price_with_discount')->nullable();
             $table->integer('discount');
             $table->datetime('invoiced_at')->nullable();
             $table->softDeletes();

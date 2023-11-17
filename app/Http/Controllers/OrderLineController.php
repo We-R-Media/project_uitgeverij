@@ -44,12 +44,6 @@ class OrderLineController extends Controller
     {
         $order = Order::findOrFail($order_id);
         $project = Project::findOrFail($project_id);
-    
-        // $paperTypes = explode(',', $project->paper_format);
-    
-        // $paperTypes = array_map('trim', $paperTypes);
-    
-        // $formats = Format::whereIn('paper_type', $project)->get();
 
         return view('pages.orderlines.create', compact('order', 'project'))->with([
             'pageTitleSection' => self::$page_title_section,
@@ -61,20 +55,31 @@ class OrderLineController extends Controller
      */
     public function store(Request $request, string $order_id)
     {
-
-
-         DB::transaction(function () use($request, $order_id) {
-
+        DB::transaction(function () use ($request, $order_id) {
             $order = Order::findOrFail($order_id);
-
+    
+            $base_price = $request->input('base_price');
+            $discount = $request->input('discount');
+    
+            $discount_amount = ($discount / 100) * $base_price;
+    
             $orderline = OrderLine::create([
-                'base_price' => $request->input('base_price'),
-                'discount' => $request->input('discount'),
+                'base_price' => $base_price,
+                'discount' => $discount,
+                'project' => $request->input('project'),
+                'price_with_discount' => $base_price - $discount_amount,
             ]);
-
-            // $order->orderlines()->save($orderline);
+    
             $orderline->order()->associate($order);
+            $orderline->save();
+    
+            $orderTotalPrice = $base_price - $discount_amount;
+    
+            $order->where('id', $order_id)->update([
+                'order_total_price' => $orderTotalPrice,
+            ]);
         });
+    
         return redirect()->route('orderlines.index', $order_id);
     }
 
