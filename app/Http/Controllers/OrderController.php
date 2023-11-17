@@ -29,7 +29,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::latest()->whereNull( 'deactivated_at' )->paginate(10);
+        $orders = Order::latest()->whereNull( 'deactivated_at' )->paginate(12);
 
         $this->subpages = [
             'Actueel' => 'orders.index',
@@ -48,7 +48,7 @@ class OrderController extends Controller
      */
     public function deactivated()
     {
-        $orders = Order::whereNotNull('deactivated_at')->paginate(10);
+        $orders = Order::whereNotNull('deactivated_at')->paginate(12);
 
         $this->subpages = [
             'Actueel' => 'orders.index',

@@ -24,11 +24,10 @@ class ProjectSeeder extends Seeder
      *
      * @return void
      */
-
-     public function run()
-     {
-         $randomNumberSmall = fake()->numberBetween(4, 8);
-         $randomNumberLarge = fake()->numberBetween(6, 12);
+    public function run()
+    {
+        $randomNumberSmall = fake()->numberBetween(5, 9);
+        $randomNumberLarge = fake()->numberBetween(12, 26);
      
          $advertisers = Advertiser::factory()
              ->has(Invoice::factory()->count($randomNumberLarge))

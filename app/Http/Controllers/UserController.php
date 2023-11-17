@@ -29,9 +29,7 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
     public function index(string $role = null)
-    {
-
-
+    {   
         $users = User::all();
 
         $this->subpages = [

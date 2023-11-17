@@ -36,7 +36,11 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "Dompdf\\": "vendor/dompdf/dompdf/src/"
-        }
+        },
+        "files": [
+            "app/Helpers/PostalCodeHelper.php",
+            "app/Helpers/RouteHelper.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {

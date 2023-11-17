@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Helpers\Helpers;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,10 +17,12 @@ class ClientFactory extends Factory
      */
     public function definition(): array
     {
+        $formattedPostalCode = Helpers::generatePostalCode();
+
         return [
             'name' => fake()->company(),
             'address' => fake()->address(),
-            'postal_code' => fake()->postcode(),
+            'postal_code' => $formattedPostalCode,
             'city' => fake()->city(),
         ];
     }

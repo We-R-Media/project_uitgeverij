@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helpers;
 use App\Models\Advertiser;
 use App\Models\Contact;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class AdvertiserController extends Controller
      */
     public function index()
     {
-        $advertisers = Advertiser::latest()->paginate(10);
+        $advertisers = Advertiser::latest()->paginate(12);
 
         $this->subpages = [
             'Actueel' => 'advertisers.index',
@@ -46,7 +47,7 @@ class AdvertiserController extends Controller
      */
     public function blacklist()
     {
-        $advertisers = Advertiser::whereNotNull('blacklisted_at')->paginate(10);
+        $advertisers = Advertiser::whereNotNull('blacklisted_at')->paginate(12);
 
         $this->subpages = [
             'Actueel' => 'advertisers.index',
@@ -82,7 +83,7 @@ class AdvertiserController extends Controller
                 'email' => $request->input('email'),
                 'address' => $request->input('address'),
                 'po_box' => $request->input('po_box'),
-                'postal_code' => $request->input('postal_code'),
+                'postal_code' => Helpers::formatPostalCode($request->input('postal_code')),
                 'city' => $request->input('city'),
                 'province' => $request->input('province'),
                 'phone_mobile' => $request->input('phone_mobile'),
@@ -119,7 +120,7 @@ class AdvertiserController extends Controller
             Advertiser::where('id', $advertiser_id)->update([
                 'name' => $request->input('name'),
                 'po_box' => $request->input('po_box'),
-                'postal_code' => $request->input('postal_code'),
+                'postal_code' => Helpers::formatPostalCode($request->input('postal_code')),
                 'city' => $request->input('city'),
                 'province' => $request->input('province'),
                 'phone' => $request->input('phone'),
