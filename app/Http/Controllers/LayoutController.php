@@ -14,6 +14,8 @@ class LayoutController extends Controller
 
     public function __construct()
     {
+
+
         $this->subpages = [
             'Formaten' => 'formats.index',
             'Layouts' => 'layouts.index',

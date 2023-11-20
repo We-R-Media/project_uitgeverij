@@ -83,28 +83,35 @@ class OrderController extends Controller
      */
     public function store(Request $request,  $advertiser_id)
     {
-        $transactions = DB::transaction(function () use($request, $advertiser_id) {
-            $project_id = $request->input('project_id');
+        try {
+            $transactions = DB::transaction(function () use($request, $advertiser_id) {
+                $project_id = $request->input('project_id');
 
-            $order = Order::create([
-                'project_id' => $project_id,
-                'order_date' => now(),
-                'approved_at' => now(),
-                'order_total_price' => 0.0,
-            ]);
+                $order = Order::create([
+                    'project_id' => $project_id,
+                    'order_date' => now(),
+                    'approved_at' => now(),
+                    'order_total_price' => 0.0,
+                ]);
 
 
-            $project = Project::findOrFail($project_id);
-            $order->project()->associate($project);
-            $order->save();
+                $project = Project::findOrFail($project_id);
+                $order->project()->associate($project);
+                $order->save();
 
-            $advertiser = Advertiser::findOrFail($advertiser_id);
-            $order->advertiser()->associate($advertiser);
-            $order->save();
-        });
+                $advertiser = Advertiser::findOrFail($advertiser_id);
+                $order->advertiser()->associate($advertiser);
+                $order->save();
+            });
 
-        dd($transactions);
-        // return redirect()->route('orders.edit', $order->id);
+            Alert::toast('De relatie is succesvol bijgewerkt', 'success');
+
+            return redirect()->route('advertisers.index');
+        } catch (\Exception $e){
+            Alert::toast('Er is iets fout gegaan', 'error');
+
+            return redirect()->route('advertisers.index');
+        }
     }
 
     /**
@@ -147,7 +154,7 @@ class OrderController extends Controller
 
             return redirect()->route('orders.index');
         } catch (\Exception $e){
-            dd($e);
+            // dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('orders.index');

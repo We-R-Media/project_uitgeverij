@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('phone');
             $table->boolean('role')->nullable();
             $table->longText('comments')->nullable();
-            $table->timestamp('deactivated_at');
+            $table->timestamp('deactivated_at')->nullable()->default(null);
             $table->softDeletes();
             $table->timestamps();
         });

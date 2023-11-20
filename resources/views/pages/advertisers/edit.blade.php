@@ -81,7 +81,7 @@
                 <div class="field field-alt">
                     <label for="credit_limit">{{ __('Kredietlimiet') }}</label>
                     <input id="" type="text" name="credit_limit" value="{{ $advertiser->credit_limit }}">
-                    {{dd($advertiser->credit_limit)}}
+                    {{--  dd($advertiser->credit_limit) --}}
                     @error('credit_limit')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>

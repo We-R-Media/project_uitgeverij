@@ -123,7 +123,7 @@ class AdvertiserController extends Controller
      */
     public function update(Request $request, string $advertiser_id)
     {
-        try {
+        try{
             DB::transaction(function () use($request, $advertiser_id) {
                 Advertiser::where('id', $advertiser_id)->update([
                     'name' => $request->input('name'),
@@ -181,24 +181,33 @@ class AdvertiserController extends Controller
 
     public function contacts__store(Request $request, string $advertiser_id)
     {
-        DB::transaction(function () use ($request, $advertiser_id) {
-            $advertiser = Advertiser::findOrFail($advertiser_id);
+        try {
+            DB::transaction(function () use ($request, $advertiser_id) {
+                $advertiser = Advertiser::findOrFail($advertiser_id);
 
-            $contact = new Contact([
-                'salutation' => $request->input('salutation'),
-                'initial' => $request->input('initial'),
-                'preposition' => $request->input('preposition'),
-                'first_name' => $request->input('first_name'),
-                'last_name' => $request->input('last_name'),
-                'phone' => $request->input('phone'),
-                'email' => $request->input('email'),
-                'comments' => $request->input('comments'),
-                'role' => $request->input('role'),
-            ]);
+                $contact = new Contact([
+                    'salutation' => $request->input('salutation'),
+                    'initial' => $request->input('initial'),
+                    'preposition' => $request->input('preposition'),
+                    'first_name' => $request->input('first_name'),
+                    'last_name' => $request->input('last_name'),
+                    'phone' => $request->input('phone'),
+                    'email' => $request->input('email'),
+                    'comments' => $request->input('comments'),
+                    'role' => $request->input('role'),
+                ]);
 
-            $advertiser->contacts()->save($contact);
-        });
-        return redirect()->route('advertisers.contacts', $advertiser_id);
+                $advertiser->contacts()->save($contact);
+            });
+
+            Alert::toast('De relatie is succesvol bijgewerkt', 'success');
+
+            return redirect()->route('advertisers.contacts', $advertiser_id);
+        } catch (\Exception $e){
+            Alert::toast('Er is iets fout gegaan', 'error');
+
+            return redirect()->route('advertisers.index');
+        }
     }
 
     public function orders(string $advertiser_id)
