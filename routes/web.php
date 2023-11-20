@@ -140,9 +140,10 @@ Route::group(['middleware' => ['auth']], function() {
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/nieuw', 'create')->name('create');
-                Route::get('/{tax_id}/bewerken', 'edit')->name('edit');
+                Route::get('/{reminder_id}/verwijderen', 'destroy')->name('destroy');
 
-                Route::post('/{tax_id}/bijwerken', 'update')->name('update');
+                Route::get('/{reminder_id}/bewerken', 'edit')->name('edit');
+                Route::post('/{reminder_id}/bijwerken', 'update')->name('update');
                 Route::post('/opslaan', 'store')->name('store');
             });
 

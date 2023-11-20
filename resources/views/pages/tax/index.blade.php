@@ -5,18 +5,18 @@
     <div class="page__wrapper">
         <div class="HeaderButtons">
             <div class="buttons">
-                <a href="{{ route('tax.create') }}" class="button button--action">Nieuwe toevoegen</a>
+                <a href="{{ route('tax.create') }}" class="button button--action">{{__('Nieuwe toevoegen')}}</a>
             </div>
         </div>
         <div class="items__head">
             <div class="item item__head">
                 <div class="item__content">
-                    <div>{{__('Titel')}}</div>
+                    <div>{{__('Land')}}</div>
                 </div>
                 <div class="item__summary">
-                    <div>{{__('BTW 0')}}</div>
-                    <div>{{__('BTW laag')}}</div>
-                    <div>{{__('BTW hoog')}}</div>
+                    <div>{{__('BTW percentage 0')}}</div>
+                    <div>{{__('BTW percentage laag')}}</div>
+                    <div>{{__('BTW percentage hoog')}}</div>
                 </div>
                 <div class="item__actions">
                     <div>{{--__('Actions')--}}</div>
@@ -36,15 +36,15 @@
                         <div class="item__summary">
                             <div class="field">
                                 <label>{{__('BTW 0')}}</label>
-                                {{$tax->zero}}
+                                {{$tax->zero}}%
                             </div>
                             <div class="field">
                                 <label>{{__('BTW laag')}}</label>
-                                {{$tax->low}}
+                                {{$tax->low}}%
                             </div>
                             <div class="field">
                                 <label>{{__('BTW hoog')}}</label>
-                                {{$tax->high}}
+                                {{$tax->high}}%
                             </div>
                         </div>
                         <div class="item__actions">
@@ -63,7 +63,7 @@
                 @endforeach
             @else
                 <li class="item">
-                    <p>Geen btw gevonden</p>
+                    <p>{{__('Geen BTW gevonden')}}</p>
                 </li>
             @endif
         </ul>

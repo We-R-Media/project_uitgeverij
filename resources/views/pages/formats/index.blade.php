@@ -11,7 +11,7 @@
         <div class="items__head">
             <div class="item item__head">
                 <div class="item__content">
-                    <div>{{__('Titel')}}</div>
+                    <div>{{__('Projectcode')}}</div>
                 </div>
                 <div class="item__summary">
                     <div>{{__('Papiertype')}}</div>
@@ -61,7 +61,7 @@
                 @endforeach
             @else
                 <li class="item">
-                    <p>{{__('Geen relaties gevonden')}}</p>
+                    <p>{{__('Geen formaten gevonden')}}</p>
                 </li>
             @endif
         </ul>

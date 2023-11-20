@@ -11,7 +11,7 @@
         <div class="items__head">
             <div class="item item__head">
                 <div class="item__content">
-                    <div>{{__('Titel')}}</div>
+                    <div>{{__('Naam')}}</div>
                 </div>
                 <div class="item__summary">
                     <div>{{__('Plaatsnaam')}}</div>
@@ -60,7 +60,7 @@
                 @endforeach
             @else
                 <li class="item">
-                    <p>Geen layouts gevonden</p>
+                    <p>{{__('Geen layouts gevonden')}}</p>
                 </li>
             @endif
         </ul>
