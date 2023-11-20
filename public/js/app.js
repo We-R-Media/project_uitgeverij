@@ -28881,7 +28881,7 @@ function buildURL(url, params, options) {
   if (!params) {
     return url;
   }
-  
+
   const _encode = options && options.encode || encode;
 
   const serializeFn = options && options.serialize;
@@ -31429,7 +31429,7 @@ class $3ed269f2f0fb224b$export$2e2bcd8739ae039 extends $4040acfd8584338d$export$
             "reset",
             "maxfilesexceeded",
             "maxfilesreached",
-            "queuecomplete", 
+            "queuecomplete",
         ];
         this.prototype._thumbnailQueue = [];
         this.prototype._processingThumbnail = false;
@@ -31574,7 +31574,7 @@ class $3ed269f2f0fb224b$export$2e2bcd8739ae039 extends $4040acfd8584338d$export$
                         return this.emit("dragend", e);
                     }
                 }
-            }, 
+            },
         ];
         this.clickableElements.forEach((clickableElement)=>{
             return this.listeners.push({
@@ -32516,7 +32516,7 @@ $3ed269f2f0fb224b$export$2e2bcd8739ae039.discover = function() {
 // incorrectly **
 $3ed269f2f0fb224b$export$2e2bcd8739ae039.blockedBrowsers = [
     // The mac os and windows phone version of opera 12 seems to have a problem with the File drag'n'drop API.
-    /opera.*(Macintosh|Windows Phone).*version\/12/i, 
+    /opera.*(Macintosh|Windows Phone).*version\/12/i,
 ];
 // Checks if the browser is supported
 $3ed269f2f0fb224b$export$2e2bcd8739ae039.isBrowserSupported = function() {
@@ -32875,7 +32875,7 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -32889,17 +32889,17 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = __webpack_modules__;
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/chunk loaded */
 /******/ 	(() => {
@@ -32932,7 +32932,7 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /******/ 			return result;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
@@ -32944,7 +32944,7 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -32956,7 +32956,7 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -32968,12 +32968,12 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /******/ 			}
 /******/ 		})();
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -32984,11 +32984,11 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/jsonp chunk loading */
 /******/ 	(() => {
 /******/ 		// no baseURI
-/******/ 		
+/******/
 /******/ 		// object to store loaded and loading chunks
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
@@ -32996,19 +32996,19 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /******/ 			"/js/app": 0,
 /******/ 			"css/styles": 0
 /******/ 		};
-/******/ 		
+/******/
 /******/ 		// no chunk on demand loading
-/******/ 		
+/******/
 /******/ 		// no prefetching
-/******/ 		
+/******/
 /******/ 		// no preloaded
-/******/ 		
+/******/
 /******/ 		// no HMR
-/******/ 		
+/******/
 /******/ 		// no HMR manifest
-/******/ 		
+/******/
 /******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
-/******/ 		
+/******/
 /******/ 		// install a JSONP callback for chunk loading
 /******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
 /******/ 			var [chunkIds, moreModules, runtime] = data;
@@ -33033,20 +33033,20 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /******/ 			}
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
-/******/ 		
+/******/
 /******/ 		var chunkLoadingGlobal = self["webpackChunkwer_theme_base_package"] = self["webpackChunkwer_theme_base_package"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
-/******/ 	
+/******/
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["css/styles"], () => (__webpack_require__("./resources/js/app.js")))
 /******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/styles"], () => (__webpack_require__("./resources/sass/styles.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
-/******/ 	
+/******/
 /******/ })()
 ;

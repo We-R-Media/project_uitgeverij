@@ -131,10 +131,9 @@
                         </span>
                     @enderror
                 </div>
-
                 <div class="field field-alt">
                     <label for="order_date">{{ __('Order datum') }}</label>
-                    <input id="order_date" type="text" name="order_date" value="{{ old('order_date') }}" >
+                    <input class="field__date" id="order_date" type="datetime-local" name="order_date" value="{{ old('order_date', $order->order_date) }}">
                     @error('order_date')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -143,8 +142,8 @@
                 </div>
 
                 <div class="field field-alt">
-                    <label for="deactivated_at">{{ __('Annuleringsdatum') }}</label>
-                    <input id="deactivated_at" type="text" name="deactivated_at">
+                    <label for="deactivated_at">{{ __('Annuleren op') }}</label>
+                    <input class="field__date" id="deactivated_at" type="datetime-local" name="deactivated_at" value="{{ old('order_date', $order->deactivated_at) }}">
                     @error('deactivated_at')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>

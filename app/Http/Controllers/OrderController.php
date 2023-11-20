@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Advertiser;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -121,19 +122,19 @@ class OrderController extends Controller
         try {
             DB::transaction(function () use($request, $id) {
 
-                dd($request);
-
-                Order::where('id', $id)->update([
+                $order = Order::where('id', $id)->update([
                     'order_date' => $request->input('order_date'),
-                    'approved_at' => $request->input('approved_at') ? $request->input('approved_at') : null,
+                    'approved_at' => $request->input('deactivated_at') ? now() : null,
                     'deactivated_at' => $request->input('deactivated_at') ? now() : null,
                 ]);
+
             });
 
             Alert::toast('De order is succesvol bijgewerkt', 'success');
 
             return redirect()->route('orders.index');
         } catch (\Exception $e){
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('orders.index');
