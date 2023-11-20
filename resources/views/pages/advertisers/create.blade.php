@@ -72,6 +72,16 @@
                         @enderror
                     </div>
 
+                    <div class="field field-alt">
+                        <label for="credit_limit">{{ __('Kredietlimiet') }}</label>
+                        <input id="" type="text" name="credit_limit">
+                        @error('credit_limit')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
+
                 <div class="field field-alt">
                     <label for="phone">{{ __('Telefoonnummer') }}</label>
                     <input id="" type="text" name="phone">

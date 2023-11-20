@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('postal_code');
             $table->string('city');
             $table->string('po_box')->nullable();
+            $table->double('credit_limit')->nullable();
             $table->string('province')->nullable();
             $table->longText('comments')->nullable();
             $table->date('deactivated_at')->nullable();

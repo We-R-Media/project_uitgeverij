@@ -30,6 +30,7 @@ class AdvertiserFactory extends Factory
             'postal_code' => $formattedPostalCode,
             'city' => fake()->city(),
             'po_box' => fake()->optional()->address(),
+            'credit_limit' => fake()->randomFloat(0, 4),
             'comments' => fake()->optional()->paragraph(),
             'deactivated_at' => fake()->optional()->dateTimeThisCentury(),
             'blacklisted_at' => fake()->optional()->dateTimeThisCentury()
