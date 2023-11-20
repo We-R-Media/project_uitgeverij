@@ -5,7 +5,7 @@
     <div class="page__wrapper">
         <div class="HeaderButtons">
             <div class="buttons">
-                <a href="{{ route('formats.create') }}" class="button button--action">Nieuw formaat</a>
+                <a href="{{ route('formats.create') }}" class="button button--action">{{__('Nieuw formaat')}}</a>
             </div>
         </div>
         <div class="items__head">
@@ -14,6 +14,7 @@
                     <div>{{__('Titel')}}</div>
                 </div>
                 <div class="item__summary">
+                    <div>{{__('Papiertype')}}</div>
                     <div>{{__('Afmetingen')}}</div>
                     <div>{{__("Prijs")}}</div>
                 </div>
@@ -32,13 +33,17 @@
                             </a>
                         </div>
                         <div class="item__summary">
+                            <div class="item__fromat field">
+                                <label>{{__('Papiertype')}}</label>
+                                {{$format->paper_type}}
+                            </div>
                             <div class="item__format field">
-                                <label>Afmeting</label>
+                                <label>{{__('Afmeting')}}</label>
                                 {{$format->measurement}}
                             </div>
                             <div class="item__pages field">
-                                <label>Prijs</label>
-                                {{$format->price}}
+                                <label>{{__('Prijs')}}</label>
+                                {{ number_format($format->price, 2)}}
                             </div>
                         </div>
                         <div class="item__actions">
@@ -56,7 +61,7 @@
                 @endforeach
             @else
                 <li class="item">
-                    <p>Geen relaties gevonden</p>
+                    <p>{{__('Geen relaties gevonden')}}</p>
                 </li>
             @endif
         </ul>

@@ -28,9 +28,9 @@ class InvoiceController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create($id)
+    public function create($order_id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::findOrFail($order_id);
 
         return view('pages.invoices.create', compact('order'))->with([
             'pageTitleSection' => self::$page_title_section,
@@ -49,9 +49,9 @@ class InvoiceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $invoice_id)
     {
-        $invoice = Invoice::FindOrFail($id);
+        $invoice = Invoice::FindOrFail($invoice_id);
 
         return view('pages.invoices.edit', compact('invoice'))
             ->with([
@@ -63,10 +63,10 @@ class InvoiceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $invoice_id)
     {
-        DB::transaction(function () use($request, $id) {
-            Invoice::where('id', $id)->update([
+        DB::transaction(function () use($request, $invoice_id) {
+            Invoice::where('id', $invoice_id)->update([
                 'name' => $request->input('name')
             ]);
         });
@@ -75,9 +75,9 @@ class InvoiceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $invoice_id)
     {
-        $invoice = Invoice::find($id);
+        $invoice = Invoice::find($invoice_id);
 
         if( $invoice ) {
             $invoice->delete();

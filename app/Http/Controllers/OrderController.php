@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\Advertiser;
 use Carbon\Carbon;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -65,64 +66,76 @@ class OrderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(string $id)
+    public function create(string $advertiser_id)
     {
-        $advertiser = Advertiser::findOrFail($id);
-        $order = Order::findOrFail($id);
+        $advertiser = Advertiser::findOrFail($advertiser_id);
+        $projects = Project::all();
 
-        return view('pages.orders.create', compact('advertiser','order'))
+        return view('pages.orders.create', compact('advertiser', 'projects'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
-                'subpagesData' => $this->getSubpages(),
+                'subpagesData' => $this->getSubpages($advertiser_id),
             ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,  $id)
+    public function store(Request $request,  $advertiser_id)
     {
-        $order = DB::transaction(function () use($request, $id) {
-            $advertiser = Advertiser::findOrFail($id);
+        $transactions = DB::transaction(function () use($request, $advertiser_id) {
+            $project_id = $request->input('project_id');
+
             $order = Order::create([
+                'project_id' => $project_id,
                 'order_date' => now(),
                 'approved_at' => now(),
                 'order_total_price' => 0.0,
             ]);
 
+
+            $project = Project::findOrFail($project_id);
+            $order->project()->associate($project);
+            $order->save();
+
+            $advertiser = Advertiser::findOrFail($advertiser_id);
             $order->advertiser()->associate($advertiser);
             $order->save();
         });
 
-        dd( $order );
-
-        return redirect()->route('orders.edit', $order->id);
+        dd($transactions);
+        // return redirect()->route('orders.edit', $order->id);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $order_id)
     {
-        $order = Order::findOrFail( $id );
+        $order = Order::findOrFail($order_id);
+
+        // $total = $order->orderLines->sum('base_price');
+
+        // $result = $order->order_total_price = (double) $total;
+
 
         return view('pages.orders.edit', compact('order'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'pageTitle' => $order->title,
-                'subpagesData' =>  $this->getSubpages( $id )
+                'subpagesData' =>  $this->getSubpages( $order_id )
             ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $order_id)
     {
         try {
-            DB::transaction(function () use($request, $id) {
+            DB::transaction(function () use($request, $order_id) {
 
-                $order = Order::where('id', $id)->update([
+                $order = Order::where('id', $order_id)->update([
                     'order_date' => $request->input('order_date'),
                     'approved_at' => $request->input('deactivated_at') ? now() : null,
                     'deactivated_at' => $request->input('deactivated_at') ? now() : null,
@@ -153,9 +166,9 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $order_id)
     {
-        $order = Order::find($id);
+        $order = Order::find($order_id);
 
         if( $order ) {
             $order->delete();
@@ -166,36 +179,36 @@ class OrderController extends Controller
         return redirect()->route('orders.index');
     }
 
-    public function print(string $id)
+    public function print(string $order_id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::findOrFail($order_id);
 
         return view('pages.orders.print')->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $order->title,
-            'subpagesData' => $this->getSubpages($id),
+            'subpagesData' => $this->getSubpages($order_id),
         ]);
     }
 
-    public function articles(string $id)
+    public function articles(string $order_id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::findOrFail($order_id);
 
         return view('pages.orders.articles')->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $order->title,
-            'subpagesData' => $this->getSubpages($id),
+            'subpagesData' => $this->getSubpages($order_id),
         ]);
     }
 
-    public function complaints(string $id)
+    public function complaints(string $order_id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::findOrFail($order_id);
 
         return view('pages.orders.complaints')->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $order->title,
-            'subpagesData' => $this->getSubpages($id),
+            'subpagesData' => $this->getSubpages($order_id),
 
         ]);
     }

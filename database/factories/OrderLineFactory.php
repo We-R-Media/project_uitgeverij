@@ -3,10 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\OrderLine;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\OrderLine>
- */
 class OrderLineFactory extends Factory
 {
     /**
@@ -16,10 +14,14 @@ class OrderLineFactory extends Factory
      */
     public function definition(): array
     {
+        $basePrice = $this->faker->numberBetween(0, 500);
+        $discount = $this->faker->numberBetween(0, 100);
+
         return [
-            'base_price' => fake()->numberBetween(0, 500),
-            'discount' => fake()->numberBetween(0, 100),
-            'invoiced_at' => fake()->optional()->dateTimeThisCentury(),
+            'base_price' => $basePrice,
+            'discount' => $discount,
+            'price_with_discount' => $basePrice - (($discount / 100) * $basePrice),
+            'invoiced_at' => $this->faker->optional()->dateTimeThisCentury(),
         ];
     }
 }

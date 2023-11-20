@@ -27,7 +27,7 @@
                 @endforeach
             @else
                 <li class="item">
-                    <p>Geen aanmaningen gevonden</p>
+                    <p>{{__('Geen aanmaningen gevonden')}}</p>
                 </li>
             @endif
         </ul>

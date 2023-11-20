@@ -17,9 +17,11 @@ class Format extends BaseModel
      */
     protected $fillable = [
         'name',
+        'paper_type',
         'size',
         'measurement',
         'ratio',
+        'project_id',
         'price',
         'page_count',
         'description'

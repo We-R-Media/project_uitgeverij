@@ -5,11 +5,14 @@
 @section('content')
 
 <div class="page__wrapper">
+
+
+
     <form  class="formContainer" action="{{route('orders.update', $order->id)}}" method="post">
         @csrf
         @method('post')
 
-        <div class="grid__wrapper">
+    <div class="grid__wrapper">
             <fieldset class="fields base">
                 <h3>{{ __('Bevestigingsadres') }}</h3>
 
@@ -153,13 +156,27 @@
 
                 <div class="field field-alt">
                     <label for="project_id">{{ __('Projectcode') }}</label>
-                    <input id="" type="text" name="project_id" value="{{-- $order->project->id --}}" readonly>
+                    <input id="" type="text" name="project_id" value="{{$order->project->id}}" disabled>
                     @error('project_id')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
                 </div>
+
+                {{-- <div class="field field-alt">
+                    <label for="layout_name">{{ __('Layout') }}</label>
+                    @if($order->project->layout->count() == 0)
+                    {{__('Layout niet beschikbaar...')}}
+                    @else
+                    <input id="" type="text" name="layout_name" value="{{$order->project->layout->layout_name}}" disabled>
+                    @error('layout_name')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                    @endif
+                </div> --}}
 
                 <div class="field field-alt">
                     <label for="invoiced">{{ __('Gefactureerd') }}</label>
@@ -171,13 +188,38 @@
                     @enderror
                 </div>
 
-                {{-- <div class="field field-alt">
+                <div class="field field-alt">
+                    <label for="canceled">{{ __('Geannuleerd') }}</label>
+                    <div class="radio__group">
+                        <input id="" type="radio" name="canceled" value="1">
+                        <label for="canceled">{{__('Ja')}}</label>
+                        <input id="" type="radio" name="canceled" value="0">
+                        <label for="canceled">{{__('Nee')}}</label>
+                    </div>
+                    @error('canceled')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="canceldate">{{ __('Annuleringsdatum') }}</label>
+                    <input id="" type="text" name="canceldate" value="">
+                    @error('canceldate')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
                     <label for="incasso">{{ __('Incasso') }}</label>
                     <div class="radio__group">
-                        <input id="incasso_true" type="radio" name="incasso" value="1" @if($order->incasso) checked @endif>
-                        <label for="incasso_true">Ja</label>
-                        <input id="incasso_false" type="radio" name="incasso" value="0" @if(!$order->incasso) checked @endif>
-                        <label for="incasso_false">Nee</label>
+                        <input id="" type="radio" name="incasso" value="1">
+                        <label>{{__('Ja')}}</label>
+                        <input id="" type="radio" name="incasso" value="0">
+                        <label>{{__('Nee')}}</label>
                     </div>
                     @error('incasso')
                         <span class="form__message" role="alert">
@@ -185,6 +227,7 @@
                         </span>
                     @enderror
                 </div> --}}
+
 
                 <div class="field field-alt">
                     <label for="order_number">{{ __('Ordernummer') }}</label>
@@ -198,7 +241,7 @@
 
                 <div class="field field-alt">
                     <label for="order_total">{{ __('Ordertotaal') }}</label>
-                    <input id="" type="text" name="order_total" value="{{$order->order_total_price}}" readonly>
+                    <input id="" type="text" name="order_total" value="{{ number_format($order->order_total_price, 2)}}">
                     @error('order_total')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -236,13 +279,14 @@
                         <small>{{ $message }}</small>
                     </span>
                 @enderror
+
             </fieldset>
 
         </div>
         <div class="ButtonGroup">
             <div class="buttons">
                 @if ($order->approved_at)
-                    <a href="{{ route('email.approval', $order->id) }}">Verstuur akkoord</a>
+                    <a href="{{ route('email.approval', $order->id) }}" class="button button--action">{{__('Verstuur akkoord')}}</a>
                 @else
                     <a href="{{ route('invoices.create', $order->id) }}" class="button button--action">{{__('Factureer order')}}</a>
                 @endif

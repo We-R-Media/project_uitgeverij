@@ -30,14 +30,14 @@
                         <div class="item__summary">
                             <div class="item__format field">
                                 <label>{{__('Prijs')}}</label>
-                                {{$order->order_total_price}}
+                                {{ number_format($order->order_total_price, 2) }}
                             </div>
                             <div class="item__created field">
                                 <label>{{__('Aangemaakt op')}}</label>
                                 {{$order->order_date}}
                             </div>
                             <div class="item__comments field">
-                                <label>Laatst bijgewerkt op</label>
+                                <label>{{__('Laatst bijgewerkt op')}}</label>
                                 {{$order->updated_at}}
                             </div>
                         </div>
@@ -56,7 +56,7 @@
                 @endforeach
             @else
                 <li class="item">
-                    <p>Geen projecten gevonden</p>
+                    <p>{{__('Geen orders gevonden')}}</p>
                 </li>
             @endif
         </ul>

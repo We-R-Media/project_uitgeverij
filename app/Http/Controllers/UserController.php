@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Http;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class UserController extends Controller
@@ -28,7 +29,7 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
     public function index(string $role = null)
-    {
+    {   
         $users = User::all();
 
         $this->subpages = [
@@ -143,25 +144,23 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        $subpages = $this->getSubpages() ?? false;
-
         return view('pages.users.edit', compact('user'))
         ->with([
             'pageTitleSection' => self::$page_title_plural,
             'pageTitle' => self::$page_title_singular,
-            'subpages' => $subpages,
+            'subpages' =>$this->getSubpages($id),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $user_id)
     {
         try {
 
-            DB::transaction(function () use($request, $id) {
-                User::where('id', $id)->update([
+            DB::transaction(function () use($request, $user_id) {
+                User::where('id', $user_id)->update([
                     'first_name' => $request->input('first_name'),
                     'last_name' => $request->input('last_name'),
                     'initial' => $request->input('initial'),
@@ -186,9 +185,9 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $user_id)
     {
-        $user = User::find($id);
+        $user = User::find($user_id);
 
         if($user) {
             $user->delete();

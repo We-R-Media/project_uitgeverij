@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\FormatRequest;
+use Illuminate\Http\Request;
 use App\Models\Format;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -54,11 +55,12 @@ class FormatController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(FormatRequest $request)
+    public function store(Request $request)
     {
         try {
             DB::transaction(function () use($request) {
                 Format::create([
+                    'paper_type' => $request->input('paper_type'),
                     'size' => $request->input('size'),
                     'measurement' => $request->input('measurement'),
                     'ratio' => $request->input('ratio'),
@@ -79,9 +81,9 @@ class FormatController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $format_id)
     {
-        $format = Format::findOrFail($id);
+        $format = Format::findOrFail($format_id);
 
         return view('pages.formats.edit', compact('format'))
             ->with([
@@ -94,11 +96,11 @@ class FormatController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(FormatRequest $request, string $id)
+    public function update(Request $request, string $format_id)
     {
         try {
-            DB::transaction(function () use($request,$id) {
-                Format::where('id', $id)->update([
+            DB::transaction(function () use($request,$format_id) {
+                Format::where('format_id', $format_id)->update([
                     'size' => $request->input('size'),
                     'measurement' => $request->input('measurement'),
                     'ratio' => $request->input('ratio'),
@@ -119,9 +121,9 @@ class FormatController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $format_id)
     {
-        $format = Format::find($id);
+        $format = Format::find($format_id);
 
         if($format) {
             $format->delete();

@@ -11,6 +11,15 @@
                 <fieldset class="fields base">
 
                     <div class="field field-alt">
+                        <label for="paper_type">{{__('Papier')}}</label>
+                        <select name="paper_type" id="">
+                            <option value="A5">{{__('A5')}}</option>
+                            <option value="A4">{{__('A4')}}</option>
+                            <option value="A3">{{__('A3')}}</option>
+                        </select>
+                    </div>
+
+                    <div class="field field-alt">
                         <label for="size">{{__('Grootte')}}</label>
                         <input type="text" name="size" id="">
                         @error('size')
@@ -55,7 +64,7 @@
 
             <div class="buttonGroup">
                 <div class="buttons">
-                    <button type="submit" class="button button--action">Opslaan</button>
+                    <button type="submit" class="button button--action">{{__('Opslaan')}}</button>
                 </div>
             </div>
 

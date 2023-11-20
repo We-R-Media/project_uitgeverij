@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('order_lines', function (Blueprint $table) {
             $table->id();
              $table->string('title')->nullable();
-            $table->foreignID('order_id');
-            $table->double('base_price');
+            $table->foreignId('order_id')->nullable();
+            $table->double('base_price')->nullable();
+            $table->double('price_with_discount')->nullable();
             $table->integer('discount');
             $table->datetime('invoiced_at')->nullable();
             $table->softDeletes();

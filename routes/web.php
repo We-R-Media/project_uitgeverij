@@ -8,6 +8,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderLineController;
+use App\Http\Controllers\FormatGroupController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\FormatController;
 use App\Http\Controllers\InvoiceController;
@@ -39,12 +40,12 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/', 'index')->name('index');
 
             Route::get('/nieuw', 'create')->name('create');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
-            Route::get('/{id}/planning', 'planning')->name('planning');
-            Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
+            Route::get('/{project_id}/bewerken', 'edit')->name('edit');
+            Route::get('/{project_id}/planning', 'planning')->name('planning');
+            Route::get('/{project_id}/verwijderen', 'destroy')->name('destroy');
 
-            Route::post('/store', 'store')->name('store');
-            Route::post('/{id}/update', 'update')->name('update');
+            Route::post('/opslaan', 'store')->name('store');
+            Route::post('/{project_id}/bijwerken', 'update')->name('update');
     });
 
     Route::name('orders.')
@@ -54,26 +55,28 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/', 'index')->name('index');
             Route::get('/gedeactiveerd', 'deactivated')->name('deactivated');
 
-            Route::get('/{id}/nieuw', 'create')->name('create');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
-            Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
-            Route::get('/{id}/print', 'print')->name('print');
-            Route::get('/{id}/klachten', 'complaints')->name('complaints');
+            Route::get('/{advertiser_id}/nieuw', 'create')->name('create');
+            Route::get('/{order_id}/bewerken', 'edit')->name('edit');
+            Route::get('/{order_id}/verwijderen', 'destroy')->name('destroy');
+            Route::get('/{order_id}/print', 'print')->name('print');
+            Route::get('/{order_id}/klachten', 'complaints')->name('complaints');
 
-            Route::post('/{id}/store', 'store')->name('store');
-            Route::post('/{id}/update', 'update')->name('update');
-            Route::post('/{id}/verzenden', 'approval')->name('approval');
-            Route::post('/{id}/akkoord', 'approved')->name('approved');
+            Route::post('/{order_id}/opslaan', 'store')->name('store');
+            Route::post('/{order_id}/update', 'update')->name('update');
+            Route::post('/{order_id}/verzenden', 'approval')->name('approval');
+            Route::post('/{order_id}/akkoord', 'approved')->name('approved');
 
             Route::delete('/{id}', 'delete')->name('delete');
         });
 
     Route::name('orderlines.')
-        ->prefix('orderregels')
-        ->controller(OrderLineController::class)
-        ->group(function () {
-            Route::get('/{id}', 'index')->name('index');
-        });
+    ->prefix('orders')
+    ->controller(OrderLineController::class)
+    ->group(function () {
+        Route::get('/{order_id}/orderregels', 'index')->name('index');
+        Route::get('/{order_id}/{project_id}/orderregels/nieuw', 'create')->name('create');
+        Route::post('/{order_id}/orderregels/opslaan', 'store')->name('store');
+    });
 
     Route::name('advertisers.')
         ->prefix('relaties')
@@ -83,10 +86,14 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/zwarte-lijst', 'blacklist')->name('blacklist');
 
             Route::get('/nieuw', 'create')->name('create');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
-            Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
-            Route::get('/{id}/contacten', 'contacts')->name('contacts');
-            Route::get('/{id}/orders', 'orders')->name('orders');
+            Route::get('/{advertiser_id}/bewerken', 'edit')->name('edit');
+            Route::get('/{advertiser_id}/verwijderen', 'destroy')->name('destroy');
+
+
+            Route::get('/{advertiser_id}/contacten', 'contacts')->name('contacts');
+            Route::post('{advertiser_id}/contacten/opslaan', 'contacts__store')->name('contacts.store');
+
+            Route::get('/{advertiser_id}/orders', 'orders')->name('orders');
 
             Route::post('/{id}/store', 'store')->name('store');
             Route::post('/{id}/update', 'update')->name('update');
@@ -97,12 +104,12 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(InvoiceController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/{id}/nieuw', 'create')->name('create');
-            Route::get('/{id}/bewerken', 'edit')->name('edit');
-            Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
+            Route::get('/{order_id}/nieuw', 'create')->name('create');
+            Route::get('/{invoice_id}/bewerken', 'edit')->name('edit');
+            Route::get('/{invoice_id}/verwijderen', 'destroy')->name('destroy');
 
             Route::post('/store', 'store')->name('store'); // FIX
-            Route::post('/update', 'update')->name('update'); // FIX
+            Route::post('/{invoice_id}/update', 'update')->name('update'); // FIX
         });
 
 
@@ -133,9 +140,9 @@ Route::group(['middleware' => ['auth']], function() {
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/nieuw', 'create')->name('create');
-                Route::get('/{id}/bewerken', 'edit')->name('edit');
+                Route::get('/{tax_id}/bewerken', 'edit')->name('edit');
 
-                Route::post('/{id}/bijwerken', 'update')->name('update');
+                Route::post('/{tax_id}/bijwerken', 'update')->name('update');
                 Route::post('/opslaan', 'store')->name('store');
             });
 
@@ -160,11 +167,11 @@ Route::group(['middleware' => ['auth']], function() {
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/nieuw', 'create')->name('create');
-                Route::get('/{id}/bewerken', 'edit')->name('edit');
-                Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
+                Route::get('/{user_id}/bewerken', 'edit')->name('edit');
+                Route::get('/{user_id}/verwijderen', 'destroy')->name('destroy');
 
                 Route::post('/store', 'store')->name('store');
-                Route::post('/update', 'update')->name('update');
+                Route::post('/{user_id}/update', 'update')->name('update');
                 Route::post('/upload', 'upload')->name('upload');
             });
 
@@ -174,13 +181,23 @@ Route::group(['middleware' => ['auth']], function() {
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/nieuw', 'create')->name('create');
-                Route::get('/{id}/bewerken', 'edit')->name('edit');
-                Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
+                Route::get('/{format_id}/bewerken', 'edit')->name('edit');
+                Route::get('/{format_id}/verwijderen', 'destroy')->name('destroy');
 
                 Route::post('/store', 'store')->name('store');
-                Route::post('/update', 'update')->name('update');
+                Route::post('/{format_id}/update', 'update')->name('update');
             });
     });
+
+        Route::name('formatgroup.')
+            ->prefix('formaatgroep')
+            ->controller(FormatGroupController::class)
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/nieuw', 'create')->name('create');
+
+                Route::post('/opslaan', 'store')->name('store');
+            });
 
     Route::name('email.')
         ->prefix('emails')

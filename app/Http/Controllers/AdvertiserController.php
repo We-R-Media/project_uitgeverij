@@ -67,7 +67,9 @@ class AdvertiserController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.advertisers.create')->with([
+            'pageTitleSection'=> self::$page_title_section,
+        ]);
     }
 
     /**
@@ -75,35 +77,32 @@ class AdvertiserController extends Controller
      */
     public function store(Request $request)
     {
-        $contactId = $request->input('contact_id');
-
-        DB::transaction(function () use ($request, $contactId) {
+        DB::transaction(function () use ($request) {
             $advertiser = Advertiser::create([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
+                'address' => $request->input('address'),
+                'po_box' => $request->input('po_box'),
                 'po_box' => $request->input('po_box'),
                 'postal_code' => Helpers::formatPostalCode($request->input('postal_code')),
                 'city' => $request->input('city'),
                 'province' => $request->input('province'),
                 'phone_mobile' => $request->input('phone_mobile'),
                 'phone' => $request->input('phone'),
-                'contact_id' => $request->input('contact_id'),
                 'comments' => $request->input('comments'),
             ]);
-            $contact = Contact::find($contactId);
-            $contact->advertisers()->associate($advertiser);
             $advertiser->save();
         });
 
-        return redirect()->back();
+        return redirect()->route('advertisers.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $advertiser_id)
     {
-        $advertiser = Advertiser::findOrFail($id);
+        $advertiser = Advertiser::findOrFail($advertiser_id);
 
         if($advertiser->blacklisted_at) {
             $pageTitle = $advertiser->title . ' (Zwarte lijst)';
@@ -114,16 +113,22 @@ class AdvertiserController extends Controller
         return view('pages.advertisers.edit', compact('advertiser'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
+<<<<<<< HEAD
                 'pageTitle' => $pageTitle,
                 'subpagesData' => $this->getSubpages( $id ),
+=======
+                'pageTitle' => $advertiser->title,
+                'subpagesData' => $this->getSubpages( $advertiser_id ),
+>>>>>>> d5da8646c5d5572fe289e67c994e7ea88a21fb44
             ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $advertiser_id)
     {
+<<<<<<< HEAD
         try {
             DB::transaction(function () use($request, $id) {
                 Advertiser::where('id', $id)->update([
@@ -138,6 +143,21 @@ class AdvertiserController extends Controller
                     'email' => $request->input('email'),
                 ]);
             });
+=======
+        DB::transaction(function () use($request, $advertiser_id) {
+            Advertiser::where('id', $advertiser_id)->update([
+                'name' => $request->input('name'),
+                'po_box' => $request->input('po_box'),
+                'postal_code' => Helpers::formatPostalCode($request->input('postal_code')),
+                'credit_limit' => $request->input('credit_limit'),
+                'city' => $request->input('city'),
+                'province' => $request->input('province'),
+                'phone' => $request->input('phone'),
+                'phone_mobile' => $request->input('phone_mobile'),
+                'email' => $request->input('email'),
+            ]);
+        });
+>>>>>>> d5da8646c5d5572fe289e67c994e7ea88a21fb44
 
             Alert::toast('De relatie is succesvol bijgewerkt', 'success');
 
@@ -152,25 +172,59 @@ class AdvertiserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $advertiser_id)
     {
-        //
+        $advertiser = Advertiser::findOrFail($advertiser_id);
+
+        if($advertiser) {
+            $advertiser->delete();
+
+            Alert::toast('De relatie is verwijderd.', 'info');
+        }
+        return redirect()->route('advertisers.index');
     }
 
-    public function contacts(string $id)
+    public function contacts(string $advertiser_id)
     {
-        $advertiser = Advertiser::findOrFail($id);
+        $advertiser = Advertiser::findOrFail($advertiser_id);
 
-        return view('pages.advertisers.contacts')->with([
+        $aliases = [
+            1 => 'Primair',
+        ];
+
+
+        return view('pages.advertisers.contacts', compact('advertiser','aliases'))->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $advertiser->title,
-            'subpagesData' => $this->getSubpages( $id ),
+            'subpagesData' => $this->getSubpages( $advertiser_id ),
         ]);
     }
 
-    public function orders(string $id)
+    public function contacts__store(Request $request, string $advertiser_id)
     {
-        $advertiser = Advertiser::findOrFail($id);
+        DB::transaction(function () use ($request, $advertiser_id) {
+            $advertiser = Advertiser::findOrFail($advertiser_id);
+
+            $contact = new Contact([
+                'salutation' => $request->input('salutation'),
+                'initial' => $request->input('initial'),
+                'preposition' => $request->input('preposition'),
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'phone' => $request->input('phone'),
+                'email' => $request->input('email'),
+                'comments' => $request->input('comments'),
+                'role' => $request->input('role'),
+            ]);
+
+            $advertiser->contacts()->save($contact);
+        });
+        return redirect()->route('advertisers.contacts', $advertiser_id);
+    }
+
+    public function orders(string $advertiser_id)
+    {
+        $advertiser = Advertiser::findOrFail($advertiser_id);
         // $orders = Advertiser::with('orders')->get();
 
         // dd($advertiser);
@@ -179,7 +233,7 @@ class AdvertiserController extends Controller
         return view('pages.advertisers.orders', compact('advertiser'))->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $advertiser->title,
-            'subpagesData' => $this->getSubpages( $id ),
+            'subpagesData' => $this->getSubpages( $advertiser_id ),
         ]);
     }
 }

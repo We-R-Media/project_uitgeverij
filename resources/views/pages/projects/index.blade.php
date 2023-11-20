@@ -3,6 +3,11 @@
 @section('seo_title', $pageTitleSection)
 @section('content')
     <div class="page__wrapper">
+        <div class="HeaderButtons">
+            <div class="buttons">
+                <a href="{{ route('projects.create') }}" class="button button--action">{{__('Nieuw project')}}</a>
+            </div>
+        </div>
         <div class="items__head">
             <div class="item item__head">
                 <div class="item__content">

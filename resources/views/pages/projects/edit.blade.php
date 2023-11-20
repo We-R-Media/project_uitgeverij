@@ -5,7 +5,7 @@
 @section('content')
 
     <div class="page__wrapper">
-        <form class="formContainer" action="{{route('projects.edit', $project->id)}}" method="post">
+        <form class="formContainer" action="{{route('projects.update', $project->id)}}" method="post">
             @csrf
             @method('post')
 
@@ -14,7 +14,7 @@
                     <h3>{{ __('Algemeen') }}</h3>
                     <div class="field field-alt">
                         <label for="project_code">{{ __('Projectcode') }}</label>
-                        <input id="" type="text" name="project_code" value="{{ $project->project_code }}">
+                        <input id="" type="text" name="project_code" value="{{ $project->id }}" disabled>
                         @error('project_code')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
@@ -122,7 +122,7 @@
                         </div>
                     </div>
                     <div class="form__row-alt">
-                        <label>Binnenwerk</label>
+                        <label>{{__('Binnenwerk')}}</label>
                         <div class="field__row">
                             <div class="form__row">
                                 <div class="field">
@@ -210,18 +210,17 @@
                     </div>
 
                     <div class="field field-alt">
-                        <label for="taxes">{{ __('BTW') }}</label>
+                        <label for="tax">{{ __('BTW') }}</label>
                         <div class="dropdown">
                             <select class="select2" title="taxes" name="taxes" id="taxes">
-                                {{--@if($taxes->isEmpty())--}}
+                                @if($taxes->isEmpty())
                                     <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
-                                {{--
                                 @else
-                                @foreach($taxes as $tax)
-                                    <option value="{{$tax->id}}">{{$tax->country}}</option>
-                                @endforeach
+                                    @foreach($taxes as $tax)
+                                        <option value="{{$tax->id}}">{{$tax->country}}</option>
+                                    @endforeach
                                 @endif
-                                --}}
+
                         </select>
                         </div>
                     </div>
