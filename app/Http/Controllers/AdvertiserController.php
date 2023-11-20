@@ -113,13 +113,8 @@ class AdvertiserController extends Controller
         return view('pages.advertisers.edit', compact('advertiser'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
-<<<<<<< HEAD
-                'pageTitle' => $pageTitle,
-                'subpagesData' => $this->getSubpages( $id ),
-=======
                 'pageTitle' => $advertiser->title,
                 'subpagesData' => $this->getSubpages( $advertiser_id ),
->>>>>>> d5da8646c5d5572fe289e67c994e7ea88a21fb44
             ]);
     }
 
@@ -128,14 +123,13 @@ class AdvertiserController extends Controller
      */
     public function update(Request $request, string $advertiser_id)
     {
-<<<<<<< HEAD
         try {
-            DB::transaction(function () use($request, $id) {
-                Advertiser::where('id', $id)->update([
+            DB::transaction(function () use($request, $advertiser_id) {
+                Advertiser::where('id', $advertiser_id)->update([
                     'name' => $request->input('name'),
                     'po_box' => $request->input('po_box'),
                     'postal_code' => Helpers::formatPostalCode($request->input('postal_code')),
-                    'blacklisted_at' => $request->input('blacklisted') ? now() : null,
+                    'credit_limit' => $request->input('credit_limit'),
                     'city' => $request->input('city'),
                     'province' => $request->input('province'),
                     'phone' => $request->input('phone'),
@@ -143,21 +137,6 @@ class AdvertiserController extends Controller
                     'email' => $request->input('email'),
                 ]);
             });
-=======
-        DB::transaction(function () use($request, $advertiser_id) {
-            Advertiser::where('id', $advertiser_id)->update([
-                'name' => $request->input('name'),
-                'po_box' => $request->input('po_box'),
-                'postal_code' => Helpers::formatPostalCode($request->input('postal_code')),
-                'credit_limit' => $request->input('credit_limit'),
-                'city' => $request->input('city'),
-                'province' => $request->input('province'),
-                'phone' => $request->input('phone'),
-                'phone_mobile' => $request->input('phone_mobile'),
-                'email' => $request->input('email'),
-            ]);
-        });
->>>>>>> d5da8646c5d5572fe289e67c994e7ea88a21fb44
 
             Alert::toast('De relatie is succesvol bijgewerkt', 'success');
 
