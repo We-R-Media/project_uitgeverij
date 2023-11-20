@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
-            $table->string('invoice_number');
+            $table->foreignId('advertiser_id')->default(1);
+            $table->string('invoice_number')->nullable();
             $table->string('title')->nullable();
-            $table->foreignID('advertiser_id')->nullable();
             $table->datetime('invoice_date')->nullable();
             $table->enum('post_method', ['mail','post']);
             $table->datetime('first_reminder')->nullable();

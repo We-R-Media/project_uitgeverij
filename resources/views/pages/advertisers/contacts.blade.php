@@ -90,12 +90,12 @@
                </div>
             </div>
 
-            
+
 
 
             <textarea name="comments" id="" cols="30" rows="10" placeholder="{{__('Vul opmerkingen in...')}}"></textarea>
 
-            
+
             <button type="submit" class="button button--action">{{__('Nieuwe toevoegen')}}</button>
 
          </fieldset>
@@ -104,6 +104,8 @@
    </form>
 
    <ul class="items__view">
+
+        {{dd()}}
       @if($advertiser->contacts->count() > 0)
          @foreach ($advertiser->contacts as $contact )
          <li class="item">

@@ -13,6 +13,8 @@ class LayoutSeeder extends Seeder
      */
     public function run(): void
     {
-        
+        $randomNumberSmall = fake()->numberBetween(2, 5);
+
+        $layout = Layout::factory()->times($randomNumberSmall)->create();
     }
 }

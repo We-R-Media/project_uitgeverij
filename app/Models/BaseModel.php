@@ -21,19 +21,21 @@ class BaseModel extends Model
         parent::boot();
 
         static::creating(function ($model) {
-            if (is_null($model->title) && empty($model->title) ) {
-                $title = '';
+            if (!property_exists($model, 'titleGenerationAttributes') || $model->titleGenerationAttributes !== false) {
+                if ( is_null($model->title) && empty($model->title) ) {
+                    $title = '';
 
-                foreach ($model->titleGenerationAttributes as $field) {
-                    $value = $model->$field;
+                    foreach ($model->titleGenerationAttributes as $field) {
+                        $value = $model->$field;
 
-                    if (!empty($value)) {
-                        $title .= $value . ' ';
+                        if (!empty($value)) {
+                            $title .= $value . ' ';
+                        }
                     }
-                }
 
-                $title = rtrim($title);
-                $model->title = $title;
+                    $title = rtrim($title);
+                    $model->title = $title;
+                }
             }
         });
     }
