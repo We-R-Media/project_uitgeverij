@@ -14,7 +14,7 @@
                     <div>{{__('Laatst bijgewerkt op')}}</div>
                 </div>
                 <div class="item__actions">
-                    <div>{{--__('Actions')--}}</div>
+                    <div></div>
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
                         <div class="item__summary">
                             <div class="item__format field">
                                 <label>{{__('Prijs')}}</label>
-                                {{ number_format($order->order_total_price, 2) }}
+                                @money($order->order_total_price)
                             </div>
                             <div class="item__created field">
                                 <label>{{__('Aangemaakt op')}}</label>

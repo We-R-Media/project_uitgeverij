@@ -4,10 +4,8 @@ namespace App\Models;
 
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Log;
 use Laravel\Scout\Searchable;
@@ -110,8 +108,9 @@ class Order extends BaseModel
 
             if (!$update_current_order) {
                 Log::info('Kan de totale prijs van de bestelling niet bijwerken: '. $current_order->id);
+                Alert::toast('Kan de totale prijs van de bestelling niet bijwerken', 'error');
 
-                throw new \Exception('Kan de totale prijs van de bestelling niet bijwerken');
+                return redirect()->route('orders.edit', $current_order->id);
             }
 
             Log::notice('De orderregels zijn succesvol bijgewerkt van order nummer: ' . $current_order->id );

@@ -63,7 +63,7 @@
 
                     <div class="field field-alt">
                         <label for="price">{{__('Prijs')}}</label>
-                        <input type="text" value="{{ $format->price }}" name="price" id="">
+                        <input type="text" value="@money($format->price)" name="price" id="">
                         @error('price')
                             <span class="form__message">
                                 <small>{{ $message }}</small>

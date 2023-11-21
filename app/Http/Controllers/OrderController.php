@@ -34,7 +34,7 @@ class OrderController extends Controller
 
         $this->subpages = [
             'Actueel' => 'orders.index',
-            'Gedeactiveerd' => 'orders.deactivated',
+            'Geannuleerd' => 'orders.deactivated',
         ];
 
         return view('pages.orders.index', compact('orders'))
@@ -53,7 +53,7 @@ class OrderController extends Controller
 
         $this->subpages = [
             'Actueel' => 'orders.index',
-            'Gedeactiveerd' => 'orders.deactivated',
+            'Geannuleerd' => 'orders.deactivated',
         ];
 
         return view('pages.orders.index', compact('orders'))

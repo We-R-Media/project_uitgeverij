@@ -20,7 +20,7 @@ class OrderLineFactory extends Factory
         return [
             'base_price' => $basePrice,
             'discount' => $discount,
-            'price_with_discount' => $basePrice - (($discount / 100) * $basePrice),
+            'price_with_discount' => ( $basePrice - $discount ),
             'invoiced_at' => $this->faker->optional()->dateTimeThisCentury(),
         ];
     }
