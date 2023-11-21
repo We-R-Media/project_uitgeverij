@@ -85,7 +85,7 @@ class AdvertiserController extends Controller
                 'po_box' => $request->input('po_box'),
                 'postal_code' => Helpers::formatPostalCode($request->input('postal_code')),
                 'city' => $request->input('city'),
-                'credit_limit' => $request->input('credit_limit'),
+                'credit_limit' => $request->input('credit'),
                 'province' => $request->input('province'),
                 'phone_mobile' => $request->input('phone_mobile'),
                 'phone' => $request->input('phone'),

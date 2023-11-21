@@ -73,9 +73,9 @@
                     </div>
 
                     <div class="field field-alt">
-                        <label for="credit_limit">{{ __('Kredietlimiet') }}</label>
-                        <input id="" type="text" name="credit_limit">
-                        @error('credit_limit')
+                        <label for="credit">{{ __('Kredietlimiet') }}</label>
+                        <input id="" type="text" name="credit">
+                        @error('credit')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
                             </span>

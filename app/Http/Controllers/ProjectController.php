@@ -20,6 +20,7 @@ class ProjectController extends Controller
         $this->subpages = [
             'Projectgegevens' => 'projects.edit',
             'Planning' => 'projects.planning',
+            'Formaten' => 'projects.formats',
         ];
     }
 
@@ -210,6 +211,17 @@ class ProjectController extends Controller
         $project = Project::findOrFail($project_id);
 
         return view('pages.projects.planning')->with([
+            'pageTitleSection' => self::$page_title_section,
+            'pageTitle' => $project->title,
+            'subpagesData' => $this->getSubpages( $project_id )
+        ]);
+    }
+
+    public function formats(string $project_id) 
+    {
+        $project = Project::findOrFail($project_id);
+
+        return view('pages.projects.formats')->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $project->title,
             'subpagesData' => $this->getSubpages( $project_id )

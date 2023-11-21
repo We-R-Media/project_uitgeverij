@@ -8,7 +8,7 @@
     <div class="HeaderButtons">
         <div class="buttons">
             <a href="{{ route('orders.create', $advertiser->id) }}" class="button button--action">+ {{ __('Nieuwe order') }}</a>
-    </div>
+        </div>
     </div>
 
     <form class="formContainer" action="{{ route('advertisers.update', $advertiser->id) }}" method="post">
@@ -79,9 +79,9 @@
                 </div>
 
                 <div class="field field-alt">
-                    <label for="credit_limit">{{ __('Kredietlimiet') }}</label>
-                    <input id="" type="text" name="credit_limit" value="{{ $advertiser->credit_limit }}">
-                    @error('credit_limit')
+                    <label for="credit">{{ __('Kredietlimiet') }}</label>
+                    <input id="" type="text" name="credit" value="{{ $advertiser->credit }}">
+                    @error('credit')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>

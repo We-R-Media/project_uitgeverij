@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/nieuw', 'create')->name('create');
             Route::get('/{project_id}/bewerken', 'edit')->name('edit');
             Route::get('/{project_id}/planning', 'planning')->name('planning');
+            Route::get('{project_id}/formaten', 'formats')->name('formats');
             Route::get('/{project_id}/verwijderen', 'destroy')->name('destroy');
 
             Route::post('/opslaan', 'store')->name('store');
