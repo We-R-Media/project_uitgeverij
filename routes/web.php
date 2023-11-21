@@ -96,7 +96,8 @@ Route::group(['middleware' => ['auth']], function() {
 
             Route::get('/{advertiser_id}/orders', 'orders')->name('orders');
 
-            Route::post('/{id}/store', 'store')->name('store');
+            Route::post('/opslaan', 'store')->name('store');
+            // Route::post('/{id}/store', 'store')->name('store');
             Route::post('/{id}/update', 'update')->name('update');
         });
 

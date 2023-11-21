@@ -1,7 +1,7 @@
 @use "../mixins/" as mixin;
 @use "../base/colors" as color;
 
-@forward 'air-datepicker/air-datepicker.css';
+// @forward 'air-datepicker/air-datepicker.css';
 
 .fields {
     @include mixin.flex($flex-direction: column);

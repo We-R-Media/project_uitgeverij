@@ -80,7 +80,7 @@
 
                 <div class="field field-alt">
                     <label for="credit">{{ __('Kredietlimiet') }}</label>
-                    <input id="" type="text" name="credit" value="{{ $advertiser->credit }}">
+                    <input id="" type="text" name="credit" value="{{ number_format($advertiser->credit_limit, 2) }}">
                     @error('credit')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>

@@ -226,7 +226,7 @@
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
-                </div> --}}
+                </div>
 
 
                 <div class="field field-alt">
@@ -248,6 +248,10 @@
                         </span>
                     @enderror
                 </div>
+
+                @if ($order->order_total_price > $order->advertiser->credit_limit)
+                    {{dd(true)}}
+                @endif
 
                 <div class="field field-alt">
                     <label for="order_rule">{{ __('Orderregels') }}</label>
