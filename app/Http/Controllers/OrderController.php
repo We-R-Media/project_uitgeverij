@@ -121,11 +121,6 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($order_id);
 
-        // $total = $order->orderLines->sum('base_price');
-
-        // $result = $order->order_total_price = (double) $total;
-
-
         return view('pages.orders.edit', compact('order'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
@@ -147,14 +142,12 @@ class OrderController extends Controller
                     'approved_at' => $request->input('deactivated_at') ? now() : null,
                     'deactivated_at' => $request->input('deactivated_at') ? now() : null,
                 ]);
-
             });
 
             Alert::toast('De order is succesvol bijgewerkt', 'success');
 
             return redirect()->route('orders.index');
         } catch (\Exception $e){
-            // dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('orders.index');
@@ -216,7 +209,6 @@ class OrderController extends Controller
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $order->title,
             'subpagesData' => $this->getSubpages($order_id),
-
         ]);
     }
 }

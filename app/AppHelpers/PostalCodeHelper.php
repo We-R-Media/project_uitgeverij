@@ -1,8 +1,8 @@
 <?php
-namespace App\Helpers;
 
-class Helpers {
+namespace App\AppHelpers;
 
+class PostalCodeHelper {
     /**
      * Generate a Dutch postal code.
      *

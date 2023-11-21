@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Helpers\Helpers;
+use App\AppHelpers\Helpers;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**

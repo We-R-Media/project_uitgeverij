@@ -89,13 +89,12 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{advertiser_id}/bewerken', 'edit')->name('edit');
             Route::get('/{advertiser_id}/verwijderen', 'destroy')->name('destroy');
 
-
             Route::get('/{advertiser_id}/contacten', 'contacts')->name('contacts');
             Route::post('{advertiser_id}/contacten/opslaan', 'contacts__store')->name('contacts.store');
 
             Route::get('/{advertiser_id}/orders', 'orders')->name('orders');
 
-            Route::post('/{id}/store', 'store')->name('store');
+            Route::post('/store', 'store')->name('store');
             Route::post('/{id}/update', 'update')->name('update');
         });
 

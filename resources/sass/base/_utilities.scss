@@ -39,3 +39,7 @@
 .heading--margin-big {
     margin: 0 0 4rem;
 }
+
+.heading--splitted {
+    @include mixin.flex($justify-content: space-between);
+}

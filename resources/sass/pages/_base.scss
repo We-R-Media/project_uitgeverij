@@ -161,7 +161,13 @@
 }
 
 .mainContent {
-    padding: 50px;
+    padding: 20px;
+
+
+    @include mixin.breakpoint("min", "tablet") {
+     padding: 50px;
+
+    }
 }
 
 .page-details {
@@ -234,6 +240,7 @@
             text-align:center;
             position:relative;
             min-height:40px;
+
             .actions__button {
                 position:absolute;
                 margin:0px auto;
@@ -241,16 +248,18 @@
                 right:0px;
                 display:flex;
                 flex-direction: row-reverse;
+
                 .icon {
                     width:40px;
                     height:40px;
-                    background:color.$accent;
+                    // background:color.$accent;
                     display:flex;
                     align-items:center;
                     justify-content: center;
                     border-radius:100%;
                     position: relative;
-
+                    transition:all 0.4s ease;
+                    cursor: pointer;
                 }
                 .actions__group {
                     position:relative;
@@ -266,15 +275,19 @@
                     opacity:0;
                     transition:all 0.4s ease;
                     transform:translatex(10%);
+
                     a {
                         font-size:11px;
                         padding:5px;
+
                         &:hover {
                             color:color.$primary;
                         }
                     }
                 }
-                &:hover {
+                &:hover,
+                &:focus,
+                &:active {
                     .icon {
                         background:color.$primary;
                     }

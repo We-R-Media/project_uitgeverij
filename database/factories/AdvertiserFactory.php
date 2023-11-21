@@ -2,10 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Helpers\Helpers;
+use App\AppHelpers\Helpers;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Helpers\PostalCodeHelper;
-
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Advertiser>
