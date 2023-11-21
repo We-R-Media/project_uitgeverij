@@ -27,19 +27,20 @@
                <a href="{{ route('orders.edit', $order->id) }}">
                   {{$order->id}}
                </a>
-            </div> 
+            </div>
             <div class="item__summary">
                <div class="item__format field">
-                  {{$order->order_total_price}}   
-               </div> 
+                  <label>{{__('Prijs')}}</label>
+                  {{$order->order_total_price}}
+               </div>
                <div class="item__created field">
                   {{$order->order_date}}
               </div>
               <div class="item__comments field">
                {{$order->updated_at}}
            </div>
-            </div>     
-         </li>             
+            </div>
+         </li>
       @endif
       @endforeach
    </ul>

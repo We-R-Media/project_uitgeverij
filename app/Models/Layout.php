@@ -29,6 +29,7 @@ class Layout extends BaseModel
     public static function boot()
     {
         parent::boot();
+
         static::creating(function ($post) {
             $post->title = $post->layout_name;
         });

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
+            $table->string('title');
+            $table->dateTime('order_date');
             $table->foreignID('project_id')->nullable();
             $table->foreignID('advertiser_id')->nullable();
-            $table->dateTime('order_date');
             $table->double('order_total_price');
             $table->dateTime('approved_at')->nullable()->default(null);
             $table->dateTime('deactivated_at')->nullable()->default(null);

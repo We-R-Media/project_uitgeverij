@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use App\Helpers\Helpers;
 use App\Models\Advertiser;
 use App\Models\Contact;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
-
 
 class AdvertiserController extends Controller
 {
@@ -28,7 +28,7 @@ class AdvertiserController extends Controller
      */
     public function index()
     {
-        $advertisers = Advertiser::latest()->paginate(12);
+        $advertisers = Advertiser::whereNull('blacklisted_at')->paginate(12);
 
         $this->subpages = [
             'Actueel' => 'advertisers.index',
@@ -42,7 +42,7 @@ class AdvertiserController extends Controller
             ]);
     }
 
-        /**
+    /**
      * Display a blacklist of the resource.
      */
     public function blacklist()
@@ -104,6 +104,12 @@ class AdvertiserController extends Controller
     {
         $advertiser = Advertiser::findOrFail($advertiser_id);
 
+        if($advertiser->blacklisted_at) {
+            $pageTitle = $advertiser->title . ' (Zwarte lijst)';
+        } else {
+            $pageTitle = $advertiser->title;
+        }
+
         return view('pages.advertisers.edit', compact('advertiser'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
@@ -117,21 +123,29 @@ class AdvertiserController extends Controller
      */
     public function update(Request $request, string $advertiser_id)
     {
-        DB::transaction(function () use($request, $advertiser_id) {
-            Advertiser::where('id', $advertiser_id)->update([
-                'name' => $request->input('name'),
-                'po_box' => $request->input('po_box'),
-                'postal_code' => Helpers::formatPostalCode($request->input('postal_code')),
-                'credit_limit' => $request->input('credit_limit'),
-                'city' => $request->input('city'),
-                'province' => $request->input('province'),
-                'phone' => $request->input('phone'),
-                'phone_mobile' => $request->input('phone_mobile'),
-                'email' => $request->input('email'),
-            ]);
-        });
+        try{
+            DB::transaction(function () use($request, $advertiser_id) {
+                Advertiser::where('id', $advertiser_id)->update([
+                    'name' => $request->input('name'),
+                    'po_box' => $request->input('po_box'),
+                    'postal_code' => Helpers::formatPostalCode($request->input('postal_code')),
+                    'credit_limit' => $request->input('credit_limit'),
+                    'city' => $request->input('city'),
+                    'province' => $request->input('province'),
+                    'phone' => $request->input('phone'),
+                    'phone_mobile' => $request->input('phone_mobile'),
+                    'email' => $request->input('email'),
+                ]);
+            });
 
-        return redirect()->route('advertisers.index');
+            Alert::toast('De relatie is succesvol bijgewerkt', 'success');
+
+            return redirect()->route('advertisers.index');
+        } catch (\Exception $e){
+            Alert::toast('Er is iets fout gegaan', 'error');
+
+            return redirect()->route('advertisers.index');
+        }
     }
 
     /**
@@ -140,7 +154,7 @@ class AdvertiserController extends Controller
     public function destroy(string $advertiser_id)
     {
         $advertiser = Advertiser::findOrFail($advertiser_id);
-        
+
         if($advertiser) {
             $advertiser->delete();
 
@@ -167,24 +181,33 @@ class AdvertiserController extends Controller
 
     public function contacts__store(Request $request, string $advertiser_id)
     {
-        DB::transaction(function () use ($request, $advertiser_id) {
-            $advertiser = Advertiser::findOrFail($advertiser_id);
-    
-            $contact = new Contact([
-                'salutation' => $request->input('salutation'),
-                'initial' => $request->input('initial'),
-                'preposition' => $request->input('preposition'),
-                'first_name' => $request->input('first_name'),
-                'last_name' => $request->input('last_name'),
-                'phone' => $request->input('phone'),
-                'email' => $request->input('email'),
-                'comments' => $request->input('comments'),
-                'role' => $request->input('role'),
-            ]);
-    
-            $advertiser->contacts()->save($contact);
-        });
-        return redirect()->route('advertisers.contacts', $advertiser_id);
+        try {
+            DB::transaction(function () use ($request, $advertiser_id) {
+                $advertiser = Advertiser::findOrFail($advertiser_id);
+
+                $contact = new Contact([
+                    'salutation' => $request->input('salutation'),
+                    'initial' => $request->input('initial'),
+                    'preposition' => $request->input('preposition'),
+                    'first_name' => $request->input('first_name'),
+                    'last_name' => $request->input('last_name'),
+                    'phone' => $request->input('phone'),
+                    'email' => $request->input('email'),
+                    'comments' => $request->input('comments'),
+                    'role' => $request->input('role'),
+                ]);
+
+                $advertiser->contacts()->save($contact);
+            });
+
+            Alert::toast('De relatie is succesvol bijgewerkt', 'success');
+
+            return redirect()->route('advertisers.contacts', $advertiser_id);
+        } catch (\Exception $e){
+            Alert::toast('Er is iets fout gegaan', 'error');
+
+            return redirect()->route('advertisers.index');
+        }
     }
 
     public function orders(string $advertiser_id)

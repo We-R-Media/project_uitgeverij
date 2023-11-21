@@ -57,29 +57,29 @@ class OrderLineController extends Controller
     {
         DB::transaction(function () use ($request, $order_id) {
             $order = Order::findOrFail($order_id);
-    
+
             $base_price = $request->input('base_price');
             $discount = $request->input('discount');
-    
+
             $discount_amount = ($discount / 100) * $base_price;
-    
+
             $orderline = OrderLine::create([
                 'base_price' => $base_price,
                 'discount' => $discount,
                 'project' => $request->input('project'),
                 'price_with_discount' => $base_price - $discount_amount,
             ]);
-    
+
             $orderline->order()->associate($order);
             $orderline->save();
-    
+
             $orderTotalPrice = $base_price - $discount_amount;
-    
+
             $order->where('id', $order_id)->update([
                 'order_total_price' => $orderTotalPrice,
             ]);
         });
-    
+
         return redirect()->route('orderlines.index', $order_id);
     }
 

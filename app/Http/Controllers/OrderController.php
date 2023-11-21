@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Advertiser;
+use Carbon\Carbon;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -82,28 +83,35 @@ class OrderController extends Controller
      */
     public function store(Request $request,  $advertiser_id)
     {
-        DB::transaction(function () use($request, $advertiser_id) {
-            $project_id = $request->input('project_id');
+        try {
+            $transactions = DB::transaction(function () use($request, $advertiser_id) {
+                $project_id = $request->input('project_id');
 
-            $order = Order::create([
-                'project_id' => $project_id,
-                'order_date' => now(),
-                'approved_at' => now(),
-                'order_total_price' => 0.0,
-            ]);
-
-
-            $project = Project::findOrFail($project_id);
-            $order->project()->associate($project);
-            $order->save();
-            
-            $advertiser = Advertiser::findOrFail($advertiser_id);
-            $order->advertiser()->associate($advertiser);
-            $order->save();
-        });
+                $order = Order::create([
+                    'project_id' => $project_id,
+                    'order_date' => now(),
+                    'approved_at' => now(),
+                    'order_total_price' => 0.0,
+                ]);
 
 
-        return redirect()->route('orders.index');
+                $project = Project::findOrFail($project_id);
+                $order->project()->associate($project);
+                $order->save();
+
+                $advertiser = Advertiser::findOrFail($advertiser_id);
+                $order->advertiser()->associate($advertiser);
+                $order->save();
+            });
+
+            Alert::toast('De relatie is succesvol bijgewerkt', 'success');
+
+            return redirect()->route('advertisers.index');
+        } catch (\Exception $e){
+            Alert::toast('Er is iets fout gegaan', 'error');
+
+            return redirect()->route('advertisers.index');
+        }
     }
 
     /**
@@ -131,19 +139,31 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $order_id)
     {
-        DB::transaction(function () use($request, $order_id) {
-            Order::where('id', $order_id)->update([
-                
-            ]);
-        });
+        try {
+            DB::transaction(function () use($request, $order_id) {
 
-        return redirect()->route('orders.index');
+                $order = Order::where('id', $order_id)->update([
+                    'order_date' => $request->input('order_date'),
+                    'approved_at' => $request->input('deactivated_at') ? now() : null,
+                    'deactivated_at' => $request->input('deactivated_at') ? now() : null,
+                ]);
+
+            });
+
+            Alert::toast('De order is succesvol bijgewerkt', 'success');
+
+            return redirect()->route('orders.index');
+        } catch (\Exception $e){
+            // dd($e);
+            Alert::toast('Er is iets fout gegaan', 'error');
+
+            return redirect()->route('orders.index');
+        }
     }
 
     public function approved(Request $request, $id) {
-
-        DB::transaction(function () use ($request, $order_id) {
-            Order::where('id', $order_id)->update([
+        DB::transaction(function () use ($request, $id) {
+            Order::where('id', $id)->update([
                 'approved_at' => $request->dateTimeNow(),
             ]);
         });

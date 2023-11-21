@@ -28,15 +28,21 @@
                                 <h3>{{ $invoice->invoice_number }}</h3>
                             </a>
                         </div>
+
+                        {{ dd($invoice) }}
+
                         <div class="item__summary">
-                            <div class="item__format field">
-                                <label>{{__('Adverteerder')}}</label>
-                                {{$invoice->advertiser->name}}
-                            </div>
-                            <div class="item__pages field">
-                                <label>{{__('Adverteerder klantnummer')}}</label>
-                                {{$invoice->advertiser->id}}
-                            </div>
+                            @if ( !is_null($invoice->advertiser) && $invoice->advertiser->count() > 0)
+                                <div class="item__format field">
+                                    <label>{{__('Adverteerder')}}</label>
+                                    {{$invoice->advertiser->name}}
+                                </div>
+                                <div class="item__pages field">
+                                    <label>{{__('Adverteerder klantnummer')}}</label>
+                                    {{$invoice->advertiser->id}}
+                                </div>
+                            @endif
+
                             <div class="field">
                                 <label>{{__('Factuurdatum')}}</label>
                                 {{$invoice->invoice_date}}

@@ -197,7 +197,7 @@
                         <div class="field field-alt">
                         <label for="layout">{{ __('Layout') }}</label>
                         <div class="dropdown">
-                            <select title="layout" name="layout" id="layout">
+                            <select class="select2" title="layout" name="layout" id="layout">
                                 @if(empty($layouts))
                                     <option value="" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
                                 @else
@@ -212,16 +212,15 @@
                     <div class="field field-alt">
                         <label for="tax">{{ __('BTW') }}</label>
                         <div class="dropdown">
-                            <select title="tax" name="tax" id="tax">
+                            <select class="select2" title="taxes" name="taxes" id="taxes">
                                 @if($taxes->isEmpty())
                                     <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
-                                
                                 @else
-                                @foreach($taxes as $tax)
-                                    <option value="{{$tax->id}}">{{$tax->country}}</option>
-                                @endforeach
+                                    @foreach($taxes as $tax)
+                                        <option value="{{$tax->id}}">{{$tax->country}}</option>
+                                    @endforeach
                                 @endif
-                               
+
                         </select>
                         </div>
                     </div>

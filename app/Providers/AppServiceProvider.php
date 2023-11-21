@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use Illuminate\Database\Eloquent\Model;
+use Faker\Factory as FakerFactory;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -13,7 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->singleton(FakerGenerator::class, function () {
+            return FakerFactory::create('nl_NL');
+        });
     }
 
     /**

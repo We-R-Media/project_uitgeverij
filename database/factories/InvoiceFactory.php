@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Advertiser;
 use App\Models\Invoice;
+use App\Services\InvoiceService;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -10,7 +12,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class InvoiceFactory extends Factory
 {
-    protected $model = Invoice::class;
+    // protected $model = Invoice::class;
 
     /**
      * Define the model's default state.
@@ -19,12 +21,12 @@ class InvoiceFactory extends Factory
      */
     public function definition(): array
     {
-        $invoiceNumber = (new Invoice())->generateInvoiceNumber();
+        $invoiceNumber = InvoiceService::generateInvoiceNumber();
 
         return [
             'title' => 'Factuur ' . $invoiceNumber,
             'invoice_number' => $invoiceNumber,
-            'invoice_date' => fake()->dateTimeThisCentury(),
+            'invoice_date' => fake()->optional(.9)->dateTimeThisCentury(),
             'post_method' => fake()->randomElement(['mail', 'post']),
             'first_reminder' => fake()->optional()->dateTimeThisCentury(),
             'second_reminder' => fake()->optional()->dateTimeThisCentury(),

@@ -205,6 +205,25 @@
                     @enderror
                 </div>
             </fieldset>
+
+            <fieldset class="fields base">
+                <h3>{{ __('Opties') }}</h3>
+
+                <div class="field field-alt">
+                    <label>{{ __('Zwarte lijst') }}</label>
+                    <div class="radio__group">
+                        <input id="blacklisted_true" type="radio" name="blacklisted" value="1" @if($advertiser->blacklisted_at) checked @endif>
+                        <label for="blacklisted_true">Ja</label>
+                        <input id="blacklisted_false" type="radio" name="blacklisted" value="0" @if(!$advertiser->blacklisted_at) checked @endif>
+                        <label for="blacklisted_false">Nee</label>
+                    </div>
+                    @error('blacklisted_at')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+            </fieldset>
         </div>
         <div class="ButtonGroup">
             <div class="buttons">

@@ -39,7 +39,8 @@
         },
         "files": [
             "app/Helpers/PostalCodeHelper.php",
-            "app/Helpers/RouteHelper.php"
+            "app/Helpers/RouteHelper.php",
+            "app/Helpers/DateHelper.php"
         ]
     },
     "autoload-dev": {

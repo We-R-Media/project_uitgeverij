@@ -193,11 +193,11 @@
             <fieldset class="fields financial'">
                 <h3>{{ __('Financieel') }}</h3>
 
-                
+
                 <div class="field field-alt">
                     <label for="layout">{{ __('Layout') }}</label>
                     <div class="dropdown">
-                        <select title="layout" name="layout" id="layout">
+                        <select class="select2" title="layout" name="layout" id="layout">
                             @if($layouts->isEmpty())
                                 <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
                             @else
@@ -209,11 +209,11 @@
                     </div>
                 </div>
 
-                                
+
                 <div class="field field-alt">
                     <label for="layout">{{ __('BTW') }}</label>
                     <div class="dropdown">
-                        <select title="tax" name="tax" id="tax">
+                        <select class="select2" title="taxes" name="taxes" id="taxes">
                             @if($taxes->isEmpty())
                                 <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
                             @else
@@ -224,7 +224,7 @@
                         </select>
                     </div>
                 </div>
-            
+
 
                 <div class="field field-alt">
                     <label for="ledger">{{ __('Grootboek') }}</label>

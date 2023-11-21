@@ -77,6 +77,4 @@ class Advertiser extends BaseModel
     {
         return $this->hasMany(Order::class);
     }
-
-
 }

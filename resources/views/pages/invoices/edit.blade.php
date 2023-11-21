@@ -23,7 +23,7 @@
 
                 <div class="field field-alt">
                     <label for="name">{{__('Bedrijfsnaam')}}</label>
-                <input type="text" name="name" value="{{$invoice->advertiser->name}}" disabled id="">
+                    <input type="text" name="name" value="{{$invoice->advertiser->name}}" disabled id="">
                     @error('name')
                         <span class="form__message">
                             <small>{{ $message }}</small>
@@ -51,7 +51,7 @@
                     @enderror
                 </div>
 
-                
+
                 <div class="field field-alt">
                     <label for="postal_code">{{__('Postadres')}}</label>
                     <input type="text" name="postal_code" value="{{$invoice->advertiser->postal_code}}" disabled id="">
@@ -62,7 +62,7 @@
                     @enderror
                 </div>
 
-                                
+
                 <div class="field field-alt">
                     <label for="city">{{__('Postadres')}}</label>
                     <input type="text" name="city" value="{{$invoice->advertiser->city}}" disabled id="">
@@ -151,7 +151,7 @@
                     @enderror
                 </div>
 
-                
+
                 <div class="field field-alt">
                     <label for="third_reminder">{{__('Aanmaning')}}</label>
                     <input type="text" name="third_reminder" value="{{$invoice->third_reminder}}" id="">
@@ -208,7 +208,7 @@
                 </div>
 
             </fieldset>
-            
+
             <fieldset class="fields notes full-width">
                 <h3>{{__('Aantekeningen')}}</h3>
                 <label for="comments">{{__('Aantekeningen')}}</label>

@@ -18,7 +18,7 @@
 
                 <div class="field field-alt">
                     <label for="advertiser">{{ __('Klantnummer') }}</label>
-                    <input id="" type="text" name="advertiser" value="{{$order->advertiser->id}}">
+                    <input id="" type="text" name="advertiser" value="{{$order->advertiser->id}}" readonly>
                     @error('advertiser')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -28,7 +28,7 @@
 
                 <div class="field field-alt">
                     <label for="company">{{ __('Bedrijfsnaam') }}</label>
-                    <input id="" type="text" name="company" value="">
+                    <input id="" type="text" name="company" value="{{$order->advertiser->title}}" readonly>
                     @error('company')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -38,7 +38,7 @@
 
                 <div class="field field-alt">
                     <label for="contact">{{ __('Contactpersoon') }}</label>
-                    <input id="" type="text" name="contact" value="{{ $order->advertiser->name }}">
+                    <input id="" type="text" name="contact" value="{{-- $order->advertiser->contacts --}}" readonly>
                     @error('contact')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -48,7 +48,7 @@
 
                 <div class="field field-alt">
                     <label for="po_box">{{ __('Postadres') }}</label>
-                    <input id="" type="text" name="po_box" value="{{ $order->advertiser->po_box }}">
+                    <input id="" type="text" name="po_box" value="{{ $order->advertiser->po_box }}" readonly>
                     @error('po_box')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -58,7 +58,7 @@
 
                 <div class="field field-alt">
                     <label for="postal_code">{{ __('Postcode') }}</label>
-                    <input id="" type="text" name="postal_code" value="{{ $order->advertiser->postal_code }}">
+                    <input id="" type="text" name="postal_code" value="{{ $order->advertiser->postal_code }}" readonly>
                     @error('postal_code')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -68,7 +68,7 @@
 
                 <div class="field field-alt">
                     <label for="city">{{ __('Woonplaats') }}</label>
-                    <input id="" type="text" name="city" value="{{ $order->advertiser->city }}">
+                    <input id="" type="text" name="city" value="{{ $order->advertiser->city }}" readonly>
                     @error('city')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -78,7 +78,7 @@
 
                 <div class="field field-alt">
                     <label for="province">{{ __('Provincie') }}</label>
-                    <input id="" type="text" name="province" value="{{ $order->advertiser->province }}">
+                    <input id="" type="text" name="province" value="{{ $order->advertiser->province }}" readonly>
                     @error('province')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -88,7 +88,7 @@
 
                 <div class="field field-alt">
                     <label for="country">{{ __('Land') }}</label>
-                    <input id="" type="text" name="country" value="">
+                    <input id="" type="text" name="country" value="{{ $order->advertiser->province }}" readonly>
                     @error('country')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -98,7 +98,7 @@
 
                 <div class="field field-alt">
                     <label for="phone">{{ __('Telefoonnummer') }}</label>
-                    <input id="" type="text" name="phone" value="{{$order->advertiser->phone}}">
+                    <input id="" type="text" name="phone" value="{{$order->advertiser->phone}}" readonly>
                     @error('phone')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -108,7 +108,7 @@
 
                 <div class="field field-alt">
                     <label for="email">{{ __('E-mailadres') }}</label>
-                    <input id="" type="email" name="email" value="{{$order->advertiser->email}}">
+                    <input id="" type="email" name="email" value="{{$order->advertiser->email}}" readonly>
                     @error('email')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -119,6 +119,40 @@
 
             <fieldset class="fields options">
                 <h3>{{ __('Opties') }}</h3>
+
+                <div class="field field-alt">
+                    <label for="approved_at">{{ __('Goedgekeurd') }}</label>
+                    <div class="radio__group">
+                        <input id="approved_at_true" type="radio" name="approved_at" value="1" @if($order->approved_at) checked @endif>
+                        <label for="approved_at_true">Ja</label>
+                        <input id="approved_at_false" type="radio" name="approved_at" value="0" @if(!$order->approved_at) checked @endif>
+                        <label for="approved_at_false">Nee</label>
+                    </div>
+                    @error('approved_at')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+                <div class="field field-alt">
+                    <label for="order_date">{{ __('Order datum') }}</label>
+                    <input class="field__date" id="order_date" type="datetime-local" name="order_date" value="{{ old('order_date', $order->order_date) }}">
+                    @error('order_date')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="deactivated_at">{{ __('Annuleren op') }}</label>
+                    <input class="field__date" id="deactivated_at" type="datetime-local" name="deactivated_at" value="{{ old('order_date', $order->deactivated_at) }}">
+                    @error('deactivated_at')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
 
                 <div class="field field-alt">
                     <label for="project_id">{{ __('Projectcode') }}</label>
@@ -146,7 +180,7 @@
 
                 <div class="field field-alt">
                     <label for="invoiced">{{ __('Gefactureerd') }}</label>
-                    <input id="" type="text" name="invoiced" value="">
+                    <input id="" type="text" name="invoiced" value="" readonly>
                     @error('invoiced')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -192,12 +226,12 @@
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
-                </div>
+                </div> --}}
 
 
                 <div class="field field-alt">
                     <label for="order_number">{{ __('Ordernummer') }}</label>
-                    <input id="" type="text" name="order_number" value="{{ $order->id }}">
+                    <input id="" type="text" name="order_number" value="{{ $order->id }}" readonly>
                     @error('po_box')
                         <span class="order_number" role="alert">
                             <small>{{ $message }}</small>
@@ -217,7 +251,7 @@
 
                 <div class="field field-alt">
                     <label for="order_rule">{{ __('Orderregels') }}</label>
-                    <input id="" type="text" name="order_rule" value="">
+                    <input id="" type="text" name="order_rule" value="" readonly>
                     @error('order_rule')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -227,7 +261,7 @@
 
                 <div class="field field-alt">
                     <label for="invoiced">{{ __('Gefactureerd') }}</label>
-                    <input id="" type="text" name="invoiced" value="">
+                    <input id="" type="text" name="invoiced" value="" readonly>
                     @error('invoiced')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
