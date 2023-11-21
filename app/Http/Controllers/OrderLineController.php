@@ -63,13 +63,12 @@ class OrderLineController extends Controller
 
             $base_price = $request->input('base_price');
             $discount = $request->input('discount');
-            $discounted_price = ( $base_price - $discount );
 
             $orderline = OrderLine::create([
                 'base_price' => $base_price,
                 'discount' => $discount,
                 'project' => $request->input('project'),
-                'price_with_discount' => $discounted_price,
+                'price_with_discount' => ($discount != 0) ? ($base_price - $discount) : $base_price,
             ]);
 
             $orderline->order()->associate($order);
