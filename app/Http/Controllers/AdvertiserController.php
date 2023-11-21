@@ -134,7 +134,7 @@ class AdvertiserController extends Controller
                     'phone' => $request->input('phone'),
                     'phone_mobile' => $request->input('phone_mobile'),
                     'email' => $request->input('email'),
-                    'blacklisted_at' => $request->input('blacklisted_at') ? now() : null,
+                    'blacklisted_at' => $request->input('blacklisted_at') == 1 ? now() : null,
                 ]);
             });
 
