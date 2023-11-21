@@ -69,8 +69,6 @@
                         </select>
                     </div>
 
-
-
                     <div class="field field-alt">
                         <label for="last_name">{{__('Achternaam')}}</label>
                         <input value="{{ $user->last_name }}" type="text" name="last_name" id="">
