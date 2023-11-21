@@ -124,7 +124,7 @@ class AdvertiserController extends Controller
     {
         try{
             DB::transaction(function () use($request, $advertiser_id) {
-                Advertiser::where('id', $advertiser_id)->update([
+                $advertiser = Advertiser::where('id', $advertiser_id)->update([
                     'name' => $request->input('name'),
                     'po_box' => $request->input('po_box'),
                     'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
@@ -134,7 +134,7 @@ class AdvertiserController extends Controller
                     'phone' => $request->input('phone'),
                     'phone_mobile' => $request->input('phone_mobile'),
                     'email' => $request->input('email'),
-                    'blacklisted_at' => $request->input('blacklisted_at') == 1 ? now() : null,
+                    'blacklisted_at' => $request->input('blacklisted') == 1 ? now() : null,
                 ]);
             });
 
