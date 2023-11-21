@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\AppHelpers\Helpers;
+use App\AppHelpers\PostalCodeHelper;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +17,7 @@ class AdvertiserFactory extends Factory
      */
     public function definition(): array
     {
-        $formattedPostalCode = Helpers::generatePostalCode();
+        $formattedPostalCode = PostalCodeHelper::generatePostalCode();
 
         return [
             'name' => fake()->name(),
