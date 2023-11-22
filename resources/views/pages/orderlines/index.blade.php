@@ -40,7 +40,7 @@
                                 {{ number_format($orderLine->base_price, 2)}}
                             </div>
                             <div class="item__format field">
-                                {{$orderLine->discount}}%
+                                {{ number_format($orderLine->discount, 2)}}
                             </div>
                             <div class="item__format field">
                                 {{ number_format($orderLine->price_with_discount, 2) }}
