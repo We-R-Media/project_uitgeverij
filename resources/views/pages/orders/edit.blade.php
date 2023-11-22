@@ -249,9 +249,7 @@
                     @enderror
                 </div>
 
-                @if ($order->order_total_price > $order->advertiser->credit_limit)
-                    {{dd(true)}}
-                @endif
+                {{-- @if ($order->order_total_price > $order->advertiser->credit_limit)@endif --}}
 
                 <div class="field field-alt">
                     <label for="order_rule">{{ __('Orderregels') }}</label>

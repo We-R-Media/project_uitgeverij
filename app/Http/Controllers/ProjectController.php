@@ -138,10 +138,16 @@ class ProjectController extends Controller
 
             DB::transaction(function () use($request, $project_id) {
 
-                $layout_id = $request->input('layout');
-                $tax_id = $request->input('tax');
+                $project = Project::findOrFail($project_id);
 
-                Project::where('id', $project_id)->update([
+
+                $layout_id = $request->input('layout');
+                $layout = Layout::findOrFail($layout_id);
+
+                $tax_id = $request->input('taxes');
+                $tax = Tax::findOrFail($tax_id);
+
+                $project->update([
                     'name' => $request->input('name'),
                     'layout_id' => $layout_id,
                     'tax_id' => $tax_id,
@@ -167,6 +173,11 @@ class ProjectController extends Controller
                     'revenue_goals' => $request->input('revenue_goals'),
                     'comments' => $request->input('comments'),
                 ]);
+                $project->layout()->associate($layout);
+                $project->save();
+
+                $project->tax()->associate($tax);
+                $project->save();
             });
 
             Alert::toast('Het project is successvol bijgewerkt!', 'success');

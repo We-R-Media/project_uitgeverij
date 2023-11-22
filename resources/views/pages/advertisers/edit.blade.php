@@ -213,9 +213,9 @@
                     <label>{{ __('Zwarte lijst') }}</label>
                     <div class="radio__group">
                         <input id="blacklisted_true" type="radio" name="blacklisted" value="1" @if($advertiser->blacklisted_at) checked @endif>
-                        <label for="blacklisted_true">Ja</label>
+                        <label for="blacklisted_true">{{__('Ja')}}</label>
                         <input id="blacklisted_false" type="radio" name="blacklisted" value="0" @if(!$advertiser->blacklisted_at) checked @endif>
-                        <label for="blacklisted_false">Nee</label>
+                        <label for="blacklisted_false">{{__('Nee')}}</label>
                     </div>
                     @error('blacklisted_at')
                         <span class="form__message" role="alert">

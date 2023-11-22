@@ -110,7 +110,7 @@ class OrderController extends Controller
                 $order->save();
             });
 
-            Alert::toast('De relatie is succesvol bijgewerkt', 'success');
+            Alert::toast('De order is successvol aangemaakt', 'success');
 
             return redirect()->route('advertisers.index');
         } catch (\Exception $e){

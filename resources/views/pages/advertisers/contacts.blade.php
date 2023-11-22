@@ -104,10 +104,6 @@
    </form>
 
    <ul class="items__view">
-<<<<<<< HEAD
-
-=======
->>>>>>> 41948894f0552e16782674c61c376d4cfe8b3b34
       @if($advertiser->contacts->count() > 0)
          @foreach ($advertiser->contacts as $contact )
          <li class="item">
