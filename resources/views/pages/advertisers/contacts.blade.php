@@ -105,7 +105,6 @@
 
    <ul class="items__view">
 
-        {{dd()}}
       @if($advertiser->contacts->count() > 0)
          @foreach ($advertiser->contacts as $contact )
          <li class="item">

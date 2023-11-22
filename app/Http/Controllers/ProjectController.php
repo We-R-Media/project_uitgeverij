@@ -20,7 +20,8 @@ class ProjectController extends Controller
         $this->subpages = [
             'Projectgegevens' => 'projects.edit',
             'Planning' => 'projects.planning',
-            'Formaten' => 'projects.formats',
+            // 'Formaten' => 'formats.index',
+            'Formaten' => 'formats.index',
         ];
     }
 
@@ -58,12 +59,15 @@ class ProjectController extends Controller
         try {
             DB::transaction(function () use ($request) {
 
-
                 $layout_id = $request->input('layout');
-                $tax_id = $request->input('tax');
-    
+                $layout = Layout::findOrFail($layout_id);
+
+
+                $tax_id = $request->input('taxes');
+                $tax = Tax::findOrFail($tax_id);
+
                 $project = Project::create([
-                    'id' => $request->input('project_code'),
+                    'name' => $request->input('name'),
                     'layout_id' => $layout_id,
                     'tax_id' => $tax_id,
                     'designer' => $request->input('designer'),
@@ -88,27 +92,21 @@ class ProjectController extends Controller
                     'revenue_goals' => $request->input('revenue_goals'),
                     'comments' => $request->input('comments'),
                 ]);            
-                $layout = Layout::findOrFail($layout_id);
-                $layout->project()->associate($project);
-                $layout->save();
-    
-                $tax = Tax::findOrFail($tax_id);
-                $tax->project()->associate($project);
-                $tax->save();
-            });
+                $project->layout()->associate($layout);
+                $project->save();
 
+                $project->tax()->associate($tax);
+                $project->save();
+            });
+            
             Alert::toast('Het project is succesvol aangemaakt', 'success');
 
             return redirect()->route('projects.index');
 
         } catch (\Exception $e) {
             Alert::toast('Er is iets fout gegaan', 'error');
-
             return redirect()->route('projects.index');
         }
-
-
-        return redirect()->route('projects.index');
     }
 
     /**
@@ -135,16 +133,16 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $project_id)
     {
-        try {
+        // try {
 
 
             DB::transaction(function () use($request, $project_id) {
 
                 $layout_id = $request->input('layout');
                 $tax_id = $request->input('tax');
-    
+
                 Project::where('id', $project_id)->update([
-                    'id' => $request->input('project_code'),
+                    'name' => $request->input('name'),
                     'layout_id' => $layout_id,
                     'tax_id' => $tax_id,
                     'designer' => $request->input('designer'),
@@ -169,24 +167,15 @@ class ProjectController extends Controller
                     'revenue_goals' => $request->input('revenue_goals'),
                     'comments' => $request->input('comments'),
                 ]);
-    
-                $layout = Layout::findOrFail($layout_id);
-                $layout->project()->associate($project);
-                $layout->save();
-    
-                $tax = Tax::findOrFail($tax_id);
-                $tax->project()->associate($project);
-                $tax->save();
             });
 
             Alert::toast('Het project is successvol bijgewerkt!', 'success');
 
             return redirect()->route('projects.index');
-        } catch (\Exception $e) {
-            Alert::toast('Er is iets fout gegaan', 'error');
-
-            return redirect()->route('projects.index');
-        }
+        // } catch (\Exception $e) {
+        //     Alert::toast('Er is iets fout gegaan', 'error');
+        //     return redirect()->route('projects.index');
+        // }
     }
 
      /**

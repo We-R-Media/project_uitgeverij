@@ -3,7 +3,6 @@
 @section('seo_title',  $pageTitleSection)
 
 @section('content')
-
     <div class="page__wrapper">
         <form class="formContainer" action="{{route('projects.update', $project->id)}}" method="post">
             @csrf
@@ -13,9 +12,9 @@
                 <fieldset class="fields base">
                     <h3>{{ __('Algemeen') }}</h3>
                     <div class="field field-alt">
-                        <label for="project_code">{{ __('Projectcode') }}</label>
-                        <input id="" type="text" name="project_code" value="{{ $project->id }}" disabled>
-                        @error('project_code')
+                        <label for="name">{{ __('Projectcode') }}</label>
+                        <input id="" type="text" name="name" value="{{ $project->name }}">
+                        @error('name')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
                             </span>
@@ -153,7 +152,7 @@
 
                     <div class="field field-alt">
                         <label for="designer">{{ __('Vormgever') }}</label>
-                        <input id="" type="text" name="designer" value="{{--$project->designer--}}">
+                        <input id="" type="text" name="designer" value="{{$project->designer}}">
                         @error('designer')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
@@ -163,7 +162,7 @@
 
                     <div class="field field-alt">
                         <label for="printer">{{ __('Drukker') }}</label>
-                        <input id="" type="text" name="printer" value="{{--$project->printer--}}">
+                        <input id="" type="text" name="printer" value="{{$project->printer}}">
                         @error('printer')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
@@ -173,7 +172,7 @@
 
                     <div class="field field-alt">
                         <label for="client">{{ __('Opdrachtgever') }}</label>
-                        <input id="" type="text" name="client" value="{{--$project->client--}}">
+                        <input id="" type="text" name="client" value="{{$project->client}}">
                         @error('client')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
@@ -183,7 +182,7 @@
 
                     <div class="field field-alt">
                         <label for="distribution">{{ __('Verspreider') }}</label>
-                        <input id="" type="text" name="distribution" value="{{--$project->distribution--}}">
+                        <input id="" type="text" name="distribution" value="{{$project->distribution}}">
                         @error('distribution')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>

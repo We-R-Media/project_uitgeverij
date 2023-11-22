@@ -17,7 +17,6 @@ class LayoutController extends Controller
 
 
         $this->subpages = [
-            'Formaten' => 'formats.index',
             'Layouts' => 'layouts.index',
             'BTW' => 'tax.index',
             'Aanmaningen' => 'reminders.index',

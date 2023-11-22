@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Layout extends BaseModel
@@ -19,6 +21,7 @@ class Layout extends BaseModel
         'layout_name',
         'city_name',
         'logo',
+        'project_id'
     ];
 
     /**
@@ -59,8 +62,18 @@ class Layout extends BaseModel
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function project(): BelongsTo
+    // public function project(): BelongsTo
+    // {
+    //     return $this->belongsTo(Project::class);
+    // }
+
+    /**
+     * Get the project associated with the Layout
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function project(): HasOne
     {
-        return $this->belongsTo(Project::class);
+        return $this->hasOne(Project::class);
     }
 }

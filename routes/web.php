@@ -8,7 +8,6 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaxController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderLineController;
-use App\Http\Controllers\FormatGroupController;
 use App\Http\Controllers\LayoutController;
 use App\Http\Controllers\FormatController;
 use App\Http\Controllers\InvoiceController;
@@ -17,6 +16,7 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProjectFormatController;
 use Illuminate\Support\Facades\Redirect;
 
 /*
@@ -42,7 +42,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/nieuw', 'create')->name('create');
             Route::get('/{project_id}/bewerken', 'edit')->name('edit');
             Route::get('/{project_id}/planning', 'planning')->name('planning');
-            Route::get('{project_id}/formaten', 'formats')->name('formats');
+            // Route::get('{project_id}/formaten', 'formats')->name('formats');
             Route::get('/{project_id}/verwijderen', 'destroy')->name('destroy');
 
             Route::post('/opslaan', 'store')->name('store');
@@ -178,29 +178,20 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::post('/upload', 'upload')->name('upload');
             });
 
-        Route::name('formats.')
+            Route::name('formats.')
             ->prefix('formaten')
-            ->controller(FormatController::class)
+            ->controller(ProjectFormatController::class)
             ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/nieuw', 'create')->name('create');
+                Route::get('/{project_id}', 'index')->name('index');
+                Route::get('/{project_id}/nieuw', 'create')->name('create');
                 Route::get('/{format_id}/bewerken', 'edit')->name('edit');
-                Route::get('/{format_id}/verwijderen', 'destroy')->name('destroy');
+                Route::get('/{format_id}/{project_id}/verwijderen', 'destroy')->name('destroy');
 
-                Route::post('/store', 'store')->name('store');
-                Route::post('/{format_id}/update', 'update')->name('update');
+                Route::post('/{project_id}/opslaan', 'store')->name('store');
+                Route::post('/{format_id}/{project_id}/bijwerken', 'update')->name('update');
             });
+
     });
-
-        Route::name('formatgroup.')
-            ->prefix('formaatgroep')
-            ->controller(FormatGroupController::class)
-            ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/nieuw', 'create')->name('create');
-
-                Route::post('/opslaan', 'store')->name('store');
-            });
 
     Route::name('email.')
         ->prefix('emails')

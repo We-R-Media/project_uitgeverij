@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tax extends Model
@@ -16,6 +18,7 @@ class Tax extends Model
         'zero',
         'low',
         'high',
+        'project_id',
     ];
 
     /**
@@ -37,10 +40,12 @@ class Tax extends Model
     ];
 
     /**
-     * Get the project that owns the tax.
+     * Get the project associated with the Tax
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function project(): BelongsTo
+    public function project(): HasOne
     {
-        return $this->belongsTo(Project::class);
+        return $this->hasOne(Project::class);
     }
 }

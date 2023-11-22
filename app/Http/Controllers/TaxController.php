@@ -14,7 +14,6 @@ class TaxController extends Controller
 
     public function __construct() {
         $this->subpages = [
-            'Formaten' => 'formats.index',
             'Layouts' => 'layouts.index',
             'BTW' => 'tax.index',
             'Aanmaningen' => 'reminders.index',
@@ -36,7 +35,7 @@ class TaxController extends Controller
         return view('pages.tax.index', compact('taxes'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
-                'subpages' => $subpages,
+                'subpagesData' => $this->getSubpages(),
             ]);
     }
 

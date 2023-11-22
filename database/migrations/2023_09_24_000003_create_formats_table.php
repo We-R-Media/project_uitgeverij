@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('formats', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
-            $table->string('paper_type');
+            $table->string('format_title');
             $table->foreignID('project_id')->nullable();
             $table->string('size');
             $table->string('measurement');

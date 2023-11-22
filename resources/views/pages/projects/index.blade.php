@@ -25,7 +25,7 @@
                     <li class="item">
                         <div class="item__content">
                             <a href="{{ route('projects.edit', $project->id) }}" class="">
-                                <h3>{{ $project->id }}</h3>
+                                <h3>{{ $project->name }}</h3>
                             </a>
                         </div>
                         <div class="item__summary">
