@@ -24,7 +24,7 @@
                     <li class="item">
                         <div class="item__content">
                             <a href="{{ route('orders.edit', $order->id) }}" class="">
-                                <h3>{{ $order->advertiser->name }}</h3>
+                                <h3>{{$order->advertiser->name}}</h3>
                             </a>
                         </div>
                         <div class="item__summary">

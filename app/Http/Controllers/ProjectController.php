@@ -98,7 +98,7 @@ class ProjectController extends Controller
                 $project->tax()->associate($tax);
                 $project->save();
             });
-            
+
             Alert::toast('Het project is succesvol aangemaakt', 'success');
 
             return redirect()->route('projects.index');
@@ -133,7 +133,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $project_id)
     {
-        // try {
+        try {
 
 
             DB::transaction(function () use($request, $project_id) {
@@ -172,10 +172,10 @@ class ProjectController extends Controller
             Alert::toast('Het project is successvol bijgewerkt!', 'success');
 
             return redirect()->route('projects.index');
-        // } catch (\Exception $e) {
-        //     Alert::toast('Er is iets fout gegaan', 'error');
-        //     return redirect()->route('projects.index');
-        // }
+        } catch (\Exception $e) {
+            Alert::toast('Er is iets fout gegaan', 'error');
+            return redirect()->route('projects.index');
+        }
     }
 
      /**

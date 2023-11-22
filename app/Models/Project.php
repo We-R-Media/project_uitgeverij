@@ -79,7 +79,7 @@ class Project extends BaseModel
     ];
 
     /**
-     * Get the orders associated with the project.
+     * Get all of the orders for the Project
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

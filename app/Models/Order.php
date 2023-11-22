@@ -46,7 +46,7 @@ class Order extends BaseModel
     ];
 
     /**
-     * Get the project that owns the order.
+     * Get the project that owns the Order
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
