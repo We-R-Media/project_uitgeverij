@@ -241,7 +241,7 @@
 
                 <div class="field field-alt">
                     <label for="order_total">{{ __('Ordertotaal') }}</label>
-                    <input id="" type="text" name="order_total" value="{{ number_format($order->order_total_price, 2)}}">
+                    <input id="" type="text" name="order_total" value="{{ $order->order_total_price }}">
                     @error('order_total')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>

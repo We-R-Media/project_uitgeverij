@@ -29,10 +29,11 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
     public function index(string $role = null)
-    {   
+    {
         $users = User::all();
 
         $this->subpages = [
+            'Alle gebruikers' => 'users.index',
             'Admin' => [
                 'name' => 'users.role',
                 'parameters' => ['admin'],
@@ -63,6 +64,7 @@ class UserController extends Controller
         $users = User::where('role', $role)->get();
 
         $this->subpages = [
+            'Alle gebruikers' => 'users.index',
             'Admin' => [
                 'name' => 'users.role',
                 'parameters' => ['admin'],
@@ -145,11 +147,11 @@ class UserController extends Controller
         $user = User::findOrFail($id);
 
         return view('pages.users.edit', compact('user'))
-        ->with([
-            'pageTitleSection' => self::$page_title_plural,
-            'pageTitle' => self::$page_title_singular,
-            'subpages' =>$this->getSubpages($id),
-        ]);
+            ->with([
+                'pageTitleSection' => self::$page_title_plural,
+                'pageTitle' => self::$page_title_singular,
+                'subpages' =>$this->getSubpages($id),
+            ]);
     }
 
     /**
@@ -158,7 +160,6 @@ class UserController extends Controller
     public function update(Request $request, string $user_id)
     {
         try {
-
             DB::transaction(function () use($request, $user_id) {
                 User::where('id', $user_id)->update([
                     'first_name' => $request->input('first_name'),

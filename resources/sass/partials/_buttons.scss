@@ -26,8 +26,9 @@
 }
 
 .button--action {
-    background: color.$gradiant;
+    background: color.$primary;
     color: color.$white;
+
     &:hover {
         background:transparent;
         color:color.$primary;

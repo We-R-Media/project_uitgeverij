@@ -88,11 +88,11 @@ class TaxController extends Controller
         $subpages = $this->getSubpages() ?? false;
 
         return view('pages.tax.edit', compact('tax'))
-        ->with([
-            'pageTitleSection' => self::$page_title_section,
-            'pageTitle' => $tax->title,
-            'subpages' => $subpages
-        ]);
+            ->with([
+                'pageTitleSection' => self::$page_title_section,
+                'pageTitle' => $tax->title,
+                'subpages' => $subpages
+            ]);
     }
 
     /**
@@ -101,7 +101,7 @@ class TaxController extends Controller
     public function update(TaxRequest $request, string $tax_id)
     {
         DB::transaction(function () use($request, $tax_id) {
-            Tax::where('id', $id)->update([
+            Tax::where('id', $tax_id)->update([
                 'country' => $request->input('country'),
                 'zero' => $request->input('zero'),
                 'low' => $request->input('low'),

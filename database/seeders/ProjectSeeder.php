@@ -27,14 +27,15 @@ class ProjectSeeder extends Seeder
     public function run()
     {
         $randomNumberSmall = fake()->numberBetween(2, 5);
+        $randomAdvertiser = Advertiser::all();
 
          $projects = Project::factory()
              ->has(Order::factory()
-                 ->has(OrderLine::factory()->count(2))
-                //  ->afterCreating(function (Order $order) use ($advertisers) {
-                //      $advertiser = $advertisers->random();
-                //      $order->advertiser()->associate($advertiser)->save();
-                //  })
+                ->has(OrderLine::factory()->count(2))
+                ->afterCreating(function (Order $order) {
+                    $advertiser = Advertiser::inRandomOrder()->first();
+                    $order->advertiser()->associate($advertiser)->save();
+                })
              )
              ->count($randomNumberSmall)
              ->create();

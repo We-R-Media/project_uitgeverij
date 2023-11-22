@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Helpers;
+namespace App\AppHelpers;
 
 use Illuminate\Support\Facades\Route;
 

@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\Helpers;
+use App\AppHelpers\PostalCodeHelper;
 use App\Models\Advertiser;
 use App\Models\Contact;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -82,8 +81,8 @@ class AdvertiserController extends Controller
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
                 'address' => $request->input('address'),
-                'po_box' => $request->input('po_box'),
-                'postal_code' => Helpers::formatPostalCode($request->input('postal_code')),
+               'po_box' => $request->input('po_box'),
+                'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
                 'city' => $request->input('city'),
                 'credit_limit' => $request->input('credit'),
                 'province' => $request->input('province'),
@@ -125,16 +124,17 @@ class AdvertiserController extends Controller
     {
         try{
             DB::transaction(function () use($request, $advertiser_id) {
-                Advertiser::where('id', $advertiser_id)->update([
+                $advertiser = Advertiser::where('id', $advertiser_id)->update([
                     'name' => $request->input('name'),
                     'po_box' => $request->input('po_box'),
-                    'postal_code' => Helpers::formatPostalCode($request->input('postal_code')),
-                    'credit_limit' => $request->input('credit'),
+                    'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
+                    'credit_limit' => $request->input('credit_limit'),
                     'city' => $request->input('city'),
                     'province' => $request->input('province'),
                     'phone' => $request->input('phone'),
                     'phone_mobile' => $request->input('phone_mobile'),
                     'email' => $request->input('email'),
+                    'blacklisted_at' => $request->input('blacklisted') == 1 ? now() : null,
                 ]);
             });
 
@@ -170,7 +170,6 @@ class AdvertiserController extends Controller
         $aliases = [
             1 => 'Primair',
         ];
-
 
         return view('pages.advertisers.contacts', compact('advertiser','aliases'))->with([
             'pageTitleSection' => self::$page_title_section,
@@ -213,10 +212,6 @@ class AdvertiserController extends Controller
     public function orders(string $advertiser_id)
     {
         $advertiser = Advertiser::findOrFail($advertiser_id);
-        // $orders = Advertiser::with('orders')->get();
-
-        // dd($advertiser);
-
 
         return view('pages.advertisers.orders', compact('advertiser'))->with([
             'pageTitleSection' => self::$page_title_section,

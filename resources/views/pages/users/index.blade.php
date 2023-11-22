@@ -8,7 +8,23 @@
                 <a href="{{ route('users.create') }}" class="button button--action">{{__('Nieuwe gebruiker')}}</a>
             </div>
         </div>
+
+        <div class="items__head">
+            <div class="item item__head">
+                <div class="item__content">
+                    <div>{{__('Naam')}}</div>
+                </div>
+                <div class="item__summary">
+                    <div>{{__('E-mailadres')}}</div>
+                </div>
+                <div class="item__actions">
+                    <div>{{--__('Actions')--}}</div>
+                </div>
+            </div>
+        </div>
+
         <ul class="items__view">
+
             @if ( $users->count() > 0 )
                 @foreach ($users as $user)
                     <li class="item">
@@ -21,14 +37,6 @@
                             <div class="item__format field">
                                 <label>{{__('E-mailadres')}}</label>
                                 {{$user->email}}
-                            </div>
-                            {{-- <div class="item__format field">
-                                <label>{{__('Rol')}}</label>
-                                {{$aliases[$user->role]}}
-                            </div> --}}
-                            <div class="item__pages field">
-                                <label>{{__('Aangemaakt op')}}</label>
-                                {{$user->created_at}}
                             </div>
                         </div>
                         <div class="item__actions">

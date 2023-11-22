@@ -73,11 +73,7 @@ class OrderLineController extends Controller
             $orderline->order()->associate($order);
             $orderline->save();
 
-            $orderTotalPrice = $base_price - $discount_amount;
-
-            $order->where('id', $order_id)->update([
-                'order_total_price' => $orderTotalPrice,
-            ]);
+            $order->updateOrderTotalPrice();
         });
 
         return redirect()->route('orderlines.index', $order_id);

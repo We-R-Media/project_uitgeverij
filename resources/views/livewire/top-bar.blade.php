@@ -54,15 +54,15 @@
     <div class="sub__pages">
         @foreach ($subpages as $pageName => $route)
             @if (isset($route['parameters']))
-                <a href="{{ route($route['name'], $route['parameters']) }}" {{App\Helpers\RouteHelper::isActiveSubpage($route['name'], $route['parameters'], $id)}}>
+                <a href="{{ route($route['name'], $route['parameters']) }}" {{App\AppHelpers\RouteHelper::isActiveSubpage($route['name'], $route['parameters'], $id)}}>
                     {{ $pageName }}
                 </a>
             @elseif (!is_null($id))
-                <a href="{{ route($route, $id) }}" {{App\Helpers\RouteHelper::isActiveSubpage($route, null, $id)}}>
+                <a href="{{ route($route, $id) }}" {{App\AppHelpers\RouteHelper::isActiveSubpage($route, null, $id)}}>
                     {{ $pageName }}
                 </a>
             @else
-                <a href="{{ route($route) }}" {{App\Helpers\RouteHelper::isActiveSubpage($route)}}>
+                <a href="{{ route($route) }}" {{App\AppHelpers\RouteHelper::isActiveSubpage($route)}}>
                     {{ $pageName }}
                 </a>
             @endif

@@ -28,9 +28,6 @@
                                 <h3>{{ $invoice->invoice_number }}</h3>
                             </a>
                         </div>
-
-                        {{ dd($invoice) }}
-
                         <div class="item__summary">
                             @if ( !is_null($invoice->advertiser) && $invoice->advertiser->count() > 0)
                                 <div class="item__format field">

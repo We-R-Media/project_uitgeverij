@@ -25,34 +25,31 @@
                 </div>
             </div>
         </div>
-        </div>
-            <ul class="items__view">
-                @if ($order->orderLines->count() > 0)
-                    @foreach ($order->orderLines as $orderLine)
-                        <li class="item">
-                            <div class="item__content">
-                                {{ $orderLine->id }}
+        <ul class="items__view">
+            @if ($order->orderLines->count() > 0)
+                @foreach ($order->orderLines as $orderLine)
+                    <li class="item">
+                        <div class="item__content">
+                            {{ $orderLine->id }}
+                        </div>
+                        <div class="item__summary">
+                            <div class="item__format field">
+                                {{ $orderLine->order->project->edition_name }}
                             </div>
-                            <div class="item__summary">
-                                <div class="item__format field">
-                                    {{ $orderLine->order->project->edition_name }}
-                                </div>
-                                <div class="item__format field">
-                                    {{ number_format($orderLine->base_price, 2)}}
-                                </div>
-                                <div class="item__format field">
-                                    {{$orderLine->discount}}%
-                                </div>
-                                <div class="item__format field">
-                                    {{ number_format($orderLine->price_with_discount, 2) }}
-                                </div>
+                            <div class="item__format field">
+                                {{ number_format($orderLine->base_price, 2)}}
                             </div>
-                        </li>
-                    @endforeach                    
-                @endif
-            </ul>
-
-        </div>
+                            <div class="item__format field">
+                                {{$orderLine->discount}}%
+                            </div>
+                            <div class="item__format field">
+                                {{ number_format($orderLine->price_with_discount, 2) }}
+                            </div>
+                        </div>
+                    </li>
+                @endforeach
+            @endif
+        </ul>
     </div>
 @endsection
 

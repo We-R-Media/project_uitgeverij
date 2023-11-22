@@ -1,10 +1,10 @@
 <?php
-namespace App\Helpers;
+
+namespace App\AppHelpers;
 
 use DateTime;
 
-class Helpers {
-
+class DateHelper {
     public function formatReadableDate($date) {
         setlocale(LC_TIME, 'nl_NL');
 

@@ -23,9 +23,11 @@
                 @foreach ($orders as $order)
                     <li class="item">
                         <div class="item__content">
-                            <a href="{{ route('orders.edit', $order->id) }}" class="">
-                                <h3>{{$order->advertiser->name}}</h3>
-                            </a>
+                            @if ( $order->advertiser )
+                                <a href="{{ route('orders.edit', $order->id) }}" class="">
+                                    <h3>{{ $order->advertiser->name }}</h3>
+                                </a>
+                            @endif
                         </div>
                         <div class="item__summary">
                             <div class="item__format field">

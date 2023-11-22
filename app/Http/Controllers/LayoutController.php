@@ -14,8 +14,6 @@ class LayoutController extends Controller
 
     public function __construct()
     {
-
-
         $this->subpages = [
             'Layouts' => 'layouts.index',
             'BTW' => 'tax.index',
@@ -31,10 +29,11 @@ class LayoutController extends Controller
     {
         $layouts = Layout::latest()->paginate(12);
 
-        return view('pages.layouts.index', compact('layouts'))->with([
-            'pageTitleSection' => self::$page_title_section,
-            'subpagesData' => $this->getSubpages(),
-        ]);
+        return view('pages.layouts.index', compact('layouts'))
+            ->with([
+                'pageTitleSection' => self::$page_title_section,
+                'subpagesData' => $this->getSubpages(),
+            ]);
     }
 
     /**
@@ -46,7 +45,6 @@ class LayoutController extends Controller
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'subpagesData' => $this->getSubpages(),
-
             ]);
     }
 

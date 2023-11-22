@@ -12,6 +12,7 @@
         "http-interop/http-factory-guzzle": "^1.2",
         "laravel/fortify": "^1.18",
         "laravel/framework": "^10.10",
+        "laravel/pail": "^1.0",
         "laravel/sanctum": "^3.2",
         "laravel/scout": "^10.5",
         "laravel/tinker": "^2.8",
@@ -38,9 +39,9 @@
             "Dompdf\\": "vendor/dompdf/dompdf/src/"
         },
         "files": [
-            "app/Helpers/PostalCodeHelper.php",
-            "app/Helpers/RouteHelper.php",
-            "app/Helpers/DateHelper.php"
+            "app/AppHelpers/PostalCodeHelper.php",
+            "app/AppHelpers/RouteHelper.php",
+            "app/AppHelpers/DateHelper.php"
         ]
     },
     "autoload-dev": {
