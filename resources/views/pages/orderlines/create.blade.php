@@ -13,26 +13,30 @@
                     <h3>{{__('Orderregel')}}</h3>
                     <div class="field field-alt">
                         <label for="project">{{__('Editie')}}</label>
-                        <select name="project" id="project">
-                            <option value="{{$project->id}}">{{$project->edition_name}}</option>
-                        </select>
+                        <div class="dropdown">
+                            <select class="select2" name="project" id="project">
+                                <option value="{{ $project->id }}">{{ $project->edition_name }}</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="field field-alt">
-                        <label for="base_price">{{__('Basisbedrag')}}</label>
+                        <label for="format">{{__('Formaat')}}</label>
+                        <div class="dropdown">
+                            <select class="select2" name="format" id="format">
+                                @foreach ($order->project->formats as $format)
+                                    <option value="{{ $format->paper_type }}">{{ $format->size }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="field field-alt">
+                        <label for="base_price">{{ __('Basisbedrag') }}</label>
                         <input type="text" name="base_price" id="base_price">
                         @error('base_price')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
                             </span>
                         @enderror
-                    </div>
-                    <div class="field field-alt">
-                        <label for="format">{{__('Formaat')}}</label>
-                        <select name="format" id="format">
-                            @foreach ($order->project->formats as $format)
-                                <option value="{{$format->paper_type}}">{{$format->size}}</option>
-                            @endforeach
-                        </select>
                     </div>
                     <div class="field field-alt">
                         <label for="discount">{{__('Korting')}}</label>

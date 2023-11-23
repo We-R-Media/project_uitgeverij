@@ -7,6 +7,14 @@
         <div class="page__info">
             <span class="info__box">
                 <span class="box__title">
+                  Startkrediet
+                </span>
+                <span class="box__text">
+                    {{ $order->getInitialCredit() }}
+                </span>
+            </span>
+            <span class="info__box">
+                <span class="box__title">
                   Aantal regels
                 </span>
                 <span class="box__text">
@@ -19,6 +27,14 @@
                 </span>
                 <span class="box__text">
                     @money($order->order_total_price)
+                </span>
+            </span>
+            <span class="info__box">
+                <span class="box__title">
+                  Resterend krediet
+                </span>
+                <span class="box__text">
+                    {{ $order->calculateTotalCredit() }}
                 </span>
             </span>
         </div>
@@ -59,7 +75,7 @@
                                 @money( $orderline->base_price )
                             </div>
                             <div class="item__format field">
-                                {{ $orderline->discount !== 0 ? "€{$orderline->discount}" : '-' }}
+                                {{ $orderline->discount !== 0 && !is_null($orderline->discount) ? "€{$orderline->discount}" : '-' }}
                             </div>
                             <div class="item__format field">
                                 @money( $orderline->price_with_discount )
