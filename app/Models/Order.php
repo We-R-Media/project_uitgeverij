@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Akaunting\Money\Money;
-use Akaunting\Money\View\Components\Money as ComponentsMoney;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -161,12 +160,12 @@ class Order extends BaseModel
 
             if ($orderTotals > $advertiserCreditLimit) {
                 error_log("Order total exceeds advertiser's credit limit. Order Total: $orderTotals, Credit Limit: $advertiserCreditLimit");
-                throw new \Exception("Order total exceeds advertiser's credit limit.");
+                throw new Log("Order total exceeds advertiser's credit limit.");
             }
 
             if ($advertiserCreditLimit === 0) {
                 error_log("Advertiser's credit limit is zero, division by zero.");
-                throw new \Exception("Advertiser's credit limit is zero, division by zero.");
+                throw new Log("Advertiser's credit limit is zero, division by zero.");
             }
 
             $remainingCredit = ($advertiserCreditLimit - $orderTotals);
@@ -174,7 +173,7 @@ class Order extends BaseModel
             return Money::EUR($remainingCredit, true);
         } catch (\Exception $e) {
             error_log("Failed to calculate total credit: " . $e->getMessage());
-            throw new \Exception("Failed to calculate total credit: " . $e->getMessage());
+            throw new Log("Failed to calculate total credit: " . $e->getMessage());
         }
     }
 }
