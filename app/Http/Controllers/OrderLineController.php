@@ -123,7 +123,6 @@ class OrderLineController extends Controller
         try {
             $orderline = OrderLine::onlyTrashed()->findOrFail($regel_id);
 
-
             $orderline->restore();
             $orderline->order->updateOrderTotalPrice();
 

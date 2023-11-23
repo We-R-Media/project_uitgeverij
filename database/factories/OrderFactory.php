@@ -19,7 +19,7 @@ class OrderFactory extends Factory
         return [
             'order_date' => fake()->dateTimeThisCentury(),
             'order_total_price' => fake()->randomFloat(2, 10, 500),
-            'approved_at' => fake()->dateTimeThisCentury(),
+            'validation_token' => fake()->uuid(),
             'comment_confirmation' => fake()->optional()->paragraph(),
             'comment_facturation' => fake()->optional()->paragraph(),
             'comment_reference' => fake()->optional()->paragraph(),

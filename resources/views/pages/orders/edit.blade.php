@@ -135,6 +135,12 @@
                             </span>
                         @enderror
                     </div>
+
+                    <div class="field field-alt">
+                        <label for="order_date">{{ __('Datum goedkeuring') }}</label>
+                        <input class="field__date" id="order_date" type="datetime-local" name="order_date" value="{{ old('approved_at', $order->approved_at) }}" disabled>
+                    </div>
+
                     <div class="field field-alt">
                         <label for="order_date">{{ __('Order datum') }}</label>
                         <input class="field__date" id="order_date" type="datetime-local" name="order_date" value="{{ old('order_date', $order->order_date) }}">
@@ -254,7 +260,7 @@
         </div>
         <div class="ButtonGroup">
             <div class="buttons">
-                @if ($order->approved_at)
+                @if (!$order->approved_at)
                     <a href="{{ route('email.approval', $order->id) }}" class="button button--action">{{__('Verstuur akkoord')}}</a>
                 @else
                     <a href="{{ route('invoices.create', $order->id) }}" class="button button--action">{{__('Factureer order')}}</a>
