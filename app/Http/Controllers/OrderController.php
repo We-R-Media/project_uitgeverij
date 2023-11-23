@@ -54,7 +54,7 @@ class OrderController extends Controller
 
         $this->subpages = [
             'Actueel' => 'orders.index',
-            'Gedeactiveerd' => 'orders.deactivated',
+            'Geannuleerd' => 'orders.deactivated',
         ];
 
         return view('pages.orders.index', compact('orders'))
@@ -157,7 +157,7 @@ class OrderController extends Controller
                 $order = Order::where('id', $order_id)->update([
                     'order_date' => $request->input('order_date'),
                     'approved_at' => $request->input('deactivated_at') ? now() : null,
-                    'deactivated_at' => $request->input('deactivated_at') ? now() : null,
+                    'deactivated_at' => $request->input('canceldate') ? now() : null,
                 ]);
             });
 

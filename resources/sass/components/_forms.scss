@@ -41,7 +41,7 @@
             }
         }
     }
-    input {
+    input:not([type="radio"]) {
         &:read-only {
             cursor: not-allowed;
             border-color: color.$gray-light !important;

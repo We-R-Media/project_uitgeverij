@@ -145,16 +145,6 @@
                 </div>
 
                 <div class="field field-alt">
-                    <label for="deactivated_at">{{ __('Annuleren op') }}</label>
-                    <input class="field__date" id="deactivated_at" type="datetime-local" name="deactivated_at" value="{{ old('order_date', $order->deactivated_at) }}">
-                    @error('deactivated_at')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field field-alt">
                     <label for="project_id">{{ __('Projectcode') }}</label>
                     <input id="" type="text" name="project_id" value="{{$order->project->id}}" disabled>
                     @error('project_id')
@@ -188,7 +178,7 @@
                     @enderror
                 </div>
 
-                <div class="field field-alt">
+                {{-- <div class="field field-alt">
                     <label for="canceled">{{ __('Geannuleerd') }}</label>
                     <div class="radio__group">
                         <input id="" type="radio" name="canceled" value="1">
@@ -211,7 +201,11 @@
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
-                </div>
+                </div> --}}
+
+                {{-- @livewire('canceled-orders') --}}
+                {{-- <livewire:canceled-orders :order="$order" /> --}}
+                @livewire('canceled-orders', ['order' => $order], key($order->id))
 
                 <div class="field field-alt">
                     <label for="incasso">{{ __('Incasso') }}</label>
