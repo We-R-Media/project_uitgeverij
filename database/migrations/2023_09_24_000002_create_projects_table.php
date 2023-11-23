@@ -39,6 +39,7 @@ return new class extends Migration
             $table->double('revenue_goals');
             $table->longText('comments')->nullable();
             $table->softDeletes();
+            $table->date('deactivated_at')->nullable()->default(null);
             $table->timestamps();
         });
     }

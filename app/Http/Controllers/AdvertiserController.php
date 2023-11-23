@@ -27,10 +27,11 @@ class AdvertiserController extends Controller
      */
     public function index()
     {
-        $advertisers = Advertiser::whereNull('blacklisted_at')->paginate(12);
+        $advertisers = Advertiser::whereNull('blacklisted_at')->whereNull('deactivated_at')->paginate(12);
 
         $this->subpages = [
             'Actueel' => 'advertisers.index',
+            'Inactief' => 'advertisers.inactive',
             'Zwarte lijst' => 'advertisers.blacklist',
         ];
 
@@ -50,6 +51,7 @@ class AdvertiserController extends Controller
 
         $this->subpages = [
             'Actueel' => 'advertisers.index',
+            'Inactief' => 'advertisers.inactive',
             'Zwarte lijst' => 'advertisers.blacklist',
         ];
 
@@ -58,6 +60,22 @@ class AdvertiserController extends Controller
                 'pageTitleSection' => self::$page_title_section,
                 'subpagesData' => $this->getSubpages(),
             ]);
+    }
+
+    public function inactive() 
+    {
+        $advertisers = Advertiser::whereNotNull('deactivated_at')->paginate(12);
+
+        $this->subpages = [
+            'Actueel' => 'advertisers.index',
+            'Inactief' => 'advertisers.inactive',
+            'Zwarte lijst' => 'advertisers.blacklist',
+        ];
+
+        return view('pages.advertisers.index', compact('advertisers'))->with([
+            'pageTitleSection' => self::$page_title_section,
+            'subpagesData' => $this->getSubpages(),
+        ]);
     }
 
 
@@ -139,6 +157,7 @@ class AdvertiserController extends Controller
                     'phone_mobile' => $request->input('phone_mobile'),
                     'email' => $request->input('email'),
                     'blacklisted_at' => $request->input('blacklisted') == 1 ? now() : null,
+                    'deactivated_at' => $request->input('active') == 1 ? now() : null,
                 ]);
             });
 
@@ -146,6 +165,7 @@ class AdvertiserController extends Controller
 
             return redirect()->route('advertisers.index');
         } catch (\Exception $e){
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('advertisers.index');

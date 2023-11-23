@@ -7,7 +7,9 @@
 
     <div class="HeaderButtons">
         <div class="buttons">
-            <a href="{{ route('orders.create', $advertiser->id) }}" class="button button--action">+ {{ __('Nieuwe order') }}</a>
+            @if (!$advertiser->deactivated_at)
+                <a href="{{ route('orders.create', $advertiser->id) }}" class="button button--action">+ {{ __('Nieuwe order') }}</a>
+            @endif
         </div>
     </div>
 
@@ -223,6 +225,18 @@
                         </span>
                     @enderror
                 </div>
+
+                <div class="field field-alt">
+                    <label>{{__('Actief')}}</label>
+
+                    <div class="radio__group">
+                        <input id="deactivated_true" type="radio" name="active" value="0" @if($advertiser->deactivated_at) checked @endif>
+                        <label for="deactivated_true">{{__('Ja')}}</label>
+                        <input id="deactivated_false" type="radio" name="active" value="1" @if(!$advertiser->deactivated_at) checked @endif>
+                        <label for="deactivated_false">{{__('Nee')}}</label>
+                    </div>
+                </div>
+
             </fieldset>
         </div>
         <div class="ButtonGroup">

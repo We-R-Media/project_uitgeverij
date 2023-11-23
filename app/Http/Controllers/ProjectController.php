@@ -18,10 +18,8 @@ class ProjectController extends Controller
     public function __construct()
     {
         $this->subpages = [
-            'Projectgegevens' => 'projects.edit',
-            'Planning' => 'projects.planning',
-            // 'Formaten' => 'formats.index',
-            'Formaten' => 'formats.index',
+            'Actueel' => 'projects.index',
+            'Inactief' => 'projects.inactive',
         ];
     }
 
@@ -30,11 +28,23 @@ class ProjectController extends Controller
      */
     public function index() : View
     {
-        $projects = Project::latest()->paginate(12);
+        $projects = Project::latest()->whereNull('deactivated_at')->paginate(12);
 
         return view('pages.projects.index', compact('projects'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
+                'subpagesData' => $this->getSubpages(),
+            ]);
+    }
+
+    public function inactive() {
+
+        $projects = Project::whereNotNull('deactivated_at')->paginate(12);
+
+        return view('pages.projects.index', compact('projects'))
+            ->with([
+                'pageTitleSection' => self::$page_title_section,
+                'subpagesData' => $this->getSubpages(),
             ]);
     }
 
@@ -116,6 +126,12 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($project_id);
 
+        $this->subpages = [
+            'Projectgegevens' => 'projects.edit',
+            'Planning' => 'projects.planning',
+            'Formaten' => 'formats.index',
+        ];
+
         $layouts = Layout::all();
         $taxes = Tax::all();
 
@@ -134,8 +150,6 @@ class ProjectController extends Controller
     public function update(Request $request, string $project_id)
     {
         try {
-
-
             DB::transaction(function () use($request, $project_id) {
 
                 $project = Project::findOrFail($project_id);
@@ -172,6 +186,8 @@ class ProjectController extends Controller
                     // 'year' => $request->input('year'),
                     'revenue_goals' => $request->input('revenue_goals'),
                     'comments' => $request->input('comments'),
+                    'deactivated_at' => $request->input('active') == 1 ? now() : null,
+
                 ]);
                 $project->layout()->associate($layout);
                 $project->save();
@@ -210,21 +226,16 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($project_id);
 
+        $this->subpages = [
+            'Projectgegevens' => 'projects.edit',
+            'Planning' => 'projects.planning',
+            'Formaten' => 'formats.index',
+        ];
+
         return view('pages.projects.planning')->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $project->title,
-            'subpagesData' => $this->getSubpages( $project_id )
-        ]);
-    }
-
-    public function formats(string $project_id) 
-    {
-        $project = Project::findOrFail($project_id);
-
-        return view('pages.projects.formats')->with([
-            'pageTitleSection' => self::$page_title_section,
-            'pageTitle' => $project->title,
-            'subpagesData' => $this->getSubpages( $project_id )
+            'subpagesData' => $this->getSubpages( $project_id ),
         ]);
     }
 }

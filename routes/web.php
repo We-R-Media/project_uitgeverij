@@ -42,7 +42,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/nieuw', 'create')->name('create');
             Route::get('/{project_id}/bewerken', 'edit')->name('edit');
             Route::get('/{project_id}/planning', 'planning')->name('planning');
-            // Route::get('{project_id}/formaten', 'formats')->name('formats');
+            Route::get('/inactief', 'inactive')->name('inactive');
             Route::get('/{project_id}/verwijderen', 'destroy')->name('destroy');
 
             Route::post('/opslaan', 'store')->name('store');
@@ -85,6 +85,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/zwarte-lijst', 'blacklist')->name('blacklist');
+            Route::get('/inactief', 'inactive')->name('inactive');
 
             Route::get('/nieuw', 'create')->name('create');
             Route::get('/{advertiser_id}/bewerken', 'edit')->name('edit');

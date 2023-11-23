@@ -56,6 +56,7 @@ class Project extends BaseModel
         'department',
         'year',
         'revenue_goals',
+        'deactivated_at',
         'comments',
     ];
 

@@ -106,21 +106,29 @@
 
                     <div class="field field-alt">
                         <label for="contact">{{__('Contactpersoon')}}</label>
-                        <select name="contact" id="">
+                        <select class="select2" name="contact" id="">
+                            @if($advertiser->contacts->isEmpty())
+                            <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
+                            @else
                             @foreach ($advertiser->contacts as $contact)
                                 <option value="{{ $contact->id }}" {{ $contact->role == 1 ? 'selected' : '' }}>
                                     {{ $contact->salutation }} {{ $contact->initial }} {{ $contact->last_name }}
                                 </option>
                             @endforeach
+                            @endif
                         </select>
                     </div>
 
                     <div class="field field-alt">
                         <label for="project_id">{{__('Projectcode')}}</label>
-                        <select name="project_id" id="">
+                        <select class="select2" name="project_id" id="">
+                            @if($projects->isEmpty())
+                                <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
+                            @else
                             @foreach ($projects as $project )
-                                    <option value="{{$project->id}}">{{$project->id}} - {{$project->release_name}}</option>
-                                @endforeach
+                                <option value="{{$project->id}}">{{$project->id}} - {{$project->release_name}}</option>
+                            @endforeach
+                            @endif
                         </select>
                     </div>
 
@@ -203,14 +211,16 @@
 
                     <div class="field field-alt">
                         <label for="contact-alt">{{__('Contactpersoon')}}</label>
-                        <select name="contact-alt" id="">
-                            @foreach ($advertiser->contacts as $contact )
-                                <option value="{{$contact->id}}">
-                                    {{$contact->salutation}}
-                                     {{$contact->initial}} 
-                                     {{$contact->last_name}}
+                        <select class="select2" name="contact-alt" id="">
+                                @if($advertiser->contacts->isEmpty())
+                                <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
+                                @else
+                                @foreach ($advertiser->contacts as $contact)
+                                    <option value="{{ $contact->id }}" {{ $contact->role == 1 ? 'selected' : '' }}>
+                                        {{ $contact->salutation }} {{ $contact->initial }} {{ $contact->last_name }}
                                     </option>
-                            @endforeach
+                                @endforeach
+                                @endif
                         </select>
                     </div>
                     

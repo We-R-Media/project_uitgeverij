@@ -164,7 +164,7 @@
                     @enderror
                 </div>
 
-                {{-- <div class="field field-alt">
+                <div class="field field-alt">
                     <label for="layout_name">{{ __('Layout') }}</label>
                     @if($order->project->layout->count() == 0)
                     {{__('Layout niet beschikbaar...')}}
@@ -176,7 +176,7 @@
                         </span>
                     @enderror
                     @endif
-                </div> --}}
+                </div>
 
                 <div class="field field-alt">
                     <label for="invoiced">{{ __('Gefactureerd') }}</label>
@@ -253,7 +253,7 @@
 
                 <div class="field field-alt">
                     <label for="order_rule">{{ __('Orderregels') }}</label>
-                    <input id="" type="text" name="order_rule" value="" readonly>
+                    <input id="" type="text" name="order_rule" value="{{ $order->orderLines->count() }}" readonly>
                     @error('order_rule')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>

@@ -11,7 +11,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 class ProjectFormatController extends Controller
 {
 
-    private static $page_title_section = 'Formaten';
+    private static $page_title_section = 'Projecten';
 
     public function __construct() {
         $this->subpages = [
