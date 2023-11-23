@@ -124,11 +124,15 @@ class AdvertiserController extends Controller
     {
         try{
             DB::transaction(function () use($request, $advertiser_id) {
-                $advertiser = Advertiser::where('id', $advertiser_id)->update([
+                $advertiser = Advertiser::findOrFail($advertiser_id);
+
+
+
+                $advertiser->update([
                     'name' => $request->input('name'),
                     'po_box' => $request->input('po_box'),
                     'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
-                    'credit_limit' => $request->input('credit_limit'),
+                    'credit_limit' => $request->input('credit'),
                     'city' => $request->input('city'),
                     'province' => $request->input('province'),
                     'phone' => $request->input('phone'),

@@ -60,7 +60,7 @@ class LayoutController extends Controller
                 'logo' => $request->input('logo'),
             ]);
         });
-        return redirect()->back();
+        return redirect()->route('layouts.index');
     }
 
     /**

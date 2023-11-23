@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Advertiser;
 use Carbon\Carbon;
 use App\Models\Project;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -85,6 +86,12 @@ class OrderController extends Controller
     {
         try {
             $transactions = DB::transaction(function () use($request, $advertiser_id) {
+
+
+                $contact_id = $request->input('contact');
+                $contact = Contact::findOrFail($contact_id);
+
+
                 $project_id = $request->input('project_id');
                 $project = Project::findOrFail($project_id);
 
@@ -92,9 +99,11 @@ class OrderController extends Controller
                 $advertiser = Advertiser::findOrFail($advertiser_id);
 
 
+
                 $order = Order::create([
                     'project_id' => $project_id,
                     'advertiser_id' => $advertiser_id,
+                    'contact_id' => $contact_id,
                     'order_date' => now(),
                     'approved_at' => now(),
                     'order_total_price' => 0.0,
@@ -104,7 +113,8 @@ class OrderController extends Controller
                 $order->project()->associate($project);
                 $order->save();
 
-
+                $order->contact()->associate($contact);
+                $order->save();
 
                 $order->advertiser()->associate($advertiser);
                 $order->save();
@@ -114,6 +124,7 @@ class OrderController extends Controller
 
             return redirect()->route('advertisers.index');
         } catch (\Exception $e){
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('advertisers.index');

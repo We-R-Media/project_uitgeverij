@@ -37,6 +37,7 @@ class Order extends BaseModel
      */
     protected $fillable = [
         'name',
+        'contact_id',
         'approved_at',
         'order_date',
         'order_total_price',
@@ -79,6 +80,16 @@ class Order extends BaseModel
     public function advertiser(): BelongsTo
     {
         return $this->belongsTo(Advertiser::class);
+    }
+
+    /**
+     * Get the contact that owns the Order
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function contact(): BelongsTo
+    {
+        return $this->belongsTo(Contact::class);
     }
 
     /**

@@ -6,7 +6,11 @@
     <div class="page__wrapper">
         <div class="HeaderButtons">
             <div class="buttons">
-                <a href="{{ route('orderlines.create', [$order->id, $order->project->id]) }}" class="button button--action">{{__('Nieuwe regel')}}</a>
+                @if ($order->order_total_price < $order->advertiser->credit_limit)
+                    <a href="{{ route('orderlines.create', [$order->id, $order->project->id]) }}" class="button button--action">{{__('Nieuwe regel')}}</a>
+                @else
+                    <h4>{{__('Limiet overschreden')}}</h4>
+                @endif
             </div>
         </div>
         <div class="items__head">

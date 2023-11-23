@@ -38,7 +38,7 @@
 
                 <div class="field field-alt">
                     <label for="contact">{{ __('Contactpersoon') }}</label>
-                    <input id="" type="text" name="contact" value="{{-- $order->advertiser->contacts --}}" readonly>
+                    <input id="" type="text" name="contact" value="{{$order->contact->first_name}} {{$order->contact->last_name}}" readonly>
                     @error('contact')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -124,9 +124,9 @@
                     <label for="approved_at">{{ __('Goedgekeurd') }}</label>
                     <div class="radio__group">
                         <input id="approved_at_true" type="radio" name="approved_at" value="1" @if($order->approved_at) checked @endif>
-                        <label for="approved_at_true">Ja</label>
+                        <label for="approved_at_true">{{__('Ja')}}</label>
                         <input id="approved_at_false" type="radio" name="approved_at" value="0" @if(!$order->approved_at) checked @endif>
-                        <label for="approved_at_false">Nee</label>
+                        <label for="approved_at_false">{{__('Nee')}}</label>
                     </div>
                     @error('approved_at')
                         <span class="form__message" role="alert">

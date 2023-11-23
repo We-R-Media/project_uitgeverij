@@ -17,6 +17,7 @@ class Contact extends BaseModel
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
         'salutation',
         'first_name',
         'last_name',
@@ -66,6 +67,16 @@ class Contact extends BaseModel
     public function reminders()
     {
         return $this->hasMany(Reminder::class);
+    }
+
+    /**
+     * Get all of the orders for the Contact
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 
     /**

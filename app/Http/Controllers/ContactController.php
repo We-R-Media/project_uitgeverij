@@ -41,7 +41,7 @@ class ContactController extends Controller
                 ]);
             });
 
-            Alert::toast('De adverteerder is succesvol bijgewerkt', 'success');
+            Alert::toast('De adverteerder is succesvol aangemaakt', 'success');
 
             return redirect()->route('contacts.index');
         } catch (\Exception $e){

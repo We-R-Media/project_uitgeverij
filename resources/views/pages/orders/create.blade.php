@@ -107,12 +107,10 @@
                     <div class="field field-alt">
                         <label for="contact">{{__('Contactpersoon')}}</label>
                         <select name="contact" id="">
-                            @foreach ($advertiser->contacts as $contact )
-                                <option value="{{$contact->id}}">
-                                    {{$contact->salutation}}
-                                     {{$contact->initial}} 
-                                     {{$contact->last_name}}
-                                    </option>
+                            @foreach ($advertiser->contacts as $contact)
+                                <option value="{{ $contact->id }}" {{ $contact->role == 1 ? 'selected' : '' }}>
+                                    {{ $contact->salutation }} {{ $contact->initial }} {{ $contact->last_name }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -204,8 +202,8 @@
                     </div>
 
                     <div class="field field-alt">
-                        <label for="contact">{{__('Contactpersoon')}}</label>
-                        <select name="contact" id="">
+                        <label for="contact-alt">{{__('Contactpersoon')}}</label>
+                        <select name="contact-alt" id="">
                             @foreach ($advertiser->contacts as $contact )
                                 <option value="{{$contact->id}}">
                                     {{$contact->salutation}}
