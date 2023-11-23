@@ -54,7 +54,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->controller(OrderController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/gedeactiveerd', 'deactivated')->name('deactivated');
+            Route::get('/geannuleerd', 'deactivated')->name('deactivated');
 
             Route::get('/{advertiser_id}/nieuw', 'create')->name('create');
             Route::get('/{order_id}/bewerken', 'edit')->name('edit');
@@ -66,18 +66,21 @@ Route::group(['middleware' => ['auth']], function() {
             Route::post('/{order_id}/update', 'update')->name('update');
             Route::post('/{order_id}/verzenden', 'approval')->name('approval');
             Route::post('/{order_id}/akkoord', 'approved')->name('approved');
-
-            Route::delete('/{id}', 'delete')->name('delete');
         });
 
     Route::name('orderlines.')
-    ->prefix('orders')
-    ->controller(OrderLineController::class)
-    ->group(function () {
-        Route::get('/{order_id}/orderregels', 'index')->name('index');
-        Route::get('/{order_id}/{project_id}/orderregels/nieuw', 'create')->name('create');
-        Route::post('/{order_id}/orderregels/opslaan', 'store')->name('store');
-    });
+        ->prefix('orders')
+        ->controller(OrderLineController::class)
+        ->group(function () {
+            Route::get('/{order_id}/orderregels', 'index')->name('index');
+
+            Route::get('/{order_id}/orderregels/{regel_id}/verwijderen', 'destroy')->name('destroy');
+            Route::get('/{order_id}/orderregels/{regel_id}/herstellen', 'restore')->name('restore');
+
+            Route::get('/{order_id}/{project_id}/orderregels/nieuw', 'create')->name('create');
+
+            Route::post('/{order_id}/orderregels/opslaan', 'store')->name('store');
+        });
 
     Route::name('advertisers.')
         ->prefix('relaties')
@@ -97,7 +100,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{advertiser_id}/orders', 'orders')->name('orders');
 
             Route::post('/store', 'store')->name('store');
-            Route::post('/{id}/update', 'update')->name('update');
+            Route::post('/{advertiser_id}/update', 'update')->name('update');
         });
 
     Route::name('invoices.')
@@ -113,9 +116,8 @@ Route::group(['middleware' => ['auth']], function() {
             Route::post('/{invoice_id}/update', 'update')->name('update'); // FIX
         });
 
-
     Route::middleware(['admin.check'])->group(function () {
-            Route::name('settings.')
+        Route::name('settings.')
             ->prefix('instellingen')
             ->controller(SettingsController::class)
             ->group(function () {
@@ -128,8 +130,8 @@ Route::group(['middleware' => ['auth']], function() {
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/nieuw', 'create')->name('create');
-                Route::get('/{id}/bewerken', 'edit')->name('edit');
-                Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
+                Route::get('/{tax_id}/bewerken', 'edit')->name('edit');
+                Route::get('/{tax_id}/verwijderen', 'destroy')->name('destroy');
 
                 Route::post('/store', 'store')->name('store');
                 Route::post('/update', 'update')->name('update');
@@ -156,8 +158,8 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::get('/rol/{role?}', 'role')->name('role');
 
                 Route::get('/nieuw', 'create')->name('create');
-                Route::get('/{id}/bewerken', 'edit')->name('edit');
-                Route::get('/{id}/verwijderen', 'destroy')->name('destroy');
+                Route::get('/{user_id}/bewerken', 'edit')->name('edit');
+                Route::get('/{user_id}/verwijderen', 'destroy')->name('destroy');
 
                 Route::post('/opslaan', 'store')->name('store');
                 Route::post('/update', 'update')->name('update');
@@ -169,11 +171,11 @@ Route::group(['middleware' => ['auth']], function() {
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/nieuw', 'create')->name('create');
-                Route::get('/{user_id}/bewerken', 'edit')->name('edit');
-                Route::get('/{user_id}/verwijderen', 'destroy')->name('destroy');
+                Route::get('/{layouts_id}/bewerken', 'edit')->name('edit');
+                Route::get('/{layouts_id}/verwijderen', 'destroy')->name('destroy');
 
                 Route::post('/store', 'store')->name('store');
-                Route::post('/{user_id}/update', 'update')->name('update');
+                Route::post('/{layouts_id}/update', 'update')->name('update');
                 Route::post('/upload', 'upload')->name('upload');
             });
 
@@ -200,10 +202,7 @@ Route::group(['middleware' => ['auth']], function() {
         });
 
     Route::get('/search', [ SearchController::class, 'search'])->name('search');
-
 });
-
-
 
 Route::fallback(function () {
     abort(404);

@@ -118,7 +118,8 @@
             </fieldset>
 
             <fieldset class="fields options">
-                <h3>{{ __('Opties') }}</h3>
+                <div class="fields__row">
+                    <h3>{{ __('Opties') }}</h3>
 
                 <div class="field field-alt">
                     <label for="approved_at">{{ __('Goedgekeurd') }}</label>
@@ -188,22 +189,30 @@
                         <input id="" type="radio" name="incasso" value="0">
                         <label>{{__('Nee')}}</label>
                     </div>
-                    @error('incasso')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
                 </div>
 
+                <div class="fields__row">
+                    <h3>{{ __('Orderregels') }}</h3>
 
-                <div class="field field-alt">
-                    <label for="order_number">{{ __('Ordernummer') }}</label>
-                    <input id="" type="text" name="order_number" value="{{ $order->id }}" readonly>
-                    @error('po_box')
-                        <span class="order_number" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
+                    <div class="field field-alt">
+                        <label for="order_rule">{{ __('Aantal orderregels') }}</label>
+                        <input id="" type="text" name="order_rule" value="{{ $order->orderlines->count() }}" readonly>
+                        @error('order_rule')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="field field-alt">
+                        <label for="order_total">{{ __('Order totaal') }}</label>
+                        <input id="" type="text" name="order_total" value="@money($order->order_total_price)">
+                        @error('order_total')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
                 </div>
 
                 <div class="field field-alt">

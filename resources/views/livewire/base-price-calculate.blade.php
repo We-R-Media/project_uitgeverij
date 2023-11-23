@@ -11,10 +11,12 @@
     
     <div class="field field-alt">
         <label for="format">{{__('Formaat')}}</label>
-        <select wire:model.change="format" name="format" id="" wire:init="setDefaultFormat">
-            @foreach ($order->project->formats as $format)
-                <option value="{{ $format->id }}">{{ $format->size }}</option>
-            @endforeach
-        </select>
+        <div class="dropdown">
+            <select wire:model.change="format" name="format" id="" wire:init="setDefaultFormat">
+                @foreach ($order->project->formats as $format)
+                    <option value="{{ $format->id }}">{{ $format->size }}</option>
+                @endforeach
+            </select>
+        </div>
     </div>
 </div>

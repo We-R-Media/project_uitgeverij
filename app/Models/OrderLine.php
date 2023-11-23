@@ -7,16 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class OrderLine extends Model
+class OrderLine extends BaseModel
 {
+    use HasFactory, SoftDeletes;
+
     protected $fillable = [
         'base_price',
         'discount',
         'material',
         'price_with_discount',
     ];
-
-    use HasFactory, SoftDeletes;
 
     /**
      * Get the order that owns the order line.

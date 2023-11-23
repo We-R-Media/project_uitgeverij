@@ -31,7 +31,7 @@
             <div class="item__summary">
                <div class="item__format field">
                   <label>{{__('Prijs')}}</label>
-                  {{$order->order_total_price}}
+                  @money($order->order_total_price)
                </div>
                <div class="item__created field">
                   {{$order->order_date}}
