@@ -19,7 +19,7 @@
                             <option value="{{$project->id}}">{{$project->edition_name}}</option>
                         </select>
                     </div>
-                    <div class="field field-alt">
+                    {{-- <div class="field field-alt">
                         <label for="base_price">{{__('Basisbedrag')}}</label>
                         <input type="text" name="base_price" id="">
                         @error('base_price')
@@ -36,7 +36,9 @@
                                 <option value="{{$format->paper_type}}">{{$format->size}}</option>
                             @endforeach
                         </select>
-                    </div>
+                    </div> --}}
+
+                    @livewire('base-price-calculate', ['order' => $order], key($order->id))
 
                     <div class="field field-alt">
                         <label for="discount">{{__('Korting')}}</label>
@@ -47,6 +49,7 @@
                             </span>
                         @enderror
                     </div>
+                    
 
                 </fieldset>
             </div>
