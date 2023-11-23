@@ -43,7 +43,7 @@
                             </div>
                             <div class="item__pages field">
                                 <label>{{__('Prijs')}}</label>
-                                @money($format->price)
+                                {{ @money($format->price) }}
                             </div>
                         </div>
                         <div class="item__actions">

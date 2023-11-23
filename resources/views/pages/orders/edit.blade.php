@@ -206,7 +206,7 @@
 
                     <div class="field field-alt">
                         <label for="order_total">{{ __('Order totaal') }}</label>
-                        <input id="" type="text" name="order_total" value="@money($order->order_total_price)">
+                        <input id="" type="text" name="order_total" value="{{ @money($order->order_total_price) }}">
                         @error('order_total')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>

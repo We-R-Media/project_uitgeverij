@@ -26,7 +26,7 @@
                     Order totaal
                 </span>
                 <span class="box__text">
-                    @money($order->order_total_price)
+                    {{ @money($order->order_total_price) }}
                 </span>
             </span>
             <span class="info__box">
@@ -76,13 +76,13 @@
                                 {{ $orderline->order->project->edition_name }}
                             </div>
                             <div class="item__format field">
-                                @money( $orderline->base_price )
+                                {{ @money( $orderline->base_price ) }}
                             </div>
                             <div class="item__format field">
                                 {{ $orderline->discount !== 0 && !is_null($orderline->discount) ? "€{$orderline->discount}" : '-' }}
                             </div>
                             <div class="item__format field">
-                                @money( $orderline->price_with_discount )
+                                {{ @money( $orderline->price_with_discount ) }}
                             </div>
                         </div>
                         <div class="item__actions">
