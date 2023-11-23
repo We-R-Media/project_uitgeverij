@@ -12,6 +12,7 @@ class OrderLine extends Model
     protected $fillable = [
         'base_price',
         'discount',
+        'material',
         'price_with_discount',
     ];
 

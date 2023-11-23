@@ -19,24 +19,6 @@
                             <option value="{{$project->id}}">{{$project->edition_name}}</option>
                         </select>
                     </div>
-                    {{-- <div class="field field-alt">
-                        <label for="base_price">{{__('Basisbedrag')}}</label>
-                        <input type="text" name="base_price" id="">
-                        @error('base_price')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="field field-alt">
-                        <label for="format">{{__('Formaat')}}</label>
-                        <select name="format" id="">
-                            @foreach ($order->project->formats as $format)
-                                <option value="{{$format->paper_type}}">{{$format->size}}</option>
-                            @endforeach
-                        </select>
-                    </div> --}}
 
                     @livewire('base-price-calculate', ['order' => $order], key($order->id))
 
@@ -48,6 +30,15 @@
                                 <small>{{ $message }}</small>
                             </span>
                         @enderror
+                    </div>
+
+                    <div class="field field-alt">
+                        <label for="material">{{ __('Materiaal') }}</label>
+                        <div class="radio__group">
+                            <input id="" type="radio" name="material" value="1">
+                            <label>{{__('Ja')}}</label>
+                            <input id="" type="radio" name="material" value="0">
+                            <label>{{__('Nee')}}</label>
                     </div>
                     
 

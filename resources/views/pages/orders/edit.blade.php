@@ -178,33 +178,6 @@
                     @enderror
                 </div>
 
-                {{-- <div class="field field-alt">
-                    <label for="canceled">{{ __('Geannuleerd') }}</label>
-                    <div class="radio__group">
-                        <input id="" type="radio" name="canceled" value="1">
-                        <label for="canceled">{{__('Ja')}}</label>
-                        <input id="" type="radio" name="canceled" value="0">
-                        <label for="canceled">{{__('Nee')}}</label>
-                    </div>
-                    @error('canceled')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field field-alt">
-                    <label for="canceldate">{{ __('Annuleringsdatum') }}</label>
-                    <input id="" type="text" name="canceldate" value="">
-                    @error('canceldate')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div> --}}
-
-                {{-- @livewire('canceled-orders') --}}
-                {{-- <livewire:canceled-orders :order="$order" /> --}}
                 @livewire('canceled-orders', ['order' => $order], key($order->id))
 
                 <div class="field field-alt">
@@ -235,7 +208,7 @@
 
                 <div class="field field-alt">
                     <label for="order_total">{{ __('Ordertotaal') }}</label>
-                    <input id="" type="text" name="order_total" value="{{ $order->order_total_price }}">
+                    <input id="" type="text" name="order_total" value="{{ $order->order_total_price }}" readonly>
                     @error('order_total')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>

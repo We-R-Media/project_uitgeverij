@@ -68,6 +68,7 @@ class OrderLineController extends Controller
                 'base_price' => $base_price,
                 'discount' => $discount,
                 'project' => $request->input('project'),
+                'material' => $request->input('material'),
                 // 'price_with_discount' => $base_price - $discount_amount,
                 'price_with_discount' => $discount_amount,
             ]);
