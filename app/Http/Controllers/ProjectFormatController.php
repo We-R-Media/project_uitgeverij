@@ -27,7 +27,7 @@ class ProjectFormatController extends Controller
     public function index(string $project_id)
     {
         $project = Project::findOrFail($project_id);
-        $formats = Format::latest()->paginate(12);
+        $formats = Format::where('project_id', $project_id)->latest()->paginate(12);
 
 
         return view('pages.formats.index', compact('project', 'formats'))

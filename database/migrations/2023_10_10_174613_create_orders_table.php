@@ -23,6 +23,7 @@ return new class extends Migration
             $table->dateTime('approved_at')->nullable()->default(null);
             $table->dateTime('deactivated_at')->nullable()->default(null);
             $table->dateTime('email_sent_at')->nullable()->default(null);
+            $table->dateTime('material_received_at')->nullable()->default(null);
             $table->text('comment_confirmation')->nullable();
             $table->text('comment_facturation')->nullable();
             $table->text('comment_reference')->nullable();

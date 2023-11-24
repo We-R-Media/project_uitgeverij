@@ -58,29 +58,37 @@ class OrderLineController extends Controller
      */
     public function store(Request $request, string $order_id)
     {
-        DB::transaction(function () use ($request, $order_id) {
-            $order = Order::findOrFail($order_id);
+        try 
+        {
+            DB::transaction(function () use ($request, $order_id) {
+                $order = Order::findOrFail($order_id);
 
-            $base_price = $request->input('base_price');
-            $discount = $request->input('discount');
+                $base_price = $request->input('base_price');
+                $discount = $request->input('discount');
 
-            // $discount_amount = ($discount / 100) * $base_price;
-            $discount_amount = $base_price - $discount;
+                // $discount_amount = ($discount / 100) * $base_price;
+                $discount_amount = $base_price - $discount;
 
-            $orderline = OrderLine::create([
-                'base_price' => $base_price,
-                'discount' => $discount,
-                'project' => $request->input('project'),
-                'price_with_discount' => ($discount != 0) ? ($base_price - $discount) : $base_price,
-            ]);
+                $orderline = OrderLine::create([
+                    'base_price' => $base_price,
+                    'discount' => $discount,
+                    'project' => $request->input('project'),
+                    'price_with_discount' => ($discount != 0) ? ($base_price - $discount) : $base_price,
+                ]);
 
-            $orderline->order()->associate($order);
-            $orderline->save();
+                $orderline->order()->associate($order);
+                $orderline->save();
 
-            $order->updateOrderTotalPrice();
-        });
+                $order->updateOrderTotalPrice();
+            });
 
-        return redirect()->route('orderlines.index', $order_id);
+            Alert::toast('De orderregel is succesvol aangemaakt', 'success');
+            return redirect()->route('orderlines.index', $order_id);
+
+        } catch(Exception $e) {
+            Alert::toast('Er is iets fout gegaan', 'error');
+            return redirect()->route('orderlines.index');
+        }
     }
 
     /**

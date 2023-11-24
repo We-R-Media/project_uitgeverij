@@ -15,7 +15,7 @@
             </span>
             <span class="info__box">
                 <span class="box__title">
-                  Aantal regels
+                  {{__('Aantal regels')}}
                 </span>
                 <span class="box__text">
                     {{ $order->orderlines->count() }}
@@ -23,7 +23,7 @@
             </span>
             <span class="info__box">
                 <span class="box__title">
-                    Order totaal
+                    {{__('Order totaal')}}
                 </span>
                 <span class="box__text">
                     {{ @money($order->order_total_price) }}
@@ -31,7 +31,7 @@
             </span>
             <span class="info__box">
                 <span class="box__title">
-                  Resterend krediet
+                  {{__('Resterend krediet')}}
                 </span>
                 <span class="box__text">
                     {{ $order->calculateTotalCredit() }}
@@ -92,9 +92,10 @@
                                 </div>
                                 <div class="actions__group">
                                     @if ( $orderline->trashed() )
-                                        <a href="{{ route('orderlines.restore', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id] ) }}" class="btn" onclick="return confirm('Are you sure you want to restore this record?')">Herstellen</a>
+                                        <a href="{{ route('orderlines.restore', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id] ) }}" class="btn" onclick="return confirm('Are you sure you want to restore this record?')">{{__('Herstellen')}}</a>
                                     @else
-                                        <a href="{{ route('orderlines.destroy', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id]) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">Verwijderen</a>
+                                        <a href="{{ route('orderlines.destroy', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id]) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">{{__('Verwijderen')}}</a>
+                                        <a href="{{ route('invoices.create', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id]) }}" class="btn">{{__('Factureren')}}</a>
                                     @endif
                                 </div>
                             </div>

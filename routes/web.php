@@ -56,6 +56,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/geannuleerd', 'deactivated')->name('deactivated');
+            Route::get('/akkoord', 'certified')->name('certified');
 
             Route::get('/{advertiser_id}/nieuw', 'create')->name('create');
             Route::get('/{order_id}/bewerken', 'edit')->name('edit');

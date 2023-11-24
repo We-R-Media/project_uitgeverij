@@ -230,9 +230,9 @@
                     <label>{{__('Actief')}}</label>
 
                     <div class="radio__group">
-                        <input id="deactivated_true" type="radio" name="active" value="0" @if($advertiser->deactivated_at) checked @endif>
+                        <input id="deactivated_true" type="radio" name="active" value="1" @if(!$advertiser->deactivated_at) checked @endif>
                         <label for="deactivated_true">{{__('Ja')}}</label>
-                        <input id="deactivated_false" type="radio" name="active" value="1" @if(!$advertiser->deactivated_at) checked @endif>
+                        <input id="deactivated_false" type="radio" name="active" value="0" @if($advertiser->deactivated_at) checked @endif>
                         <label for="deactivated_false">{{__('Nee')}}</label>
                     </div>
                 </div>

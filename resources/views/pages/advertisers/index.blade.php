@@ -14,8 +14,9 @@
                     <div>{{__('Bedrijfsnaam')}}</div>
                 </div>
                 <div class="item__summary">
+                    <div>{{__('Postadres')}}</div>
+                    <div>{{__('Postcode')}}</div>
                     <div>{{__('E-mailadres')}}</div>
-                    <div>{{__('Adresgegevens')}}</div>
                 </div>
                 <div class="item__actions">
                     <div>{{--__('Actions')--}}</div>
@@ -32,14 +33,17 @@
                             </a>
                         </div>
                         <div class="item__summary">
+                            <div class="item__pages field">
+                                <Label>{{__('Postadres')}}</label>
+                                {{$advertiser->po_box}}
+                            </div>
+                            <div class="item__format field">
+                                <label>{{__('Postcode')}}</label>
+                                {{$advertiser->postal_code}}, {{$advertiser->city}}
+                            </div>
                             <div class="item__format field">
                                 <label>{{__('E-mailadres')}}</label>
                                 {{$advertiser->email}}
-                            </div>
-                            <div class="item__pages field">
-                                <Label>{{__('Adresgegevens')}}</label>
-                                {{$advertiser->address}} <br />
-                                {{$advertiser->postal_code}}, {{$advertiser->city}}
                             </div>
                         </div>
                         <div class="item__actions">

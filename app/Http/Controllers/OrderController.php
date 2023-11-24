@@ -36,10 +36,11 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::latest()->whereNull('deactivated_at')->paginate(12);
+        $orders = Order::latest()->whereNull('deactivated_at')->whereNull('approved_at')->paginate(12);
 
         $this->subpages = [
             'Actueel' => 'orders.index',
+            'Akkoord' => 'orders.certified',
             'Geannuleerd' => 'orders.deactivated',
         ];
 
@@ -59,6 +60,7 @@ class OrderController extends Controller
 
         $this->subpages = [
             'Actueel' => 'orders.index',
+            'Akkoord' => 'orders.certified',
             'Geannuleerd' => 'orders.deactivated',
         ];
 
@@ -132,7 +134,6 @@ class OrderController extends Controller
             return redirect()->route('advertisers.index');
         } catch (\Exception $e) {
             Alert::toast('Er is iets fout gegaan', 'error');
-            dd($e);
 
             return redirect()->route('advertisers.index');
         }
@@ -165,6 +166,7 @@ class OrderController extends Controller
                     // 'order_date' => $request->input('order_date'),
                     'approved_at' => $request->input('approved_at') == 1 ? now() : null,
                     'email_sent_at' => $request->input('approved_at') == 1 ? now() : null,
+                    'material_received_at' => $request->input('material_received_at') == 1 ? now() : null,
                     'deactivated_at' => $request->input('canceldate') ? now() : null,
                 ]);
             });
@@ -225,6 +227,22 @@ class OrderController extends Controller
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $order->title,
             'subpagesData' => $this->getSubpages($order_id),
+        ]);
+    }
+
+    public function certified() {
+
+        $orders = Order::whereNotNull('approved_at')->paginate(12); 
+
+        $this->subpages = [
+            'Actueel' => 'orders.index',
+            'Akkoord' => 'orders.certified',
+            'Geannuleerd' => 'orders.deactivated',
+        ];
+
+        return view('pages.orders.index', compact('orders'))->with([
+            'pageTitleSection' => self::$page_title_section,
+            'subpagesData' => $this->getSubpages(),
         ]);
     }
 }

@@ -118,7 +118,7 @@
             </fieldset>
 
             <fieldset class="fields options">
-                <div class="fields__row">
+
                     <h3>{{ __('Opties') }}</h3>
 
                     <div class="field field-alt">
@@ -129,6 +129,30 @@
                                 <small>{{ $message }}</small>
                             </span>
                         @enderror
+                    </div>
+
+                    <div class="field field-alt">
+                        <label for="project_id">{{ __('Projectcode') }}</label>
+                        <input id="" type="text" name="project_id" value="{{$order->project->name}}" disabled>
+                        @error('project_id')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
+
+
+
+                    <div class="fields__row">
+
+                    <div class="field field-alt">
+                        <label for="material_received_at">{{__('Materiaal')}}</label>
+                        <div class="radio__group">
+                            <input id="material_received_true" type="radio" name="material_received_at"  value="1" @if($order->material_received_at) checked @endif id="">
+                            <label for="approved_at_true">{{__('Ja')}}</label>
+                            <input id="material_received_true" type="radio" name="material_received_at" value="0" @if(!$order->material_received_at) checked @endif id="">
+                            <label for="approved_at_true">{{__('Nee')}}</label>
+                        </div>
                     </div>
 
                     <div class="field field-alt">
@@ -146,15 +170,9 @@
                         @enderror
                     </div>
 
-                <div class="field field-alt">
-                    <label for="project_id">{{ __('Projectcode') }}</label>
-                    <input id="" type="text" name="project_id" value="{{$order->project->id}}" disabled>
-                    @error('project_id')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
+                    
+
+                @livewire('canceled-orders', ['order' => $order], key($order->id))
 
                 <div class="field field-alt">
                     <label for="layout_name">{{ __('Layout') }}</label>
@@ -180,9 +198,8 @@
                     @enderror
                 </div>
 
-                @livewire('canceled-orders', ['order' => $order], key($order->id))
 
-                <div class="field field-alt">
+                <div class="field field-alt radio">
                     <label for="incasso">{{ __('Incasso') }}</label>
                     <div class="radio__group">
                         <input id="" type="radio" name="incasso" value="1">
@@ -194,7 +211,6 @@
 
                 <div class="fields__row">
                     <h3>{{ __('Orderregels') }}</h3>
-
                     <div class="field field-alt">
                         <label for="order_rule">{{ __('Aantal orderregels') }}</label>
                         <input id="" type="text" name="order_rule" value="{{ $order->orderlines->count() }}" readonly>
@@ -207,7 +223,7 @@
 
                     <div class="field field-alt">
                         <label for="order_total">{{ __('Order totaal') }}</label>
-                        <input id="" type="text" name="order_total" value="{{ @money($order->order_total_price) }}">
+                        <input id="" type="text" name="order_total" value="{{ @money($order->order_total_price) }}" readonly>
                         @error('order_total')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
@@ -226,7 +242,6 @@
                     @enderror
                 </div>
 
-                {{-- @if ($order->order_total_price > $order->advertiser->credit_limit)@endif --}}
 
                 <div class="field field-alt">
                     <label for="order_rule">{{ __('Orderregels') }}</label>
@@ -238,6 +253,8 @@
                     @enderror
                 </div>
 
+
+
                 <div class="field field-alt">
                     <label for="invoiced">{{ __('Gefactureerd') }}</label>
                     <input id="" type="text" name="invoiced" value="" readonly>
@@ -246,6 +263,8 @@
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
+
+
                 </div>
 
             </fieldset>
@@ -259,6 +278,8 @@
                     </span>
                 @enderror
 
+                
+
             </fieldset>
 
         </div>
@@ -268,7 +289,7 @@
                     <a href="{{ route('email.approval', $order->id) }}" class="button button--action">{{__('Opdrachtbevestiging')}}</a>
                 @else
                     <a href="{{ route('invoices.create', $order->id) }}" class="button button--action">{{__('Factureer order')}}</a>
-                @endif
+                @endif                   
                 <button type="submit" class="button button--action">{{ __('Opslaan') }}</button>
             </div>
         </div>
