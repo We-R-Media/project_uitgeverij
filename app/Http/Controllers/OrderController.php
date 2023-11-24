@@ -7,8 +7,11 @@ use App\Models\Advertiser;
 use Carbon\Carbon;
 use App\Models\Project;
 use App\Models\Contact;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 
 
@@ -31,7 +34,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::latest()->whereNull( 'deactivated_at' )->paginate(12);
+        $orders = Order::latest()->whereNull('deactivated_at')->paginate(12);
 
         $this->subpages = [
             'Actueel' => 'orders.index',
@@ -123,8 +126,7 @@ class OrderController extends Controller
             Alert::toast('De order is successvol aangemaakt', 'success');
 
             return redirect()->route('advertisers.index');
-        } catch (\Exception $e){
-            dd($e);
+        } catch (\Exception $e) {
             Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('advertisers.index');
@@ -142,7 +144,7 @@ class OrderController extends Controller
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'pageTitle' => $order->title,
-                'subpagesData' =>  $this->getSubpages( $order_id )
+                'subpagesData' =>  $this->getSubpages($order_id)
             ]);
     }
 
@@ -152,7 +154,7 @@ class OrderController extends Controller
     public function update(Request $request, string $order_id)
     {
         try {
-            DB::transaction(function () use($request, $order_id) {
+            DB::transaction(function () use ($request, $order_id) {
 
                 $order = Order::where('id', $order_id)->update([
                     'order_date' => $request->input('order_date'),
@@ -164,20 +166,11 @@ class OrderController extends Controller
             Alert::toast('De order is succesvol bijgewerkt', 'success');
 
             return redirect()->route('orders.index');
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('orders.index');
         }
-    }
-
-    public function approved(Request $request, $id) {
-        DB::transaction(function () use ($request, $id) {
-            Order::where('id', $id)->update([
-                'approved_at' => $request->dateTimeNow(),
-            ]);
-        });
-        return redirect()->route('orders.index');
     }
 
     /**
@@ -187,7 +180,7 @@ class OrderController extends Controller
     {
         $order = Order::find($order_id);
 
-        if( $order ) {
+        if ($order) {
             $order->delete();
 
             Alert::toast('De order is verwijderd.', 'info');

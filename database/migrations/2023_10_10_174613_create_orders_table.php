@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignID('advertiser_id')->nullable();
             $table->foreignID('contact_id')->nullable();
             $table->double('order_total_price');
+            $table->string('validation_token')->unique();
             $table->dateTime('approved_at')->nullable()->default(null);
             $table->dateTime('deactivated_at')->nullable()->default(null);
             $table->text('comment_confirmation')->nullable();

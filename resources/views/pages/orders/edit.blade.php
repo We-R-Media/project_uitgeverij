@@ -121,29 +121,20 @@
                 <div class="fields__row">
                     <h3>{{ __('Opties') }}</h3>
 
-                <div class="field field-alt">
-                    <label for="approved_at">{{ __('Goedgekeurd') }}</label>
-                    <div class="radio__group">
-                        <input id="approved_at_true" type="radio" name="approved_at" value="1" @if($order->approved_at) checked @endif>
-                        <label for="approved_at_true">{{__('Ja')}}</label>
-                        <input id="approved_at_false" type="radio" name="approved_at" value="0" @if(!$order->approved_at) checked @endif>
-                        <label for="approved_at_false">{{__('Nee')}}</label>
+                    <div class="field field-alt">
+                        <label for="approved_at">{{ __('Goedgekeurd') }}</label>
+                        <div class="radio__group">
+                            <input id="approved_at_true" type="radio" name="approved_at" value="1" @if($order->approved_at) checked @endif>
+                            <label for="approved_at_true">Ja</label>
+                            <input id="approved_at_false" type="radio" name="approved_at" value="0" @if(!$order->approved_at) checked @endif>
+                            <label for="approved_at_false">Nee</label>
+                        </div>
+                        @error('approved_at')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
                     </div>
-                    @error('approved_at')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-                <div class="field field-alt">
-                    <label for="order_date">{{ __('Order datum') }}</label>
-                    <input class="field__date" id="order_date" type="datetime-local" name="order_date" value="{{ old('order_date', $order->order_date) }}">
-                    @error('order_date')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
 
                 <div class="field field-alt">
                     <label for="project_id">{{ __('Projectcode') }}</label>
@@ -263,7 +254,7 @@
         </div>
         <div class="ButtonGroup">
             <div class="buttons">
-                @if ($order->approved_at)
+                @if (!$order->approved_at)
                     <a href="{{ route('email.approval', $order->id) }}" class="button button--action">{{__('Verstuur akkoord')}}</a>
                 @else
                     <a href="{{ route('invoices.create', $order->id) }}" class="button button--action">{{__('Factureer order')}}</a>

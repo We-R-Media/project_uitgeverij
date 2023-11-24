@@ -26,7 +26,11 @@
                     Order totaal
                 </span>
                 <span class="box__text">
+<<<<<<< HEAD
                     {{ @money($order->order_total_price) }}
+=======
+                    @money($order->order_total_price)
+>>>>>>> 5e1d1ea239aa69d4aa05f02e93457c28f9511d7b
                 </span>
             </span>
             <span class="info__box">
@@ -76,13 +80,21 @@
                                 {{ $orderline->order->project->edition_name }}
                             </div>
                             <div class="item__format field">
+<<<<<<< HEAD
                                 {{ @money( $orderline->base_price ) }}
+=======
+                                @money( $orderline->base_price )
+>>>>>>> 5e1d1ea239aa69d4aa05f02e93457c28f9511d7b
                             </div>
                             <div class="item__format field">
                                 {{ $orderline->discount !== 0 && !is_null($orderline->discount) ? "€{$orderline->discount}" : '-' }}
                             </div>
                             <div class="item__format field">
+<<<<<<< HEAD
                                 {{ @money( $orderline->price_with_discount ) }}
+=======
+                                @money( $orderline->price_with_discount )
+>>>>>>> 5e1d1ea239aa69d4aa05f02e93457c28f9511d7b
                             </div>
                         </div>
                         <div class="item__actions">
