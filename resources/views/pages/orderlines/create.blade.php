@@ -20,31 +20,9 @@
                             </select>
                         </div>
                     </div>
-<<<<<<< HEAD
 
                     @livewire('base-price-calculate', ['order' => $order], key($order->id))
 
-=======
-                    <div class="field field-alt">
-                        <label for="format">{{__('Formaat')}}</label>
-                        <div class="dropdown">
-                            <select class="select2" name="format" id="format">
-                                @foreach ($order->project->formats as $format)
-                                    <option value="{{ $format->paper_type }}">{{ $format->size }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="field field-alt">
-                        <label for="base_price">{{ __('Basisbedrag') }}</label>
-                        <input type="text" name="base_price" id="base_price">
-                        @error('base_price')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
->>>>>>> 62a8599181f5a9650e78c133d2ff9dd8bbc7b729
                     <div class="field field-alt">
                         <label for="discount">{{__('Korting')}}</label>
                         <input type="text" name="discount" id="discount">
@@ -54,7 +32,6 @@
                             </span>
                         @enderror
                     </div>
-<<<<<<< HEAD
 
                     <div class="field field-alt">
                         <label for="material">{{ __('Materiaal') }}</label>
@@ -66,8 +43,6 @@
                     </div>
                     
 
-=======
->>>>>>> 62a8599181f5a9650e78c133d2ff9dd8bbc7b729
                 </fieldset>
             </div>
             <div class="ButtonGroup">
