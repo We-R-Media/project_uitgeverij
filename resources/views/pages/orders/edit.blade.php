@@ -122,12 +122,22 @@
                     <h3>{{ __('Opties') }}</h3>
 
                     <div class="field field-alt">
+                        <label for="order">{{ __('Ordernummer') }}</label>
+                        <input id="" type="text" name="order" value="{{$order->id}}" readonly>
+                        @error('order')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="field field-alt">
                         <label for="approved_at">{{ __('Goedgekeurd') }}</label>
                         <div class="radio__group">
                             <input id="approved_at_true" type="radio" name="approved_at" value="1" @if($order->approved_at) checked @endif>
-                            <label for="approved_at_true">Ja</label>
+                            <label for="approved_at_true">{{__('Ja')}}</label>
                             <input id="approved_at_false" type="radio" name="approved_at" value="0" @if(!$order->approved_at) checked @endif>
-                            <label for="approved_at_false">Nee</label>
+                            <label for="approved_at_false">{{__('Nee')}}</label>
                         </div>
                         @error('approved_at')
                             <span class="form__message" role="alert">
@@ -255,7 +265,7 @@
         <div class="ButtonGroup">
             <div class="buttons">
                 @if (!$order->approved_at)
-                    <a href="{{ route('email.approval', $order->id) }}" class="button button--action">{{__('Verstuur akkoord')}}</a>
+                    <a href="{{ route('email.approval', $order->id) }}" class="button button--action">{{__('Opdrachtbevestiging')}}</a>
                 @else
                     <a href="{{ route('invoices.create', $order->id) }}" class="button button--action">{{__('Factureer order')}}</a>
                 @endif

@@ -34,7 +34,7 @@ class OrderApproveController extends Controller
                 }
 
                 $order->update([
-                    'approved_at' => Carbon::now()
+                    'approved_at' => Carbon::now(),
                 ]);
 
                 Log::info('Order goedgekeurd');

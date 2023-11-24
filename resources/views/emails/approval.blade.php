@@ -333,7 +333,7 @@
     </style>
   </head>
   <body>
-    <span class="preheader">This is preheader text. Some clients will show this text as a preview.</span>
+    <span class="preheader">{{__('This is preheader text. Some clients will show this text as a preview.')}}</span>
     <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
       <tr>
         <td>&nbsp;</td>
@@ -354,9 +354,9 @@
                         <label for="name">{{__('Bedrijfsnaam:')}}</label>
                         {{$order->advertiser->name}} --}}
 
-                        <p>Geachte heer/mevrouw,</p>
+                        <p>{{__('Geachte heer/mevrouw,')}}</p>
 
-                        <p>Er is een order die goedkeuring vereist. Klik op de onderstaande link om de bestelling goed te keuren:</p>
+                        <p>{{__('Er is een order die goedkeuring vereist. Klik op de onderstaande link om de bestelling goed te keuren:')}}</p>
 
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>
@@ -366,7 +366,7 @@
                                   <tbody>
                                     <tr>
                                       <td>
-                                        <a href="{{ route('orders.approve', [$order->id, $order->validation_token]) }}" target="_blank">Order Goedkeuren</a>
+                                        <a href="{{ route('orders.approve', [$order->id, $order->validation_token]) }}" target="_blank">{{__('Order Goedkeuren')}}</a>
                                     </td>
                                     </tr>
                                   </tbody>
@@ -375,8 +375,8 @@
                             </tr>
                           </tbody>
                         </table>
-                        <p>Met vriendelijke groet,</p>
-                        <p>Concept Plus B.V.</p>
+                        <p>{{__('Met vriendelijke groet,')}}</p>
+                        <p>{{__('Concept Plus B.V.')}}</p>
                       </td>
                     </tr>
                   </table>

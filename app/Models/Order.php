@@ -41,6 +41,7 @@ class Order extends BaseModel
         'order_date',
         'order_total_price',
         'deactivated_at',
+        'validation_token',
     ];
 
     /**

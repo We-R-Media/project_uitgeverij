@@ -199,7 +199,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('emails')
         ->controller(EmailController::class)
         ->group(function () {
-            Route::get('/{id}/akkoord', 'approval')->name('approval');
+            Route::get('/{order_id}/akkoord', 'approval')->name('approval');
         });
 
 

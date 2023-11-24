@@ -31,15 +31,11 @@
                         <div class="item__summary">
                             <div class="item__format field">
                                 <label>{{__('Prijs')}}</label>
-<<<<<<< HEAD
                                 {{ @money($order->order_total_price) }}
                             </div>
                             <div class="item__created field">
                                 <label>{{__('Aangemaakt op')}}</label>
                                 {{$order->order_date}}
-=======
-                                @money($order->order_total_price)
->>>>>>> 5e1d1ea239aa69d4aa05f02e93457c28f9511d7b
                             </div>
                             <div class="item__comments field">
                                 <label>{{__('Laatst bijgewerkt op')}}</label>

@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use App\Models\Project;
 use App\Models\Contact;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Str;
+
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -101,6 +103,8 @@ class OrderController extends Controller
 
                 $advertiser = Advertiser::findOrFail($advertiser_id);
 
+                $token = Str::random(60);
+
 
 
                 $order = Order::create([
@@ -108,8 +112,8 @@ class OrderController extends Controller
                     'advertiser_id' => $advertiser_id,
                     'contact_id' => $contact_id,
                     'order_date' => now(),
-                    'approved_at' => now(),
                     'order_total_price' => 0.0,
+                    'validation_token' => $token,
                 ]);
 
 
@@ -128,6 +132,7 @@ class OrderController extends Controller
             return redirect()->route('advertisers.index');
         } catch (\Exception $e) {
             Alert::toast('Er is iets fout gegaan', 'error');
+            dd($e);
 
             return redirect()->route('advertisers.index');
         }
@@ -157,8 +162,9 @@ class OrderController extends Controller
             DB::transaction(function () use ($request, $order_id) {
 
                 $order = Order::where('id', $order_id)->update([
-                    'order_date' => $request->input('order_date'),
-                    'approved_at' => $request->input('deactivated_at') ? now() : null,
+                    // 'order_date' => $request->input('order_date'),
+                    'approved_at' => $request->input('approved_at') == 1 ? now() : null,
+                    'email_sent_at' => $request->input('approved_at') == 1 ? now() : null,
                     'deactivated_at' => $request->input('canceldate') ? now() : null,
                 ]);
             });
@@ -167,6 +173,7 @@ class OrderController extends Controller
 
             return redirect()->route('orders.index');
         } catch (\Exception $e) {
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('orders.index');
@@ -210,7 +217,6 @@ class OrderController extends Controller
             'subpagesData' => $this->getSubpages($order_id),
         ]);
     }
-
     public function complaints(string $order_id)
     {
         $order = Order::findOrFail($order_id);
