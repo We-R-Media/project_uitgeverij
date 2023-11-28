@@ -146,4 +146,20 @@ class ProjectFormatController extends Controller
         }
         return redirect()->route('formats.index', $project_id);
     }
+
+    public function duplicate($project_id)
+    {
+        $formats = Format::where('project_id', 1)->get();
+    
+
+        $project = Project::findOrFail($project_id);
+    
+        foreach ($formats as $format) {
+            $newFormat = $format->replicate();
+            $newFormat->project_id = $project_id;
+            $newFormat->save();
+        }
+    
+        return redirect()->route('formats.index', ['project_id' => $project_id]);
+    }
 }

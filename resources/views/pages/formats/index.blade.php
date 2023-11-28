@@ -6,7 +6,7 @@
         <div class="HeaderButtons">
             <div class="buttons">
                 <a href="{{ route('formats.create', $project->id) }}" class="button button--action">{{__('Nieuw formaat')}}</a>
-                {{-- <a href="{{ route('formats.duplicate', $project->id) }}" class="button button--action">{{__('Groep overnemen')}}</a> --}}
+                <a href="{{ route('formats.duplicate', $project->id) }}" class="button button--action">{{__('Groep overnemen')}}</a>
             </div>
         </div>
         <div class="items__head">

@@ -38,6 +38,8 @@ class Order extends BaseModel
         'name',
         'contact_id',
         'approved_at',
+        'order_method_approval',
+        'order_method_invoice',
         'order_date',
         'order_total_price',
         'deactivated_at',
@@ -90,6 +92,16 @@ class Order extends BaseModel
     public function contact(): BelongsTo
     {
         return $this->belongsTo(Contact::class);
+    }
+
+    /**
+     * Get the user that owns the Order
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     /**

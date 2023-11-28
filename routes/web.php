@@ -173,11 +173,11 @@ Route::group(['middleware' => ['auth']], function() {
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/nieuw', 'create')->name('create');
-                Route::get('/{layouts_id}/bewerken', 'edit')->name('edit');
-                Route::get('/{layouts_id}/verwijderen', 'destroy')->name('destroy');
+                Route::get('/{layout_id}/bewerken', 'edit')->name('edit');
+                Route::get('/{layout_id}/verwijderen', 'destroy')->name('destroy');
 
                 Route::post('/store', 'store')->name('store');
-                Route::post('/{layouts_id}/update', 'update')->name('update');
+                Route::post('/{layout_id}/update', 'update')->name('update');
                 Route::post('/upload', 'upload')->name('upload');
             });
 
@@ -189,6 +189,7 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::get('/{project_id}/nieuw', 'create')->name('create');
                 Route::get('/{format_id}/bewerken', 'edit')->name('edit');
                 Route::get('/{format_id}/{project_id}/verwijderen', 'destroy')->name('destroy');
+                Route::get('/{project_id}/dupliceren', 'duplicate')->name('duplicate');
 
                 Route::post('/{project_id}/opslaan', 'store')->name('store');
                 Route::post('/{format_id}/{project_id}/bijwerken', 'update')->name('update');

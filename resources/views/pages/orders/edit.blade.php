@@ -8,7 +8,7 @@
 
 
 
-    <form  class="formContainer" action="{{route('orders.update', $order->id)}}" method="post">
+    <form  class="formContainer" action="{{route('orders.update', $order->id)}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('post')
 
@@ -20,6 +20,16 @@
                     <label for="advertiser">{{ __('Klantnummer') }}</label>
                     <input id="" type="text" name="advertiser" value="{{$order->advertiser->id}}" readonly>
                     @error('advertiser')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="user">{{ __('Verkoper') }}</label>
+                    <input id="" type="text" name="user" value="{{$order->user->first_name}} {{$order->user->last_name}}" readonly>
+                    @error('user')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
@@ -175,6 +185,37 @@
                 @livewire('canceled-orders', ['order' => $order], key($order->id))
 
                 <div class="field field-alt">
+                    <label for="order_method">{{__('Bevestiging')}}</label>
+                    <div class="radio__group">
+                        <input type="checkbox" name="method_approval[]" value="email" checked>
+                        <label for="email_checkbox">{{__('E-mail')}}</label>
+                        <input type="checkbox" name="method_approval[]" value="post" checked>
+                        <label for="post_checkbox">{{__('Post')}}</label>
+                    </div>
+                </div>
+
+                <div class="field field-alt">
+                    <label for="order_method">{{__('Factuur')}}</label>
+                    <div class="radio__group">
+                        <input type="checkbox" name="method_invoice[]" value="email" checked>
+                        <label for="email_checkbox">{{__('E-mail')}}</label>
+                        <input type="checkbox" name="method_invoice[]" value="post" checked>
+                        <label for="post_checkbox">{{__('Post')}}</label>
+                    </div>
+                </div>
+
+                <div class="field field-alt">
+                    <label for="order_file">{{__('Bijlage 1')}}</label>
+                    <input type="file" name="order_file" id="">
+                </div>
+
+                <div class="field field-alt">
+                    <label for="order_file">{{__('Bijlage 2')}}</label>
+                    <input type="file" name="order_file_2" id="">
+                </div>
+
+
+                <div class="field field-alt">
                     <label for="layout_name">{{ __('Layout') }}</label>
                     @if($order->project->layout->count() == 0)
                     {{__('Layout niet beschikbaar...')}}
@@ -277,9 +318,6 @@
                         <small>{{ $message }}</small>
                     </span>
                 @enderror
-
-                
-
             </fieldset>
 
         </div>

@@ -39,7 +39,7 @@
                             </div>
                             <div class="item__format field">
                                 <label>{{__('Postcode')}}</label>
-                                {{$advertiser->postal_code}}, {{$advertiser->city}}
+                                {{$advertiser->postal_code}} {{$advertiser->city}}
                             </div>
                             <div class="item__format field">
                                 <label>{{__('E-mailadres')}}</label>

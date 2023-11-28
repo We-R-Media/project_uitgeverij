@@ -74,9 +74,9 @@ class LayoutController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Layout $layout, string $id)
+    public function edit(Layout $layout, string $layout_id)
     {
-        $layout = Layout::findOrFail($id);
+        $layout = Layout::findOrFail($layout_id);
 
         return view('pages.layouts.edit', compact('layout'))
             ->with([
@@ -89,10 +89,10 @@ class LayoutController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $layout_id)
     {
-        DB::transaction(function () use($request, $id) {
-            Layout::where('id', $id)->update([
+        DB::transaction(function () use($request, $layout_id) {
+            Layout::where('id', $layout_id)->update([
                 'layout_name' => $request->input('layout_name'),
                 'city_name' => $request->input('city_name'),
                 'logo' => $request->input('logo')

@@ -7,6 +7,7 @@ use App\Models\Advertiser;
 use Carbon\Carbon;
 use App\Models\Project;
 use App\Models\Contact;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 
@@ -15,6 +16,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+
+
 
 
 class OrderController extends Controller
@@ -102,22 +107,27 @@ class OrderController extends Controller
                 $project_id = $request->input('project_id');
                 $project = Project::findOrFail($project_id);
 
+                $user_id = Auth::user()->id;
+
+                $user = User::findOrFail($user_id);
 
                 $advertiser = Advertiser::findOrFail($advertiser_id);
 
                 $token = Str::random(60);
 
 
-
                 $order = Order::create([
                     'project_id' => $project_id,
                     'advertiser_id' => $advertiser_id,
-                    'contact_id' => $contact_id,
+                    'user_id' => $user_id,
                     'order_date' => now(),
                     'order_total_price' => 0.0,
                     'validation_token' => $token,
                 ]);
 
+
+                $order->user()->associate($user);
+                $order->save();
 
                 $order->project()->associate($project);
                 $order->save();
@@ -133,6 +143,7 @@ class OrderController extends Controller
 
             return redirect()->route('advertisers.index');
         } catch (\Exception $e) {
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('advertisers.index');
@@ -159,15 +170,38 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $order_id)
     {
-        try {
-            DB::transaction(function () use ($request, $order_id) {
+        $method_approval = $request->input('method_approval', []);
+        $all_selected_approval = in_array('email', $method_approval) && in_array('post', $method_approval);
+        $order_method_approval = $all_selected_approval ? 'all' : implode(',', $method_approval);
 
-                $order = Order::where('id', $order_id)->update([
+        $method_invoice = $request->input('method_invoice', []);
+        $all_selected_invoice = in_array('email', $method_invoice) && in_array('post', $method_invoice);
+        $order_method_invoice = $all_selected_invoice ? 'all' : implode(',', $method_invoice);
+
+
+        try {
+
+            DB::transaction(function () use ($request, $order_id, $order_method_approval, $order_method_invoice) {
+
+
+                $order = Order::findOrFail($order_id);
+
+                $file = $request->file('order_file');
+
+                $file_name = $file->getClientOriginalName();
+
+        
+
+                $order->update([
                     // 'order_date' => $request->input('order_date'),
                     'approved_at' => $request->input('approved_at') == 1 ? now() : null,
                     'email_sent_at' => $request->input('approved_at') == 1 ? now() : null,
+                    'order_method_approval' => $order_method_approval,
+                    'order_method_invoice' => $order_method_invoice,
+                    'order_file' => $request->input('order_file'),
                     'material_received_at' => $request->input('material_received_at') == 1 ? now() : null,
                     'deactivated_at' => $request->input('canceldate') ? now() : null,
+                    
                 ]);
             });
 
