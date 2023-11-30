@@ -92,44 +92,14 @@
             </div>
             @endif
 
-
-
-
             <textarea name="comments" id="" cols="30" rows="10" placeholder="{{__('Vul opmerkingen in...')}}"></textarea>
-
-
             <button type="submit" class="button button--action">{{__('Nieuwe toevoegen')}}</button>
-
          </fieldset>
 
       </div>
    </form>
+</div>
 
-   <ul class="items__view">
-      @if($advertiser->contacts->count() > 0)
-         @foreach ($advertiser->contacts as $contact )
-         <li class="item">
-            <div class="item__summary">
-               <div class="field">
-                  <label>{{__('Naam')}}</label>
-                  {{$contact->initial}} {{$contact->last_name}}
-               </div>
-               <div class="field">
-                  <label>{{__('E-mailadres')}}</label>
-                  {{$contact->email}}
-               </div>
-               <div class="field">
-                  <label>{{__('Rol')}}</label>
-                     @if ($contact->role == 1)
-                      {{$aliases[$contact->role]}}
-                     @else
-                     {{__('')}}
-                     @endif
-               </div>
-            </div>
-         </li>
-         @endforeach
-      @endif
-   </ul>
+
 
 @endsection

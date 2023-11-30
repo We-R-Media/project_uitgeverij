@@ -12,16 +12,19 @@
             <div class="grid__wrapper">
                 <fieldset class="fields base">
                     <h3>{{__('Orderregel')}}</h3>
-                    <div class="field field-alt">
+                    {{-- <div class="field field-alt">
                         <label for="project">{{__('Editie')}}</label>
                         <div class="dropdown">
                             <select class="select2" name="project" id="project">
-                                <option value="{{ $project->id }}">{{ $project->edition_name }}</option>
+                                @foreach ($projects as $project )
+                                    <option value="{{ $project->id }}">{{ $project->edition_name }}</option>
+                                @endforeach
                             </select>
                         </div>
-                    </div>
+                    </div> --}}
 
-                    @livewire('base-price-calculate', ['order' => $order], key($order->id))
+                    @livewire('format-dropdown', ['order' => $order, 'projects' => $projects ])
+                    {{-- @livewire('base-price-calculate', ['order' => $order, 'project' => $project], key($order->id)) --}}
 
                     <div class="field field-alt">
                         <label for="discount">{{__('Korting')}}</label>

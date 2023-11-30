@@ -94,24 +94,31 @@ class AdvertiserController extends Controller
      */
     public function store(Request $request)
     {
-        DB::transaction(function () use ($request) {
-            $advertiser = Advertiser::create([
-                'name' => $request->input('name'),
-                'email' => $request->input('email'),
-                'address' => $request->input('address'),
-               'po_box' => $request->input('po_box'),
-                'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
-                'city' => $request->input('city'),
-                'credit_limit' => $request->input('credit'),
-                'province' => $request->input('province'),
-                'phone_mobile' => $request->input('phone_mobile'),
-                'phone' => $request->input('phone'),
-                'comments' => $request->input('comments'),
-            ]);
-            $advertiser->save();
-        });
+        try {
+            DB::transaction(function () use ($request) {
+                $advertiser = Advertiser::create([
+                    'name' => $request->input('name'),
+                    'email' => $request->input('email'),
+                    'address' => $request->input('address'),
+                   'po_box' => $request->input('po_box'),
+                    'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
+                    'city' => $request->input('city'),
+                    'credit_limit' => $request->input('credit'),
+                    'province' => $request->input('province'),
+                    'phone_mobile' => $request->input('phone_mobile'),
+                    'phone' => $request->input('phone'),
+                    'comments' => $request->input('comments'),
+                ]);
+                $advertiser->save();
+            });
+    
+            Alert::toast('de relatie is successvol aangemaakt', 'success');
+            return redirect()->route('advertisers.index');
 
-        return redirect()->route('advertisers.index');
+        } catch (\Exception $e) {
+            Alert::toast('Er is iets fout gegaan', 'error');
+            return redirect()->route('advertisers.index');
+        }
     }
 
     /**

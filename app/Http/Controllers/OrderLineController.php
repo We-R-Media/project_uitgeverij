@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Order;
 use App\Models\Project;
+use App\Models\Format;
 use App\Models\OrderLine;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
@@ -43,12 +44,13 @@ class OrderLineController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(string $order_id, string $project_id)
+    public function create(string $order_id)
     {
         $order = Order::findOrFail($order_id);
-        $project = Project::findOrFail($project_id);
+        $projects = Project::all();
+        // $project = Project::findOrFail($project_id);
 
-        return view('pages.orderlines.create', compact('order', 'project'))->with([
+        return view('pages.orderlines.create', compact('order', 'projects'))->with([
             'pageTitleSection' => self::$page_title_section,
         ]);
     }
@@ -63,20 +65,29 @@ class OrderLineController extends Controller
             DB::transaction(function () use ($request, $order_id) {
                 $order = Order::findOrFail($order_id);
 
-                $base_price = $request->input('base_price');
-                $discount = $request->input('discount');
+                $project = Project::findOrFail($request->input('project_id'));
 
-                // $discount_amount = ($discount / 100) * $base_price;
+                $format = Format::findOrFail($request->input('format_id'));
+                $raw_price = $request->input('base_price');
+                $cleaned_price = str_replace(',', '.', preg_replace('/[^\d,]/', '', $raw_price));
+                $base_price = floatval($cleaned_price);                
+                $discount = $request->input('discount');
                 $discount_amount = $base_price - $discount;
 
                 $orderline = OrderLine::create([
                     'base_price' => $base_price,
                     'discount' => $discount,
-                    'project' => $request->input('project'),
+                    'project_id' => $project,
                     'price_with_discount' => ($discount != 0) ? ($base_price - $discount) : $base_price,
                 ]);
 
                 $orderline->order()->associate($order);
+                $orderline->save();
+
+                $orderline->project()->associate($project);
+                $orderline->save();
+
+                $orderline->format()->associate($format);
                 $orderline->save();
 
                 $order->updateOrderTotalPrice();

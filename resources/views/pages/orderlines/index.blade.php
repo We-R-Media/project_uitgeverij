@@ -42,7 +42,8 @@
         <div class="HeaderButtons">
             <div class="buttons">
                 @if ($order->order_total_price < $order->advertiser->credit_limit)
-                    <a href="{{ route('orderlines.create', [$order->id, $order->project->id]) }}" class="button button--action">{{__('Nieuwe regel')}}</a>
+                    {{-- <a href="{{ route('orderlines.create', [$order->id, $order->project->id]) }}" class="button button--action">{{__('Nieuwe regel')}}</a> --}}
+                    <a href="{{ route('orderlines.create', $order->id) }}" class="button button--action">{{__('Nieuwe regel')}}</a>
                 @else
                     <h4>{{__('Limiet overschreden')}}</h4>
                 @endif
@@ -73,7 +74,7 @@
                         </div>
                         <div class="item__summary">
                             <div class="item__format field">
-                                {{ $orderline->order->project->edition_name }}
+                                {{ $orderline->project->edition_name }}
                             </div>
                             <div class="item__format field">
                                 {{ @money( $orderline->base_price ) }}

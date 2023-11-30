@@ -124,7 +124,7 @@
                         </select>
                     </div>
 
-                    <div class="field field-alt">
+                    {{-- <div class="field field-alt">
                         <label for="project_id">{{__('Projectcode')}}</label>
                         <select class="select2" name="project_id" id="">
                             @if($projects->isEmpty())
@@ -135,7 +135,7 @@
                             @endforeach
                             @endif
                         </select>
-                    </div>
+                    </div> --}}
 
                 </fieldset>
 

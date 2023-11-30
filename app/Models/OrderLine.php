@@ -27,4 +27,27 @@ class OrderLine extends BaseModel
     {
         return $this->belongsTo(Order::class);
     }
+
+    /**
+     * Get the project that owns the OrderLine
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function project(): BelongsTo
+    {
+        return $this->belongsTo(Project::class);
+    }
+
+    /**
+     * Get the format that owns the OrderLine
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function format(): BelongsTo
+    {
+        return $this->belongsTo(Format::class);
+    }
+
+    
+    
 }

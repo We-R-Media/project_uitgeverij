@@ -196,7 +196,7 @@ class ProjectController extends Controller
                 $project->save();
             });
 
-            Alert::toast('Het project is successvol bijgewerkt!', 'success');
+            Alert::toast('Het project is successvol bijgewerkt', 'success');
 
             return redirect()->route('projects.index');
         } catch (\Exception $e) {

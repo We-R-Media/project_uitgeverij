@@ -12,7 +12,7 @@
                     <div>{{__('Bedrijfsnaam')}}</div>
                     <div>{{__('Plaatsnaam')}}</div>
                     <div>{{__('E-mailadres')}}</div>
-                    <div>{{__('Projectcode')}}</div>
+                    {{-- <div>{{__('Projectcode')}}</div> --}}
                 </div>
                 <div class="item__actions">
                     <div></div>
@@ -42,10 +42,10 @@
                             <div class="item__format field">
                                 {{$order->advertiser->email}}
                             </div>
-                            <div class="item__format field">
+                            {{-- <div class="item__format field">
                                 <label>{{__('Projectcode')}}</label>
                                 {{$order->project->name}}
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="item__actions">
                             <div class="actions__button">

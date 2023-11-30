@@ -79,7 +79,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{order_id}/orderregels/{regel_id}/verwijderen', 'destroy')->name('destroy');
             Route::get('/{order_id}/orderregels/{regel_id}/herstellen', 'restore')->name('restore');
 
-            Route::get('/{order_id}/{project_id}/orderregels/nieuw', 'create')->name('create');
+            Route::get('/{order_id}/orderregels/nieuw', 'create')->name('create');
 
             Route::post('/{order_id}/orderregels/opslaan', 'store')->name('store');
         });

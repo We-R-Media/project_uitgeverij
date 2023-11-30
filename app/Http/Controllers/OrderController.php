@@ -104,8 +104,8 @@ class OrderController extends Controller
                 $contact = Contact::findOrFail($contact_id);
 
 
-                $project_id = $request->input('project_id');
-                $project = Project::findOrFail($project_id);
+                // $project_id = $request->input('project_id');
+                // $project = Project::findOrFail($project_id);
 
                 $user_id = Auth::user()->id;
 
@@ -117,7 +117,7 @@ class OrderController extends Controller
 
 
                 $order = Order::create([
-                    'project_id' => $project_id,
+                    // 'project_id' => $project_id,
                     'advertiser_id' => $advertiser_id,
                     'user_id' => $user_id,
                     'order_date' => now(),
@@ -127,9 +127,6 @@ class OrderController extends Controller
 
 
                 $order->user()->associate($user);
-                $order->save();
-
-                $order->project()->associate($project);
                 $order->save();
 
                 $order->contact()->associate($contact);
@@ -156,8 +153,12 @@ class OrderController extends Controller
     public function edit(string $order_id)
     {
         $order = Order::findOrFail($order_id);
+        $selectedOrder = Order::with('orderLines.project')->find($order_id);
+        // $orderLine = $order->orderlines();
+        // $assoc_layout = $order->layout->layout_name;
 
-        return view('pages.orders.edit', compact('order'))
+
+        return view('pages.orders.edit', compact('order','selectedOrder'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'pageTitle' => $order->title,

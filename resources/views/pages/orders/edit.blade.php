@@ -58,7 +58,7 @@
 
                 <div class="field field-alt">
                     <label for="po_box">{{ __('Postadres') }}</label>
-                    <input id="" type="text" name="po_box" value="{{ $order->advertiser->po_box }}" readonly>
+                    <input id="" type="text" name="po_box" value="{{ $order->advertiser->address }}" readonly>
                     @error('po_box')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -131,6 +131,14 @@
 
                     <h3>{{ __('Opties') }}</h3>
 
+                    @if (!$selectedOrder->orderLines->isEmpty())
+                    <div class="field field-alt">
+                        <label for="layout">{{ __('Layout') }}</label>
+                        <input type="text" name="layout" value="{{ $order->layout->layout_name }}" id="" readonly>
+                    </div>
+                    @endif
+                
+
                     <div class="field field-alt">
                         <label for="order">{{ __('Ordernummer') }}</label>
                         <input id="" type="text" name="order" value="{{$order->id}}" readonly>
@@ -141,7 +149,7 @@
                         @enderror
                     </div>
 
-                    <div class="field field-alt">
+                    {{-- <div class="field field-alt">
                         <label for="project_id">{{ __('Projectcode') }}</label>
                         <input id="" type="text" name="project_id" value="{{$order->project->name}}" disabled>
                         @error('project_id')
@@ -149,7 +157,7 @@
                                 <small>{{ $message }}</small>
                             </span>
                         @enderror
-                    </div>
+                    </div> --}}
 
 
 
@@ -215,7 +223,7 @@
                 </div>
 
 
-                <div class="field field-alt">
+                {{-- <div class="field field-alt">
                     <label for="layout_name">{{ __('Layout') }}</label>
                     @if($order->project->layout->count() == 0)
                     {{__('Layout niet beschikbaar...')}}
@@ -227,7 +235,7 @@
                         </span>
                     @enderror
                     @endif
-                </div>
+                </div> --}}
 
                 <div class="field field-alt">
                     <label for="invoiced">{{ __('Gefactureerd') }}</label>
@@ -271,27 +279,6 @@
                             </span>
                         @enderror
                     </div>
-                </div>
-
-                <div class="field field-alt">
-                    <label for="order_total">{{ __('Ordertotaal') }}</label>
-                    <input id="" type="text" name="order_total" value="{{ $order->order_total_price }}" readonly>
-                    @error('order_total')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-
-                <div class="field field-alt">
-                    <label for="order_rule">{{ __('Orderregels') }}</label>
-                    <input id="" type="text" name="order_rule" value="{{ $order->orderLines->count() }}" readonly>
-                    @error('order_rule')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
                 </div>
 
 

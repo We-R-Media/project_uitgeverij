@@ -65,16 +65,6 @@ class Order extends BaseModel
     ];
 
     /**
-     * Get the project that owns the Order
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function project(): BelongsTo
-    {
-        return $this->belongsTo(Project::class);
-    }
-
-    /**
      * Get the advertiser that owns the Order
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -112,6 +102,23 @@ class Order extends BaseModel
     public function orderLines(): HasMany
     {
         return $this->hasMany(OrderLine::class);
+    }
+
+    public function getLayoutAttribute()
+    {
+        $firstOrderLine = $this->orderLines->first();
+        
+        return $firstOrderLine ? $firstOrderLine->project->layout : null;
+    }
+    
+    /**
+     * Get all of the layouts for the Order
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function layouts(): HasManyThrough
+    {
+        return $this->hasManyThrough(Layout::class, OrderLine::class);
     }
 
     /**
