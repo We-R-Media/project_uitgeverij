@@ -41,6 +41,8 @@ class Order extends BaseModel
         'order_method_approval',
         'order_method_invoice',
         'order_date',
+        'order_file',
+        'order_file_2',
         'order_total_price',
         'deactivated_at',
         'validation_token',

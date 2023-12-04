@@ -111,17 +111,19 @@
 
                     <div class="field field-alt">
                         <label for="contact">{{__('Contactpersoon')}}</label>
-                        <select class="select2" name="contact" id="">
-                            @if($advertiser->contacts->isEmpty())
-                            <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
-                            @else
-                            @foreach ($advertiser->contacts as $contact)
-                                <option value="{{ $contact->id }}" {{ $contact->role == 1 ? 'selected' : '' }}>
-                                    {{ $contact->salutation }} {{ $contact->initial }} {{ $contact->last_name }}
-                                </option>
-                            @endforeach
-                            @endif
-                        </select>
+                        <div class="dropdown">
+                            <select class="select2" name="contact" id="">
+                                @if($advertiser->contacts->isEmpty())
+                                <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
+                                @else
+                                @foreach ($advertiser->contacts as $contact)
+                                    <option value="{{ $contact->id }}" {{ $contact->role == 1 ? 'selected' : '' }}>
+                                        {{ $contact->salutation }} {{ $contact->initial }} {{ $contact->last_name }}
+                                    </option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
                     </div>
 
                     {{-- <div class="field field-alt">
@@ -216,7 +218,8 @@
 
                     <div class="field field-alt">
                         <label for="contact-alt">{{__('Contactpersoon')}}</label>
-                        <select class="select2" name="contact-alt" id="">
+                        <div class="dropdown">
+                            <select class="select2" name="contact-alt" id="">
                                 @if($advertiser->contacts->isEmpty())
                                 <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
                                 @else
@@ -227,6 +230,7 @@
                                 @endforeach
                                 @endif
                         </select>
+                        </div>
                     </div>
                     
 

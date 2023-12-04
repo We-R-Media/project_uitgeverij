@@ -45,6 +45,6 @@ class Format extends BaseModel
      */
     public function orderlines(): HasOne
     {
-        return $this->hasOne(User::class, 'foreign_key', 'local_key');
+        return $this->hasOne(OrderLine::class);
     }
 }

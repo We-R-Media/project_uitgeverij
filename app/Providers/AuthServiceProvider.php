@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use App\Policies\SettingsPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -17,7 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        'settings' => SettingsPolicy::class,
     ];
 
     /**
@@ -26,6 +27,16 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
+
+        Gate::define('settings', function (User $user){
+            return $user->isAdmin
+            ? Response::allow()
+            : Response::deny('You must be an administrator');
+        });
+
+        Gate::define('canAccess', function (User $user, $role) {
+            return $user->role === $role;
+        });
 
         Gate::define('isAdmin', function (User $user) {
             return $user->role === 'admin';

@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="page__wrapper">
-    <form class="formContainer" action="{{ route('layouts.store') }}" method="post">
+    <form class="formContainer" action="{{ route('layouts.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('post')
         <div class="grid__wrapper">
@@ -43,7 +43,7 @@
         </div>
         <div class="ButtonGroup">
             <div class="buttons">
-                <button class="button button--action" type="submit">Opslaan</button>
+                <button class="button button--action" type="submit">{{__('Opslaan')}}</button>
             </div>
         </div>
     </form>

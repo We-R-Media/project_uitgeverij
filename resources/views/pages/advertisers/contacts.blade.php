@@ -14,11 +14,17 @@
 
             <div class="field field-alt">
                <label for="salutation">{{__('Aanhef')}}</label>
-               <input type="text" name="salutation" id="">
+               <div class="dropdown">
+                  <select name="salutation" id="" class="select2">
+                     <option value="Dhr.">{{__('Dhr.')}}</option>
+                     <option value="Mw.">{{__('Mw.')}}</option>
+                  </select>
+               </div>
                @error('salutation')
                   <span class="form__message" role="alert">
                      <small>{{ $message }}</small>
                   </span>
+                  
                @enderror
             </div>
 
@@ -95,11 +101,52 @@
             <textarea name="comments" id="" cols="30" rows="10" placeholder="{{__('Vul opmerkingen in...')}}"></textarea>
             <button type="submit" class="button button--action">{{__('Nieuwe toevoegen')}}</button>
          </fieldset>
-
+         <fieldset class="fields base">
+            <ul class="items__view contacts__view">
+               @if($advertiser->contacts->count() > 0)
+                  @foreach ($advertiser->contacts as $contact )
+                  <li class="item {{ $contact->trashed() ? 'item--thrashed' : 'item--default' }}">
+                     <div class="item__content">
+                        <div class="field">
+                           <label>{{__('Naam')}}</label>
+                           {{$contact->initial}} {{$contact->last_name}}
+                        </div>
+                     </div>
+                     <div class="item__summary">
+                        <div class="field">
+                           <label>{{__('E-mailadres')}}</label>
+                           {{$contact->email}}
+                        </div>
+                        <div class="field">
+                           <label>{{__('Rol')}}</label>
+                              @if ($contact->role == 1)
+                              {{$aliases[$contact->role]}}
+                              @else
+                              {{__('')}}
+                              @endif
+                        </div>
+                     </div>
+                     <div class="item__actions">
+                        <div class="actions__button">
+                           <div class="icon">
+                              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 128 512"><path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z"/></svg>
+                           </div>
+                           <div class="actions__group">
+                              @if ( $contact->trashed() )
+                                 <a href="{{ route('advertisers.contacts.restore', $contact->id)}}" class="btn" onclick="return confirm('Are you sure you want to restore this record?')">{{__('Herstellen')}}</a>
+                              @else
+                                 <a href="{{ route('advertisers.contacts.destroy', [$contact->advertiser_id, $contact->id]) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">{{__('Verwijderen')}}</a>
+                              @endif
+                           </div>
+                        </div>
+                     </div>
+                  </li>
+                  @endforeach
+               @endif
+            </ul>
+         </fieldset>
       </div>
    </form>
 </div>
-
-
 
 @endsection

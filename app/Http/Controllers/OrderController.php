@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
@@ -87,15 +88,17 @@ class OrderController extends Controller
         return view('pages.orders.create', compact('advertiser', 'projects'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
-                'subpagesData' => $this->getSubpages($advertiser_id),
             ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(Request $request,  $advertiser_id)
     {
+
+
         try {
             $transactions = DB::transaction(function () use($request, $advertiser_id) {
 
@@ -154,8 +157,6 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($order_id);
         $selectedOrder = Order::with('orderLines.project')->find($order_id);
-        // $orderLine = $order->orderlines();
-        // $assoc_layout = $order->layout->layout_name;
 
 
         return view('pages.orders.edit', compact('order','selectedOrder'))
@@ -171,35 +172,43 @@ class OrderController extends Controller
      */
     public function update(Request $request, string $order_id)
     {
-        $method_approval = $request->input('method_approval', []);
-        $all_selected_approval = in_array('email', $method_approval) && in_array('post', $method_approval);
-        $order_method_approval = $all_selected_approval ? 'all' : implode(',', $method_approval);
-
-        $method_invoice = $request->input('method_invoice', []);
-        $all_selected_invoice = in_array('email', $method_invoice) && in_array('post', $method_invoice);
-        $order_method_invoice = $all_selected_invoice ? 'all' : implode(',', $method_invoice);
-
 
         try {
 
-            DB::transaction(function () use ($request, $order_id, $order_method_approval, $order_method_invoice) {
+            $order = Order::findOrFail($order_id);
+            
+            $method_approval = $request->input('method_approval', []);
+            $all_selected_approval = in_array('email', $method_approval) && in_array('post', $method_approval);
+            $order_method_approval = $all_selected_approval ? 'all' : implode(',', $method_approval);
+    
+            $method_invoice = $request->input('method_invoice', []);
+            $all_selected_invoice = in_array('email', $method_invoice) && in_array('post', $method_invoice);
+            $order_method_invoice = $all_selected_invoice ? 'all' : implode(',', $method_invoice);
+    
 
+            $file = $request->file('order_file');
 
-                $order = Order::findOrFail($order_id);
+            $file_2 = $request->file('order_file_2');
 
-                $file = $request->file('order_file');
+            DB::transaction(function () use ($request, $order_id, $order_method_approval, $order_method_invoice, $file, $file_2, $order) {
+            
 
-                $file_name = $file->getClientOriginalName();
+                $file_name = time() . '.' . $file->extension();
+                $file_name_2 = time() . '_2' . '.' .  $file_2->extension();
 
-        
+                $file->move(public_path('images/uploads/orders'), $file_name);
+                $file_2->move(public_path('images/uploads/orders'), $file_name_2);
 
-                $order->update([
+                
+
+                Order::where('id', $order_id)->update([
                     // 'order_date' => $request->input('order_date'),
                     'approved_at' => $request->input('approved_at') == 1 ? now() : null,
                     'email_sent_at' => $request->input('approved_at') == 1 ? now() : null,
                     'order_method_approval' => $order_method_approval,
                     'order_method_invoice' => $order_method_invoice,
-                    'order_file' => $request->input('order_file'),
+                    'order_file' => $file_name,
+                    'order_file_2' => $file_name_2,
                     'material_received_at' => $request->input('material_received_at') == 1 ? now() : null,
                     'deactivated_at' => $request->input('canceldate') ? now() : null,
                     

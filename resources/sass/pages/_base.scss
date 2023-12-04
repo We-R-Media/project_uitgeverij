@@ -205,6 +205,8 @@
     }
 }
 
+
+
 .items__view,
 .items__head {
     list-style-type: none;
@@ -363,6 +365,18 @@
     }
 }
 
+.contacts__view {
+    @include mixin.flex;
+
+    &> .item {
+        flex: 1;
+
+        // & * {
+        //     flex: 1;
+        //     min-width: 100%;
+        // }
+    }  
+}
 
 .item--thrashed {
     .item__content,

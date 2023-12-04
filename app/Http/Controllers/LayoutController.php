@@ -53,11 +53,23 @@ class LayoutController extends Controller
      */
     public function store(Request $request)
     {
-        DB::transaction(function () use($request) {
+
+        $file = $request->file('logo');
+        $file->getClientOriginalName();
+
+
+
+
+        DB::transaction(function () use($request, $file) {
+
+            
+            $image_name = time() . '-' . '.' . $file->extension();
+            $file->move(public_path('images/uploads/layouts'), $image_name);
+
             Layout::create([
                 'layout_name' => $request->input('layout_name'),
                 'city_name' => $request->input('city_name'),
-                'logo' => $request->input('logo'),
+                'logo' => $image_name,
             ]);
         });
         return redirect()->route('layouts.index');
@@ -91,11 +103,12 @@ class LayoutController extends Controller
      */
     public function update(Request $request, $layout_id)
     {
+        
         DB::transaction(function () use($request, $layout_id) {
             Layout::where('id', $layout_id)->update([
                 'layout_name' => $request->input('layout_name'),
                 'city_name' => $request->input('city_name'),
-                'logo' => $request->input('logo')
+                'logo' => $image_name,
             ]);
         });
 

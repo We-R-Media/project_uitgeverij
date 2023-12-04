@@ -6,11 +6,11 @@
 
 <div class="page__wrapper">
 
-
-
     <form  class="formContainer" action="{{route('orders.update', $order->id)}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('post')
+        
+        {{-- {{dd(asset('public/images/uploads/' . $order->order_file))}} --}}
 
     <div class="grid__wrapper">
             <fieldset class="fields base">
@@ -218,7 +218,7 @@
                 </div>
 
                 <div class="field field-alt">
-                    <label for="order_file">{{__('Bijlage 2')}}</label>
+                    <label for="order_file_2">{{__('Bijlage 2')}}</label>
                     <input type="file" name="order_file_2" id="">
                 </div>
 

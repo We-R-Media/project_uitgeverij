@@ -75,6 +75,7 @@ class Project extends BaseModel
      * @var array<string>
      */
     protected $searchableFields = [
+        'name',
         'release_name',
         'edition_name',
     ];

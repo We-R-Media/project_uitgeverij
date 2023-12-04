@@ -7,7 +7,7 @@
         <div class="page__info">
             <span class="info__box">
                 <span class="box__title">
-                  Startkrediet
+                  {{__('Startkrediet')}}
                 </span>
                 <span class="box__text">
                     {{ $order->getInitialCredit() }}
@@ -83,7 +83,7 @@
                                 {{ $orderline->discount !== 0 && !is_null($orderline->discount) ? "€{$orderline->discount}" : '-' }}
                             </div>
                             <div class="item__format field">
-                                {{ @money( $orderline->price_with_discount ) }}
+                                {{ @money( $orderline->price_with_discount) }}
                             </div>
                         </div>
                         <div class="item__actions">
@@ -94,10 +94,10 @@
                                 <div class="actions__group">
                                     @if ( $orderline->trashed() )
                                         <a href="{{ route('orderlines.restore', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id] ) }}" class="btn" onclick="return confirm('Are you sure you want to restore this record?')">{{__('Herstellen')}}</a>
-                                    @else
+                                    @endif
+                                       
                                         <a href="{{ route('orderlines.destroy', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id]) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">{{__('Verwijderen')}}</a>
                                         <a href="{{ route('invoices.create', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id]) }}" class="btn">{{__('Factureren')}}</a>
-                                    @endif
                                 </div>
                             </div>
                         </div>

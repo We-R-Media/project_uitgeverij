@@ -33,7 +33,11 @@ class OrderLineController extends Controller
     public function index(string $order_id)
     {
         $order = Order::with('orderLines')->findOrFail($order_id);
+
         $orderlines = $order->orderLines()->withTrashed()->paginate(12);
+
+        // $trashed = $orderlines->trashed();
+
 
         return view('pages.orderlines.index', compact('order', 'orderlines'))->with([
             'pageTitleSection' => self::$page_title_section,
@@ -47,6 +51,7 @@ class OrderLineController extends Controller
     public function create(string $order_id)
     {
         $order = Order::findOrFail($order_id);
+
         $projects = Project::all();
         // $project = Project::findOrFail($project_id);
 
@@ -151,11 +156,15 @@ class OrderLineController extends Controller
             Log::info('Orderregel succesvol hersteld: ' . $orderline->order->id);
             Alert::toast('Orderregel succesvol hersteld', 'success');
         } catch (ModelNotFoundException $e) {
+
             Log::error('Orderregel niet gevonden: ' . $regel_id);
             Alert::toast('Orderregel niet gevonden', 'error');
+            
         } catch (QueryException $e) {
+
             Log::error('Databasefout bij herstellen orderregel: ' . $e->getMessage());
             Alert::toast('Er is een fout opgetreden bij het herstellen van de orderregel', 'error');
+
         }
 
         return redirect()->route('orderlines.index', $order_id);

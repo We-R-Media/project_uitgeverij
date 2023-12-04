@@ -95,6 +95,10 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/nieuw', 'create')->name('create');
             Route::get('/{advertiser_id}/bewerken', 'edit')->name('edit');
             Route::get('/{advertiser_id}/verwijderen', 'destroy')->name('destroy');
+            Route::get('/{advertiser_id}/herstellen', 'contacts__restore')->name('restore');
+
+            Route::get('{advertiser_id}/contacten/{contact_id}/verwijderen', 'contacts__destroy')->name('contacts.destroy');
+            Route::get('/{advertiser_id}/herstellen', 'restore')->name('restore');
 
             Route::get('/{advertiser_id}/contacten', 'contacts')->name('contacts');
             Route::post('{advertiser_id}/contacten/opslaan', 'contacts__store')->name('contacts.store');
@@ -118,7 +122,13 @@ Route::group(['middleware' => ['auth']], function() {
             Route::post('/{invoice_id}/update', 'update')->name('update'); // FIX
         });
 
-    Route::middleware(['admin.check'])->group(function () {
+    Route::name('settings.')
+        ->prefix('instellingen')
+        ->controller(SettingsController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+        });
+        
         Route::name('settings.')
             ->prefix('instellingen')
             ->controller(SettingsController::class)
@@ -189,13 +199,12 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::get('/{project_id}/nieuw', 'create')->name('create');
                 Route::get('/{format_id}/bewerken', 'edit')->name('edit');
                 Route::get('/{format_id}/{project_id}/verwijderen', 'destroy')->name('destroy');
+                Route::get('/{format_id}/herstellen', 'restore')->name('restore');
                 Route::get('/{project_id}/dupliceren', 'duplicate')->name('duplicate');
 
                 Route::post('/{project_id}/opslaan', 'store')->name('store');
                 Route::post('/{format_id}/{project_id}/bijwerken', 'update')->name('update');
             });
-
-    });
 
     Route::name('email.')
         ->prefix('emails')

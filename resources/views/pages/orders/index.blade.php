@@ -30,6 +30,7 @@
                                 </a>
                             @endif
                         </div>
+                        {{-- {{dd(asset('images/uploads/' . $order->order_file))}} --}}
                         <div class="item__summary">
                             <div class="item__format field">
                                 <label>{{__('Bedrijfsnaam')}}</label>
@@ -42,10 +43,6 @@
                             <div class="item__format field">
                                 {{$order->advertiser->email}}
                             </div>
-                            {{-- <div class="item__format field">
-                                <label>{{__('Projectcode')}}</label>
-                                {{$order->project->name}}
-                            </div> --}}
                         </div>
                         <div class="item__actions">
                             <div class="actions__button">
@@ -54,7 +51,7 @@
                                 </div>
                                 <div class="actions__group">
                                     <a href="{{ route('orders.edit', $order->id) }}">{{__('Bewerken')}}</a>
-                                    <a href="{{ route('orders.destroy', $order->id) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">Verwijderen</a>
+                                    <a href="{{ route('orders.destroy', $order->id) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">{{__('Verwijderen')}}</a>
                                 </div>
                             </div>
                         </div>

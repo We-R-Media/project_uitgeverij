@@ -58,16 +58,6 @@ class Layout extends BaseModel
     ];
 
     /**
-     * Get the project associated with the layout.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    // public function project(): BelongsTo
-    // {
-    //     return $this->belongsTo(Project::class);
-    // }
-
-    /**
      * Get the project associated with the Layout
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne

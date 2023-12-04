@@ -8,6 +8,9 @@ use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Log;
+
 
 class AdvertiserController extends Controller
 {
@@ -27,7 +30,7 @@ class AdvertiserController extends Controller
      */
     public function index()
     {
-        $advertisers = Advertiser::whereNull('blacklisted_at')->whereNull('deactivated_at')->paginate(12);
+        $advertisers = Advertiser::whereNull('blacklisted_at')->whereNull('deactivated_at')->withTrashed()->paginate(12);
 
         $this->subpages = [
             'Actueel' => 'advertisers.index',
@@ -194,6 +197,31 @@ class AdvertiserController extends Controller
         return redirect()->route('advertisers.index');
     }
 
+        /**
+     * Restore a trashed advertiser.
+     *
+     * @param  int  $advertiser_id  The ID of the trashed order line to restore.
+     * @return void
+     */
+    public function restore(string $advertiser_id)
+    {
+        try 
+        {
+            $advertiser = Advertiser::onlyTrashed()->findOrFail($advertiser_id);
+            $advertiser->restore();
+
+            Log::info('Relatie succesvol hersteld:' . $advertiser->id);
+            Alert::toast('Relatie succesvol hersteld' , 'success');
+        } catch (ModelNotFoundException $e) {
+            Log::error('Relatie niet gevonden:' . $advertiser_id);
+            Alert::toast('Relatie niet gevonden', 'error');
+        } catch (QueryException $e) {
+            Log::error('Databasefout bij herstellen relatie: ' . $e->getMessage());
+            Alert::toast('Er is een fout opgetreden bij het herstellen van de relatie', 'error');
+        }
+        return redirect()->route('advertisers.index');
+    }
+
     public function contacts(string $advertiser_id)
     {
         $advertiser = Advertiser::findOrFail($advertiser_id);
@@ -211,6 +239,9 @@ class AdvertiserController extends Controller
 
     public function contacts__store(Request $request, string $advertiser_id)
     {
+
+        // dd($request->input('salutation'));
+
         try {
             DB::transaction(function () use ($request, $advertiser_id) {
                 $advertiser = Advertiser::findOrFail($advertiser_id);
@@ -234,10 +265,45 @@ class AdvertiserController extends Controller
 
             return redirect()->route('advertisers.contacts', $advertiser_id);
         } catch (\Exception $e){
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('advertisers.index');
         }
+    }
+
+    public function contacts__destroy(string $advertiser_id,string $contact_id) {
+
+        $contact = Contact::findOrFail($contact_id);
+        $advertiser = Advertiser::findOrFail($advertiser_id);
+
+        if($contact) {
+            $contact->delete();
+
+            Alert::toast('De contactpersoon is verwijderd', 'info');
+        }
+        return redirect()->route('advertisers.contacts', $advertiser->id);
+    }
+
+            /**
+     * Restore a trashed contact.
+     *
+     * @param  int  $contact_id  The ID of the trashed contact to restore.
+     * @return void
+     */
+    public function contacts__restore(string $contact_id, string $advertiser_id) {
+        try 
+        {
+            $contact = Contact::onlyTrashed()->findOrFail($contact_id);
+            $contact->restore();
+
+            Log::info('Contact succesvol hersteld:' . $contact->id);
+            Alert::toast('Contact succesvol hersteld', 'success');
+        } catch (ModelNotFoundException $e) {
+            Log::error('Databasefout bij herstellen contactpersoon: ' . $e->getMessage());
+            Alert::toast('Er is een fout opgetreden bij het herstellen van de contactpersoon', 'error');
+        }
+        return redirect()->route('advertisers.contacts', $advertiser_id);
     }
 
     public function orders(string $advertiser_id)

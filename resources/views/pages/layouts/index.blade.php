@@ -39,7 +39,7 @@
                             <div class="field">
                                 <label>{{__('Logo')}}</label>
                                 @if (!empty($layout->logo))
-                                    <div class="logo__preview"><a href="{{asset($layout->logo)}}" target="_blank">Bekijk afbeelding</a></div>
+                                    <div class="logo__preview"><a href="{{asset($layout->logo)}}" target="_blank">{{__('Bekijk afbeelding')}}</a></div>
                                 @else
                                     {{--__('Geen afbeelding geupload.')--}}
                                 @endif
@@ -52,7 +52,7 @@
                                 </div>
                                 <div class="actions__group">
                                     <a href="{{route('layouts.edit', $layout->id)}}">{{__('Bewerken')}}</a>
-                                    <a href="{{ route('layouts.destroy', $layout->id) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">Verwijderen</a>
+                                    <a href="{{ route('layouts.destroy', $layout->id) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">{{__('Verwijderen')}}</a>
                                 </div>
                             </div>
                         </div>
