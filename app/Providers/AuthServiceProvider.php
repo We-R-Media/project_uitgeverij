@@ -18,7 +18,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        'settings' => SettingsPolicy::class,
+        //
     ];
 
     /**
@@ -27,16 +27,6 @@ class AuthServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->registerPolicies();
-
-        Gate::define('settings', function (User $user){
-            return $user->isAdmin
-            ? Response::allow()
-            : Response::deny('You must be an administrator');
-        });
-
-        Gate::define('canAccess', function (User $user, $role) {
-            return $user->role === $role;
-        });
 
         Gate::define('isAdmin', function (User $user) {
             return $user->role === 'admin';
@@ -49,6 +39,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('isSeller', function (User $user) {
             return $user->role === 'seller';
         });
+
+
 
     }
 }

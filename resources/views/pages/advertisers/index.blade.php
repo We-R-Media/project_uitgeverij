@@ -16,6 +16,7 @@
                 <div class="item__summary">
                     <div>{{__('Postadres')}}</div>
                     <div>{{__('Postcode')}}</div>
+                    <div>{{__('Woonplaats')}}</div>
                     <div>{{__('E-mailadres')}}</div>
                 </div>
                 <div class="item__actions">
@@ -39,7 +40,11 @@
                             </div>
                             <div class="item__format field">
                                 <label>{{__('Postcode')}}</label>
-                                {{$advertiser->postal_code}} {{$advertiser->city}}
+                                {{$advertiser->postal_code}} 
+                            </div>
+                            <div class="item__format field">
+                                {{$advertiser->city}}
+                                <label>{{__('Woonplaats')}}</label>
                             </div>
                             <div class="item__format field">
                                 <label>{{__('E-mailadres')}}</label>

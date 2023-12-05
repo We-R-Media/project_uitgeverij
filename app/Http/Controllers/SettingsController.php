@@ -23,15 +23,10 @@ class SettingsController extends Controller
     }
 
     public function index() {
-
-        if(Gate::allows('isAdmin') || Gate::allow('isSupervisor')) {
             return view('pages.settings')
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'subpagesData' => $this->getSubpages(),
             ]);
-        } else {
-            abort(403);
-        }
         }
     }

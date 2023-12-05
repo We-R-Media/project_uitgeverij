@@ -37,14 +37,17 @@ class Kernel extends HttpKernel
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
-        'admin.check' => [
-            \App\Http\Middleware\AdminCheck::class
-        ],
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
+    ];
+
+    protected $routeMiddleware = [
+        'admin.check' => \App\Http\Middleware\AdminCheck::class,
+        'supervisor.check' => \App\Http\Middleware\SupervisorCheck::class,
+        'seller.check' => \App\Http\Middleware\SellerCheck::class,
     ];
 
     /**

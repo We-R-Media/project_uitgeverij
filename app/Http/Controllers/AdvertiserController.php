@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 
@@ -103,7 +104,7 @@ class AdvertiserController extends Controller
                     'name' => $request->input('name'),
                     'email' => $request->input('email'),
                     'address' => $request->input('address'),
-                   'po_box' => $request->input('po_box'),
+                    'po_box' => $request->input('po_box'),
                     'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
                     'city' => $request->input('city'),
                     'credit_limit' => $request->input('credit'),
@@ -160,7 +161,7 @@ class AdvertiserController extends Controller
                     'name' => $request->input('name'),
                     'po_box' => $request->input('po_box'),
                     'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
-                    'credit_limit' => $request->input('credit'),
+                    'credit_limit' => $this->convertToNumeric($request->input('credit')),
                     'city' => $request->input('city'),
                     'province' => $request->input('province'),
                     'phone' => $request->input('phone'),
@@ -180,6 +181,13 @@ class AdvertiserController extends Controller
 
             return redirect()->route('advertisers.index');
         }
+    }
+
+    private function convertToNumeric($value)
+    {
+        $cleanedValue = str_replace(['€', '.', ','], ['', '', '.'], $value);
+
+        return floatval($cleanedValue);
     }
 
     /**
@@ -308,7 +316,14 @@ class AdvertiserController extends Controller
 
     public function orders(string $advertiser_id)
     {
+
+
         $advertiser = Advertiser::findOrFail($advertiser_id);
+        $user_id = Auth::user()->id;
+
+        // $seller = $advertiser->orders->where('user_id', Auth::user()->id)->orWhere('role', 'seller');
+
+        // dd($seller);
 
         return view('pages.advertisers.orders', compact('advertiser'))->with([
             'pageTitleSection' => self::$page_title_section,

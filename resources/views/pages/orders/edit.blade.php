@@ -159,16 +159,14 @@
                         @enderror
                     </div> --}}
 
-
-
                     <div class="fields__row">
 
                     <div class="field field-alt">
                         <label for="material_received_at">{{__('Materiaal')}}</label>
                         <div class="radio__group">
-                            <input id="material_received_true" type="radio" name="material_received_at"  value="1" @if($order->material_received_at) checked @endif id="">
+                            <input id="material_received_true" type="radio" name="material_received_at" @can('isSeller') disabled @endcan value="1" @if($order->material_received_at) checked @endif id="">
                             <label for="approved_at_true">{{__('Ja')}}</label>
-                            <input id="material_received_true" type="radio" name="material_received_at" value="0" @if(!$order->material_received_at) checked @endif id="">
+                            <input id="material_received_true" type="radio" name="material_received_at" @can('isSeller') disabled @endcan value="0" @if(!$order->material_received_at) checked @endif id="">
                             <label for="approved_at_true">{{__('Nee')}}</label>
                         </div>
                     </div>
@@ -176,9 +174,9 @@
                     <div class="field field-alt">
                         <label for="approved_at">{{ __('Goedgekeurd') }}</label>
                         <div class="radio__group">
-                            <input id="approved_at_true" type="radio" name="approved_at" value="1" @if($order->approved_at) checked @endif>
+                            <input id="approved_at_true" type="radio" name="approved_at" @can('isSeller') disabled @endcan value="1" @if($order->approved_at) checked @endif>
                             <label for="approved_at_true">{{__('Ja')}}</label>
-                            <input id="approved_at_false" type="radio" name="approved_at" value="0" @if(!$order->approved_at) checked @endif>
+                            <input id="approved_at_false" type="radio" name="approved_at" @can('isSeller') disabled @endcan value="0" @if(!$order->approved_at) checked @endif>
                             <label for="approved_at_false">{{__('Nee')}}</label>
                         </div>
                         @error('approved_at')
@@ -195,9 +193,9 @@
                 <div class="field field-alt">
                     <label for="order_method">{{__('Bevestiging')}}</label>
                     <div class="radio__group">
-                        <input type="checkbox" name="method_approval[]" value="email" checked>
+                        <input type="checkbox" name="method_approval[]" @can('isSeller') disabled @endcan value="email" checked>
                         <label for="email_checkbox">{{__('E-mail')}}</label>
-                        <input type="checkbox" name="method_approval[]" value="post" checked>
+                        <input type="checkbox" name="method_approval[]" @can('isSeller') disabled @endcan value="post" checked>
                         <label for="post_checkbox">{{__('Post')}}</label>
                     </div>
                 </div>
@@ -205,21 +203,21 @@
                 <div class="field field-alt">
                     <label for="order_method">{{__('Factuur')}}</label>
                     <div class="radio__group">
-                        <input type="checkbox" name="method_invoice[]" value="email" checked>
+                        <input type="checkbox" name="method_invoice[]" @can('isSeller') disabled @endcan value="email" checked>
                         <label for="email_checkbox">{{__('E-mail')}}</label>
-                        <input type="checkbox" name="method_invoice[]" value="post" checked>
+                        <input type="checkbox" name="method_invoice[]" @can('isSeller') disabled @endcan value="post" checked>
                         <label for="post_checkbox">{{__('Post')}}</label>
                     </div>
                 </div>
 
                 <div class="field field-alt">
                     <label for="order_file">{{__('Bijlage 1')}}</label>
-                    <input type="file" name="order_file" id="">
+                    <input type="file" name="order_file" id="" @can('isSeller') disabled @endcan>
                 </div>
 
                 <div class="field field-alt">
                     <label for="order_file_2">{{__('Bijlage 2')}}</label>
-                    <input type="file" name="order_file_2" id="">
+                    <input type="file" name="order_file_2" id="" @can('isSeller') disabled @endcan>
                 </div>
 
 
@@ -251,9 +249,9 @@
                 <div class="field field-alt radio">
                     <label for="incasso">{{ __('Incasso') }}</label>
                     <div class="radio__group">
-                        <input id="" type="radio" name="incasso" value="1">
+                        <input id="" type="radio" name="incasso" @can('isSeller') disabled @endcan value="1">
                         <label>{{__('Ja')}}</label>
-                        <input id="" type="radio" name="incasso" value="0">
+                        <input id="" type="radio" name="incasso" @can('isSeller') disabled @endcan value="0">
                         <label>{{__('Nee')}}</label>
                     </div>
                 </div>
@@ -299,7 +297,7 @@
 
             <fieldset class="field notes full-width">
                 <label for="comment_confirmation">{{ __('Opmerkingen') }}</label>
-                <textarea id="" cols="30" rows="10" name="comment_confirmation" placeholder="Vul opmerkingen in...">{{$order->comment_confirmation}}</textarea>
+                <textarea id="" cols="30" rows="10" name="comment_confirmation" @can('isSeller') readonly @endcan placeholder="Vul opmerkingen in...">{{$order->comment_confirmation}}</textarea>
                 @error('comment_confirmation')
                     <span class="form__message" role="alert">
                         <small>{{ $message }}</small>

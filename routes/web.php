@@ -34,9 +34,11 @@ Route::group(['middleware' => ['auth']], function() {
         HomeController::class, 'index'
     ] )->name('home');
 
+    
     Route::name('projects.')
         ->prefix('projecten')
         ->controller(ProjectController::class)
+        ->middleware('supervisor.check')
         ->group(function () {
             Route::get('/', 'index')->name('index');
 
@@ -60,9 +62,9 @@ Route::group(['middleware' => ['auth']], function() {
 
             Route::get('/{advertiser_id}/nieuw', 'create')->name('create');
             Route::get('/{order_id}/bewerken', 'edit')->name('edit');
-            Route::get('/{order_id}/verwijderen', 'destroy')->name('destroy');
-            Route::get('/{order_id}/print', 'print')->name('print');
-            Route::get('/{order_id}/klachten', 'complaints')->name('complaints');
+            Route::get('/{order_id}/verwijderen', 'destroy')->name('destroy')->middleware('supervisor.check');
+            Route::get('/{order_id}/print', 'print')->name('print')->middleware('supervisor.check');
+            Route::get('/{order_id}/klachten', 'complaints')->name('complaints')->middleware('supervisor.check');
 
             Route::post('/{order_id}/opslaan', 'store')->name('store');
             Route::post('/{order_id}/update', 'update')->name('update');
@@ -73,6 +75,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::name('orderlines.')
         ->prefix('orders')
         ->controller(OrderLineController::class)
+        ->middleware('supervisor.check')
         ->group(function () {
             Route::get('/{order_id}/orderregels', 'index')->name('index');
 
@@ -112,6 +115,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::name('invoices.')
         ->prefix('facturen')
         ->controller(InvoiceController::class)
+        ->middleware('supervisor.check')
         ->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/{order_id}/nieuw', 'create')->name('create');
@@ -125,20 +129,15 @@ Route::group(['middleware' => ['auth']], function() {
     Route::name('settings.')
         ->prefix('instellingen')
         ->controller(SettingsController::class)
+        ->middleware('supervisor.check')
         ->group(function () {
             Route::get('/', 'index')->name('index');
         });
-        
-        Route::name('settings.')
-            ->prefix('instellingen')
-            ->controller(SettingsController::class)
-            ->group(function () {
-                Route::get('/', 'index')->name('index');
-            });
 
         Route::name('tax.')
             ->prefix('btw')
             ->controller(TaxController::class)
+            ->middleware('supervisor.check')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/nieuw', 'create')->name('create');
@@ -152,6 +151,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::name('reminders.')
             ->prefix('aanmaningen')
             ->controller(ReminderController::class)
+            ->middleware('supervisor.check')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/nieuw', 'create')->name('create');
@@ -165,6 +165,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::name('users.')
             ->prefix('gebruikers')
             ->controller(UserController::class)
+            ->middleware('admin.check')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/rol/{role?}', 'role')->name('role');
@@ -180,6 +181,7 @@ Route::group(['middleware' => ['auth']], function() {
         Route::name('layouts.')
             ->prefix('layouts')
             ->controller(LayoutController::class)
+            ->middleware('supervisor.check')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/nieuw', 'create')->name('create');
@@ -194,6 +196,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::name('formats.')
             ->prefix('formaten')
             ->controller(ProjectFormatController::class)
+            ->middleware('supervisor.check')
             ->group(function () {
                 Route::get('/{project_id}', 'index')->name('index');
                 Route::get('/{project_id}/nieuw', 'create')->name('create');
@@ -209,6 +212,7 @@ Route::group(['middleware' => ['auth']], function() {
     Route::name('email.')
         ->prefix('emails')
         ->controller(EmailController::class)
+        ->middleware('supervisor.check')
         ->group(function () {
             Route::get('/{order_id}/akkoord', 'approval')->name('approval');
         });

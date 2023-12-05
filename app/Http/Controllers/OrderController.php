@@ -42,14 +42,27 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::latest()->whereNull('deactivated_at')->whereNull('approved_at')->paginate(12);
-
+        $user_id = Auth::user()->id;
+    
         $this->subpages = [
             'Actueel' => 'orders.index',
             'Akkoord' => 'orders.certified',
             'Geannuleerd' => 'orders.deactivated',
         ];
-
+    
+        if (Gate::allows('isSeller')) {
+            $orders = Order::latest()
+                ->where('user_id', $user_id)
+                ->whereNull('deactivated_at')
+                ->whereNull('approved_at')
+                ->paginate(12);
+        } else {
+            $orders = Order::latest()
+                ->whereNull('deactivated_at')
+                ->whereNull('approved_at')
+                ->paginate(12);
+        }
+    
         return view('pages.orders.index', compact('orders'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
@@ -106,10 +119,6 @@ class OrderController extends Controller
                 $contact_id = $request->input('contact');
                 $contact = Contact::findOrFail($contact_id);
 
-
-                // $project_id = $request->input('project_id');
-                // $project = Project::findOrFail($project_id);
-
                 $user_id = Auth::user()->id;
 
                 $user = User::findOrFail($user_id);
@@ -137,6 +146,8 @@ class OrderController extends Controller
 
                 $order->advertiser()->associate($advertiser);
                 $order->save();
+
+                // Mail::to('algemeen@wermedia.nl')->send(new OrderConfirmationMail($order));
             });
 
             Alert::toast('De order is successvol aangemaakt', 'success');
@@ -145,8 +156,7 @@ class OrderController extends Controller
         } catch (\Exception $e) {
             dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
-
-            return redirect()->route('advertisers.index');
+            return redirect()->route('orders.index');
         }
     }
 
@@ -193,12 +203,19 @@ class OrderController extends Controller
             DB::transaction(function () use ($request, $order_id, $order_method_approval, $order_method_invoice, $file, $file_2, $order) {
             
 
-                $file_name = time() . '.' . $file->extension();
-                $file_name_2 = time() . '_2' . '.' .  $file_2->extension();
-
-                $file->move(public_path('images/uploads/orders'), $file_name);
-                $file_2->move(public_path('images/uploads/orders'), $file_name_2);
-
+                $file_name = null;
+                $file_name_2 = null;
+                
+                if ($file) {
+                    $file_name = time() . '.' . $file->extension();
+                    $file->move(public_path('images/uploads/orders'), $file_name);
+                }
+                
+                if ($file_2) {
+                    $file_name_2 = time() . '_2' . '.' .  $file_2->extension();
+                    $file_2->move(public_path('images/uploads/orders'), $file_name_2);
+                }
+                
                 
 
                 Order::where('id', $order_id)->update([

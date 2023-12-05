@@ -102,23 +102,31 @@
             <button type="submit" class="button button--action">{{__('Nieuwe toevoegen')}}</button>
          </fieldset>
          <fieldset class="fields base">
-            <ul class="items__view contacts__view">
+            <ul class="items__view">
+               <div class="items__head">
+                  <div class="item item__head">
+                     <div class="item__content">
+                        <div>{{__('Naam')}}</div>
+                     </div>
+                     <div class="item__summary">
+                        <div>{{__('E-mailadres')}}</div>
+                        <div>{{__('Rol')}}</div>
+                     </div>
+                  </div>
+               </div>
                @if($advertiser->contacts->count() > 0)
                   @foreach ($advertiser->contacts as $contact )
                   <li class="item {{ $contact->trashed() ? 'item--thrashed' : 'item--default' }}">
                      <div class="item__content">
                         <div class="field">
-                           <label>{{__('Naam')}}</label>
                            {{$contact->initial}} {{$contact->last_name}}
                         </div>
                      </div>
                      <div class="item__summary">
                         <div class="field">
-                           <label>{{__('E-mailadres')}}</label>
                            {{$contact->email}}
                         </div>
                         <div class="field">
-                           <label>{{__('Rol')}}</label>
                               @if ($contact->role == 1)
                               {{$aliases[$contact->role]}}
                               @else

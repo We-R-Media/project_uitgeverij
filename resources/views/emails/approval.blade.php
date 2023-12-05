@@ -354,9 +354,15 @@
                         <label for="name">{{__('Bedrijfsnaam:')}}</label>
                         {{$order->advertiser->name}} --}}
 
-                        <p>{{__('Geachte heer/mevrouw,')}}</p>
+                        {{-- <p>{{__('Geachte heer/mevrouw,')}}</p> --}}
+                        <p>Geachte {{$order->contact->salutation}} {{$order->contact->first_name}} {{$order->contact->last_name}},</p>
 
-                        <p>{{__('Er is een order die goedkeuring vereist. Klik op de onderstaande link om de bestelling goed te keuren:')}}</p>
+                        <p>
+                           Naar aanleiding van ons gesprek op 5 december 2023 is het ons een genoegen de plaatsing van uw advertentie te bevestigen.
+                           De opdrachtbevestiging met daarop de specifieke informatie over uw plaatsing vindt u in de bijlage van deze mail.</p>
+                        </p>
+
+                        {{-- <p>{{__('Er is een order die goedkeuring vereist. Klik op de onderstaande link om de bestelling goed te keuren:')}}</p> --}}
 
                         <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                           <tbody>

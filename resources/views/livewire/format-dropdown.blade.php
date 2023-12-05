@@ -14,7 +14,7 @@
         <div class="field field-alt">
             <label for="format">{{__('Formaat')}}</label>
             <div class="dropdown">
-                <select class="select2" wire:model.change="selectedFormat" name="format_id" id="">
+                <select wire:model.change="selectedFormat" name="format_id" id="">
                     @foreach ($currentProject->formats as $formats)
                     <option value="{{$formats->id}}">{{ $formats->size }}</option>   
                     @endforeach
