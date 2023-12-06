@@ -70,15 +70,15 @@
 
     .button--submit {
         @include mixin.flex($align-items: center, $justify-content: center);
-        flex: 0 0 5rem;
-        width: 5rem;
-        height: 5rem;
+        flex: 0 0 4rem;
+        width: 4rem;
+        height: 4rem;
         cursor: pointer;
 
         .button__icon {
             @include mixin.flex($align-items: center, $justify-content: center);
-            width: 3rem;
-            height: 3rem;
+            width: 2rem;
+            height: 2rem;
         }
     }
 }
@@ -109,10 +109,22 @@ label{
 .form__row--spacer-top {
     margin-top: 2rem;
 }
-
-
 .form__instruction {
     font-size: clamp(1rem, 4vw, 1.2rem);
     margin-bottom: 2rem;
 }
 
+.search__bar {
+    background-color: color.$secondary;
+    border-radius: 3rem;
+
+    .field {
+        input {
+            min-width: 15vw;
+
+            &:not([type=checkbox]):not([type=radio]) {
+                border: unset;
+            }
+        }
+    }
+}

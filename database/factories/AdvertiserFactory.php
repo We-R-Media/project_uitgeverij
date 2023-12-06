@@ -30,8 +30,8 @@ class AdvertiserFactory extends Factory
             'po_box' => fake()->optional()->address(),
             'credit_limit' => fake()->randomFloat(2, 100, 3000),
             'comments' => fake()->optional()->paragraph(),
-            'deactivated_at' => fake()->optional()->dateTimeThisCentury(),
-            'blacklisted_at' => fake()->optional()->dateTimeThisCentury()
+            'deactivated_at' => fake()->optional(.2)->dateTimeThisCentury(),
+            'blacklisted_at' => fake()->optional(.2)->dateTimeThisCentury()
         ];
     }
 }

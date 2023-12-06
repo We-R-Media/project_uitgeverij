@@ -41,14 +41,12 @@
             font-weight: 500;
         }
         .dropdown {
-            //border-bottom: 1px solid color.$primary;
             position: relative;
             select {
                 width: 100%;
                 border: 0px;
                 padding-right: 25px;
             }
-            //&:after {content: "";border: solid color.$primary; border-width: 0 3px 3px 0;display: inline-block;padding: 3px;position: absolute;right: 0px;transform: rotate(45deg);-webkit-transform: rotate(45deg);bottom: 25px; }
         }
         &.notes {
             border: 0px;
@@ -153,10 +151,13 @@
             background: color.$grey-lighter;
         }
     }
-    .HeaderButtons {
-        display: flex;
-        justify-content: flex-end;
+    .header__bar {
+        @include mixin.flex($justify-content: space-between);
         margin-bottom: 30px;
+
+        .buttons {
+            margin-left: auto;
+        }
     }
 }
 

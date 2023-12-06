@@ -3,7 +3,7 @@
 @section('seo_title', $pageTitleSection)
 @section('content')
     <div class="page__wrapper">
-        <div class="HeaderButtons">
+        <div class="header__bar">
             <div class="buttons">
                 <a href="{{ route('users.create') }}" class="button button--action">{{__('Nieuwe gebruiker')}}</a>
             </div>

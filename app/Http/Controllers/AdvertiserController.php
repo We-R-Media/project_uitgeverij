@@ -5,16 +5,22 @@ namespace App\Http\Controllers;
 use App\AppHelpers\PostalCodeHelper;
 use App\Models\Advertiser;
 use App\Models\Contact;
+use App\Services\SearchService;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class AdvertiserController extends Controller
 {
+    protected $searchService;
+
     private static $page_title_section = 'Relaties';
 
-    public function __construct()
+    public function __construct(SearchService $searchService)
     {
+        $this->searchService = $searchService;
+
         $this->subpages = [
             'Adverteerder' => 'advertisers.edit',
             'Contactpersonen' => 'advertisers.contacts',
@@ -25,9 +31,18 @@ class AdvertiserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request) : View
     {
-        $advertisers = Advertiser::whereNull('blacklisted_at')->whereNull('deactivated_at')->paginate(12);
+        $searchQuery = $request->input('search');
+
+        $advertisers = Advertiser::whereNull('blacklisted_at')
+            ->when($searchQuery, function ($query) use ($searchQuery) {
+                $this->searchService->search($query, $searchQuery, [
+                    'name',
+                ]);
+            })
+            ->whereNull('deactivated_at')
+            ->paginate(12);
 
         $this->subpages = [
             'Actueel' => 'advertisers.index',
@@ -62,7 +77,7 @@ class AdvertiserController extends Controller
             ]);
     }
 
-    public function inactive() 
+    public function inactive()
     {
         $advertisers = Advertiser::whereNotNull('deactivated_at')->paginate(12);
 
@@ -143,8 +158,6 @@ class AdvertiserController extends Controller
         try{
             DB::transaction(function () use($request, $advertiser_id) {
                 $advertiser = Advertiser::findOrFail($advertiser_id);
-
-
 
                 $advertiser->update([
                     'name' => $request->input('name'),

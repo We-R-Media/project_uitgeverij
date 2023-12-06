@@ -29,10 +29,14 @@ class OrderLineController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(string $order_id)
+    public function index(Request $request, string $order_id)
     {
+        $query = $request->input('search');
+
         $order = Order::with('orderLines')->findOrFail($order_id);
-        $orderlines = $order->orderLines()->withTrashed()->paginate(12);
+        $orderlines = $order->orderLines()
+            ->withTrashed()
+            ->paginate(12);
 
         return view('pages.orderlines.index', compact('order', 'orderlines'))->with([
             'pageTitleSection' => self::$page_title_section,

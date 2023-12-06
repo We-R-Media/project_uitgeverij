@@ -18,7 +18,7 @@ return new class extends Migration
             $table->double('base_price')->nullable();
             $table->double('price_with_discount')->nullable();
             $table->integer('discount')->nullable();
-            $table->boolean('material');
+            $table->boolean('material')->nullable();
             $table->datetime('invoiced_at')->nullable();
             $table->softDeletes();
             $table->timestamps();

@@ -2,27 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\SearchableModelTrait;
 use App\Models\Order;
 use App\Models\Advertiser;
-use Carbon\Carbon;
 use App\Models\Project;
 use App\Models\Contact;
+use App\Services\SearchService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
-
 
 class OrderController extends Controller
 {
+    protected $searchService;
+
     private static $page_title_section = 'Orders';
 
-    public function __construct()
+    public function __construct(SearchService $searchService)
     {
+        $this->searchService = $searchService;
+
         $this->subpages = [
             'Ordergegevens' => 'orders.edit',
             'Print' => 'orders.print',
-            'Klachten' =>  'orders.complaints',
+            'Klachten' => 'orders.complaints',
             'Orderregels' => 'orderlines.index',
         ];
     }
@@ -30,9 +33,19 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::latest()->whereNull('deactivated_at')->paginate(12);
+        $searchQuery = $request->input('search');
+
+        $orders = Order::query()
+            ->latest()
+            ->whereNull('deactivated_at')
+            ->when($searchQuery, function ($query) use ($searchQuery) {
+                $this->searchService->search($query, $searchQuery, [
+                    'title'
+                ]);
+            })
+            ->paginate(12);
 
         $this->subpages = [
             'Actueel' => 'orders.index',
