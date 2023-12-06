@@ -27,10 +27,11 @@ class AdvertiserController extends Controller
      */
     public function index()
     {
-        $advertisers = Advertiser::whereNull('blacklisted_at')->paginate(12);
+        $advertisers = Advertiser::whereNull('blacklisted_at')->whereNull('deactivated_at')->paginate(12);
 
         $this->subpages = [
             'Actueel' => 'advertisers.index',
+            'Inactief' => 'advertisers.inactive',
             'Zwarte lijst' => 'advertisers.blacklist',
         ];
 
@@ -50,6 +51,7 @@ class AdvertiserController extends Controller
 
         $this->subpages = [
             'Actueel' => 'advertisers.index',
+            'Inactief' => 'advertisers.inactive',
             'Zwarte lijst' => 'advertisers.blacklist',
         ];
 
@@ -58,6 +60,22 @@ class AdvertiserController extends Controller
                 'pageTitleSection' => self::$page_title_section,
                 'subpagesData' => $this->getSubpages(),
             ]);
+    }
+
+    public function inactive() 
+    {
+        $advertisers = Advertiser::whereNotNull('deactivated_at')->paginate(12);
+
+        $this->subpages = [
+            'Actueel' => 'advertisers.index',
+            'Inactief' => 'advertisers.inactive',
+            'Zwarte lijst' => 'advertisers.blacklist',
+        ];
+
+        return view('pages.advertisers.index', compact('advertisers'))->with([
+            'pageTitleSection' => self::$page_title_section,
+            'subpagesData' => $this->getSubpages(),
+        ]);
     }
 
 
@@ -81,10 +99,10 @@ class AdvertiserController extends Controller
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
                 'address' => $request->input('address'),
-                'po_box' => $request->input('po_box'),
-                'po_box' => $request->input('po_box'),
+               'po_box' => $request->input('po_box'),
                 'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
                 'city' => $request->input('city'),
+                'credit_limit' => $request->input('credit'),
                 'province' => $request->input('province'),
                 'phone_mobile' => $request->input('phone_mobile'),
                 'phone' => $request->input('phone'),
@@ -124,17 +142,22 @@ class AdvertiserController extends Controller
     {
         try{
             DB::transaction(function () use($request, $advertiser_id) {
-                $advertiser = Advertiser::where('id', $advertiser_id)->update([
+                $advertiser = Advertiser::findOrFail($advertiser_id);
+
+
+
+                $advertiser->update([
                     'name' => $request->input('name'),
                     'po_box' => $request->input('po_box'),
                     'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
-                    'credit_limit' => $request->input('credit_limit'),
+                    'credit_limit' => $request->input('credit'),
                     'city' => $request->input('city'),
                     'province' => $request->input('province'),
                     'phone' => $request->input('phone'),
                     'phone_mobile' => $request->input('phone_mobile'),
                     'email' => $request->input('email'),
                     'blacklisted_at' => $request->input('blacklisted') == 1 ? now() : null,
+                    'deactivated_at' => $request->input('active') == 1 ? now() : null,
                 ]);
             });
 
@@ -142,6 +165,7 @@ class AdvertiserController extends Controller
 
             return redirect()->route('advertisers.index');
         } catch (\Exception $e){
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('advertisers.index');

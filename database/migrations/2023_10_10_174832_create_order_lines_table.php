@@ -15,9 +15,10 @@ return new class extends Migration
             $table->id();
              $table->string('title')->nullable();
             $table->foreignId('order_id')->nullable();
-            $table->double('base_price');
-            $table->double('price_with_discount');
-            $table->double('discount')->nullable();
+            $table->double('base_price')->nullable();
+            $table->double('price_with_discount')->nullable();
+            $table->integer('discount')->nullable();
+            $table->boolean('material');
             $table->datetime('invoiced_at')->nullable();
             $table->softDeletes();
             $table->timestamps();

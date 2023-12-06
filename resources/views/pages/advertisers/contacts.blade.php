@@ -82,13 +82,15 @@
                @enderror
             </div>
 
-            <div class="field field-alt">
-               <label for="role">{{__('Rol')}}</label>
-               <div class="radio__group">
-                  <label>{{__('Primair')}}</label>
-                  <input type="radio" name="role" value="1">
-               </div>
+            @if (!$advertiser->contacts->where('role', 1)->count() == 1)
+               <div class="field field-alt">
+                  <label for="role">{{__('Rol')}}</label>
+                  <div class="radio__group">
+                     <label>{{__('Primair')}}</label>
+                     <input type="radio" name="role" value="1">
+                  </div>
             </div>
+            @endif
 
 
 

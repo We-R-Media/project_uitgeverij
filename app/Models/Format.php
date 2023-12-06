@@ -16,15 +16,16 @@ class Format extends BaseModel
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'paper_type',
+        // 'name',
+        // 'paper_type',
+        'format_title',
         'size',
         'measurement',
         'ratio',
         'project_id',
         'price',
         'page_count',
-        'description'
+        'description',
     ];
 
     /**

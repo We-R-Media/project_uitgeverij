@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 
@@ -30,6 +31,8 @@ class Project extends BaseModel
      * @var array<int, string>
      */
     protected $fillable = [
+        'id',
+        'name',
         'title',
         'layout_id',
         'tax_id',
@@ -53,6 +56,7 @@ class Project extends BaseModel
         'department',
         'year',
         'revenue_goals',
+        'deactivated_at',
         'comments',
     ];
 
@@ -76,7 +80,7 @@ class Project extends BaseModel
     ];
 
     /**
-     * Get the orders associated with the project.
+     * Get all of the orders for the Project
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -96,13 +100,13 @@ class Project extends BaseModel
     }
 
     /**
-     * Get the tax associated with the project.
+     * Get the tax that owns the Project
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function tax(): HasOne
+    public function tax(): BelongsTo
     {
-        return $this->hasOne(Tax::class);
+        return $this->belongsTo(Tax::class);
     }
 
     /**
@@ -145,14 +149,15 @@ class Project extends BaseModel
         return $this->hasOne(Client::class);
     }
 
+
     /**
-     * Get the layout associated with the project.
+     * Get the layout that owns the Project
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function layout(): HasOne
+    public function layout(): BelongsTo
     {
-        return $this->hasOne(Layout::class);
+        return $this->belongsTo(Layout::class);
     }
 
         /**

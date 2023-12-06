@@ -6,7 +6,7 @@
         <div class="items__head">
             <div class="item item__head">
                 <div class="item__content">
-                    <div>{{__('Titel')}}</div>
+                    <div>{{__('Bedrijfsnaam')}}</div>
                 </div>
                 <div class="item__summary">
                     <div>{{__('Prijs')}}</div>

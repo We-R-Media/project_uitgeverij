@@ -14,7 +14,6 @@ class TaxController extends Controller
 
     public function __construct() {
         $this->subpages = [
-            'Formaten' => 'formats.index',
             'Layouts' => 'layouts.index',
             'BTW' => 'tax.index',
             'Aanmaningen' => 'reminders.index',

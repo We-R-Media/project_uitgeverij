@@ -6,8 +6,7 @@ use App\Models\Order;
 use App\Models\Advertiser;
 use Carbon\Carbon;
 use App\Models\Project;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\QueryException;
+use App\Models\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -87,30 +86,46 @@ class OrderController extends Controller
     public function store(Request $request,  $advertiser_id)
     {
         try {
-            $transactions = DB::transaction(function () use ($request, $advertiser_id) {
+            $transactions = DB::transaction(function () use($request, $advertiser_id) {
+
+
+                $contact_id = $request->input('contact');
+                $contact = Contact::findOrFail($contact_id);
+
+
                 $project_id = $request->input('project_id');
+                $project = Project::findOrFail($project_id);
+
+
+                $advertiser = Advertiser::findOrFail($advertiser_id);
+
+
 
                 $order = Order::create([
                     'project_id' => $project_id,
+                    'advertiser_id' => $advertiser_id,
+                    'contact_id' => $contact_id,
                     'order_date' => now(),
                     'approved_at' => now(),
                     'order_total_price' => 0.0,
                 ]);
 
 
-                $project = Project::findOrFail($project_id);
                 $order->project()->associate($project);
                 $order->save();
 
-                $advertiser = Advertiser::findOrFail($advertiser_id);
+                $order->contact()->associate($contact);
+                $order->save();
+
                 $order->advertiser()->associate($advertiser);
                 $order->save();
             });
 
-            Alert::toast('De relatie is succesvol bijgewerkt', 'success');
+            Alert::toast('De order is successvol aangemaakt', 'success');
 
             return redirect()->route('advertisers.index');
-        } catch (\Exception $e) {
+        } catch (\Exception $e){
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('advertisers.index');
@@ -143,7 +158,7 @@ class OrderController extends Controller
                 $order = Order::where('id', $order_id)->update([
                     'order_date' => $request->input('order_date'),
                     'approved_at' => $request->input('deactivated_at') ? now() : null,
-                    'deactivated_at' => $request->input('deactivated_at') ? now() : null,
+                    'deactivated_at' => $request->input('canceldate') ? now() : null,
                 ]);
             });
 

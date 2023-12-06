@@ -15,7 +15,6 @@ class LayoutController extends Controller
     public function __construct()
     {
         $this->subpages = [
-            'Formaten' => 'formats.index',
             'Layouts' => 'layouts.index',
             'BTW' => 'tax.index',
             'Aanmaningen' => 'reminders.index',
@@ -61,7 +60,7 @@ class LayoutController extends Controller
                 'logo' => $request->input('logo'),
             ]);
         });
-        return redirect()->back();
+        return redirect()->route('layouts.index');
     }
 
     /**

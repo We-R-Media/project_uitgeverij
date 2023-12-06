@@ -19,7 +19,7 @@ mix.options({
     processCssUrls: false
 });
 
-mix.sass('resources/sass/styles.scss', 'public/css');
+// mix.sass('resources/sass/styles.scss', 'public/css');
 
 mix.js('resources/js/app.js', 'public/js');
 mix.js('resources/js/maps.js', 'public/js');

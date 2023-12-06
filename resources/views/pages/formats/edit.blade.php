@@ -4,30 +4,15 @@
 @section('seo_title', $pageTitleSection)
 @section('content')
     <div class="page__wrapper">
-        <form action="{{ route('formats.update', $format->id) }}" method="post">
+        <form action="{{ route('formats.update', [$format->id, $format->project_id]) }}" method="post">
             @csrf
             @method('post')
             <div class="grid__wrapper">
                 <fieldset class="fields base">
 
                     <div class="field field-alt">
-                        <label for="format_id">{{__('Formaat ID')}}</label>
-                        <input type="number" value="{{ $format->id }}" name="format_id" id="" disabled>
-                        @error('format_id')
-                            <span class="form__message">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="field field-alt">
-                        <label for="project_id">{{__('Projectcode')}}</label>
-                        <input type="number" value="{{ $format->project_id }}" name="project_id" id="" disabled>
-                        @error('project_id')
-                            <span class="form__message">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
+                        <label for="format_title">{{__('Titel')}}</label>
+                        <input type="text" name="format_title" value="{{$format->format_title}}" id="">
                     </div>
 
                     <div class="field field-alt">
@@ -74,7 +59,7 @@
             </div>
             <div class="ButtonGroup">
                 <div class="buttons">
-                    <button type="submit" class="button button--action">Opslaan</button>
+                    <button type="submit" class="button button--action">{{__('Opslaan')}}</button>
                 </div>
             </div>
         </form>

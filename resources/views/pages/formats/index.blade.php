@@ -5,16 +5,16 @@
     <div class="page__wrapper">
         <div class="HeaderButtons">
             <div class="buttons">
-                <a href="{{ route('formats.create') }}" class="button button--action">{{__('Nieuw formaat')}}</a>
+                <a href="{{ route('formats.create', $project->id) }}" class="button button--action">{{__('Nieuw formaat')}}</a>
             </div>
         </div>
         <div class="items__head">
             <div class="item item__head">
                 <div class="item__content">
-                    <div>{{__('Titel')}}</div>
+                    <div>{{__('Projectcode')}}</div>
                 </div>
                 <div class="item__summary">
-                    <div>{{__('Papiertype')}}</div>
+                    <div>{{__('Verhouding')}}</div>
                     <div>{{__('Afmetingen')}}</div>
                     <div>{{__("Prijs")}}</div>
                 </div>
@@ -34,8 +34,8 @@
                         </div>
                         <div class="item__summary">
                             <div class="item__fromat field">
-                                <label>{{__('Papiertype')}}</label>
-                                {{$format->paper_type}}
+                                <label>{{__('Verhouding')}}</label>
+                                {{$format->ratio}}
                             </div>
                             <div class="item__format field">
                                 <label>{{__('Afmeting')}}</label>
@@ -53,7 +53,7 @@
                                 </div>
                                 <div class="actions__group">
                                     <a href="{{ route('formats.edit', $format->id) }}">{{__('Bewerken')}}</a>
-                                    <a href="{{ route('formats.destroy', $format->id) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">Verwijderen</a>
+                                    <a href="{{ route('formats.destroy', [$format->id, $format->project_id]) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">{{__('Verwijderen')}}</a>
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                 @endforeach
             @else
                 <li class="item">
-                    <p>{{__('Geen relaties gevonden')}}</p>
+                    <p>{{__('Geen formaten gevonden')}}</p>
                 </li>
             @endif
         </ul>

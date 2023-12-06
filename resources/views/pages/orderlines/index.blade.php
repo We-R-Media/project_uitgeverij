@@ -41,7 +41,11 @@
 
         <div class="HeaderButtons">
             <div class="buttons">
-                <a href="{{ route('orderlines.create', [$order->project->id, $order->id]) }}" class="button button--action">{{__('Nieuwe regel')}}</a>
+                @if ($order->order_total_price < $order->advertiser->credit_limit)
+                    <a href="{{ route('orderlines.create', [$order->id, $order->project->id]) }}" class="button button--action">{{__('Nieuwe regel')}}</a>
+                @else
+                    <h4>{{__('Limiet overschreden')}}</h4>
+                @endif
             </div>
         </div>
         <div class="items__head">
@@ -75,7 +79,7 @@
                                 @money( $orderline->base_price )
                             </div>
                             <div class="item__format field">
-                                {{ $orderline->discount !== 0 && !is_null($orderline->discount) ? "€{$orderline->discount}" : '-' }}
+                                {{ number_format($orderLine->discount, 2)}}
                             </div>
                             <div class="item__format field">
                                 @money( $orderline->price_with_discount )

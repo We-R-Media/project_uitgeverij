@@ -13,9 +13,9 @@
             <fieldset class="fields base">
                 <h3>{{ __('Algemeen') }}</h3>
                 <div class="field field-alt">
-                    <label for="project_code">{{ __('Projectcode') }}</label>
-                    <input id="" type="text" name="project_code" value="{{ old('project_code') }}">
-                    @error('project_code')
+                    <label for="name">{{ __('Projectcode') }}</label>
+                    <input id="" type="text" name="name" value="{{ old('name') }}">
+                    @error('name')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
@@ -215,7 +215,7 @@
                     <div class="dropdown">
                         <select class="select2" title="taxes" name="taxes" id="taxes">
                             @if($taxes->isEmpty())
-                                <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
+                            <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
                             @else
                             @foreach($taxes as $tax)
                                 <option value="{{$tax->id}}">{{$tax->country}}</option>
@@ -224,7 +224,6 @@
                         </select>
                     </div>
                 </div>
-
 
                 <div class="field field-alt">
                     <label for="ledger">{{ __('Grootboek') }}</label>

@@ -4,19 +4,15 @@
 @section('seo_title', $pageTitleSection)
 @section('content')
     <div class="page__wrapper">
-        <form action="{{ route('formats.store') }}" method="post">
+        <form action="{{ route('formats.store', $project->id) }}" method="post">
             @csrf
             @method('post')
             <div class="grid__wrapper">
                 <fieldset class="fields base">
 
                     <div class="field field-alt">
-                        <label for="paper_type">{{__('Papier')}}</label>
-                        <select name="paper_type" id="">
-                            <option value="A5">{{__('A5')}}</option>
-                            <option value="A4">{{__('A4')}}</option>
-                            <option value="A3">{{__('A3')}}</option>
-                        </select>
+                        <label for="format_title">{{__('Titel')}}</label>
+                        <input type="text" value="{{$project->name}}" name="format_title" id="">
                     </div>
 
                     <div class="field field-alt">

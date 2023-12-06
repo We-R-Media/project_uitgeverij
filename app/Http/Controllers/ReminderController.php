@@ -12,7 +12,6 @@ class ReminderController extends Controller
 
     public function __construct() {
         $this->subpages = [
-            'Formaten' => 'formats.index',
             'Layouts' => 'layouts.index',
             'BTW' => 'tax.index',
             'Aanmaningen' => 'reminders.index',
@@ -68,7 +67,7 @@ class ReminderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $reminder_id)
     {
         //
     }
@@ -76,9 +75,9 @@ class ReminderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $reminder_id)
     {
-        $reminder = Reminder::findOrFail($id);
+        $reminder = Reminder::findOrFail($reminder_id);
 
         return view('pages.reminders.edit', compact('reminder'))
             ->with([
@@ -90,10 +89,10 @@ class ReminderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $reminder_id)
     {
-        DB::transaction(function () use($request, $id) {
-            Reminder::where('id', $id)->update([
+        DB::transaction(function () use($request, $reminder_id) {
+            Reminder::where('id', $reminder_id)->update([
                 'period_first' => $request->input('period_first'),
                 'period_second' => $request->input('period_second'),
                 'period_third' => $request->input('period_third'),
@@ -109,7 +108,7 @@ class ReminderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $reminder_id)
     {
         //
     }

@@ -38,7 +38,7 @@
 
                 <div class="field field-alt">
                     <label for="contact">{{ __('Contactpersoon') }}</label>
-                    <input id="" type="text" name="contact" value="{{-- $order->advertiser->contacts --}}" readonly>
+                    <input id="" type="text" name="contact" value="{{$order->contact->first_name}} {{$order->contact->last_name}}" readonly>
                     @error('contact')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -121,103 +121,58 @@
                 <div class="fields__row">
                     <h3>{{ __('Opties') }}</h3>
 
-                    <div class="field field-alt">
-                        <label for="approved_at">{{ __('Goedgekeurd') }}</label>
-                        <div class="radio__group">
-                            <input id="approved_at_true" type="radio" name="approved_at" value="1" @if($order->approved_at) checked @endif>
-                            <label for="approved_at_true">Ja</label>
-                            <input id="approved_at_false" type="radio" name="approved_at" value="0" @if(!$order->approved_at) checked @endif>
-                            <label for="approved_at_false">Nee</label>
-                        </div>
-                        @error('approved_at')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
+                <div class="field field-alt">
+                    <label for="approved_at">{{ __('Goedgekeurd') }}</label>
+                    <div class="radio__group">
+                        <input id="approved_at_true" type="radio" name="approved_at" value="1" @if($order->approved_at) checked @endif>
+                        <label for="approved_at_true">{{__('Ja')}}</label>
+                        <input id="approved_at_false" type="radio" name="approved_at" value="0" @if(!$order->approved_at) checked @endif>
+                        <label for="approved_at_false">{{__('Nee')}}</label>
                     </div>
 
-                    <div class="field field-alt">
-                        <label for="order_date">{{ __('Datum goedkeuring') }}</label>
-                        <input class="field__date" id="order_date" type="datetime-local" name="order_date" value="{{ old('approved_at', $order->approved_at) }}" disabled>
-                    </div>
+                <div class="field field-alt">
+                    <label for="project_id">{{ __('Projectcode') }}</label>
+                    <input id="" type="text" name="project_id" value="{{$order->project->id}}" disabled>
+                    @error('project_id')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
 
-                    <div class="field field-alt">
-                        <label for="order_date">{{ __('Order datum') }}</label>
-                        <input class="field__date" id="order_date" type="datetime-local" name="order_date" value="{{ old('order_date', $order->order_date) }}">
-                        @error('order_date')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
+                <div class="field field-alt">
+                    <label for="layout_name">{{ __('Layout') }}</label>
+                    @if($order->project->layout->count() == 0)
+                    {{__('Layout niet beschikbaar...')}}
+                    @else
+                    <input id="" type="text" name="layout_name" value="{{$order->project->layout->layout_name}}" disabled>
+                    @error('layout_name')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                    @endif
+                </div>
 
-                    <div class="field field-alt">
-                        <label for="project_id">{{ __('Projectcode') }}</label>
-                        <input id="" type="text" name="project_id" value="{{$order->project->id}}" disabled>
-                        @error('project_id')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="field field-alt">
-                        <label for="canceled">{{ __('Geannuleerd') }}</label>
-                        <div class="radio__group">
-                            <input id="" type="radio" name="canceled" value="1">
-                            <label for="canceled">{{__('Ja')}}</label>
-                            <input id="" type="radio" name="canceled" value="0">
-                            <label for="canceled">{{__('Nee')}}</label>
-                        </div>
-                        @error('canceled')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
+                <div class="field field-alt">
+                    <label for="invoiced">{{ __('Gefactureerd') }}</label>
+                    <input id="" type="text" name="invoiced" value="" readonly>
+                    @error('invoiced')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
 
-                    <div class="field field-alt">
-                        <label for="deactivated_at">{{ __('Annuleren op') }}</label>
-                        <input class="field__date" id="deactivated_at" type="datetime-local" name="deactivated_at" value="{{ old('order_date', $order->deactivated_at) }}">
-                        @error('deactivated_at')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
+                @livewire('canceled-orders', ['order' => $order], key($order->id))
 
-                    <div class="field field-alt">
-                        <label for="incasso">{{ __('Incasso') }}</label>
-                        <div class="radio__group">
-                            <input id="" type="radio" name="incasso" value="1">
-                            <label>{{__('Ja')}}</label>
-                            <input id="" type="radio" name="incasso" value="0">
-                            <label>{{__('Nee')}}</label>
-                        </div>
-                        @error('incasso')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="field field-alt">
-                        <label for="order_number">{{ __('Ordernummer') }}</label>
-                        <input id="" type="text" name="order_number" value="{{ $order->id }}" readonly>
-                        @error('po_box')
-                            <span class="order_number" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="field field-alt">
-                        <label for="invoiced">{{ __('Gefactureerd') }}</label>
-                        <input id="" type="text" name="invoiced" value="" readonly>
-                        @error('invoiced')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
+                <div class="field field-alt">
+                    <label for="incasso">{{ __('Incasso') }}</label>
+                    <div class="radio__group">
+                        <input id="" type="radio" name="incasso" value="1">
+                        <label>{{__('Ja')}}</label>
+                        <input id="" type="radio" name="incasso" value="0">
+                        <label>{{__('Nee')}}</label>
                     </div>
                 </div>
 
@@ -244,6 +199,39 @@
                         @enderror
                     </div>
                 </div>
+
+                <div class="field field-alt">
+                    <label for="order_total">{{ __('Ordertotaal') }}</label>
+                    <input id="" type="text" name="order_total" value="{{ $order->order_total_price }}" readonly>
+                    @error('order_total')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                {{-- @if ($order->order_total_price > $order->advertiser->credit_limit)@endif --}}
+
+                <div class="field field-alt">
+                    <label for="order_rule">{{ __('Orderregels') }}</label>
+                    <input id="" type="text" name="order_rule" value="{{ $order->orderLines->count() }}" readonly>
+                    @error('order_rule')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="invoiced">{{ __('Gefactureerd') }}</label>
+                    <input id="" type="text" name="invoiced" value="" readonly>
+                    @error('invoiced')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
             </fieldset>
 
             <fieldset class="field notes full-width">

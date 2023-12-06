@@ -17,6 +17,7 @@ return new class extends Migration
             $table->dateTime('order_date');
             $table->foreignID('project_id')->nullable();
             $table->foreignID('advertiser_id')->nullable();
+            $table->foreignID('contact_id')->nullable();
             $table->double('order_total_price');
             $table->string('validation_token')->unique();
             $table->dateTime('approved_at')->nullable()->default(null);
@@ -29,6 +30,7 @@ return new class extends Migration
         });
     }
 
+    
     /**
      * Reverse the migrations.
      */

@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->foreignId('layout_id')->nullable();
             $table->foreignId('tax_id')->nullable();
             $table->string('title')->nullable();
@@ -34,10 +35,11 @@ return new class extends Migration
             $table->integer('ledger');
             $table->integer('journal');
             $table->integer('department');
-            $table->timestamp('year')->default(now());
+            $table->timestamp('year')->nullable();
             $table->double('revenue_goals');
             $table->longText('comments')->nullable();
             $table->softDeletes();
+            $table->date('deactivated_at')->nullable()->default(null);
             $table->timestamps();
         });
     }

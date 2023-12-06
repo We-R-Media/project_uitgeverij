@@ -60,7 +60,7 @@
                 @endforeach
             @else
                 <li class="item">
-                    <p>Geen facturen gevonden</p>
+                    <p>{{__('Geen facturen gevonden')}}</p>
                 </li>
             @endif
         </div>
