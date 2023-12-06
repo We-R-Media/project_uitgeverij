@@ -30,6 +30,52 @@
                     @enderror
                 </div>
 
+
+                <div class="field field-alt">
+                    <label for="salutation">{{__('Aanhef')}}</label>
+                    <div class="dropdown">
+                       <select name="salutation" id="" class="select2">
+                          <option value="Dhr.">{{__('Dhr.')}}</option>
+                          <option value="Mw.">{{__('Mw.')}}</option>
+                       </select>
+                    </div>
+                    @error('salutation')
+                       <span class="form__message" role="alert">
+                          <small>{{ $message }}</small>
+                       </span>
+                    @enderror
+                 </div>
+
+                <div class="field field-alt">
+                    <label for="initial">{{ __('Voorletter') }}</label>
+                    <input id="" type="text" name="initial" value="{{ $advertiser->initial }}">
+                    @error('initial')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="first_name">{{ __('Voornaam') }}</label>
+                    <input id="" type="text" name="first_name" value="{{ $advertiser->first_name }}">
+                    @error('first_name')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="last_name">{{ __('Achternaam') }}</label>
+                    <input id="" type="text" name="last_name" value="{{ $advertiser->last_name }}">
+                    @error('last_name')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
                 <div class="field field-alt">
                     <label for="name">{{ __('Bedrijfsnaam') }}</label>
                     <input id="" type="text" name="name" value="{{ $advertiser->name }}">

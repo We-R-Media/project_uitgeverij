@@ -312,7 +312,10 @@
                     <a href="{{ route('email.approval', $order->id) }}" class="button button--action">{{__('Opdrachtbevestiging')}}</a>
                 @else
                     <a href="{{ route('invoices.create', $order->id) }}" class="button button--action">{{__('Factureer order')}}</a>
-                @endif                   
+                @endif
+
+                {{-- <a href="{{ route('orders.preview', $order->id) }}" class="button button--action">{{__('Voorbeeld')}}</a> --}}
+                
                 <button type="submit" class="button button--action">{{ __('Opslaan') }}</button>
             </div>
         </div>

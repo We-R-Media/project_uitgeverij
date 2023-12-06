@@ -103,6 +103,8 @@ class AdvertiserController extends Controller
                 $advertiser = Advertiser::create([
                     'first_name' => $request->input('first_name'),
                     'last_name' => $request->input('last_name'),
+                    'salutation' => $request->input('salutation'),
+                    'initial' => $request->input('initial'),
                     'name' => $request->input('name'),
                     'email' => $request->input('email'),
                     'address' => $request->input('address'),
@@ -117,20 +119,23 @@ class AdvertiserController extends Controller
                 ]);
                 $advertiser->save();
 
-                // $advertiser_data = Advertiser::findOrFail($advertiser->id);
-
-                // $contact = Contact::firstOrCreate([
-                //     'advertiser_id' => $advertiser_data,
-                //     'first_name' => $request->input('first_name'),
-                //     'last_name' => $request->input('last_name'),
-                //     'email' => $request->input('email'),
-                //     'phone' => $request->input('phone'),
-                //     'role' => 1,
-                // ]);
+                $advertiser_data = Advertiser::findOrFail($advertiser->id);
+                $advertiser_id = $advertiser_data->id;
 
 
-                // $contact->advertiser->associate($advertiser_data);
-                // $contact->save();
+                $contact = Contact::firstOrNew([
+                    'advertiser_id' => $advertiser_id,
+                    'salutation' => $request->input('salutation'),
+                    'initial' => $request->input('initial'),
+                    'role' => 1,
+                    'email' => $request->input('email'),
+                    'first_name' => $request->input('first_name'),
+                    'last_name' => $request->input('last_name'),
+                    'phone' => $request->input('phone'),
+                ]);
+
+                $advertiser->contacts()->save($contact);
+                $contact->save();
             });
     
             Alert::toast('De relatie is successvol aangemaakt', 'success');
@@ -169,13 +174,19 @@ class AdvertiserController extends Controller
      */
     public function update(Request $request, string $advertiser_id)
     {
+
+
         try{
             DB::transaction(function () use($request, $advertiser_id) {
                 $advertiser = Advertiser::findOrFail($advertiser_id);
 
+                $first_name = $request->input('first_name');
 
-
-                $advertiser->update([
+                Advertiser::where('id', $advertiser_id)->update([
+                    'first_name' => $request->input('first_name'),
+                    'last_name' => $request->input('last_name'),
+                    'salutation' => $request->input('salutation'),
+                    'initial' => $request->input('initial'),
                     'name' => $request->input('name'),
                     'po_box' => $request->input('po_box'),
                     'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
@@ -188,6 +199,20 @@ class AdvertiserController extends Controller
                     'blacklisted_at' => $request->input('blacklisted') == 1 ? now() : null,
                     'deactivated_at' => $request->input('active') == 0 ? now() : null,
                 ]);
+
+                Contact::where('first_name', $advertiser_id)
+                    ->orWhere('email', $request->input('email'))
+                    ->first()    
+                    ->update([
+                    'salutation' => $request->input('salutation'),
+                    'initial' => $request->input('initial'),
+                    'role' => 1,
+                    'email' => $request->input('email'),
+                    'first_name' => $request->input('first_name'),
+                    'last_name' => $request->input('last_name'),
+                    'phone' => $request->input('phone'),
+                ]);
+
             });
 
             Alert::toast('De relatie is succesvol bijgewerkt', 'success');

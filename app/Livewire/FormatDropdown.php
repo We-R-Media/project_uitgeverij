@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Project;
 use App\Models\Format;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class FormatDropdown extends Component
 {
@@ -20,7 +21,13 @@ class FormatDropdown extends Component
     public function mount()
     {
         $userId = Auth::user()->id;
-        $this->projects = Project::where('user_id', $userId)->whereNull('deactivated_at')->get();
+
+        if(Gate::allows('isSeller')) {
+            $this->projects = Project::where('user_id', $userId)->whereNull('deactivated_at')->get();
+        }
+        else {
+            $this->projects = Project::whereNull('deactivated_at')->get();
+        }
 
         if ($this->projects->isNotEmpty()) {
             $this->selectedValue = $this->projects->first()->id;

@@ -65,6 +65,8 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{order_id}/print', 'print')->name('print');
             Route::get('/{order_id}/klachten', 'complaints')->name('complaints');
 
+            Route::get('/{order_id}/voorbeeld', 'preview')->name('preview');
+
             Route::post('/{order_id}/opslaan', 'store')->name('store');
             Route::post('/{order_id}/update', 'update')->name('update');
             Route::post('/{order_id}/verzenden', 'approval')->name('approval');
@@ -169,7 +171,7 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::get('/{user_id}/verwijderen', 'destroy')->name('destroy');
 
                 Route::post('/opslaan', 'store')->name('store');
-                Route::post('/update', 'update')->name('update');
+                Route::post('/{user_id}/bijwerken', 'update')->name('update');
             });
 
         Route::name('layouts.')

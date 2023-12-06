@@ -22,6 +22,8 @@ class Advertiser extends BaseModel
         'id',
         'first_name',
         'last_name',
+        'salutation',
+        'initial',
         'title',
         'name',
         'email',

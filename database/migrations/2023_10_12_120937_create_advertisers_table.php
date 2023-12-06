@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('first_name');
             $table->string('last_name');
+            $table->enum('salutation', ['Dhr.', 'Mw.'])->nullable();
+            $table->char('initial')->nullable();
             // $table->foreignId('contact_id')->nullable();
             $table->string('name');
             $table->string('email');

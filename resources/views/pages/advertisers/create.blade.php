@@ -13,6 +13,31 @@
                 <h3>{{ __('Algemeen') }}</h3>
 
                 <div class="field field-alt">
+                    <label for="salutation">{{__('Aanhef')}}</label>
+                    <div class="dropdown">
+                       <select name="salutation" id="" class="select2">
+                          <option value="Dhr.">{{__('Dhr.')}}</option>
+                          <option value="Mw.">{{__('Mw.')}}</option>
+                       </select>
+                    </div>
+                    @error('salutation')
+                       <span class="form__message" role="alert">
+                          <small>{{ $message }}</small>
+                       </span>
+                    @enderror
+                 </div>
+
+                 <div class="field field-alt">
+                    <label for="initial">{{ __('Voorletter') }}</label>
+                    <input id="" type="text" name="initial">
+                    @error('initial')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
                     <label for="first_name">{{ __('Voornaam') }}</label>
                     <input id="" type="text" name="first_name">
                     @error('first_name')
@@ -197,7 +222,7 @@
 
                 <div class="field">
                     <label for="comments">{{ __('Opmerkingen') }}</label>
-                    <textarea id="" cols="30" rows="10" name="comments" placeholder="Vul opmerkingen in...">                    </textarea>
+                    <textarea id="" cols="30" rows="10" name="comments" placeholder="Vul opmerkingen in..."></textarea>
                     @error('comments')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
