@@ -10,8 +10,8 @@ class PostalCodeHelper {
      */
     public static function generatePostalCode()
     {
-        $numbers = rand(1000, 9999); // Generates a random number between 1000 and 9999
-        $letters = chr(rand(65, 90)) . chr(rand(65, 90)); // Generates two random uppercase letters
+        $numbers = rand(1000, 9999);
+        $letters = chr(rand(65, 90)) . chr(rand(65, 90));
 
         return $numbers . ' ' . $letters;
     }
@@ -26,14 +26,12 @@ class PostalCodeHelper {
      */
     public static function formatPostalCode($postalCode)
     {
-        if (strpos($postalCode, ' ') !== false) {
-            // If a space is present, apply the formatting
+        if (strpos($postalCode, ' ') == false) {
             $numbers = substr($postalCode, 0, 4);
-            $letters = substr($postalCode, 5, 2);
+            $letters = substr($postalCode, 4, 2);
             return $numbers . ' ' . strtoupper($letters);
         }
 
-        // If no space is present, return the original postal code
         return $postalCode;
     }
 }

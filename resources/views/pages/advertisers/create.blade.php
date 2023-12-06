@@ -13,6 +13,26 @@
                 <h3>{{ __('Algemeen') }}</h3>
 
                 <div class="field field-alt">
+                    <label for="first_name">{{ __('Voornaam') }}</label>
+                    <input id="" type="text" name="first_name">
+                    @error('first_name')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="last_name">{{ __('Achternaam') }}</label>
+                    <input id="" type="text" name="last_name">
+                    @error('last_name')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
                     <label for="name">{{ __('Bedrijfsnaam') }}</label>
                     <input id="" type="text" name="name">
                     @error('name')

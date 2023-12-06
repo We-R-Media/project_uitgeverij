@@ -101,10 +101,12 @@ class AdvertiserController extends Controller
         try {
             DB::transaction(function () use ($request) {
                 $advertiser = Advertiser::create([
+                    'first_name' => $request->input('first_name'),
+                    'last_name' => $request->input('last_name'),
                     'name' => $request->input('name'),
                     'email' => $request->input('email'),
                     'address' => $request->input('address'),
-                    'po_box' => $request->input('po_box'),
+                    'po_box' => $request->input('address'),
                     'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
                     'city' => $request->input('city'),
                     'credit_limit' => $request->input('credit'),
@@ -114,12 +116,28 @@ class AdvertiserController extends Controller
                     'comments' => $request->input('comments'),
                 ]);
                 $advertiser->save();
+
+                // $advertiser_data = Advertiser::findOrFail($advertiser->id);
+
+                // $contact = Contact::firstOrCreate([
+                //     'advertiser_id' => $advertiser_data,
+                //     'first_name' => $request->input('first_name'),
+                //     'last_name' => $request->input('last_name'),
+                //     'email' => $request->input('email'),
+                //     'phone' => $request->input('phone'),
+                //     'role' => 1,
+                // ]);
+
+
+                // $contact->advertiser->associate($advertiser_data);
+                // $contact->save();
             });
     
-            Alert::toast('de relatie is successvol aangemaakt', 'success');
+            Alert::toast('De relatie is successvol aangemaakt', 'success');
             return redirect()->route('advertisers.index');
 
         } catch (\Exception $e) {
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('advertisers.index');
         }

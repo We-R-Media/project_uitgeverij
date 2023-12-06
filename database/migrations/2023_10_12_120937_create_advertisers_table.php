@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('advertisers', function (Blueprint $table) {
             $table->id();
-             $table->string('title')->nullable();
+            $table->string('title')->nullable();
+            $table->string('first_name');
+            $table->string('last_name');
             // $table->foreignId('contact_id')->nullable();
             $table->string('name');
             $table->string('email');

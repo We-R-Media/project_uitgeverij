@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('contacts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('advertiser_id');
+            $table->foreignId('advertiser_id')->nullable();
             $table->string('title')->nullable();
             $table->enum('salutation', ['Dhr.', 'Mw.']);
             // $table->string('salutation');
-            $table->char('initial');
+            $table->char('initial')->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('preposition')->nullable();

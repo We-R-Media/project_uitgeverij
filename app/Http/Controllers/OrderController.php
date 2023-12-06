@@ -45,8 +45,8 @@ class OrderController extends Controller
         $user_id = Auth::user()->id;
     
         $this->subpages = [
-            'Actueel' => 'orders.index',
-            'Akkoord' => 'orders.certified',
+            'Ter goedkeuring (administratie)' => 'orders.index',
+            'Akkoord (klant)' => 'orders.certified',
             'Geannuleerd' => 'orders.deactivated',
         ];
     
@@ -78,8 +78,8 @@ class OrderController extends Controller
         $orders = Order::whereNotNull('deactivated_at')->paginate(12);
 
         $this->subpages = [
-            'Actueel' => 'orders.index',
-            'Akkoord' => 'orders.certified',
+            'Ter goedkeuring (administratie)' => 'orders.index',
+            'Akkoord (klant)' => 'orders.certified',
             'Geannuleerd' => 'orders.deactivated',
         ];
 
@@ -296,8 +296,8 @@ class OrderController extends Controller
         $orders = Order::whereNotNull('approved_at')->paginate(12); 
 
         $this->subpages = [
-            'Actueel' => 'orders.index',
-            'Akkoord' => 'orders.certified',
+            'Ter goedkeuring (administratie)' => 'orders.index',
+            'Akkoord (klant)' => 'orders.certified',
             'Geannuleerd' => 'orders.deactivated',
         ];
 

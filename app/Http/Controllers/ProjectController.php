@@ -80,6 +80,7 @@ class ProjectController extends Controller
                     'name' => $request->input('name'),
                     'layout_id' => $layout_id,
                     'tax_id' => $tax_id,
+                    // 'user_id' => Auth::user()->id,
                     'designer' => $request->input('designer'),
                     'printer' => $request->input('printer'),
                     'client' => $request->input('client'),
