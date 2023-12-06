@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Livewire\Component;
 use App\Models\Project;
 use App\Models\Format;
+use Illuminate\Support\Facades\Auth;
 
 class FormatDropdown extends Component
 {
@@ -16,11 +17,21 @@ class FormatDropdown extends Component
     public $currentFormat;
     public $currentFormatPrice;
 
-    public function mount($projects)
+    public function mount()
     {
-        $this->projects = $projects;
-        $this->selectedValue = $this->projects->first()->id;
-        $this->updateCurrentProjectAndFormat();
+        $userId = Auth::user()->id;
+        $this->projects = Project::where('user_id', $userId)->whereNull('deactivated_at')->get();
+
+        if ($this->projects->isNotEmpty()) {
+            $this->selectedValue = $this->projects->first()->id;
+            $this->updateCurrentProjectAndFormat();
+        } else {
+            $this->selectedValue = null;
+            $this->currentProject = null;
+            $this->selectedFormat = null;
+            $this->currentFormat = null;
+            $this->currentFormatPrice = null;
+        }
     }
 
     public function updatedSelectedValue()

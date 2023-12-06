@@ -4,7 +4,7 @@
         <div class="dropdown">
             <select name="project_id" wire:model.change="selectedValue" id="">
                 @foreach ($projects as $project)
-                    <option value="{{$project->id}}">{{$project->title}}</option>
+                    <option value="{{$project->id}}">{{$project->name}}</option>
                 @endforeach
             </select>
         </div>

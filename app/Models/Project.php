@@ -91,6 +91,16 @@ class Project extends BaseModel
     }
 
     /**
+     * Get the user that owns the Project
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
      * Get all of the groups for the Project
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

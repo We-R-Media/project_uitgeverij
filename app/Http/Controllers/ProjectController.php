@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Layout;
 use App\Models\Tax;
 use App\Models\Project;
+use App\Models\User;
 use App\Http\Requests\ProjectRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -28,7 +31,22 @@ class ProjectController extends Controller
      */
     public function index() : View
     {
-        $projects = Project::latest()->whereNull('deactivated_at')->paginate(12);
+        $user_id = Auth::user()->id;
+
+
+
+        if(Gate::allows('isSeller')) {
+            $projects = Project::latest()
+                ->whereNull('deactivated_at')
+                ->where('user_id', $user_id)
+                ->paginate(12);
+        }
+        else {
+            $projects = Project::latest()
+                ->whereNull('deactivated_at')
+                ->paginate(12);
+        }
+
 
         return view('pages.projects.index', compact('projects'))
             ->with([
@@ -55,8 +73,10 @@ class ProjectController extends Controller
     {
         $layouts = Layout::all();
         $taxes = Tax::all();
+        $users = User::where('role', 'seller')->get();
+
         
-        return view('pages.projects.create', compact('layouts', 'taxes'))->with([
+        return view('pages.projects.create', compact('layouts', 'taxes','users'))->with([
             'pageTitleSection' => self::$page_title_section,
         ]);
     }
@@ -72,6 +92,8 @@ class ProjectController extends Controller
                 $layout_id = $request->input('layout');
                 $layout = Layout::findOrFail($layout_id);
 
+                $seller_id = $request->input('seller');
+                $seller = User::findOrFail($seller_id);
 
                 $tax_id = $request->input('taxes');
                 $tax = Tax::findOrFail($tax_id);
@@ -80,7 +102,7 @@ class ProjectController extends Controller
                     'name' => $request->input('name'),
                     'layout_id' => $layout_id,
                     'tax_id' => $tax_id,
-                    // 'user_id' => Auth::user()->id,
+                    'user_id' => $seller_id,
                     'designer' => $request->input('designer'),
                     'printer' => $request->input('printer'),
                     'client' => $request->input('client'),
@@ -104,6 +126,9 @@ class ProjectController extends Controller
                     'comments' => $request->input('comments'),
                 ]);            
                 $project->layout()->associate($layout);
+                $project->save();
+
+                $project->user()->associate($seller);
                 $project->save();
 
                 $project->tax()->associate($tax);
@@ -187,8 +212,7 @@ class ProjectController extends Controller
                     // 'year' => $request->input('year'),
                     'revenue_goals' => $request->input('revenue_goals'),
                     'comments' => $request->input('comments'),
-                    'deactivated_at' => $request->input('active') == 1 ? now() : null,
-
+                    'deactivated_at' => $request->input('active') == 0 ? now() : null,
                 ]);
                 $project->layout()->associate($layout);
                 $project->save();
