@@ -272,7 +272,7 @@
 
                     <div class="field field-alt">
                         <label for="revenue_goals">{{ __('Omzetdoelstelling') }}</label>
-                        <input id="" type="text" name="revenue_goals" value="{{$project->revenue_goals}}">
+                        <input id="" type="text" name="revenue_goals" value="{{@money($project->revenue_goals)}}">
                         @error('revenue_goals')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>

@@ -125,7 +125,7 @@ class ProjectController extends Controller
                     'journal' => $request->input('journal'),
                     'department' => $request->input('department'),
                     'year' => $request->input('year'),
-                    'revenue_goals' => $request->input('revenue_goals'),
+                    'revenue_goals' => $this->convertToNumeric($request->input('revenue')),
                     'comments' => $request->input('comments'),
                 ]);
                 $project->layout()->associate($layout);
@@ -146,6 +146,13 @@ class ProjectController extends Controller
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('projects.index');
         }
+    }
+
+    private function convertToNumeric($value)
+    {
+        $cleanedValue = str_replace(['€', '.', ','], ['', '', '.'], $value);
+
+        return floatval($cleanedValue);
     }
 
     /**
@@ -213,7 +220,7 @@ class ProjectController extends Controller
                     'journal' => $request->input('journal'),
                     'department' => $request->input('department'),
                     // 'year' => $request->input('year'),
-                    'revenue_goals' => $request->input('revenue_goals'),
+                    'revenue_goals' => $this->convertToNumeric($request->input('revenue_goals')),
                     'comments' => $request->input('comments'),
                     'deactivated_at' => $request->input('active') == 0 ? now() : null,
                 ]);
