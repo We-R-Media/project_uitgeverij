@@ -42,7 +42,7 @@
 
                     @if(!empty($layout->logo))
                         <div class="current__logo">
-                            <img src="{{asset($layout->logo)}}">
+                            <img src="{{asset('/images/uploads/' . $layout->logo)}}">
                         </div>
                     @endif
                     
@@ -54,7 +54,7 @@
         </div>
         <div class="ButtonGroup">
             <div class="buttons">
-                <button class="button button--action" type="submit">Opslaan</button>
+                <button class="button button--action" type="submit">{{__('Opslaan')}}</button>
             </div>
         </div>
     </form>

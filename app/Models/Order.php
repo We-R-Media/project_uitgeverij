@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Log;
 use Laravel\Scout\Searchable;
@@ -38,9 +39,14 @@ class Order extends BaseModel
         'name',
         'contact_id',
         'approved_at',
+        'order_method_approval',
+        'order_method_invoice',
         'order_date',
+        'order_file',
+        'order_file_2',
         'order_total_price',
         'deactivated_at',
+        'validation_token',
     ];
 
     /**
@@ -60,16 +66,6 @@ class Order extends BaseModel
     protected $searchableFields = [
         'name',
     ];
-
-    /**
-     * Get the project that owns the Order
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function project(): BelongsTo
-    {
-        return $this->belongsTo(Project::class);
-    }
 
     /**
      * Get the advertiser that owns the Order
@@ -92,6 +88,16 @@ class Order extends BaseModel
     }
 
     /**
+     * Get the user that owns the Order
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
      * Get the order lines associated with the order.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
@@ -99,6 +105,28 @@ class Order extends BaseModel
     public function orderLines(): HasMany
     {
         return $this->hasMany(OrderLine::class);
+    }
+
+    public function getLayoutAttribute()
+    {
+        $firstOrderLine = $this->orderLines->first();
+        $projectLayout = $firstOrderLine->project->layout ?? null;
+
+        if( !is_null($projectLayout) ) {
+            return  $firstOrderLine->project->layout;
+        }
+
+        return null;
+    }
+
+    /**
+     * Get all of the layouts for the Order
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function layouts(): HasManyThrough
+    {
+        return $this->hasManyThrough(Layout::class, OrderLine::class);
     }
 
     /**

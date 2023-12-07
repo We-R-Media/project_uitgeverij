@@ -6,6 +6,9 @@ use App\Models\Format;
 use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
+use Illuminate\Support\Facades\Log;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ProjectFormatController extends Controller
@@ -27,7 +30,7 @@ class ProjectFormatController extends Controller
     public function index(string $project_id)
     {
         $project = Project::findOrFail($project_id);
-        $formats = Format::latest()->paginate(12);
+        $formats = Format::where('project_id', $project_id)->latest()->paginate(12);
 
 
         return view('pages.formats.index', compact('project', 'formats'))
@@ -137,7 +140,7 @@ class ProjectFormatController extends Controller
      */
     public function destroy(string $format_id, string $project_id)
     {
-        $format = Format::find($format_id);
+        $format = Format::findOrFail($format_id);
 
         if($format) {
             $format->delete();
@@ -145,5 +148,50 @@ class ProjectFormatController extends Controller
             Alert::toast('Het formaat is verwijderd.', 'info');
         }
         return redirect()->route('formats.index', $project_id);
+    }
+
+
+        /**
+     * Restore a trashed format.
+     *
+     * @param  int  $id  The ID of the trashed format to restore.
+     * @return void
+     */
+    public function restore(string $format_id) {
+
+        try 
+        {
+            $format = Format::onlyTrashed()->findOrFail($format_id);
+
+            $format->restore();
+
+            Log::info('Formaat succesvol hersteld:' . $format->id);
+            Alert::toast('Formaat succesvol hersteld', 'success');
+
+
+        } catch (ModelNotFoundException $e) {
+            Log::error('Formaat niet gevonden: ' . $format_id);
+            Alert::toast('Formaat niet gevonden', 'error');
+        } catch (QueryException $e) {
+            Log::error('Databasefout bij herstellen orderregel: ' . $e->getMessage());
+            Alert::toast('Er is een fout opgetreden bij het herstellen van de orderregel', 'error');
+        }
+    }
+
+
+    public function duplicate($project_id)
+    {
+        $formats = Format::where('project_id', 1)->get();
+    
+
+        $project = Project::findOrFail($project_id);
+    
+        foreach ($formats as $format) {
+            $newFormat = $format->replicate();
+            $newFormat->project_id = $project_id;
+            $newFormat->save();
+        }
+    
+        return redirect()->route('formats.index', ['project_id' => $project_id]);
     }
 }

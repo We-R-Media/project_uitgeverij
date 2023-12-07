@@ -16,8 +16,10 @@
                     <div>{{__('Bedrijfsnaam')}}</div>
                 </div>
                 <div class="item__summary">
+                    <div>{{__('Postadres')}}</div>
+                    <div>{{__('Postcode')}}</div>
+                    <div>{{__('Woonplaats')}}</div>
                     <div>{{__('E-mailadres')}}</div>
-                    <div>{{__('Adresgegevens')}}</div>
                 </div>
                 <div class="item__actions">
                     <div>{{--__('Actions')--}}</div>
@@ -27,21 +29,28 @@
         <ul class="items__view">
             @if ($advertisers->count() > 0)
                 @foreach ($advertisers as $advertiser)
-                    <li class="item">
+                    <li class="item {{ $advertiser->trashed() ? 'item--thrashed' : 'item--default' }}">
                         <div class="item__content">
                             <a href="{{ route('advertisers.edit', $advertiser->id) }}" class="">
                                 <h3>{{ $advertiser->name }}</h3>
                             </a>
                         </div>
                         <div class="item__summary">
+                            <div class="item__pages field">
+                                <Label>{{__('Postadres')}}</label>
+                                {{$advertiser->po_box}}
+                            </div>
+                            <div class="item__format field">
+                                <label>{{__('Postcode')}}</label>
+                                {{$advertiser->postal_code}} 
+                            </div>
+                            <div class="item__format field">
+                                {{$advertiser->city}}
+                                <label>{{__('Woonplaats')}}</label>
+                            </div>
                             <div class="item__format field">
                                 <label>{{__('E-mailadres')}}</label>
                                 {{$advertiser->email}}
-                            </div>
-                            <div class="item__pages field">
-                                <Label>{{__('Adresgegevens')}}</label>
-                                {{$advertiser->address}} <br />
-                                {{$advertiser->postal_code}}, {{$advertiser->city}}
                             </div>
                         </div>
                         <div class="item__actions">
@@ -50,8 +59,14 @@
                                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 128 512"><path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z"/></svg>
                                 </div>
                                 <div class="actions__group">
-                                    <a href="{{ route('advertisers.edit', $advertiser->id) }}">{{__('Bewerken')}}</a>
-                                    <a href="{{ route('advertisers.destroy', $advertiser->id) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">Verwijderen</a>
+
+                                    @if ( $advertiser->trashed() )
+                                    <a href="{{ route('advertisers.restore', $advertiser->id ) }}" class="btn" onclick="return confirm('Are you sure you want to restore this record?')">{{__('Herstellen')}}</a>
+                                    @else
+                                        <a href="{{ route('advertisers.destroy', $advertiser->id) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">{{__('Verwijderen')}}</a>
+                                        <a href="{{ route('advertisers.edit', $advertiser->id) }}">{{__('Bewerken')}}</a>
+                                    @endif
+
                                 </div>
                             </div>
                         </div>

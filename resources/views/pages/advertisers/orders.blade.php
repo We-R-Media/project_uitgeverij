@@ -5,14 +5,20 @@
 @section('content')
 
 <div class="page__wrapper">
+   <div class="HeaderButtons">
+      <div class="buttons">
+         <a href="{{ route('orders.create', $advertiser->id) }}" class="button button--action">{{__('Nieuwe order')}}</a>
+      </div>
+   </div>
    <div class="items__head">
       <div class="item item__head">
           <div class="item__content">
               <div>{{__('Ordernummer')}}</div>
           </div>
           <div class="item__summary">
-              <div>{{__('Totaalprijs')}}</div>
-              <div>{{__('Adresgegevens')}}</div>
+              <div>{{__('Bedrijfsnaam')}}</div>
+              <div>{{__('Plaatsnaam')}}</div>
+              <div>{{__('E-mailadres')}}</div>
           </div>
           <div class="item__actions">
               <div>{{--__('Actions')--}}</div>
@@ -31,13 +37,13 @@
             <div class="item__summary">
                <div class="item__format field">
                   <label>{{__('Prijs')}}</label>
-                  @money($order->order_total_price)
+                  {{ $order->advertiser->name }}
                </div>
                <div class="item__created field">
-                  {{$order->order_date}}
+                  {{$order->advertiser->city }}
               </div>
               <div class="item__comments field">
-               {{$order->updated_at}}
+               {{$order->advertiser->email}}
            </div>
             </div>
          </li>

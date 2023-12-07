@@ -65,11 +65,19 @@ class InvoiceController extends Controller
      */
     public function update(Request $request, string $invoice_id)
     {
-        DB::transaction(function () use($request, $invoice_id) {
-            Invoice::where('id', $invoice_id)->update([
-                'name' => $request->input('name')
-            ]);
-        });
+        try {
+            DB::transaction(function () use($request, $invoice_id) {
+                Invoice::where('id', $invoice_id)->update([
+                    'name' => $request->input('name')
+                ]);
+            });
+
+            Alert::toast('Factuur is successvol aangemaakt', 'success');
+            return redirect()->route('invoices.index');
+
+        } catch (\Exception $e) {
+            Alert::toast('Er is iets mis gegaan', 'error');
+        }
     }
 
     /**

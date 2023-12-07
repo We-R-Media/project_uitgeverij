@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Symfony\Component\HttpFoundation\Response;
 
-class AdminCheck
+class SupervisorCheck
 {
     /**
      * Handle an incoming request.
@@ -16,10 +16,12 @@ class AdminCheck
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Gate::allows('isAdmin')) {
+        if(Gate::allows('isSupervisor') || Gate::allows('isAdmin')) {
             return $next($request);
-        } else {
+        }
+        else {
             abort(403, 'Toegang geweigerd');
         }
+
     }
 }

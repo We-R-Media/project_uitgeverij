@@ -12,16 +12,11 @@
             <div class="grid__wrapper">
                 <fieldset class="fields base">
                     <h3>{{__('Orderregel')}}</h3>
-                    <div class="field field-alt">
-                        <label for="project">{{__('Editie')}}</label>
-                        <div class="dropdown">
-                            <select class="select2" name="project" id="project">
-                                <option value="{{ $project->id }}">{{ $project->edition_name }}</option>
-                            </select>
-                        </div>
-                    </div>
 
-                    @livewire('base-price-calculate', ['order' => $order], key($order->id))
+                    @if (!empty($projects))
+                        @livewire('format-dropdown', ['order' => $order, 'projects' => $projects ])
+                    @endif
+                    {{-- @livewire('base-price-calculate', ['order' => $order, 'project' => $project], key($order->id)) --}}
 
                     <div class="field field-alt">
                         <label for="discount">{{__('Korting')}}</label>
@@ -41,7 +36,6 @@
                             <input id="" type="radio" name="material" value="0">
                             <label>{{__('Nee')}}</label>
                     </div>
-
 
                 </fieldset>
             </div>

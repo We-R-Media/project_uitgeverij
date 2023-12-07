@@ -37,4 +37,14 @@ class Format extends BaseModel
     {
         return $this->belongsTo(Project::class);
     }
+
+    /**
+     * Get the orderlines associated with the Format
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function orderlines(): HasOne
+    {
+        return $this->hasOne(OrderLine::class);
+    }
 }

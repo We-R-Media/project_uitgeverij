@@ -6,11 +6,11 @@
 
 <div class="page__wrapper">
 
-
-
-    <form  class="formContainer" action="{{route('orders.update', $order->id)}}" method="post">
+    <form  class="formContainer" action="{{route('orders.update', $order->id)}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('post')
+
+        {{-- {{dd(asset('public/images/uploads/' . $order->order_file))}} --}}
 
     <div class="grid__wrapper">
             <fieldset class="fields base">
@@ -25,6 +25,16 @@
                         </span>
                     @enderror
                 </div>
+{{--
+                <div class="field field-alt">
+                    <label for="user">{{ __('Verkoper') }}</label>
+                    <input id="" type="text" name="user" value="{{$order->user->first_name}} {{$order->user->last_name}}" readonly>
+                    @error('user')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div> --}}
 
                 <div class="field field-alt">
                     <label for="company">{{ __('Bedrijfsnaam') }}</label>
@@ -36,7 +46,7 @@
                     @enderror
                 </div>
 
-                <div class="field field-alt">
+                {{-- <div class="field field-alt">
                     <label for="contact">{{ __('Contactpersoon') }}</label>
                     <input id="" type="text" name="contact" value="{{$order->contact->first_name}} {{$order->contact->last_name}}" readonly>
                     @error('contact')
@@ -44,11 +54,11 @@
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
-                </div>
+                </div> --}}
 
                 <div class="field field-alt">
                     <label for="po_box">{{ __('Postadres') }}</label>
-                    <input id="" type="text" name="po_box" value="{{ $order->advertiser->po_box }}" readonly>
+                    <input id="" type="text" name="po_box" value="{{ $order->advertiser->address }}" readonly>
                     @error('po_box')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -118,29 +128,100 @@
             </fieldset>
 
             <fieldset class="fields options">
-                <div class="fields__row">
+
                     <h3>{{ __('Opties') }}</h3>
 
-                <div class="field field-alt">
-                    <label for="approved_at">{{ __('Goedgekeurd') }}</label>
-                    <div class="radio__group">
-                        <input id="approved_at_true" type="radio" name="approved_at" value="1" @if($order->approved_at) checked @endif>
-                        <label for="approved_at_true">{{__('Ja')}}</label>
-                        <input id="approved_at_false" type="radio" name="approved_at" value="0" @if(!$order->approved_at) checked @endif>
-                        <label for="approved_at_false">{{__('Nee')}}</label>
+                    {{-- @if (!$selectedOrder->orderLines->isEmpty())
+                        <div class="field field-alt">
+                            <label for="layout">{{ __('Layout') }}</label>
+                            <input type="text" name="layout" value="{{ $order->layout->layout_name }}" id="" readonly>
+                        </div>
+                    @endif --}}
+
+
+                    <div class="field field-alt">
+                        <label for="order">{{ __('Ordernummer') }}</label>
+                        <input id="" type="text" name="order" value="{{$order->id}}" readonly>
+                        @error('order')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
                     </div>
 
+                    {{-- <div class="field field-alt">
+                        <label for="project_id">{{ __('Projectcode') }}</label>
+                        <input id="" type="text" name="project_id" value="{{$order->project->name}}" disabled>
+                        @error('project_id')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div> --}}
+
+                    <div class="fields__row">
+
+                    <div class="field field-alt">
+                        <label for="material_received_at">{{__('Materiaal')}}</label>
+                        <div class="radio__group">
+                            <input id="material_received_true" type="radio" name="material_received_at" @can('isSeller') disabled @endcan value="1" @if($order->material_received_at) checked @endif id="">
+                            <label for="approved_at_true">{{__('Ja')}}</label>
+                            <input id="material_received_true" type="radio" name="material_received_at" @can('isSeller') disabled @endcan value="0" @if(!$order->material_received_at) checked @endif id="">
+                            <label for="approved_at_true">{{__('Nee')}}</label>
+                        </div>
+                    </div>
+
+                    <div class="field field-alt">
+                        <label for="approved_at">{{ __('Goedgekeurd') }}</label>
+                        <div class="radio__group">
+                            <input id="approved_at_true" type="radio" name="approved_at" @can('isSeller') disabled @endcan value="1" @if($order->approved_at) checked @endif>
+                            <label for="approved_at_true">{{__('Ja')}}</label>
+                            <input id="approved_at_false" type="radio" name="approved_at" @can('isSeller') disabled @endcan value="0" @if(!$order->approved_at) checked @endif>
+                            <label for="approved_at_false">{{__('Nee')}}</label>
+                        </div>
+                        @error('approved_at')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
+
+
+
+                @livewire('canceled-orders', ['order' => $order], key($order->id))
+
                 <div class="field field-alt">
-                    <label for="project_id">{{ __('Projectcode') }}</label>
-                    <input id="" type="text" name="project_id" value="{{$order->project->id}}" disabled>
-                    @error('project_id')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
+                    <label for="order_method">{{__('Bevestiging')}}</label>
+                    <div class="radio__group">
+                        <input type="checkbox" name="method_approval[]" @can('isSeller') disabled @endcan value="email" checked>
+                        <label for="email_checkbox">{{__('E-mail')}}</label>
+                        <input type="checkbox" name="method_approval[]" @can('isSeller') disabled @endcan value="post" checked>
+                        <label for="post_checkbox">{{__('Post')}}</label>
+                    </div>
                 </div>
 
                 <div class="field field-alt">
+                    <label for="order_method">{{__('Factuur')}}</label>
+                    <div class="radio__group">
+                        <input type="checkbox" name="method_invoice[]" @can('isSeller') disabled @endcan value="email" checked>
+                        <label for="email_checkbox">{{__('E-mail')}}</label>
+                        <input type="checkbox" name="method_invoice[]" @can('isSeller') disabled @endcan value="post" checked>
+                        <label for="post_checkbox">{{__('Post')}}</label>
+                    </div>
+                </div>
+
+                <div class="field field-alt">
+                    <label for="order_file">{{__('Bijlage 1')}}</label>
+                    <input type="file" name="order_file" id="" @can('isSeller') disabled @endcan>
+                </div>
+
+                <div class="field field-alt">
+                    <label for="order_file_2">{{__('Bijlage 2')}}</label>
+                    <input type="file" name="order_file_2" id="" @can('isSeller') disabled @endcan>
+                </div>
+
+
+                {{-- <div class="field field-alt">
                     <label for="layout_name">{{ __('Layout') }}</label>
                     @if($order->project->layout->count() == 0)
                     {{__('Layout niet beschikbaar...')}}
@@ -152,7 +233,7 @@
                         </span>
                     @enderror
                     @endif
-                </div>
+                </div> --}}
 
                 <div class="field field-alt">
                     <label for="invoiced">{{ __('Gefactureerd') }}</label>
@@ -164,21 +245,19 @@
                     @enderror
                 </div>
 
-                @livewire('canceled-orders', ['order' => $order], key($order->id))
 
-                <div class="field field-alt">
+                <div class="field field-alt radio">
                     <label for="incasso">{{ __('Incasso') }}</label>
                     <div class="radio__group">
-                        <input id="" type="radio" name="incasso" value="1">
+                        <input id="" type="radio" name="incasso" @can('isSeller') disabled @endcan value="1">
                         <label>{{__('Ja')}}</label>
-                        <input id="" type="radio" name="incasso" value="0">
+                        <input id="" type="radio" name="incasso" @can('isSeller') disabled @endcan value="0">
                         <label>{{__('Nee')}}</label>
                     </div>
                 </div>
 
                 <div class="fields__row">
                     <h3>{{ __('Orderregels') }}</h3>
-
                     <div class="field field-alt">
                         <label for="order_rule">{{ __('Aantal orderregels') }}</label>
                         <input id="" type="text" name="order_rule" value="{{ $order->orderlines->count() }}" readonly>
@@ -191,7 +270,7 @@
 
                     <div class="field field-alt">
                         <label for="order_total">{{ __('Order totaal') }}</label>
-                        <input id="" type="text" name="order_total" value="@money($order->order_total_price)">
+                        <input id="" type="text" name="order_total" value="{{ @money($order->order_total_price) }}" readonly>
                         @error('order_total')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
@@ -200,27 +279,7 @@
                     </div>
                 </div>
 
-                <div class="field field-alt">
-                    <label for="order_total">{{ __('Ordertotaal') }}</label>
-                    <input id="" type="text" name="order_total" value="{{ $order->order_total_price }}" readonly>
-                    @error('order_total')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
 
-                {{-- @if ($order->order_total_price > $order->advertiser->credit_limit)@endif --}}
-
-                <div class="field field-alt">
-                    <label for="order_rule">{{ __('Orderregels') }}</label>
-                    <input id="" type="text" name="order_rule" value="{{ $order->orderLines->count() }}" readonly>
-                    @error('order_rule')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
 
                 <div class="field field-alt">
                     <label for="invoiced">{{ __('Gefactureerd') }}</label>
@@ -230,29 +289,33 @@
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
+
+
                 </div>
 
             </fieldset>
 
             <fieldset class="field notes full-width">
                 <label for="comment_confirmation">{{ __('Opmerkingen') }}</label>
-                <textarea id="" cols="30" rows="10" name="comment_confirmation" placeholder="Vul opmerkingen in...">{{$order->comment_confirmation}}</textarea>
+                <textarea id="" cols="30" rows="10" name="comment_confirmation" @can('isSeller') readonly @endcan placeholder="Vul opmerkingen in...">{{$order->comment_confirmation}}</textarea>
                 @error('comment_confirmation')
                     <span class="form__message" role="alert">
                         <small>{{ $message }}</small>
                     </span>
                 @enderror
-
             </fieldset>
 
         </div>
         <div class="ButtonGroup">
             <div class="buttons">
                 @if (!$order->approved_at)
-                    <a href="{{ route('email.approval', $order->id) }}" class="button button--action">{{__('Verstuur akkoord')}}</a>
+                    <a href="{{ route('email.approval', $order->id) }}" class="button button--action">{{__('Opdrachtbevestiging')}}</a>
                 @else
                     <a href="{{ route('invoices.create', $order->id) }}" class="button button--action">{{__('Factureer order')}}</a>
                 @endif
+
+                {{-- <a href="{{ route('orders.preview', $order->id) }}" class="button button--action">{{__('Voorbeeld')}}</a> --}}
+
                 <button type="submit" class="button button--action">{{ __('Opslaan') }}</button>
             </div>
         </div>

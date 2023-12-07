@@ -12,6 +12,19 @@
         <div class="grid__wrapper">
             <fieldset class="fields base">
                 <h3>{{ __('Algemeen') }}</h3>
+
+                <div class="field field-alt">
+                    <label for="seller">{{ __('Verkoper') }}</label>
+                    <div class="dropdown">
+                        <select class="select2" title="seller" name="seller" id="seller">
+                            @foreach($users as $seller)
+                                <option value="{{$seller->id}}"> {{$seller->first_name}} {{$seller->last_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+
                 <div class="field field-alt">
                     <label for="name">{{ __('Projectcode') }}</label>
                     <input id="" type="text" name="name" value="{{ old('name') }}">
@@ -119,7 +132,7 @@
                     </div>
                 </div>
                 <div class="form__row-alt">
-                    <label>Binnenwerk</label>
+                    <label>{{__('Binnenwerk')}}</label>
                     <div class="field__row">
                         <div class="form__row">
                             <div class="field">

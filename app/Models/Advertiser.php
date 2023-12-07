@@ -20,6 +20,10 @@ class Advertiser extends BaseModel
      */
     protected $fillable = [
         'id',
+        'first_name',
+        'last_name',
+        'salutation',
+        'initial',
         'title',
         'name',
         'email',

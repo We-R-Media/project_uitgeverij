@@ -75,6 +75,7 @@ class Project extends BaseModel
      * @var array<string>
      */
     protected $searchableFields = [
+        'name',
         'release_name',
         'edition_name',
     ];
@@ -87,6 +88,16 @@ class Project extends BaseModel
     public function orders(): HasMany
     {
         return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Get the user that owns the Project
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     /**

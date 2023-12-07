@@ -10,9 +10,10 @@
                     <div>{{__('Factuurnummer')}}</div>
                 </div>
                 <div class="item__summary">
-                    <div>{{__('Adverteerder')}}</div>
-                    <div>{{__('Klantnummer')}}</div>
-                    <div>{{__('Datum')}}</div>
+                    <div>{{__('Factuurnummer')}}</div>
+                    <div>{{__('Factuurdatum')}}</div>
+                    <div>{{__('Bedrijfsnaam')}}</div>
+                    <div>{{__('Projectcode')}}</div>
                 </div>
                 <div class="item__actions">
                     <div>{{--__('Actions')--}}</div>
@@ -29,21 +30,24 @@
                             </a>
                         </div>
                         <div class="item__summary">
-                            @if ( !is_null($invoice->advertiser) && $invoice->advertiser->count() > 0)
-                                <div class="item__format field">
-                                    <label>{{__('Adverteerder')}}</label>
-                                    {{$invoice->advertiser->name}}
-                                </div>
-                                <div class="item__pages field">
-                                    <label>{{__('Adverteerder klantnummer')}}</label>
-                                    {{$invoice->advertiser->id}}
-                                </div>
-                            @endif
-
+                            <div class="field">
+                                <label>{{__('Factuurnummer')}}</label>
+                                {{$invoice->id}}
+                            </div>
                             <div class="field">
                                 <label>{{__('Factuurdatum')}}</label>
                                 {{$invoice->invoice_date}}
                             </div>
+                            @if ( !is_null($invoice->advertiser) && $invoice->advertiser->count() > 0)
+                                <div class="item__format field">
+                                    <label>{{__('Bedrijfsnaam')}}</label>
+                                    {{$invoice->advertiser->name}}
+                                </div>
+                                <div class="item__format field">
+                                    <label>{{__('Projectcode')}}</label>
+                                    {{$invoice->project->name}}
+                                </div>
+                            @endif
                         </div>
                         <div class="item__actions">
                             <div class="actions__button">

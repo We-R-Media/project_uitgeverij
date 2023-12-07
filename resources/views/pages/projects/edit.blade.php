@@ -11,6 +11,13 @@
             <div class="grid__wrapper">
                 <fieldset class="fields base">
                     <h3>{{ __('Algemeen') }}</h3>
+
+
+                    <div class="field field-alt">
+                        <label for="seller">{{__('Verkoper')}}</label>
+                        <input type="text" name="seller" value="{{ $project->user->first_name }} {{$project->user->last_name}}" id="" readonly>
+                    </div>
+
                     <div class="field field-alt">
                         <label for="name">{{ __('Projectcode') }}</label>
                         <input id="" type="text" name="name" value="{{ $project->name }}">
@@ -277,10 +284,10 @@
                         <label>{{__('Actief')}}</label>
     
                         <div class="radio__group">
-                            <input id="deactivated_true" type="radio" name="active" value="0" @if($project->deactivated_at) checked @endif>
+                            <input id="deactivated_true" type="radio" name="active" value="1" @if(!$project->deactivated_at) checked @endif>
                             <label for="deactivated_true">{{__('Ja')}}</label>
                             
-                            <input id="deactivated_false" type="radio" name="active" value="1" @if(!$project->deactivated_at) checked @endif>
+                            <input id="deactivated_false" type="radio" name="active" value="0" @if($project->deactivated_at) checked @endif>
                             <label for="deactivated_false">{{__('Nee')}}</label>
                         </div>
                     </div>

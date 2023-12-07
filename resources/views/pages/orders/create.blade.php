@@ -15,7 +15,7 @@
 
                     <div class="field field-alt">
                         <label for="advertiser_id">{{ __('Klantnummer') }}</label>
-                        <input type="text" name="advertiser_id" value="{{$advertiser->id}}" disabled>
+                        <input type="text" name="advertiser_id" value="{{$advertiser->id}}" readonly>
                         @error('advertiser_id')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
@@ -24,8 +24,13 @@
                     </div>
 
                     <div class="field field-alt">
+                        <label for="user">{{__('Verkoper')}}</label>
+                        <input type="text" name="user" value="{{auth()->user()->first_name}} {{auth()->user()->last_name}}" readonly>
+                    </div>
+
+                    <div class="field field-alt">
                         <label for="name">{{ __('Bedrijfsnaam') }}</label>
-                        <input type="text" name="name" value="{{$advertiser->name}}" disabled>
+                        <input type="text" name="name" value="{{$advertiser->name}}" readonly>
                         @error('name')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
@@ -35,7 +40,7 @@
 
                     <div class="field field-alt">
                         <label for="po_box">{{ __('Postadres') }}</label>
-                        <input type="text" name="po_box" value="{{$advertiser->po_box}}" disabled>
+                        <input type="text" name="po_box" value="{{$advertiser->po_box}}" readonly>
                         @error('po_box')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
@@ -45,7 +50,7 @@
 
                     <div class="field field-alt">
                         <label for="postal_code">{{ __('Postcode') }}</label>
-                        <input type="text" name="postal_code" value="{{$advertiser->postal_code}}" disabled>
+                        <input type="text" name="postal_code" value="{{$advertiser->postal_code}}" readonly>
                         @error('postal_code')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
@@ -55,7 +60,7 @@
 
                     <div class="field field-alt">
                         <label for="city">{{ __('Woonplaats') }}</label>
-                        <input type="text" name="city" value="{{$advertiser->city}}" disabled>
+                        <input type="text" name="city" value="{{$advertiser->city}}" readonly>
                         @error('city')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
@@ -65,7 +70,7 @@
 
                     <div class="field field-alt">
                         <label for="province">{{ __('Provincie') }}</label>
-                        <input type="text" name="province" value="{{$advertiser->province}}" disabled>
+                        <input type="text" name="province" value="{{$advertiser->province}}" readonly>
                         @error('province')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
@@ -75,7 +80,7 @@
 
                     <div class="field field-alt">
                         <label for="phone">{{ __('Telefoon') }}</label>
-                        <input type="text" name="phone" value="{{$advertiser->phone}}" disabled>
+                        <input type="text" name="phone" value="{{$advertiser->phone}}" readonly>
                         @error('phone')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
@@ -86,7 +91,7 @@
 
                     <div class="field field-alt">
                         <label for="phone_mobile">{{ __('Mobiel') }}</label>
-                        <input type="text" name="phone_mobile" value="{{$advertiser->phone_mobile}}" disabled>
+                        <input type="text" name="phone_mobile" value="{{$advertiser->phone_mobile}}" readonly>
                         @error('phone_mobile')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
@@ -96,7 +101,7 @@
 
                     <div class="field field-alt">
                         <label for="email">{{ __('E-mailadres') }}</label>
-                        <input type="text" name="email" value="{{$advertiser->email}}" disabled>
+                        <input type="text" name="email" value="{{$advertiser->email}}" readonly>
                         @error('email')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
@@ -106,20 +111,22 @@
 
                     <div class="field field-alt">
                         <label for="contact">{{__('Contactpersoon')}}</label>
-                        <select class="select2" name="contact" id="">
-                            @if($advertiser->contacts->isEmpty())
-                            <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
-                            @else
-                            @foreach ($advertiser->contacts as $contact)
-                                <option value="{{ $contact->id }}" {{ $contact->role == 1 ? 'selected' : '' }}>
-                                    {{ $contact->salutation }} {{ $contact->initial }} {{ $contact->last_name }}
-                                </option>
-                            @endforeach
-                            @endif
-                        </select>
+                        <div class="dropdown">
+                            <select class="select2" name="contact" id="">
+                                @if($advertiser->contacts->isEmpty())
+                                <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
+                                @else
+                                @foreach ($advertiser->contacts as $contact)
+                                    <option value="{{ $contact->id }}" {{ $contact->role == 1 ? 'selected' : '' }}>
+                                        {{ $contact->salutation }} {{ $contact->initial }} {{ $contact->last_name }}
+                                    </option>
+                                @endforeach
+                                @endif
+                            </select>
+                        </div>
                     </div>
 
-                    <div class="field field-alt">
+                    {{-- <div class="field field-alt">
                         <label for="project_id">{{__('Projectcode')}}</label>
                         <select class="select2" name="project_id" id="">
                             @if($projects->isEmpty())
@@ -130,7 +137,7 @@
                             @endforeach
                             @endif
                         </select>
-                    </div>
+                    </div> --}}
 
                 </fieldset>
 
@@ -211,7 +218,8 @@
 
                     <div class="field field-alt">
                         <label for="contact-alt">{{__('Contactpersoon')}}</label>
-                        <select class="select2" name="contact-alt" id="">
+                        <div class="dropdown">
+                            <select class="select2" name="contact-alt" id="">
                                 @if($advertiser->contacts->isEmpty())
                                 <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
                                 @else
@@ -222,6 +230,7 @@
                                 @endforeach
                                 @endif
                         </select>
+                        </div>
                     </div>
                     
 

@@ -18,7 +18,6 @@ class ContactFactory extends Factory
     public function definition(): array
     {
         return [
-            'salutation' => strtoupper(fake()->randomLetter() . fake()->randomLetter()),
             'initial' => strtoupper(fake()->randomLetter() . fake()->randomLetter()),
             'first_name' => fake()->name(),
             'last_name' => fake()->name(),
@@ -26,7 +25,6 @@ class ContactFactory extends Factory
             'phone' => fake()->phoneNumber(),
             'role' => fake()->numberBetween(0, 1),
             'email' => fake()->email(),
-            // 'deactivated_at' => fake()->optional()->dateTimeThisCentury(),
         ];
     }
 }

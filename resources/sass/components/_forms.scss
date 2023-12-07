@@ -41,7 +41,7 @@
             }
         }
     }
-    input:not([type="radio"]) {
+    input:not([type="radio"]):not([type='checkbox']) {
         &:read-only {
             cursor: not-allowed;
             border-color: color.$gray-light !important;

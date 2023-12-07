@@ -7,7 +7,7 @@
         <div class="page__info">
             <span class="info__box">
                 <span class="box__title">
-                  Startkrediet
+                  {{__('Startkrediet')}}
                 </span>
                 <span class="box__text">
                     {{ $order->getInitialCredit() }}
@@ -15,7 +15,7 @@
             </span>
             <span class="info__box">
                 <span class="box__title">
-                  Aantal regels
+                  {{__('Aantal regels')}}
                 </span>
                 <span class="box__text">
                     {{ $order->orderlines->count() }}
@@ -23,15 +23,15 @@
             </span>
             <span class="info__box">
                 <span class="box__title">
-                    Order totaal
+                    {{__('Order totaal')}}
                 </span>
                 <span class="box__text">
-                    @money($order->order_total_price)
+                    {{ @money($order->order_total_price) }}
                 </span>
             </span>
             <span class="info__box">
                 <span class="box__title">
-                  Resterend krediet
+                  {{__('Resterend krediet')}}
                 </span>
                 <span class="box__text">
                     {{ $order->calculateTotalCredit() }}
@@ -44,7 +44,8 @@
 
             <div class="buttons">
                 @if ($order->order_total_price < $order->advertiser->credit_limit)
-                    <a href="{{ route('orderlines.create', [$order->id, $order->project->id]) }}" class="button button--action">{{__('Nieuwe regel')}}</a>
+                    {{-- <a href="{{ route('orderlines.create', [$order->id, $order->project->id]) }}" class="button button--action">{{__('Nieuwe regel')}}</a> --}}
+                    <a href="{{ route('orderlines.create', $order->id) }}" class="button button--action">{{__('Nieuwe regel')}}</a>
                 @else
                     <h4>{{__('Limiet overschreden')}}</h4>
                 @endif
@@ -75,16 +76,16 @@
                         </div>
                         <div class="item__summary">
                             <div class="item__format field">
-                                {{ $orderline->order->project->edition_name }}
+                                {{ $orderline->project->edition_name }}
                             </div>
                             <div class="item__format field">
-                                @money( $orderline->base_price )
+                                {{ @money( $orderline->base_price ) }}
                             </div>
                             <div class="item__format field">
-                                {{ number_format($orderLine->discount, 2)}}
+                                {{ $orderline->discount !== 0 && !is_null($orderline->discount) ? "€{$orderline->discount}" : '-' }}
                             </div>
                             <div class="item__format field">
-                                @money( $orderline->price_with_discount )
+                                {{ @money( $orderline->price_with_discount) }}
                             </div>
                         </div>
                         <div class="item__actions">
@@ -94,10 +95,11 @@
                                 </div>
                                 <div class="actions__group">
                                     @if ( $orderline->trashed() )
-                                        <a href="{{ route('orderlines.restore', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id] ) }}" class="btn" onclick="return confirm('Are you sure you want to restore this record?')">Herstellen</a>
-                                    @else
-                                        <a href="{{ route('orderlines.destroy', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id]) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">Verwijderen</a>
+                                        <a href="{{ route('orderlines.restore', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id] ) }}" class="btn" onclick="return confirm('Are you sure you want to restore this record?')">{{__('Herstellen')}}</a>
                                     @endif
+
+                                        <a href="{{ route('orderlines.destroy', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id]) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">{{__('Verwijderen')}}</a>
+                                        <a href="{{ route('invoices.create', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id]) }}" class="btn">{{__('Factureren')}}</a>
                                 </div>
                             </div>
                         </div>

@@ -6,7 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Order;
 use App\Models\Project;
+use App\Models\Format;
 use App\Models\OrderLine;
+use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
@@ -47,12 +49,14 @@ class OrderLineController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(string $order_id, string $project_id)
+    public function create(string $order_id)
     {
         $order = Order::findOrFail($order_id);
-        $project = Project::findOrFail($project_id);
 
-        return view('pages.orderlines.create', compact('order', 'project'))->with([
+        $projects = Project::all();
+        // $project = Project::findOrFail($project_id);
+
+        return view('pages.orderlines.create', compact('order', 'projects'))->with([
             'pageTitleSection' => self::$page_title_section,
         ]);
     }
@@ -62,31 +66,45 @@ class OrderLineController extends Controller
      */
     public function store(Request $request, string $order_id)
     {
-        DB::transaction(function () use ($request, $order_id) {
-            $order = Order::findOrFail($order_id);
+        try
+        {
+            DB::transaction(function () use ($request, $order_id) {
+                $order = Order::findOrFail($order_id);
 
-            $base_price = $request->input('base_price');
-            $discount = $request->input('discount');
+                $project = Project::findOrFail($request->input('project_id'));
 
-            // $discount_amount = ($discount / 100) * $base_price;
-            $discount_amount = $base_price - $discount;
+                $format = Format::findOrFail($request->input('format_id'));
+                $raw_price = $request->input('base_price');
+                $cleaned_price = str_replace(',', '.', preg_replace('/[^\d,]/', '', $raw_price));
+                $base_price = floatval($cleaned_price);
+                $discount = $request->input('discount');
 
-            $orderline = OrderLine::create([
-                'base_price' => $base_price,
-                'discount' => $discount,
-                'project' => $request->input('project'),
-                'material' => $request->input('material'),
-                // 'price_with_discount' => $base_price - $discount_amount,
-                'price_with_discount' => $discount_amount,
-            ]);
+                $orderline = OrderLine::create([
+                    'base_price' => $base_price,
+                    'discount' => $discount,
+                    'project_id' => $project,
+                    'price_with_discount' => ($discount != 0) ? ($base_price - $discount) : $base_price,
+                ]);
 
-            $orderline->order()->associate($order);
-            $orderline->save();
+                $orderline->order()->associate($order);
+                $orderline->save();
 
-            $order->updateOrderTotalPrice();
-        });
+                $orderline->project()->associate($project);
+                $orderline->save();
 
-        return redirect()->route('orderlines.index', $order_id);
+                $orderline->format()->associate($format);
+                $orderline->save();
+
+                $order->updateOrderTotalPrice();
+            });
+
+            Alert::toast('De orderregel is succesvol aangemaakt', 'success');
+            return redirect()->route('orderlines.index', $order_id);
+
+        } catch(Exception $e) {
+            Alert::toast('Er is iets fout gegaan', 'error');
+            return redirect()->route('orderlines.index');
+        }
     }
 
     /**
@@ -138,11 +156,15 @@ class OrderLineController extends Controller
             Log::info('Orderregel succesvol hersteld: ' . $orderline->order->id);
             Alert::toast('Orderregel succesvol hersteld', 'success');
         } catch (ModelNotFoundException $e) {
+
             Log::error('Orderregel niet gevonden: ' . $regel_id);
             Alert::toast('Orderregel niet gevonden', 'error');
+
         } catch (QueryException $e) {
+
             Log::error('Databasefout bij herstellen orderregel: ' . $e->getMessage());
             Alert::toast('Er is een fout opgetreden bij het herstellen van de orderregel', 'error');
+
         }
 
         return redirect()->route('orderlines.index', $order_id);

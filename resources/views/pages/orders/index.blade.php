@@ -11,11 +11,13 @@
         <div class="items__head">
             <div class="item item__head">
                 <div class="item__content">
-                    <div>{{__('Bedrijfsnaam')}}</div>
+                    <div>{{__('Ordernummer')}}</div>
                 </div>
                 <div class="item__summary">
-                    <div>{{__('Prijs')}}</div>
-                    <div>{{__('Akkoord ontvangen')}}</div>
+                    <div>{{__('Bedrijfsnaam')}}</div>
+                    <div>{{__('Plaatsnaam')}}</div>
+                    <div>{{__('E-mailadres')}}</div>
+                    {{-- <div>{{__('Projectcode')}}</div> --}}
                 </div>
                 <div class="item__actions">
                     <div></div>
@@ -29,18 +31,22 @@
                         <div class="item__content">
                             @if ( $order->advertiser )
                                 <a href="{{ route('orders.edit', $order->id) }}" class="">
-                                    <h3>{{ $order->advertiser->name }}</h3>
+                                    <h3>{{ $order->id }}</h3>
                                 </a>
                             @endif
                         </div>
+                        {{-- {{dd(asset('images/uploads/' . $order->order_file))}} --}}
                         <div class="item__summary">
                             <div class="item__format field">
-                                <label>{{__('Prijs')}}</label>
-                                @money($order->order_total_price)
+                                <label>{{__('Bedrijfsnaam')}}</label>
+                                {{ $order->advertiser->name }}
                             </div>
-                            <div class="item__comments field">
-                                <label>{{__('Laatst bijgewerkt op')}}</label>
-                                {{ ($order->approved_at) ? 'Ja' : 'Nee'; }}
+                            <div class="item__created field">
+                                <label>{{__('Plaatsnaam')}}</label>
+                                {{$order->advertiser->city}}
+                            </div>
+                            <div class="item__format field">
+                                {{$order->advertiser->email}}
                             </div>
                         </div>
                         <div class="item__actions">
@@ -50,7 +56,7 @@
                                 </div>
                                 <div class="actions__group">
                                     <a href="{{ route('orders.edit', $order->id) }}">{{__('Bewerken')}}</a>
-                                    <a href="{{ route('orders.destroy', $order->id) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">Verwijderen</a>
+                                    <a href="{{ route('orders.destroy', $order->id) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">{{__('Verwijderen')}}</a>
                                 </div>
                             </div>
                         </div>

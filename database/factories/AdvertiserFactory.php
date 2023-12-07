@@ -20,7 +20,10 @@ class AdvertiserFactory extends Factory
         $formattedPostalCode = PostalCodeHelper::generatePostalCode();
 
         return [
-            'name' => fake()->name(),
+            'name' => fake()->company(),
+            'first_name' => fake()->firstName(),
+            'last_name' => fake()->lastName(),
+            'initial' => strtoupper(fake()->randomLetter() . fake()->randomLetter()),
             'email' => fake()->email(),
             'phone_mobile' => fake()->optional()->phoneNumber(),
             'phone' => fake()->phoneNumber(),

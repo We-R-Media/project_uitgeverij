@@ -53,20 +53,36 @@
 
                     <div class="field field-alt">
                         <label for="gender">{{__('Gender')}}</label>
-                        <select class="select2" name="gender" id="">
-                            <option value="male">Man</option>
-                            <option value="female">Vrouw</option>
-                            <option value="other">Zeg ik liever niet</option>
-                        </select>
+                        <div class="dropdown">
+                            <select class="select2" name="gender" id="">
+                                <option value="male" {{ $user->gender == 'male' ? 'selected' : '' }}>
+                                    {{__('Man')}}
+                                </option>
+                                <option value="female" {{ $user->gender == 'female' ? 'selected' : '' }}>
+                                    {{__('Vrouw')}}
+                                </option>
+                                <option value="other" {{ $user->gender == 'other' ? 'selected' : '' }}>
+                                    {{__('Zeg ik liever niet')}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="field field-alt">
                         <label for="role">{{__('Rol')}}</label>
-                        <select name="role" id="">
-                            <option value="seller">{{__('Verkoper')}}</option>
-                            <option value="supervisor">{{__('Administratie')}}</option>
-                            <option value="admin">{{__('Beheerder')}}</option>
-                        </select>
+                        <div class="dropdown">
+                            <select class="select2" name="role" id="">
+                                <option value="seller" {{ $user->role == 'seller' ? 'selected' : '' }}>
+                                    {{__('Verkoper')}}
+                                </option>
+                                <option value="supervisor" {{ $user->role == 'supervisor' ? 'selected' : '' }}>
+                                    {{__('Administratie')}}
+                                </option>
+                                <option value="admin" {{ $user->role == 'admin' ? 'selected' : '' }}>
+                                    {{__('Beheerder')}}
+                                </option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="field field-alt">
@@ -92,7 +108,7 @@
 
                     <div class="field field-alt">
                         <label for="password">{{__('Wachtwoord')}}</label>
-                        <input  type="password" name="password" id="">
+                        <input  type="password" name="password" id="" value="">
                         @error('password')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>

@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
+use App\Policies\SettingsPolicy;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -38,6 +39,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('isSeller', function (User $user) {
             return $user->role === 'seller';
         });
+
+
 
     }
 }

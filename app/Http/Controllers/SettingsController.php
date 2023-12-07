@@ -23,10 +23,10 @@ class SettingsController extends Controller
     }
 
     public function index() {
-        return view('pages.settings')
+            return view('pages.settings')
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'subpagesData' => $this->getSubpages(),
             ]);
+        }
     }
-}
