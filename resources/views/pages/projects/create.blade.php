@@ -35,9 +35,23 @@
                      @enderror
                 </div>
 
+                {{-- <div class="field field-alt">
+                    <label>{{__('Dupliceren')}}</label>
+                    <div class="dropdown">
+                        <select name="existing_projects" id="" class="select2">
+                            @foreach ($projects as $project )
+                                <option value="{{ $project->id }}">{{ $project->name }} {{$project->edition_name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <a href="{{ route('projects.duplicate', $project->id) }}" class="button button--action">{{__('Dupliceren')}}</a>
+                </div> --}}
+
+
+
                 <div class="field field-alt">
                     <label for="format">{{ __('Formaat') }}</label>
-                   <input id="" type="text" name="paper_format" value="{{ old('format') }}">
+                   <input id="" type="text" name="paper_format" value="{{ $project->format }}">
                     @error('format')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>

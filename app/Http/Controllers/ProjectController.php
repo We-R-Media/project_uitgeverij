@@ -75,11 +75,12 @@ class ProjectController extends Controller
     public function create()
     {
         $layouts = Layout::all();
+        $projects = Project::all();
         $taxes = Tax::all();
         $users = User::where('role', 'seller')->get();
 
         
-        return view('pages.projects.create', compact('layouts', 'taxes','users'))->with([
+        return view('pages.projects.create', compact('layouts', 'taxes','users', 'projects'))->with([
             'pageTitleSection' => self::$page_title_section,
         ]);
     }
@@ -154,6 +155,22 @@ class ProjectController extends Controller
 
         return floatval($cleanedValue);
     }
+
+    public function duplicate(string $project_id)
+    {
+        // Find the original project by ID
+        $originalProject = Project::findOrFail($project_id);
+
+        // Duplicate only the values of the original project (excluding 'id')
+        $newProject = new Project;
+        $newProject->fill($originalProject->toArray());
+        $newProject->id = null; // Set the 'id' to null to allow auto-increment in the database
+        $newProject->save();
+
+        // Pass the values of the new project to the view
+        return redirect()->route('projects.create', ['project' => $newProject]);
+    }
+
 
     /**
      * Show the form for editing the specified resource.
