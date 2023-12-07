@@ -120,6 +120,16 @@ class Order extends BaseModel
     }
 
     /**
+     * Customize this logic based on when an order needs approval
+     *
+     * @return void
+     */
+    public function needsApproval()
+    {
+        return $this->approved_at === null;
+    }
+
+    /**
      * Get all of the layouts for the Order
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough

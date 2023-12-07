@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Traits\SearchableModelTrait;
+use App\Events\ApproveOrder;
+use App\Events\OrderCreated;
 use App\Models\Order;
 use App\Models\Advertiser;
 use App\Models\Project;
@@ -15,8 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
-
-
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -115,10 +116,8 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(Request $request,  $advertiser_id)
+    public function store(Request $request, string $advertiser_id)
     {
-
-
         try {
             $transactions = DB::transaction(function () use($request, $advertiser_id) {
                 $contact_id = $request->input('contact');
@@ -139,6 +138,9 @@ class OrderController extends Controller
                     'validation_token' => $token,
                 ]);
 
+                Log::info('OrderCreated event dispatched', ['order_id' => $order->id]);
+
+                event(new OrderCreated($order)); // TESTEN TESTEN TESTEN
 
                 $order->user()->associate($user);
                 $order->save();
@@ -148,8 +150,6 @@ class OrderController extends Controller
 
                 $order->advertiser()->associate($advertiser);
                 $order->save();
-
-                // Mail::to('algemeen@wermedia.nl')->send(new OrderConfirmationMail($order));
             });
 
             Alert::toast('De order is successvol aangemaakt', 'success');

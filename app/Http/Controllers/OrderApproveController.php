@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ApproveOrder;
 use App\Models\Order;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -13,7 +14,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class OrderApproveController extends Controller
 {
-        /**
+    /**
      * Approve an order.
      *
      * @param  int     $order_id  The ID of the order to approve.

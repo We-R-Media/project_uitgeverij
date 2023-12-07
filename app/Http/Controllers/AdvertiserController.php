@@ -138,7 +138,6 @@ class AdvertiserController extends Controller
                 $advertiser_data = Advertiser::findOrFail($advertiser->id);
                 $advertiser_id = $advertiser_data->id;
 
-
                 $contact = Contact::firstOrNew([
                     'advertiser_id' => $advertiser_id,
                     'salutation' => $request->input('salutation'),
@@ -190,8 +189,6 @@ class AdvertiserController extends Controller
      */
     public function update(Request $request, string $advertiser_id)
     {
-
-
         try{
             DB::transaction(function () use($request, $advertiser_id) {
                 Advertiser::where('id', $advertiser_id)->update([
@@ -302,9 +299,6 @@ class AdvertiserController extends Controller
 
     public function contacts__store(Request $request, string $advertiser_id)
     {
-
-        // dd($request->input('salutation'));
-
         try {
             DB::transaction(function () use ($request, $advertiser_id) {
                 $advertiser = Advertiser::findOrFail($advertiser_id);
