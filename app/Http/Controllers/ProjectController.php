@@ -121,7 +121,7 @@ class ProjectController extends Controller
                     'ledger' => $request->input('ledger'),
                     'journal' => $request->input('journal'),
                     'department' => $request->input('department'),
-                    // 'year' => $request->input('year'),
+                    'year' => $request->input('year'),
                     'revenue_goals' => $request->input('revenue_goals'),
                     'comments' => $request->input('comments'),
                 ]);            

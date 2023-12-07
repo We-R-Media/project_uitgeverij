@@ -36,7 +36,7 @@ return new class extends Migration
             $table->integer('ledger');
             $table->integer('journal');
             $table->integer('department');
-            $table->timestamp('year')->nullable();
+            $table->string('year')->nullable();
             $table->double('revenue_goals');
             $table->longText('comments')->nullable();
             $table->softDeletes();

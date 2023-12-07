@@ -236,11 +236,16 @@ class OrderController extends Controller
 
             return redirect()->route('orders.index');
         } catch (\Exception $e) {
-            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('orders.index');
         }
+    }
+
+    public function preview(string $order_id) {
+        $order = Order::findOrFail($order_id);
+
+        $pdf = Pdf::loadView('pages.pdf.preview');
     }
 
     /**
