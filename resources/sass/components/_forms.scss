@@ -117,6 +117,7 @@ label{
 .search__bar {
     background-color: color.$secondary;
     border-radius: 3rem;
+    overflow: hidden;
 
     .field {
         input {
