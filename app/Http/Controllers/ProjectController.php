@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Services\SearchService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use RealRashid\SweetAlert\Facades\Alert;
 

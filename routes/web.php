@@ -34,7 +34,9 @@ Route::group(['middleware' => ['auth']], function() {
         HomeController::class, 'index'
     ] )->name('home');
 
+
     Route::name('projects.')
+        ->middleware('admin.check')
         ->prefix('projecten')
         ->controller(ProjectController::class)
         ->group(function () {
