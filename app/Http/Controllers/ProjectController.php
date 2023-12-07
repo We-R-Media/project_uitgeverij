@@ -2,24 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\SearchableModelTrait;
 use App\Models\Layout;
 use App\Models\Tax;
 use App\Models\Project;
 use App\Models\User;
 use App\Http\Requests\ProjectRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Services\SearchService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class ProjectController extends Controller
 {
+    protected $searchService;
+
     private static $page_title_section = 'Projecten';
 
-    public function __construct()
+    public function __construct(SearchService $searchService)
     {
+        $this->searchService = $searchService;
+
         $this->subpages = [
             'Actueel' => 'projects.index',
             'Inactief' => 'projects.inactive',
@@ -29,24 +35,21 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index() : View
+    public function index(Request $request) : View
     {
-        $user_id = Auth::user()->id;
+        $searchQuery = $request->input('search');
 
-
-
-        if(Gate::allows('isSeller')) {
-            $projects = Project::latest()
-                ->whereNull('deactivated_at')
-                ->where('user_id', $user_id)
-                ->paginate(12);
-        }
-        else {
-            $projects = Project::latest()
-                ->whereNull('deactivated_at')
-                ->paginate(12);
-        }
-
+        $projects = Project::query()
+            ->latest()
+            ->whereNull('deactivated_at')
+            ->when($searchQuery, function ($query) use ($searchQuery) {
+                $this->searchService->search($query, $searchQuery, [
+                    'name',
+                    'release_name',
+                    'edition_name'
+                ]);
+            })
+            ->paginate(12);
 
         return view('pages.projects.index', compact('projects'))
             ->with([
@@ -124,7 +127,7 @@ class ProjectController extends Controller
                     'year' => $request->input('year'),
                     'revenue_goals' => $request->input('revenue_goals'),
                     'comments' => $request->input('comments'),
-                ]);            
+                ]);
                 $project->layout()->associate($layout);
                 $project->save();
 

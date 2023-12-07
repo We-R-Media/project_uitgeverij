@@ -3,7 +3,9 @@
 @section('seo_title', $pageTitleSection)
 @section('content')
     <div class="page__wrapper">
-        <div class="HeaderButtons">
+        <div class="header__bar">
+            <x-search-field />
+
             <div class="buttons">
                 <a href="{{--route('sellers.create')--}}" class="button button--action">{{__('Nieuwe verkoper')}}</a>
             </div>

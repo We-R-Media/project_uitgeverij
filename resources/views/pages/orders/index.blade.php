@@ -3,6 +3,11 @@
 @section('seo_title',  $pageTitleSection)
 @section('content')
     <div class="page__wrapper">
+
+        <div class="header__bar">
+            <x-search-field model="orders" placeholder="Order zoeken..." />
+        </div>
+
         <div class="items__head">
             <div class="item item__head">
                 <div class="item__content">

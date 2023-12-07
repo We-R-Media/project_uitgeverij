@@ -3,7 +3,7 @@
 @section('seo_title', $pageTitleSection)
 @section('content')
     <div class="page__wrapper">
-        <div class="HeaderButtons">
+        <div class="header__bar">
             <div class="buttons">
                 <a href="{{ route('formats.create', $project->id) }}" class="button button--action">{{__('Nieuw formaat')}}</a>
                 <a href="{{ route('formats.duplicate', $project->id) }}" class="button button--action">{{__('Groep overnemen')}}</a>

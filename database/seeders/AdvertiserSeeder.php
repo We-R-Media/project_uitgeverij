@@ -20,7 +20,7 @@ class AdvertiserSeeder extends Seeder
         $randomNumberLarge = fake()->numberBetween(8, 12);
 
         $advertisers = Advertiser::factory()
-            ->count($randomNumberSmall)
+            ->count($randomNumberLarge)
             ->create();
 
         $advertisers->each(function ($advertiser) use ($randomNumberSmall) {

@@ -39,7 +39,9 @@
             </span>
         </div>
 
-        <div class="HeaderButtons">
+        <div class="header__bar">
+            <x-search-field model="orders" placeholder="Order zoeken..." />
+
             <div class="buttons">
                 @if ($order->order_total_price < $order->advertiser->credit_limit)
                     {{-- <a href="{{ route('orderlines.create', [$order->id, $order->project->id]) }}" class="button button--action">{{__('Nieuwe regel')}}</a> --}}

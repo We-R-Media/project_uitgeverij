@@ -4,8 +4,9 @@
 
 @section('content')
 <div class="page__wrapper">
+    <div class="header__bar">
+        <x-search-field model="advertisers" placeholder="Relatie zoeken..." />
 
-    <div class="HeaderButtons">
         <div class="buttons">
             @if (!$advertiser->deactivated_at)
                 <a href="{{ route('orders.create', $advertiser->id) }}" class="button button--action">+ {{ __('Nieuwe order') }}</a>

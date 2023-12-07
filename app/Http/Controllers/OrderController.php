@@ -2,37 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Traits\SearchableModelTrait;
 use App\Models\Order;
 use App\Models\Advertiser;
-use Carbon\Carbon;
 use App\Models\Project;
 use App\Models\Contact;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
 
-use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Log;
+use App\Services\SearchService;
+use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 
 
-
 class OrderController extends Controller
 {
+    protected $searchService;
+
     private static $page_title_section = 'Orders';
 
-    public function __construct()
+    public function __construct(SearchService $searchService)
     {
+        $this->searchService = $searchService;
+
         $this->subpages = [
             'Ordergegevens' => 'orders.edit',
             'Print' => 'orders.print',
-            'Klachten' =>  'orders.complaints',
+            'Klachten' => 'orders.complaints',
             'Orderregels' => 'orderlines.index',
         ];
     }
@@ -40,10 +43,21 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $searchQuery = $request->input('search');
         $user_id = Auth::user()->id;
-    
+
+        $orders = Order::query()
+            ->latest()
+            ->whereNull('deactivated_at')
+            ->when($searchQuery, function ($query) use ($searchQuery) {
+                $this->searchService->search($query, $searchQuery, [
+                    'title'
+                ]);
+            })
+            ->paginate(12);
+
         $this->subpages = [
             'Ter goedkeuring (administratie)' => 'orders.index',
             'Akkoord (klant)' => 'orders.certified',
@@ -113,15 +127,18 @@ class OrderController extends Controller
 
 
         try {
-            $transactions = DB::transaction(function () use($request, $advertiser_id) {
+            DB::transaction(function () use($request, $advertiser_id) {
 
 
                 $contact_id = $request->input('contact');
                 $contact = Contact::findOrFail($contact_id);
 
                 $user_id = Auth::user()->id;
-
                 $user = User::findOrFail($user_id);
+
+                // $project_id = $request->input('project_id');
+                // $project = Project::findOrFail($project_id);
+
 
                 $advertiser = Advertiser::findOrFail($advertiser_id);
 
@@ -153,7 +170,7 @@ class OrderController extends Controller
             Alert::toast('De order is successvol aangemaakt', 'success');
 
             return redirect()->route('advertisers.index');
-        } catch (\Exception $e) {
+        } catch (\Exception $e){
             dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('orders.index');

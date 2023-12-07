@@ -8,6 +8,16 @@
 
 @section('content')
 
+<div class="notifications">
+    <div class="notifications__list">
+        @foreach(auth()->user()->notifications as $notification)
+            <span class="notification__row">
+                {{ $notification->data['message'] }}
+            </span>
+        @endforeach
+    </div>
+</div>
+
 @if( Gate::allows( 'isAdmin' ) )
     <a href="/admin-panel">Admin Panel</a>
 @endif

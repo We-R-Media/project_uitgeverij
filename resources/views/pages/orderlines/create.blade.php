@@ -7,7 +7,7 @@
         <form action="{{ route('orderlines.store', $order->id) }}" method="post">
             @csrf
             @method('post')
-        
+
 
             <div class="grid__wrapper">
                 <fieldset class="fields base">
@@ -36,7 +36,6 @@
                             <input id="" type="radio" name="material" value="0">
                             <label>{{__('Nee')}}</label>
                     </div>
-                    
 
                 </fieldset>
             </div>

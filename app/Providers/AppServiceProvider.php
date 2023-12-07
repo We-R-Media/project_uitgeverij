@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Faker\Factory as FakerFactory;
 use Illuminate\Pagination\Paginator;
+use App\Services\SearchService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -15,6 +16,10 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(FakerGenerator::class, function () {
             return FakerFactory::create('nl_NL');
+        });
+
+        $this->app->singleton(SearchService::class, function ($app) {
+            return new SearchService();
         });
     }
 
