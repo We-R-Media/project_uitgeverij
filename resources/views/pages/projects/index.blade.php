@@ -4,7 +4,7 @@
 @section('content')
     <div class="page__wrapper">
         <div class="header__bar">
-            <x-search-field model="projects" placeholder="Projecten zoeken..." />
+            <x-search-field name="projects" model="projects" placeholder="Projecten zoeken..." />
 
             <div class="buttons">
                 <a href="{{ route('projects.create') }}" class="button button--action">{{__('Nieuw project')}}</a>

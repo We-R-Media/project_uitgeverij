@@ -47,6 +47,8 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{project_id}/dupliceren', 'duplicate')->name('duplicate');
 
             Route::post('/opslaan', 'store')->name('store');
+            Route::post('/{project_id}/planning/opslaan', 'planning__store')->name('planning.store');
+            Route::post('/{project_id}/planning/bijwerken', 'planning__update')->name('planning.update');
             Route::post('/{project_id}/bijwerken', 'update')->name('update');
     });
 

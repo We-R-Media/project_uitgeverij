@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Traits\SearchableModelTrait;
 use App\AppHelpers\MoneyHelper;
+use App\AppHelpers\DateHelper;
 use App\Models\Layout;
 use App\Models\Tax;
 use App\Models\Project;
+use App\Models\ProjectPlanning;
 use App\Models\User;
 use App\Http\Requests\ProjectRequest;
 use Illuminate\Support\Facades\Auth;
@@ -40,22 +42,21 @@ class ProjectController extends Controller
     {
         $user_id = Auth::user()->id;
 
-        $searchQuery = $request->input('search');
+        $searchQuery = $request->input('projects');
 
         if(Gate::allows('isSeller')) {
-            $projects = Project::latest()
+            $projects = Project::latest('name')
                 ->whereNull('deactivated_at')
                 ->when($searchQuery, function ($query) use ($searchQuery) {
                     $this->searchService->search($query, $searchQuery, [
-                        'release_name',
-                        'name',
+                        'title',
                     ]);
                 })
                 ->where('user_id', $user_id)
                 ->paginate(12);
         }
         else {
-            $projects = Project::latest()
+            $projects = Project::latest('name')
                 ->whereNull('deactivated_at')
                 ->when($searchQuery, function ($query) use ($searchQuery) {
                     $this->searchService->search($query, $searchQuery, [
@@ -166,14 +167,14 @@ class ProjectController extends Controller
 
     public function duplicate($project_id)
     {
-        // Find the original project by ID
+        try {
+
+            
         $originalProject = Project::findOrFail($project_id);
 
-        // Replicate the project
         $newProject = $originalProject->replicate();
         $newProject->save();
 
-        // Replicate the associated formats if they exist
         $originalFormats = $originalProject->formats;
 
         foreach ($originalFormats as $originalFormat) {
@@ -181,8 +182,14 @@ class ProjectController extends Controller
             $newProject->formats()->save($newFormat);
         }
 
-        // Redirect to the edit screen of the new project
+        Alert::toast('Project' . ' ' . $newProject->name . ' ' . 'succesvol overgenomen', 'success');
+
         return redirect()->route('projects.edit', $project_id);
+
+        } catch (\Exception $e) {
+            Alert::toast('Er is iets fout gegaan', 'error');
+            return redirect()->route('projects.edit', $project_id);
+        }
     }
 
 
@@ -301,10 +308,75 @@ class ProjectController extends Controller
             'Formaten' => 'formats.index',
         ];
 
-        return view('pages.projects.planning')->with([
+        return view('pages.projects.planning', compact('project'))->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $project->title,
             'subpagesData' => $this->getSubpages( $project_id ),
         ]);
+    }
+
+    public function planning__store(Request $request, string $project_id)
+    {
+        try 
+        {
+            DB::transaction(function () use($project_id, $request) {
+
+                $project = Project::findOrFail($project_id);
+
+
+                $planning = ProjectPlanning::create([
+                    'project_id' => $project_id,
+                    'sale_start' => $request->input('sale_start') ?? now(),
+                    'redaction_date' => $request->input('redaction_date') ?? now(),
+                    'adverts_date' => $request->input('adverts_date') ?? now(),
+                    'printer_date' => $request->input('printer_date') ?? now(),
+                    'distribution_date' => $request->input('distribution_date') ?? now(),
+                    'appearance_date' => $request->input('appearance_date') ?? now(),
+                    'sale_started' => $request->input('sale_started') ?? now(),
+                    'redaction_received' => $request->input('redaction_received') ?? now(),
+                    'adverts_received' => $request->input('adverts_received') ?? now(),
+                    'printer_received' => $request->input('printer_received') ?? now(),
+                ]);
+
+                $planning->project()->associate($project);
+                $planning->save();
+            });
+
+            Alert::toast('Planning is succesvol aangemaakt', 'success');
+            return redirect()->route('projects.planning', $project_id);
+
+        } catch (\Exception $e) {
+            dd($e);
+            Alert::toast('Er is iets fout gegaan', 'error');
+            return redirect()->route('projects.planning', $project_id);
+        }
+    }
+
+    public function planning__update(Request $request, string $project_id)
+    {
+        try 
+        {
+            DB::transaction(function () use($request, $project_id) {
+                ProjectPlanning::where('project_id', $project_id)->update([
+                    'sale_start' => $request->input('sale_start') ?? now(),
+                    'redaction_date' => $request->input('redaction_date') ?? now(),
+                    'adverts_date' => $request->input('adverts_date') ?? now(),
+                    'printer_date' => $request->input('printer_date') ?? now(),
+                    'distribution_date' => $request->input('distribution_date') ?? now(),
+                    'appearance_date' => $request->input('appearance_date') ?? now(),
+                    'sale_started' => $request->input('sale_started') ?? now(),
+                    'redaction_received' => $request->input('redaction_received') ?? now(),
+                    'adverts_received' => $request->input('adverts_received') ?? now(),
+                    'printer_received' => $request->input('printer_received') ?? now(),
+                ]);
+            });
+
+            Alert::toast('Planning is succesvol bijgewerkt', 'success');
+            return redirect()->route('projects.planning', $project_id);
+
+        } catch (\Exception $e) {
+            Alert::toast('Er is iets fout gegaan', 'error');
+            return redirect()->route('projects.planning', $project_id);
+        }
     }
 }

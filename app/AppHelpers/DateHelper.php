@@ -13,4 +13,10 @@ class DateHelper {
 
         echo $formattedDate;
     }
+
+    public function dateTimeBlade($display) {
+        setLocale(LC_TIME, 'nl_NL');
+        $dateTime = new DateTime($display);
+        $displayedDate = $dateTime->format('d m Y');
+    }
 }

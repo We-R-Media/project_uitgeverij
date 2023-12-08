@@ -171,6 +171,16 @@ class Project extends BaseModel
         return $this->belongsTo(Layout::class);
     }
 
+    /**
+     * Get the planning associated with the Project
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function planning(): HasOne
+    {
+        return $this->hasOne(ProjectPlanning::class);
+    }
+
         /**
      * Get the name of the index associated with the model.
      */
