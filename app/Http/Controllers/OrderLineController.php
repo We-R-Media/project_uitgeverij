@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Project;
 use App\Models\Format;
 use App\Models\OrderLine;
+use Exception;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Log;
@@ -68,7 +69,7 @@ class OrderLineController extends Controller
      */
     public function store(Request $request, string $order_id)
     {
-        try 
+        try
         {
             DB::transaction(function () use ($request, $order_id) {
                 $order = Order::findOrFail($order_id);
@@ -78,9 +79,8 @@ class OrderLineController extends Controller
                 $format = Format::findOrFail($request->input('format_id'));
                 $raw_price = $request->input('base_price');
                 $cleaned_price = str_replace(',', '.', preg_replace('/[^\d,]/', '', $raw_price));
-                $base_price = floatval($cleaned_price);                
+                $base_price = floatval($cleaned_price);
                 $discount = $request->input('discount');
-                $discount_amount = $base_price - $discount;
 
                 $orderline = OrderLine::create([
                     'base_price' => $base_price,
@@ -162,7 +162,7 @@ class OrderLineController extends Controller
 
             Log::error('Orderregel niet gevonden: ' . $regel_id);
             Alert::toast('Orderregel niet gevonden', 'error');
-            
+
         } catch (QueryException $e) {
 
             Log::error('Databasefout bij herstellen orderregel: ' . $e->getMessage());

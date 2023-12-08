@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('advertiser_id')->nullable();
             $table->string('title')->nullable();
-            $table->enum('salutation', ['Dhr.', 'Mw.']);
+            $table->enum('salutation', ['Dhr.', 'Mw.'])->nullable();
             $table->char('initial')->nullable();
             $table->string('first_name');
             $table->string('last_name');

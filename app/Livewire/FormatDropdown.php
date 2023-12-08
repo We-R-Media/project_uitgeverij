@@ -56,7 +56,7 @@ class FormatDropdown extends Component
     {
         $this->currentProject = Project::find($this->selectedValue);
 
-        if ($this->currentProject) {
+        if ($this->currentProject && $this->currentProject->formats->count() < 0) {
             $this->selectedFormat = $this->currentProject->formats->first()->id;
             $this->updatedSelectedFormat();
         }

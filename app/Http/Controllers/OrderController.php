@@ -3,24 +3,21 @@
 namespace App\Http\Controllers;
 
 use App\Http\Traits\SearchableModelTrait;
+use App\Events\ApproveOrder;
+use App\Events\OrderCreated;
 use App\Models\Order;
 use App\Models\Advertiser;
 use App\Models\Project;
 use App\Models\Contact;
 use App\Models\User;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Services\SearchService;
 use Illuminate\Support\Str;
-
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Log;
-use App\Services\SearchService;
-use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
-
-
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -48,27 +45,25 @@ class OrderController extends Controller
         $searchQuery = $request->input('search');
         $user_id = Auth::user()->id;
 
-        $orders = Order::query()
-            ->latest()
-            ->whereNull('deactivated_at')
-            ->when($searchQuery, function ($query) use ($searchQuery) {
-                $this->searchService->search($query, $searchQuery, [
-                    'title'
-                ]);
-            })
-            ->paginate(12);
+        $user_id = Auth::user()->id;
 
         $this->subpages = [
             'Ter goedkeuring (administratie)' => 'orders.index',
             'Akkoord (klant)' => 'orders.certified',
             'Geannuleerd' => 'orders.deactivated',
         ];
-    
+
         if (Gate::allows('isSeller')) {
-            $orders = Order::latest()
+            $orders = Order::query()
+                ->latest()
                 ->where('user_id', $user_id)
                 ->whereNull('deactivated_at')
                 ->whereNull('approved_at')
+                ->when($searchQuery, function ($query) use ($searchQuery) {
+                    $this->searchService->search($query, $searchQuery, [
+                        'title'
+                    ]);
+                })
                 ->paginate(12);
         } else {
             $orders = Order::latest()
@@ -76,7 +71,7 @@ class OrderController extends Controller
                 ->whereNull('approved_at')
                 ->paginate(12);
         }
-    
+
         return view('pages.orders.index', compact('orders'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
@@ -122,10 +117,8 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      */
 
-    public function store(Request $request,  $advertiser_id)
+    public function store(Request $request, string $advertiser_id)
     {
-
-
         try {
             DB::transaction(function () use($request, $advertiser_id) {
 
@@ -136,17 +129,11 @@ class OrderController extends Controller
                 $user_id = Auth::user()->id;
                 $user = User::findOrFail($user_id);
 
-                // $project_id = $request->input('project_id');
-                // $project = Project::findOrFail($project_id);
-
-
                 $advertiser = Advertiser::findOrFail($advertiser_id);
 
                 $token = Str::random(60);
 
-
                 $order = Order::create([
-                    // 'project_id' => $project_id,
                     'advertiser_id' => $advertiser_id,
                     'user_id' => $user_id,
                     'order_date' => now(),
@@ -154,6 +141,9 @@ class OrderController extends Controller
                     'validation_token' => $token,
                 ]);
 
+                Log::info('OrderCreated event dispatched', ['order_id' => $order->id]);
+
+                event(new OrderCreated($order)); // TESTEN TESTEN TESTEN
 
                 $order->user()->associate($user);
                 $order->save();
@@ -163,15 +153,12 @@ class OrderController extends Controller
 
                 $order->advertiser()->associate($advertiser);
                 $order->save();
-
-                // Mail::to('algemeen@wermedia.nl')->send(new OrderConfirmationMail($order));
             });
 
             Alert::toast('De order is successvol aangemaakt', 'success');
 
             return redirect()->route('advertisers.index');
         } catch (\Exception $e){
-            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('orders.index');
         }
@@ -203,37 +190,37 @@ class OrderController extends Controller
         try {
 
             $order = Order::findOrFail($order_id);
-            
+
             $method_approval = $request->input('method_approval', []);
             $all_selected_approval = in_array('email', $method_approval) && in_array('post', $method_approval);
             $order_method_approval = $all_selected_approval ? 'all' : implode(',', $method_approval);
-    
+
             $method_invoice = $request->input('method_invoice', []);
             $all_selected_invoice = in_array('email', $method_invoice) && in_array('post', $method_invoice);
             $order_method_invoice = $all_selected_invoice ? 'all' : implode(',', $method_invoice);
-    
+
 
             $file = $request->file('order_file');
 
             $file_2 = $request->file('order_file_2');
 
             DB::transaction(function () use ($request, $order_id, $order_method_approval, $order_method_invoice, $file, $file_2, $order) {
-            
+
 
                 $file_name = null;
                 $file_name_2 = null;
-                
+
                 if ($file) {
                     $file_name = time() . '.' . $file->extension();
                     $file->move(public_path('images/uploads/orders'), $file_name);
                 }
-                
+
                 if ($file_2) {
                     $file_name_2 = time() . '_2' . '.' .  $file_2->extension();
                     $file_2->move(public_path('images/uploads/orders'), $file_name_2);
                 }
-                
-                
+
+
 
                 Order::where('id', $order_id)->update([
                     // 'order_date' => $request->input('order_date'),
@@ -245,7 +232,7 @@ class OrderController extends Controller
                     'order_file_2' => $file_name_2,
                     'material_received_at' => $request->input('material_received_at') == 1 ? now() : null,
                     'deactivated_at' => $request->input('canceldate') ? now() : null,
-                    
+
                 ]);
             });
 
@@ -315,7 +302,7 @@ class OrderController extends Controller
 
     public function certified() {
 
-        $orders = Order::whereNotNull('approved_at')->paginate(12); 
+        $orders = Order::whereNotNull('approved_at')->paginate(12);
 
         $this->subpages = [
             'Ter goedkeuring (administratie)' => 'orders.index',

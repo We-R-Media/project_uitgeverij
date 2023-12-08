@@ -38,36 +38,33 @@ class ProjectController extends Controller
      */
     public function index(Request $request) : View
     {
-        $searchQuery = $request->input('search');
-
         $user_id = Auth::user()->id;
 
+        $searchQuery = $request->input('search');
+
         if(Gate::allows('isSeller')) {
-            $projects = Project::query()
-            ->latest()
-            ->where('user_id', $user_id)
-            ->whereNull('deactivated_at')
-            ->when($searchQuery, function ($query) use ($searchQuery) {
-                $this->searchService->search($query, $searchQuery, [
-                    'name',
-                    'release_name',
-                    'edition_name'
-                ]);
-            })
-            ->paginate(12);
-        } else {
-            $projects = Project::query()
-            ->latest()
-            ->whereNull('deactivated_at')
-            ->when($searchQuery, function ($query) use ($searchQuery) {
-                $this->searchService->search($query, $searchQuery, [
-                    'name',
-                    'release_name',
-                    'edition_name'
-                ]);
-            })
-            ->paginate(12);
+            $projects = Project::latest()
+                ->whereNull('deactivated_at')
+                ->when($searchQuery, function ($query) use ($searchQuery) {
+                    $this->searchService->search($query, $searchQuery, [
+                        'release_name',
+                        'name',
+                    ]);
+                })
+                ->where('user_id', $user_id)
+                ->paginate(12);
         }
+        else {
+            $projects = Project::latest()
+                ->whereNull('deactivated_at')
+                ->when($searchQuery, function ($query) use ($searchQuery) {
+                    $this->searchService->search($query, $searchQuery, [
+                        'title',
+                    ]);
+                })
+                ->paginate(12);
+        }
+
 
         return view('pages.projects.index', compact('projects'))
             ->with([

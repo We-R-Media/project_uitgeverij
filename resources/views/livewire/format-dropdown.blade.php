@@ -10,15 +10,19 @@
         </div>
     </div>
 
-    @if ($currentProject)
+    @if ($currentProject && !$currentProject->formats->isEmpty())
         <div class="field field-alt">
             <label for="format">{{__('Formaat')}}</label>
             <div class="dropdown">
+                @if ($currentProject->formats->isEmpty())
                 <select wire:model.change="selectedFormat" name="format_id" id="">
-                    @foreach ($currentProject->formats as $formats)
-                    <option value="{{$formats->id}}">{{ $formats->size }}</option>   
-                    @endforeach
+                        <option value="nvt" disabled selected>{{__('Niet beschikbaar...')}}</option>
+                    @else
+                        @foreach ($currentProject->formats as $formats)
+                        <option value="{{$formats->id}}">{{ $formats->size }}</option>   
+                        @endforeach
                 </select>
+                @endif
             </div>
         </div>
     @endif

@@ -5,8 +5,6 @@
 @section('content')
 <div class="page__wrapper">
     <div class="header__bar">
-        <x-search-field model="advertisers" placeholder="Relatie zoeken..." />
-
         <div class="buttons">
             @if (!$advertiser->deactivated_at)
                 <a href="{{ route('orders.create', $advertiser->id) }}" class="button button--action">+ {{ __('Nieuwe order') }}</a>
@@ -17,6 +15,7 @@
     <form class="formContainer" action="{{ route('advertisers.update', $advertiser->id) }}" method="post">
         @csrf
         @method('post')
+
         <div class="grid__wrapper">
             <fieldset class="fields base">
                 <h3>{{ __('Algemeen') }}</h3>
@@ -24,13 +23,13 @@
                 <div class="field field-alt">
                     <label for="advertiser_id">{{ __('Klantnummer') }}</label>
                     <input id="" type="text" name="advertiser_id" value="{{$advertiser->id}}" placeholder="Vul klantnummer in...">
+
                     @error('advertiser_id')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
                 </div>
-
 
                 <div class="field field-alt">
                     <label for="salutation">{{__('Aanhef')}}</label>
@@ -129,7 +128,8 @@
 
                 <div class="field field-alt">
                     <label for="credit">{{ __('Kredietlimiet') }}</label>
-                    <input id="" type="text" name="credit" value="{{ @money($advertiser->credit_limit) }}">
+                    <input id="" type="text" name="credit" value="{{ $advertiser->credit_limit }} ">
+
                     @error('credit')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -279,7 +279,7 @@
                     <div class="radio__group">
                         <input id="deactivated_true" type="radio" name="active" value="1" @if(!$advertiser->deactivated_at) checked @endif>
                         <label for="deactivated_true">{{__('Ja')}}</label>
-                        
+
                         <input id="deactivated_false" type="radio" name="active" value="0" @if($advertiser->deactivated_at) checked @endif>
                         <label for="deactivated_false">{{__('Nee')}}</label>
                     </div>

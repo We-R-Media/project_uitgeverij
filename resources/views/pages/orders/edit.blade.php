@@ -9,7 +9,7 @@
     <form  class="formContainer" action="{{route('orders.update', $order->id)}}" method="post" enctype="multipart/form-data">
         @csrf
         @method('post')
-        
+
         {{-- {{dd(asset('public/images/uploads/' . $order->order_file))}} --}}
 
     <div class="grid__wrapper">
@@ -25,7 +25,7 @@
                         </span>
                     @enderror
                 </div>
-
+{{--
                 <div class="field field-alt">
                     <label for="user">{{ __('Verkoper') }}</label>
                     <input id="" type="text" name="user" value="{{$order->user->first_name}} {{$order->user->last_name}}" readonly>
@@ -34,7 +34,7 @@
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
-                </div>
+                </div> --}}
 
                 <div class="field field-alt">
                     <label for="company">{{ __('Bedrijfsnaam') }}</label>
@@ -46,7 +46,7 @@
                     @enderror
                 </div>
 
-                <div class="field field-alt">
+                {{-- <div class="field field-alt">
                     <label for="contact">{{ __('Contactpersoon') }}</label>
                     <input id="" type="text" name="contact" value="{{$order->contact->first_name}} {{$order->contact->last_name}}" readonly>
                     @error('contact')
@@ -54,7 +54,7 @@
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
-                </div>
+                </div> --}}
 
                 <div class="field field-alt">
                     <label for="po_box">{{ __('Postadres') }}</label>
@@ -186,7 +186,7 @@
                         @enderror
                     </div>
 
-                    
+
 
                 @livewire('canceled-orders', ['order' => $order], key($order->id))
 

@@ -47,6 +47,7 @@ class AdvertiserController extends Controller
                 ]);
             })
             ->whereNull('deactivated_at')
+            ->withTrashed()
             ->paginate(12);
 
         $this->subpages = [
@@ -138,7 +139,6 @@ class AdvertiserController extends Controller
                 $advertiser_data = Advertiser::findOrFail($advertiser->id);
                 $advertiser_id = $advertiser_data->id;
 
-
                 $contact = Contact::firstOrNew([
                     'advertiser_id' => $advertiser_id,
                     'salutation' => $request->input('salutation'),
@@ -153,7 +153,7 @@ class AdvertiserController extends Controller
                 $advertiser->contacts()->save($contact);
                 $contact->save();
             });
-    
+
             Alert::toast('De relatie is successvol aangemaakt', 'success');
             return redirect()->route('advertisers.index');
 
@@ -190,14 +190,8 @@ class AdvertiserController extends Controller
      */
     public function update(Request $request, string $advertiser_id)
     {
-
-
         try{
             DB::transaction(function () use($request, $advertiser_id) {
-                $advertiser = Advertiser::findOrFail($advertiser_id);
-
-                $first_name = $request->input('first_name');
-
                 Advertiser::where('id', $advertiser_id)->update([
                     'first_name' => $request->input('first_name'),
                     'last_name' => $request->input('last_name'),
@@ -216,18 +210,18 @@ class AdvertiserController extends Controller
                     'deactivated_at' => $request->input('active') == 0 ? now() : null,
                 ]);
 
-                Contact::where('first_name', $advertiser_id)
+                Contact::where('id', $advertiser_id)
                     ->orWhere('email', $request->input('email'))
-                    ->first()    
+                    ->first()
                     ->update([
-                    'salutation' => $request->input('salutation'),
-                    'initial' => $request->input('initial'),
-                    'role' => 1,
-                    'email' => $request->input('email'),
-                    'first_name' => $request->input('first_name'),
-                    'last_name' => $request->input('last_name'),
-                    'phone' => $request->input('phone'),
-                ]);
+                        'salutation' => $request->input('salutation'),
+                        'initial' => $request->input('initial'),
+                        'role' => 1,
+                        'email' => $request->input('email'),
+                        'first_name' => $request->input('first_name'),
+                        'last_name' => $request->input('last_name'),
+                        'phone' => $request->input('phone'),
+                    ]);
 
             });
 
@@ -265,7 +259,7 @@ class AdvertiserController extends Controller
      */
     public function restore(string $advertiser_id)
     {
-        try 
+        try
         {
             $advertiser = Advertiser::onlyTrashed()->findOrFail($advertiser_id);
             $advertiser->restore();
@@ -299,9 +293,6 @@ class AdvertiserController extends Controller
 
     public function contacts__store(Request $request, string $advertiser_id)
     {
-
-        // dd($request->input('salutation'));
-
         try {
             DB::transaction(function () use ($request, $advertiser_id) {
                 $advertiser = Advertiser::findOrFail($advertiser_id);
@@ -352,7 +343,7 @@ class AdvertiserController extends Controller
      * @return void
      */
     public function contacts__restore(string $contact_id, string $advertiser_id) {
-        try 
+        try
         {
             $contact = Contact::onlyTrashed()->findOrFail($contact_id);
             $contact->restore();

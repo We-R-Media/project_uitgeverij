@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('order_lines', function (Blueprint $table) {
             $table->id();
-             $table->string('title')->nullable();
+            $table->string('title')->nullable();
             $table->foreignID('order_id')->nullable();
             $table->foreignID('format_id')->nullable();
             $table->foreignId('project_id')->nullable();

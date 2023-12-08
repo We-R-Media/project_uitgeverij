@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Log;
 use Laravel\Scout\Searchable;
@@ -109,10 +110,25 @@ class Order extends BaseModel
     public function getLayoutAttribute()
     {
         $firstOrderLine = $this->orderLines->first();
-        
-        return $firstOrderLine ? $firstOrderLine->project->layout : null;
+        $projectLayout = $firstOrderLine->project->layout ?? null;
+
+        if( !is_null($projectLayout) ) {
+            return  $firstOrderLine->project->layout;
+        }
+
+        return null;
     }
-    
+
+    /**
+     * Customize this logic based on when an order needs approval
+     *
+     * @return void
+     */
+    public function needsApproval()
+    {
+        return $this->approved_at === null;
+    }
+
     /**
      * Get all of the layouts for the Order
      *

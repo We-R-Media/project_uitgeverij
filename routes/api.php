@@ -19,6 +19,3 @@ use App\Http\Controllers\AdvertiserController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-// Route::get('/advertiser', [AdvertiserController::class, 'index']);
-// Route::get('/advertiser/{id}', [AdvertiserController::class, 'show']);
