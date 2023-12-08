@@ -35,7 +35,8 @@
                      @enderror
                 </div>
 
-                {{-- <div class="field field-alt">
+                @if($projects->count() > 0)
+                <div class="field field-alt">
                     <label>{{__('Dupliceren')}}</label>
                     <div class="dropdown">
                         <select name="existing_projects" id="" class="select2">
@@ -45,19 +46,21 @@
                         </select>
                     </div>
                     <a href="{{ route('projects.duplicate', $project->id) }}" class="button button--action">{{__('Dupliceren')}}</a>
-                </div> --}}
+                </div>
+                @endif
 
 
 
                 <div class="field field-alt">
                     <label for="format">{{ __('Formaat') }}</label>
-                   <input id="" type="text" name="paper_format" value="{{ $project->format }}">
+                    <input id="format" type="text" name="paper_format">
                     @error('format')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
                 </div>
+                
 
                 <div class="field field-alt">
                     <label for="release_name">{{ __('Uitgave') }}</label>

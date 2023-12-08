@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Format;
 use App\Models\Project;
+use App\AppHelpers\MoneyHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -70,7 +71,7 @@ class ProjectFormatController extends Controller
                     'size' => $request->input('size'),
                     'measurement' => $request->input('measurement'),
                     'ratio' => $request->input('ratio'),
-                    'price' => $request->input('price'),
+                    'price' => MoneyHelper::convertToNumeric($request->input('price')),
                 ]);
 
                 $format->project()->associate($project);
@@ -120,7 +121,7 @@ class ProjectFormatController extends Controller
                     'size' => $request->input('size'),
                     'measurement' => $request->input('measurement'),
                     'ratio' => $request->input('ratio'),
-                    'price' => $request->input('price'),
+                    'price' => MoneyHelper::convertToNumeric($request->input('price')),
 
                 ]);
             });
@@ -178,20 +179,28 @@ class ProjectFormatController extends Controller
         }
     }
 
-
     public function duplicate($project_id)
     {
-        $formats = Format::where('project_id', 1)->get();
-    
+        try {
+            $originalProject = Project::with('formats')->findOrFail($project_id);
 
-        $project = Project::findOrFail($project_id);
-    
-        foreach ($formats as $format) {
-            $newFormat = $format->replicate();
-            $newFormat->project_id = $project_id;
-            $newFormat->save();
+            // Duplicate the project
+            $newProject = $originalProject->replicate();
+            $newProject->save();
+
+            // Duplicate and associate each format with the new project
+            foreach ($originalProject->formats as $originalFormat) {
+                $newFormat = $originalFormat->replicate();
+                $newProject->formats()->save($newFormat);
+            }
+
+            Alert::toast('Project and formats duplicated successfully', 'success');
+            return redirect()->route('projects.index');
+        } catch (\Exception $e) {
+            Alert::toast('Error duplicating project and formats', 'error');
+            return redirect()->route('projects.index');
         }
-    
-        return redirect()->route('formats.index', ['project_id' => $project_id]);
     }
+    
+    
 }

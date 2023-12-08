@@ -9,7 +9,6 @@ use App\Http\Controllers\TaxController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\OrderLineController;
 use App\Http\Controllers\LayoutController;
-// use App\Http\Controllers\FormatController;
 use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\EmailController;
@@ -35,7 +34,6 @@ Route::group(['middleware' => ['auth']], function() {
     ] )->name('home');
 
     Route::name('projects.')
-        ->middleware('admin.check')
         ->prefix('projecten')
         ->controller(ProjectController::class)
         ->group(function () {

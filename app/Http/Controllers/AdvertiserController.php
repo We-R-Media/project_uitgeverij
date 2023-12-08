@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AppHelpers\PostalCodeHelper;
+use App\AppHelpers\MoneyHelper;
 use App\Models\Advertiser;
 use App\Models\Contact;
 use App\Services\SearchService;
@@ -126,7 +127,7 @@ class AdvertiserController extends Controller
                     'po_box' => $request->input('address'),
                     'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
                     'city' => $request->input('city'),
-                    'credit_limit' => $request->input('credit'),
+                    'credit_limit' => MoneyHelper::convertToNumeric($request->input('credit')),
                     'province' => $request->input('province'),
                     'phone_mobile' => $request->input('phone_mobile'),
                     'phone' => $request->input('phone'),
@@ -205,7 +206,7 @@ class AdvertiserController extends Controller
                     'name' => $request->input('name'),
                     'po_box' => $request->input('po_box'),
                     'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
-                    'credit_limit' => $this->convertToNumeric($request->input('credit')),
+                    'credit_limit' => MoneyHelper::convertToNumeric($request->input('credit')),
                     'city' => $request->input('city'),
                     'province' => $request->input('province'),
                     'phone' => $request->input('phone'),
@@ -239,13 +240,6 @@ class AdvertiserController extends Controller
 
             return redirect()->route('advertisers.index');
         }
-    }
-
-    private function convertToNumeric($value)
-    {
-        $cleanedValue = str_replace(['€', '.', ','], ['', '', '.'], $value);
-
-        return floatval($cleanedValue);
     }
 
     /**

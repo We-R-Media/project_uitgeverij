@@ -13,10 +13,10 @@
                     <h3>{{ __('Algemeen') }}</h3>
 
 
-                    <div class="field field-alt">
+                    {{-- <div class="field field-alt">
                         <label for="seller">{{__('Verkoper')}}</label>
                         <input type="text" name="seller" value="{{ $project->user->first_name }} {{$project->user->last_name}}" id="" readonly>
-                    </div>
+                    </div> --}}
 
                     <div class="field field-alt">
                         <label for="name">{{ __('Projectcode') }}</label>

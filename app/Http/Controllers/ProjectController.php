@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Traits\SearchableModelTrait;
+use App\AppHelpers\MoneyHelper;
 use App\Models\Layout;
 use App\Models\Tax;
 use App\Models\Project;
@@ -39,7 +40,23 @@ class ProjectController extends Controller
     {
         $searchQuery = $request->input('search');
 
-        $projects = Project::query()
+        $user_id = Auth::user()->id;
+
+        if(Gate::allows('isSeller')) {
+            $projects = Project::query()
+            ->latest()
+            ->where('user_id', $user_id)
+            ->whereNull('deactivated_at')
+            ->when($searchQuery, function ($query) use ($searchQuery) {
+                $this->searchService->search($query, $searchQuery, [
+                    'name',
+                    'release_name',
+                    'edition_name'
+                ]);
+            })
+            ->paginate(12);
+        } else {
+            $projects = Project::query()
             ->latest()
             ->whereNull('deactivated_at')
             ->when($searchQuery, function ($query) use ($searchQuery) {
@@ -50,6 +67,7 @@ class ProjectController extends Controller
                 ]);
             })
             ->paginate(12);
+        }
 
         return view('pages.projects.index', compact('projects'))
             ->with([
@@ -126,7 +144,7 @@ class ProjectController extends Controller
                     'journal' => $request->input('journal'),
                     'department' => $request->input('department'),
                     'year' => $request->input('year'),
-                    'revenue_goals' => $this->convertToNumeric($request->input('revenue')),
+                    'revenue_goals' => MoneyHelper::convertToNumeric($request->input('revenue_goals')),
                     'comments' => $request->input('comments'),
                 ]);
                 $project->layout()->associate($layout);
@@ -149,27 +167,27 @@ class ProjectController extends Controller
         }
     }
 
-    private function convertToNumeric($value)
-    {
-        $cleanedValue = str_replace(['€', '.', ','], ['', '', '.'], $value);
-
-        return floatval($cleanedValue);
-    }
-
-    public function duplicate(string $project_id)
+    public function duplicate($project_id)
     {
         // Find the original project by ID
         $originalProject = Project::findOrFail($project_id);
 
-        // Duplicate only the values of the original project (excluding 'id')
-        $newProject = new Project;
-        $newProject->fill($originalProject->toArray());
-        $newProject->id = null; // Set the 'id' to null to allow auto-increment in the database
+        // Replicate the project
+        $newProject = $originalProject->replicate();
         $newProject->save();
 
-        // Pass the values of the new project to the view
-        return redirect()->route('projects.create', ['project' => $newProject]);
+        // Replicate the associated formats if they exist
+        $originalFormats = $originalProject->formats;
+
+        foreach ($originalFormats as $originalFormat) {
+            $newFormat = $originalFormat->replicate();
+            $newProject->formats()->save($newFormat);
+        }
+
+        // Redirect to the edit screen of the new project
+        return redirect()->route('projects.edit', $project_id);
     }
+
 
 
     /**
@@ -207,6 +225,7 @@ class ProjectController extends Controller
 
                 $project = Project::findOrFail($project_id);
 
+                // dd($request->input('revenue_goals'));
 
                 $layout_id = $request->input('layout');
                 $layout = Layout::findOrFail($layout_id);
@@ -214,7 +233,7 @@ class ProjectController extends Controller
                 $tax_id = $request->input('taxes');
                 $tax = Tax::findOrFail($tax_id);
 
-                $project->update([
+                Project::where('id', $project_id)->update([
                     'name' => $request->input('name'),
                     'layout_id' => $layout_id,
                     'tax_id' => $tax_id,
@@ -237,7 +256,7 @@ class ProjectController extends Controller
                     'journal' => $request->input('journal'),
                     'department' => $request->input('department'),
                     // 'year' => $request->input('year'),
-                    'revenue_goals' => $this->convertToNumeric($request->input('revenue_goals')),
+                    'revenue_goals' => MoneyHelper::convertToNumeric($request->input('revenue_goals')),
                     'comments' => $request->input('comments'),
                     'deactivated_at' => $request->input('active') == 0 ? now() : null,
                 ]);
@@ -252,6 +271,7 @@ class ProjectController extends Controller
 
             return redirect()->route('projects.index');
         } catch (\Exception $e) {
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('projects.index');
         }
