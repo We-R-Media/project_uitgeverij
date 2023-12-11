@@ -38,7 +38,10 @@ class Order extends BaseModel
     protected $fillable = [
         'name',
         'contact_id',
-        'approved_at',
+        'administration_approved_at',
+        'seller_approved_at',
+        'email_sent_at',
+        'notification_sent_at',
         'order_method_approval',
         'order_method_invoice',
         'order_date',

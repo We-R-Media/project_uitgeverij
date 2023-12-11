@@ -16,6 +16,12 @@ class OrderApprovalNotification extends Notification
      *
      * @return array<int, string>
      */
+
+     public function __construct($order)
+     {
+        $this->order = $order;
+     }
+
     public function via(object $notifiable): array
     {
         return ['database'];
@@ -24,7 +30,8 @@ class OrderApprovalNotification extends Notification
     public function toDatabase($notifiable)
     {
         return [
-            'message' => 'An order is awaiting approval.',
+            'message' => 'Ordernummer:' . ' '  . $this->order->id . ' ' . 'wacht op goedkeuring',
+            'order_id' => $this->order->id,
         ];
     }
 }

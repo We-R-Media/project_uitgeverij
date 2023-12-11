@@ -8,11 +8,14 @@
 
 @section('content')
 
-@foreach(auth()->user()->unreadNotifications as $notification)
-        <div class="alert alert-info">
-            {{ $notification->data['message'] }}
-        </div>
-    @endforeach
+@foreach (auth()->user()->unreadNotifications as $notification )
+
+<div class="alert alert-info">
+        <label>{{$notification->data['message']}}</label>
+        <a href="{{ route('orders.edit', $notification->data['order_id']) }}" class="button button--action">{{__('Order')}}</a>
+    </div>
+@endforeach
+
 
 @if( Gate::allows( 'isAdmin' ) )
     <a href="/admin-panel">Admin Panel</a>

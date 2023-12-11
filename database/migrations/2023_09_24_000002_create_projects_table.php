@@ -41,6 +41,7 @@ return new class extends Migration
             $table->longText('comments')->nullable();
             $table->softDeletes();
             $table->date('deactivated_at')->nullable()->default(null);
+            $table->double('pages_sold')->nullable()->default(null);
             $table->timestamps();
         });
     }

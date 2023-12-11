@@ -48,8 +48,9 @@ class OrderController extends Controller
         $user_id = Auth::user()->id;
 
         $this->subpages = [
-            'Ter goedkeuring (administratie)' => 'orders.index',
-            'Akkoord (klant)' => 'orders.certified',
+            'Ter goedkeuring (verkoper)' => 'orders.index',
+            'Akkoord (verkoper)' => 'orders.seller.certified',
+            'Akkoord (klant)' => 'orders.advertiser.certified',
             'Geannuleerd' => 'orders.deactivated',
         ];
 
@@ -58,7 +59,8 @@ class OrderController extends Controller
                 ->latest()
                 ->where('user_id', $user_id)
                 ->whereNull('deactivated_at')
-                ->whereNull('approved_at')
+                ->whereNull('administration_approved_at')
+                ->whereNull('seller_approved_at')
                 ->when($searchQuery, function ($query) use ($searchQuery) {
                     $this->searchService->search($query, $searchQuery, [
                         'title'
@@ -68,7 +70,8 @@ class OrderController extends Controller
         } else {
             $orders = Order::latest()
                 ->whereNull('deactivated_at')
-                ->whereNull('approved_at')
+                ->whereNull('administration_approved_at')
+                ->whereNull('seller_approved_at')
                 ->paginate(12);
         }
 
@@ -87,8 +90,9 @@ class OrderController extends Controller
         $orders = Order::whereNotNull('deactivated_at')->paginate(12);
 
         $this->subpages = [
-            'Ter goedkeuring (administratie)' => 'orders.index',
-            'Akkoord (klant)' => 'orders.certified',
+            'Ter goedkeuring (verkoper)' => 'orders.index',
+            'Akkoord (verkoper)' => 'orders.seller.certified',
+            'Akkoord (klant)' => 'orders.advertiser.certified',
             'Geannuleerd' => 'orders.deactivated',
         ];
 
@@ -141,10 +145,6 @@ class OrderController extends Controller
                     'validation_token' => $token,
                 ]);
 
-                Log::info('OrderCreated event dispatched', ['order_id' => $order->id]);
-
-                event(new OrderCreated($order)); // TESTEN TESTEN TESTEN
-
                 $order->user()->associate($user);
                 $order->save();
 
@@ -171,6 +171,7 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($order_id);
         $selectedOrder = Order::with('orderLines.project')->find($order_id);
+
 
 
         return view('pages.orders.edit', compact('order','selectedOrder'))
@@ -224,7 +225,7 @@ class OrderController extends Controller
 
                 Order::where('id', $order_id)->update([
                     // 'order_date' => $request->input('order_date'),
-                    'approved_at' => $request->input('approved_at') == 1 ? now() : null,
+                    'administration_approved_at' => $request->input('approved_at') == 1 ? now() : null,
                     'email_sent_at' => $request->input('approved_at') == 1 ? now() : null,
                     'order_method_approval' => $order_method_approval,
                     'order_method_invoice' => $order_method_invoice,
@@ -246,10 +247,68 @@ class OrderController extends Controller
         }
     }
 
-    public function preview(string $order_id) {
+    public function seller__approve(string $order_id) 
+    {
+
+        $order = Order::findOrFail($order_id);
+
+        Order::where('id', $order_id)->update([
+            'notification_sent_at' => now(),
+        ]);
+
+        event(new OrderCreated($order));
+
+        Alert::toast('Notificatie verzonden', 'success');
+        Log::info('OrderCreated event dispatched', ['order_id' => $order_id]);
+        
+        return redirect()->route('orders.index');
+    }
+
+    public function preview(string $order_id) 
+    {
         $order = Order::findOrFail($order_id);
 
         $pdf = Pdf::loadView('pages.pdf.preview');
+    }
+
+    public function seller__approved(Request $request, $order_id)
+    {
+        try {
+            DB::transaction(function () use ($order_id) {
+                Order::where('id', $order_id)->update([
+                    'seller_approved_at' => now(),
+                ]);
+            });
+
+            $notification = Auth::user()->unreadNotifications->first();
+            if ($notification) {
+                $notification->markAsRead();
+                $notification->read_at = now();
+
+                $notification->save();
+    
+                // Optionally, delete the notification
+                $notification->delete();
+            }
+            
+            Alert::toast('Order is goedgekeurd', 'success');
+            return redirect()->route('orders.index');
+        } catch (\Exception $e) {
+            Alert::toast('Er is iets fout gegaan', 'error');
+            return redirect()->route('orders.index');
+        }
+    }
+    
+    public function approved__page() {
+        $orders = Order::whereNotNull('seller_approved_at')->paginate(12)->latest();
+
+        return view('orders.index', compact('orders'))
+            ->with([
+                'pageTitleSection' => self::$page_title_section,
+                'pageTitle' => $order->title,
+                'subpagesData' => $this->getSubpages($order_id),
+            ])
+        ;
     }
 
     /**
@@ -300,13 +359,17 @@ class OrderController extends Controller
         ]);
     }
 
-    public function certified() {
+    public function seller__certified() {
 
-        $orders = Order::whereNotNull('approved_at')->paginate(12);
+        $orders = Order::whereNotNull('seller_approved_at')
+            ->latest()
+            ->whereNull('administration_approved_at')
+            ->paginate(12);
 
         $this->subpages = [
-            'Ter goedkeuring (administratie)' => 'orders.index',
-            'Akkoord (klant)' => 'orders.certified',
+            'Ter goedkeuring (verkoper)' => 'orders.index',
+            'Akkoord (verkoper)' => 'orders.seller.certified',
+            'Akkoord (klant)' => 'orders.advertiser.certified',
             'Geannuleerd' => 'orders.deactivated',
         ];
 
@@ -315,4 +378,23 @@ class OrderController extends Controller
             'subpagesData' => $this->getSubpages(),
         ]);
     }
+
+    public function administration__certified() {
+        $orders = Order::whereNotNull('administration_approved_at')
+            ->latest()
+            ->whereNotNull('seller_approved_at')
+            ->paginate(12);
+            $this->subpages = [
+                'Ter goedkeuring (verkoper)' => 'orders.index',
+                'Akkoord (verkoper)' => 'orders.seller.certified',
+                'Akkoord (klant)' => 'orders.advertiser.certified',
+                'Geannuleerd' => 'orders.deactivated',
+            ];
+
+            return view('pages.orders.index', compact('orders'))->with([
+                'pageTitleSection' => self::$page_title_section,
+                'subpagesData' => $this->getSubpages(),
+            ]);
+    }
+
 }

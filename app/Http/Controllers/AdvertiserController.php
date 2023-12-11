@@ -115,8 +115,10 @@ class AdvertiserController extends Controller
      */
     public function store(Request $request)
     {
+        $advertiser_id = null;
+    
         try {
-            DB::transaction(function () use ($request) {
+            DB::transaction(function () use ($request, &$advertiser_id) {
                 $advertiser = Advertiser::create([
                     'first_name' => $request->input('first_name'),
                     'last_name' => $request->input('last_name'),
@@ -134,11 +136,9 @@ class AdvertiserController extends Controller
                     'phone' => $request->input('phone'),
                     'comments' => $request->input('comments'),
                 ]);
-                $advertiser->save();
-
-                $advertiser_data = Advertiser::findOrFail($advertiser->id);
-                $advertiser_id = $advertiser_data->id;
-
+    
+                $advertiser_id = $advertiser->id;
+    
                 $contact = Contact::firstOrNew([
                     'advertiser_id' => $advertiser_id,
                     'salutation' => $request->input('salutation'),
@@ -149,21 +149,20 @@ class AdvertiserController extends Controller
                     'last_name' => $request->input('last_name'),
                     'phone' => $request->input('phone'),
                 ]);
-
+    
                 $advertiser->contacts()->save($contact);
                 $contact->save();
             });
-
+    
             Alert::toast('De relatie is successvol aangemaakt', 'success');
-            return redirect()->route('advertisers.index');
-
+            return redirect()->route('advertisers.edit', $advertiser_id);
         } catch (\Exception $e) {
             dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('advertisers.index');
         }
     }
-
+    
     /**
      * Show the form for editing the specified resource.
      */

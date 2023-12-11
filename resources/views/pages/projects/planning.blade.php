@@ -13,11 +13,11 @@
             <h3>{{__('Planning')}}</h3>
 
 
-            {{-- {{dd(DateHelper::dateTimeBlade($project->planning->sale_start))}} --}}
+
 
             <div class="field field-alt">
                <label for="sale_start">{{__('Start verkoop')}}</label>
-               <input type="date" name="sale_start" @if(!$project->planning->count() > 0) value="" @endif id="">
+               <input type="date" name="sale_start" id="">
                @error('sale_start')
                   <span class="form__message">
                      <small>{{ $message }}</small>

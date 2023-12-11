@@ -301,6 +301,7 @@ class ProjectController extends Controller
     public function planning(string $project_id)
     {
         $project = Project::findOrFail($project_id);
+        $planning = Project::with('planning')->find($project->id);
 
         $this->subpages = [
             'Projectgegevens' => 'projects.edit',
@@ -322,6 +323,8 @@ class ProjectController extends Controller
             DB::transaction(function () use($project_id, $request) {
 
                 $project = Project::findOrFail($project_id);
+
+                dd(DateHelper::formatReadableDate($request->input('sale_start')));
 
 
                 $planning = ProjectPlanning::create([
@@ -358,7 +361,7 @@ class ProjectController extends Controller
         {
             DB::transaction(function () use($request, $project_id) {
                 ProjectPlanning::where('project_id', $project_id)->update([
-                    'sale_start' => $request->input('sale_start') ?? now(),
+                    'sale_start' =>$request->input('sale_start') ?? now(),
                     'redaction_date' => $request->input('redaction_date') ?? now(),
                     'adverts_date' => $request->input('adverts_date') ?? now(),
                     'printer_date' => $request->input('printer_date') ?? now(),
@@ -375,6 +378,7 @@ class ProjectController extends Controller
             return redirect()->route('projects.planning', $project_id);
 
         } catch (\Exception $e) {
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('projects.planning', $project_id);
         }

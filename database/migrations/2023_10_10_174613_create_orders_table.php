@@ -25,10 +25,14 @@ return new class extends Migration
             $table->string('order_method_invoice')->nullable()->default(null);
             $table->string('order_file')->nullable()->default(null);
             $table->string('order_file_2')->nullable()->default(null);
-            $table->dateTime('approved_at')->nullable()->default(null);
+            // $table->dateTime('approved_at')->nullable()->default(null);
+            $table->dateTime('administration_approved_at')->nullable()->default(null);
+            $table->dateTime('seller_approved_at')->nullable()->default(null);
             $table->dateTime('deactivated_at')->nullable()->default(null);
+            $table->dateTime('notification_sent_at')->nullable()->default(null);
             $table->dateTime('email_sent_at')->nullable()->default(null);
             $table->dateTime('material_received_at')->nullable()->default(null);
+            // $table->enum('confirmation_status', ['await', 'confirmed'])->nullable()->default(null);
             $table->text('comment_confirmation')->nullable();
             $table->text('comment_facturation')->nullable();
             $table->text('comment_reference')->nullable();

@@ -58,7 +58,9 @@ Route::group(['middleware' => ['auth']], function() {
         ->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/geannuleerd', 'deactivated')->name('deactivated');
-            Route::get('/akkoord', 'certified')->name('certified');
+
+            Route::get('/akkoord/verkoper', 'seller__certified')->name('seller.certified');
+            Route::get('/akkoord/administratie', 'administration__certified')->name('advertiser.certified');
 
             Route::get('/{advertiser_id}/nieuw', 'create')->name('create');
             Route::get('/{order_id}/bewerken', 'edit')->name('edit');
@@ -67,9 +69,13 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{order_id}/klachten', 'complaints')->name('complaints');
 
             Route::get('/{order_id}/voorbeeld', 'preview')->name('preview');
+            Route::get('/{order_id}/goedkeuren', 'seller__approve')->name('seller.approve');
+
+            Route::post('/{order_id}/goedgekeurd', 'seller__approved')->name('seller.approved');
 
             Route::post('/{order_id}/opslaan', 'store')->name('store');
             Route::post('/{order_id}/update', 'update')->name('update');
+
             Route::post('/{order_id}/verzenden', 'approval')->name('approval');
             Route::post('/{order_id}/akkoord', 'approved')->name('approved');
         });
