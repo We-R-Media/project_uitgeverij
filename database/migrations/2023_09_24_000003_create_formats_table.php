@@ -17,8 +17,8 @@ return new class extends Migration
             $table->string('format_title');
             $table->foreignID('project_id')->nullable();
             $table->string('size');
-            $table->string('measurement');
-            $table->string('ratio');
+            $table->string('measurement')->nullable();
+            $table->string('ratio')->nullable();
             $table->double('price');
             $table->softDeletes();
             $table->timestamps();

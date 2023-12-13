@@ -8,13 +8,22 @@
 
 @section('content')
 
-@foreach (auth()->user()->unreadNotifications as $notification )
+<div class="dashboard__wrapper">
+    <h3>{{__('Recente meldingen')}}</h3>
+    <div class="notification__wrapper">
 
-<div class="alert alert-info">
-        <label>{{$notification->data['message']}}</label>
-        <a href="{{ route('orders.edit', $notification->data['order_id']) }}" class="button button--action">{{__('Order')}}</a>
-    </div>
+
+@can('isSupervisor')   
+@foreach (auth()->user()->unreadNotifications as $notification )
+        <div class="notification__card">
+            <label>{{$notification->data['message']}}</label>
+            <a href="{{ route('orders.edit', $notification->data['order_id']) }}" class="button button--action">{{__('Order bekijken')}}</a>
+        </div>
 @endforeach
+    </div>
+    @endcan
+</div>
+
 
 
 @if( Gate::allows( 'isAdmin' ) )

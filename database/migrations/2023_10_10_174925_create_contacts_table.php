@@ -17,11 +17,11 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->enum('salutation', ['Dhr.', 'Mw.'])->nullable();
             $table->char('initial')->nullable();
-            $table->string('first_name');
+            $table->string('first_name')->nullable();
             $table->string('last_name');
             $table->string('preposition')->nullable();
-            $table->string('email');
-            $table->string('phone');
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
             $table->boolean('role')->nullable();
             $table->longText('comments')->nullable();
             $table->timestamp('deactivated_at')->nullable()->default(null);

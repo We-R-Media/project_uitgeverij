@@ -11,7 +11,9 @@
             @if ($order->notification_sent_at && !$order->seller_approved_at)
             <form action="{{ route('orders.seller.approved', $order->id) }}" method="post">
                 @csrf
-                <button value="1" name="seller_approved_at" class="button button--action">{{__('Goedkeuren')}}</button>
+                @can('isSupervisor')
+                    <button value="1" name="seller_approved_at" class="button button--action">{{__('Goedkeuren')}}</button>
+                @endcan
             </form>
             @endif
         </div>
@@ -204,9 +206,9 @@
                 <div class="field field-alt">
                     <label for="order_method">{{__('Bevestiging')}}</label>
                     <div class="radio__group">
-                        <input type="checkbox" name="method_approval[]" @if('isSeller') disabled @endcan value="email" checked>
+                        <input type="checkbox" name="method_approval[]" @can('isSeller') disabled @endcan value="email" checked>
                         <label for="email_checkbox">{{__('E-mail')}}</label>
-                        <input type="checkbox" name="method_approval[]" @if('isSeller') disabled @endcan value="post" checked>
+                        <input type="checkbox" name="method_approval[]" @can('isSeller') disabled @endcan value="post" checked>
                         <label for="post_checkbox">{{__('Post')}}</label>
                     </div>
                 </div>
@@ -324,8 +326,10 @@
                 @elseif ($order->administration_approved_at && $order->seller_approved_at)
                     <a href="{{ route('invoices.create', $order->id) }}" class="button button--action">{{__('Factureer order')}}</a>
                 @else 
-                    <a href="{{ route('orders.preview', $order->id) }}" class="button button--action">{{__('Voorbeeld')}}</a>
-                    <a href="{{ route('orders.seller.approve', $order->id) }}" class="button button--action">{{__('Goedkeuring')}}</a>
+                    @cannot('isSeller' && 'isSupervisor')
+                     <a href="{{ route('orders.preview', $order->id) }}" class="button button--action">{{__('Voorbeeld')}}</a>
+                     <a href="{{ route('orders.seller.approve', $order->id) }}" class="button button--action">{{__('Goedkeuring')}}</a>
+                    @endcannot
                 @endif
                 <button type="submit" class="button button--action">{{ __('Opslaan') }}</button>
             </div>

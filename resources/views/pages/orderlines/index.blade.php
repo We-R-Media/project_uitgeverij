@@ -4,6 +4,7 @@
 @section('seo_title', $pageTitleSection)
 @section('content')
     <div class="page__wrapper">
+        @if (!$order->advertiser->credit_limit == null)
         <div class="page__info">
             <span class="info__box">
                 <span class="box__title">
@@ -38,12 +39,13 @@
                 </span>
             </span>
         </div>
+        @endif
 
         <div class="header__bar">
             <x-search-field model="orders" placeholder="Order zoeken..." />
 
             <div class="buttons">
-                @if ($order->order_total_price < $order->advertiser->credit_limit)
+                @if ($order->order_total_price < $order->advertiser->credit_limit || $order->advertiser->credit_limit == null)
                     {{-- <a href="{{ route('orderlines.create', [$order->id, $order->project->id]) }}" class="button button--action">{{__('Nieuwe regel')}}</a> --}}
                     <a href="{{ route('orderlines.create', $order->id) }}" class="button button--action">{{__('Nieuwe regel')}}</a>
                 @else

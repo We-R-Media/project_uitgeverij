@@ -20,7 +20,7 @@ class SendOrderApprovalNotification implements ShouldQueue
         $order = $event->order;
 
         if ( $order->needsApproval() ) {
-            $admins = User::where('role', 'admin')->get();
+            $admins = User::where('role', 'supervisor')->get();
 
             foreach ($admins as $admin) {
                 $admin->notify( new OrderApprovalNotification( $order ) );

@@ -69,8 +69,8 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{order_id}/klachten', 'complaints')->name('complaints');
 
             Route::get('/{order_id}/voorbeeld', 'preview')->name('preview');
+            
             Route::get('/{order_id}/goedkeuren', 'seller__approve')->name('seller.approve');
-
             Route::post('/{order_id}/goedgekeurd', 'seller__approved')->name('seller.approved');
 
             Route::post('/{order_id}/opslaan', 'store')->name('store');

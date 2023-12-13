@@ -228,7 +228,6 @@ class AdvertiserController extends Controller
 
             return redirect()->route('advertisers.index');
         } catch (\Exception $e){
-            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
 
             return redirect()->route('advertisers.index');

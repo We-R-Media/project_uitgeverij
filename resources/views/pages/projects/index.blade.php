@@ -47,7 +47,8 @@
                                 </div>
                                 <div class="actions__group">
                                     <a href="{{ route('projects.edit', $project->id) }}">{{__('Bewerken')}}</a>
-                                    <a href="{{ route('projects.destroy', $project->id) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">Verwijderen</a>
+                                    <a href="{{ route('projects.destroy', $project->id) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">{{__('Verwijderen')}}</a>
+                                    <a href="{{ route('projects.duplicate', $project->id) }}" class="btn">{{__('Dupliceren')}}</a>
                                 </div>
                             </div>
                         </div>

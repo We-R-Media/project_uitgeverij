@@ -13,10 +13,12 @@ use App\Models\User;
 use App\Services\SearchService;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
@@ -123,8 +125,10 @@ class OrderController extends Controller
 
     public function store(Request $request, string $advertiser_id)
     {
+        $order_id = null;
+
         try {
-            DB::transaction(function () use($request, $advertiser_id) {
+            DB::transaction(function () use($request, $advertiser_id, &$order_id) {
 
 
                 $contact_id = $request->input('contact');
@@ -145,6 +149,9 @@ class OrderController extends Controller
                     'validation_token' => $token,
                 ]);
 
+                $order_id = $order->id;
+
+
                 $order->user()->associate($user);
                 $order->save();
 
@@ -157,8 +164,9 @@ class OrderController extends Controller
 
             Alert::toast('De order is successvol aangemaakt', 'success');
 
-            return redirect()->route('advertisers.index');
+            return redirect()->route('orders.edit', $order_id);
         } catch (\Exception $e){
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('orders.index');
         }
@@ -249,6 +257,11 @@ class OrderController extends Controller
 
     public function seller__approve(string $order_id) 
     {
+        // // $notifications = Auth::user()->unreadNotifications;
+
+        // foreach($notifications as $notification) {
+        //     dd($notification->data['message']);
+        // }
 
         $order = Order::findOrFail($order_id);
 
@@ -268,7 +281,9 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($order_id);
 
-        $pdf = Pdf::loadView('pages.pdf.preview');
+        $pdf = Pdf::loadView('pages.pdf.preview', compact('order'));
+
+        return $pdf->stream();
     }
 
     public function seller__approved(Request $request, $order_id)
@@ -280,20 +295,18 @@ class OrderController extends Controller
                 ]);
             });
 
-            $notification = Auth::user()->unreadNotifications->first();
-            if ($notification) {
-                $notification->markAsRead();
-                $notification->read_at = now();
+            $user = Auth::user();
 
-                $notification->save();
-    
-                // Optionally, delete the notification
-                $notification->delete();
+
+            foreach ($user->unreadNotifications as $notification) {
+                $notification->markAsRead();
             }
+
             
             Alert::toast('Order is goedgekeurd', 'success');
             return redirect()->route('orders.index');
         } catch (\Exception $e) {
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('orders.index');
         }

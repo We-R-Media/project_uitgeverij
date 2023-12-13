@@ -19,32 +19,42 @@ class FormatDropdown extends Component
     public $currentFormatPrice;
 
     public function mount()
-    {
-        $userId = Auth::user()->id;
+{
+    $userId = Auth::user()->id;
 
-        if(Gate::allows('isSeller')) {
-            $this->projects = Project::where('user_id', $userId)->whereNull('deactivated_at')->get();
-        }
-        else {
-            $this->projects = Project::whereNull('deactivated_at')->get();
-        }
-
-        if ($this->projects->isNotEmpty()) {
-            $this->selectedValue = $this->projects->first()->id;
-            $this->updateCurrentProjectAndFormat();
-        } else {
-            $this->selectedValue = null;
-            $this->currentProject = null;
-            $this->selectedFormat = null;
-            $this->currentFormat = null;
-            $this->currentFormatPrice = null;
-        }
+    if(Gate::allows('isSeller')) {
+        $this->projects = Project::where('user_id', $userId)->whereNull('deactivated_at')->get();
+    }
+    else {
+        $this->projects = Project::whereNull('deactivated_at')->get();
     }
 
-    public function updatedSelectedValue()
-    {
+    if ($this->projects->isNotEmpty()) {
+        $this->selectedValue = $this->projects->first()->id;
         $this->updateCurrentProjectAndFormat();
+        
+        if ($this->currentProject && $this->currentProject->formats->isNotEmpty()) {
+            $this->selectedFormat = $this->currentProject->formats->first()->id;
+            $this->updatedSelectedFormat();
+        }
+    } else {
+        $this->selectedValue = null;
+        $this->currentProject = null;
+        $this->selectedFormat = null;
+        $this->currentFormat = null;
+        $this->currentFormatPrice = null;
     }
+}
+
+public function updatedSelectedValue()
+{
+    $this->updateCurrentProjectAndFormat();
+    
+    if ($this->currentProject && $this->currentProject->formats->isNotEmpty()) {
+        $this->selectedFormat = $this->currentProject->formats->first()->id;
+        $this->updatedSelectedFormat();
+    }
+}
 
     public function updatedSelectedFormat()
     {

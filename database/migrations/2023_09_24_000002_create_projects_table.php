@@ -18,10 +18,10 @@ return new class extends Migration
             $table->foreignId('layout_id')->nullable();
             $table->foreignId('tax_id')->nullable();
             $table->string('title')->nullable();
-            $table->string('designer');
-            $table->string('printer');
-            $table->string('client');
-            $table->string('distribution');
+            $table->string('designer')->nullable();
+            $table->string('printer')->nullable();
+            $table->string('client')->nullable();
+            $table->string('distribution')->nullable();
             $table->string('release_name');
             $table->string('edition_name');
             $table->string('print_edition');
@@ -33,8 +33,8 @@ return new class extends Migration
             $table->string('paper_type_interior');
             $table->string('color_cover');
             $table->string('color_interior');
-            $table->integer('ledger');
-            $table->integer('journal');
+            $table->integer('ledger')->nullable();
+            $table->integer('journal')->nullable();
             $table->integer('department');
             $table->string('year')->nullable();
             $table->double('revenue_goals');
