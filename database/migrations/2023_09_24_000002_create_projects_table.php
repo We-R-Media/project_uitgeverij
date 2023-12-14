@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -17,6 +18,7 @@ return new class extends Migration
             $table->foreignId('user_id')->nullable();
             $table->foreignId('layout_id')->nullable();
             $table->foreignId('tax_id')->nullable();
+            $table->foreignId('publisher_id')->nullable();
             $table->string('title')->nullable();
             $table->string('designer')->nullable();
             $table->string('printer')->nullable();

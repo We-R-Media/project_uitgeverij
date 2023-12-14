@@ -90,11 +90,7 @@ class OrderLineController extends Controller
                 ]);
 
                 $orderline->order()->associate($order);
-                $orderline->save();
-
                 $orderline->project()->associate($project);
-                $orderline->save();
-
                 $orderline->format()->associate($format);
                 $orderline->save();
 

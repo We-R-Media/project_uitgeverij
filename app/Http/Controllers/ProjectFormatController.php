@@ -184,11 +184,9 @@ class ProjectFormatController extends Controller
         try {
             $originalProject = Project::with('formats')->findOrFail($project_id);
 
-            // Duplicate the project
             $newProject = $originalProject->replicate();
             $newProject->save();
 
-            // Duplicate and associate each format with the new project
             foreach ($originalProject->formats as $originalFormat) {
                 $newFormat = $originalFormat->replicate();
                 $newProject->formats()->save($newFormat);

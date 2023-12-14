@@ -36,6 +36,7 @@ class Project extends BaseModel
         'title',
         'layout_id',
         'tax_id',
+        'publisher_id',
         'designer',
         'printer',
         'client',
@@ -179,6 +180,16 @@ class Project extends BaseModel
     public function planning(): HasOne
     {
         return $this->hasOne(ProjectPlanning::class);
+    }
+
+    /**
+     * Get the publisher that owns the Project
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function publisher(): BelongsTo
+    {
+        return $this->belongsTo(Publisher::class);
     }
 
         /**

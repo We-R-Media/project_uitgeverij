@@ -99,12 +99,12 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * Get the user associated with the User
+     * Get all of the projects for the User
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function user(): HasOne
+    public function projects(): HasMany
     {
-        return $this->hasOne(User::class);
+        return $this->hasMany(Project::class);
     }
 }

@@ -10,6 +10,7 @@ use App\Models\Tax;
 use App\Models\Project;
 use App\Models\ProjectPlanning;
 use App\Models\User;
+use App\Models\Publisher;
 use App\Http\Requests\ProjectRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Services\SearchService;
@@ -104,66 +105,77 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        try {
-            DB::transaction(function () use ($request) {
+  public function store(Request $request)
+{
+    try {
+        DB::transaction(function () use ($request) {
 
-                $layout_id = $request->input('layout');
-                $layout = Layout::findOrFail($layout_id);
+            $publisherName = $request->input('release_name');
 
-                $seller_id = $request->input('seller');
-                $seller = User::findOrFail($seller_id);
+            $publisher = Publisher::where('name', $publisherName)->firstOrCreate([
+                'name' => $publisherName,
+            ]);
 
-                $tax_id = $request->input('taxes');
-                $tax = Tax::findOrFail($tax_id);
+            $layout_id = $request->input('layout');
+            $layout = Layout::findOrFail($layout_id);
 
-                $project = Project::create([
-                    'name' => $request->input('name'),
-                    'layout_id' => $layout_id,
-                    'tax_id' => $tax_id,
-                    'user_id' => $seller_id,
-                    'designer' => $request->input('designer'),
-                    'printer' => $request->input('printer'),
-                    'client' => $request->input('client'),
-                    'distribution' => $request->input('distribution'),
-                    'release_name' => $request->input('release_name'),
-                    'edition_name' => $request->input('edition_name'),
-                    'print_edition' => $request->input('print_edition'),
-                    'paper_format' => $request->input('paper_format'),
-                    'pages_redaction' => $request->input('pages_redaction'),
-                    'pages_adverts' => $request->input('pages_adverts'),
-                    'pages_total' => $request->input('pages_total'),
-                    'paper_type_cover' => $request->input('paper_type_cover'),
-                    'paper_type_interior' => $request->input('paper_type_interior'),
-                    'color_cover' => $request->input('color_cover'),
-                    'color_interior' => $request->input('color_interior'),
-                    'ledger' => $request->input('ledger'),
-                    'journal' => $request->input('journal'),
-                    'department' => $request->input('department'),
-                    'year' => $request->input('year'),
-                    'revenue_goals' => MoneyHelper::convertToNumeric($request->input('revenue_goals')),
-                    'comments' => $request->input('comments'),
-                ]);
-                $project->layout()->associate($layout);
-                $project->save();
+            $seller_id = $request->input('seller');
+            $seller = User::findOrFail($seller_id);
 
-                $project->user()->associate($seller);
-                $project->save();
+            $seller->save();
 
-                $project->tax()->associate($tax);
-                $project->save();
-            });
 
-            Alert::toast('Het project is succesvol aangemaakt', 'success');
+            $tax_id = $request->input('taxes');
+            $tax = Tax::findOrFail($tax_id);
 
-            return redirect()->route('projects.index');
+            $project = Project::create([
+                'name' => $request->input('release_name'),
+                'layout_id' => $layout_id,
+                'tax_id' => $tax_id,
+                'user_id' => $seller->id,
+                'publisher_id' => $publisher->id,
+                'designer' => $request->input('designer'),
+                'printer' => $request->input('printer'),
+                'client' => $request->input('client'),
+                'distribution' => $request->input('distribution'),
+                'release_name' => $publisherName, // Use $publisherName here
+                'edition_name' => $request->input('edition_name'),
+                'print_edition' => $request->input('print_edition'),
+                'paper_format' => $request->input('paper_format'),
+                'pages_redaction' => $request->input('pages_redaction'),
+                'pages_adverts' => $request->input('pages_adverts'),
+                'pages_total' => $request->input('pages_total'),
+                'paper_type_cover' => $request->input('paper_type_cover'),
+                'paper_type_interior' => $request->input('paper_type_interior'),
+                'color_cover' => $request->input('color_cover'),
+                'color_interior' => $request->input('color_interior'),
+                'ledger' => $request->input('ledger'),
+                'journal' => $request->input('journal'),
+                'department' => $request->input('department'),
+                'year' => $request->input('year'),
+                'revenue_goals' => MoneyHelper::convertToNumeric($request->input('revenue_goals')),
+                'comments' => $request->input('comments'),
+            ]);
 
-        } catch (\Exception $e) {
-            Alert::toast('Er is iets fout gegaan', 'error');
-            return redirect()->route('projects.index');
-        }
+
+            // Associate relationships
+            $project->layout()->associate($layout);
+            $project->user()->associate($seller);
+            $project->tax()->associate($tax);
+            $project->publisher()->associate($publisher);
+            $project->save();
+
+        });
+
+        Alert::toast('Het project is succesvol aangemaakt', 'success');
+
+        return redirect()->route('projects.index');
+
+    } catch (\Exception $e) {
+        Alert::toast('Er is iets fout gegaan', 'error');
+        return redirect()->route('projects.index');
     }
+}
 
     public function duplicate($project_id)
     {
@@ -265,8 +277,6 @@ class ProjectController extends Controller
                     'deactivated_at' => $request->input('active') == 0 ? now() : null,
                 ]);
                 $project->layout()->associate($layout);
-                $project->save();
-
                 $project->tax()->associate($tax);
                 $project->save();
             });

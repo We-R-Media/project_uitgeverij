@@ -19,10 +19,10 @@ class ProjectFactory extends Factory
     {
         return [
             'name' => fake()->word(),
-            'designer' => fake()->word(),
-            'printer' => fake()->word(),
-            'client' => fake()->word(),
-            'distribution' => fake()->word(),
+            'designer' => fake()->company(),
+            'printer' => fake()->company(),
+            'client' => fake()->company(),
+            'distribution' => fake()->company(),
             'release_name' => fake()->word(),
             'edition_name' => fake()->word(),
             'print_edition' => fake()->word(),

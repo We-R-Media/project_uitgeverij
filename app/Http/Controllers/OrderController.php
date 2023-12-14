@@ -111,7 +111,7 @@ class OrderController extends Controller
     public function create(string $advertiser_id)
     {
         $advertiser = Advertiser::findOrFail($advertiser_id);
-        $projects = Project::all();
+        $projects = Project::where('user_id', Auth::user()->id);
 
         return view('pages.orders.create', compact('advertiser', 'projects'))
             ->with([
@@ -153,11 +153,7 @@ class OrderController extends Controller
 
 
                 $order->user()->associate($user);
-                $order->save();
-
                 $order->contact()->associate($contact);
-                $order->save();
-
                 $order->advertiser()->associate($advertiser);
                 $order->save();
             });
@@ -178,11 +174,14 @@ class OrderController extends Controller
     public function edit(string $order_id)
     {
         $order = Order::findOrFail($order_id);
+
+        $projects = Project::where('user_id', $order->user_id)->get();
+
         $selectedOrder = Order::with('orderLines.project')->find($order_id);
 
 
 
-        return view('pages.orders.edit', compact('order','selectedOrder'))
+        return view('pages.orders.edit', compact('order','selectedOrder', 'projects'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'pageTitle' => $order->title,

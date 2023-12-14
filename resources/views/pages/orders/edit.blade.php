@@ -317,6 +317,20 @@
                     </span>
                 @enderror
             </fieldset>
+            {{dd($projects)}}
+
+            <fieldset class="fields row">
+                <h3>{{__('Orderregels')}}</h3>
+                <div class="field field-alt">
+                    <div class="dropdown">
+                        <select name="release_name" id="" class="select2">
+                            @foreach ($projects as $project )
+                                <option value="{{ $projects->publisher_id }}">{{ $projects->publisher->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
 
         </div>
         <div class="ButtonGroup">

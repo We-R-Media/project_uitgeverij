@@ -139,105 +139,22 @@
                         </select>
                     </div> --}}
 
-                </fieldset>
+                    @foreach ($projects as $project)
 
-                <fieldset class="fields options">
-                    <h3>{{__('Afwijkend factuuradres')}}</h3>
-
+                    {{dd($projects->where('user_id', Auth::user()->id))}}
                     <div class="field field-alt">
-                        <label for="advertiser_id">{{ __('Klantnummer') }}</label>
-                        <input type="text" name="advertiser_id" value="{{$advertiser->id}}" disabled>
-                        @error('advertiser_id')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    
-                    <div class="field field-alt">
-                        <label for="name">{{ __('Bedrijfsnaam') }}</label>
-                        <input type="text" name="name">
-                        @error('name')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="field field-alt">
-                        <label for="po_box">{{ __('Postadres') }}</label>
-                        <input type="text" name="po_box">
-                        @error('po_box')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="field field-alt">
-                        <label for="postal_code">{{ __('Postcode') }}</label>
-                        <input type="text" name="postal_code">
-                        @error('postal_code')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    
-                    <div class="field field-alt">
-                        <label for="city">{{ __('Woonplaats') }}</label>
-                        <input type="text" name="city">
-                        @error('city')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="field field-alt">
-                        <label for="province">{{ __('Provincie') }}</label>
-                        <input type="text" name="province">
-                        @error('province')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="field field-alt">
-                        <label for="email">{{ __('E-mailadres') }}</label>
-                        <input type="text" name="email">
-                        @error('email')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="field field-alt">
-                        <label for="contact-alt">{{__('Contactpersoon')}}</label>
+                        <label for="release_name">{{__('Uitgeverij')}}</label>
                         <div class="dropdown">
-                            <select class="select2" name="contact-alt" id="">
-                                @if($advertiser->contacts->isEmpty())
-                                <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
-                                @else
-                                @foreach ($advertiser->contacts as $contact)
-                                    <option value="{{ $contact->id }}" {{ $contact->role == 1 ? 'selected' : '' }}>
-                                        {{ $contact->salutation }} {{ $contact->initial }} {{ $contact->last_name }}
-                                    </option>
-                                @endforeach
-                                @endif
-                        </select>
+                            <select name="select2" id="" class="select2">
+                                    <option value="{{$project->name}}">{{$project->id}}</option>
+                            </select>
                         </div>
                     </div>
-                    
 
+                    @endforeach
 
 
                 </fieldset>
-
             </div>
 
             <div class="ButtonGroup">
