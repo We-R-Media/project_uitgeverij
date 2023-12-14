@@ -18,6 +18,8 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/main.scss', 'resources/js/app.js'])
+    <script src="{{asset('js/alt_address_toggle.js')}}"></script>
+
     @livewireStyles
 </head>
 <body>

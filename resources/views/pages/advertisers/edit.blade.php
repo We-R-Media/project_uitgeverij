@@ -178,12 +178,24 @@
                         </span>
                     @enderror
                     </div>
+
+                    <div class="field field-alt">
+                        <label for="alt_invoice_true">{{__('Afwijkend factuuradres')}}</label>
+                        <div class="radio__group">
+                            <label for="alt_invoice_true">{{__('Ja')}}</label>
+                            <input type="radio" value="0" name="alt_invoice" id="alt_invoice_true" onclick="toggleFormDisplay(0)">
+                            <label for="alt_invoice_false">{{__('Nee')}}</label>
+                            <input type="radio" value="1" name="alt_invoice" id="alt_invoice_false" onclick="toggleFormDisplay(1)" checked>
+                        </div>
+                    </div>                                    
+                    
+
             </fieldset>
 
-            <fieldset class="fields options">
+            <fieldset id="alt-address" class="fields options alt-fields">
                 <h3>{{__('Afwijkend factuuradres')}}</h3>
 
-                <div class="field field-alt">
+                {{-- <div class="field field-alt">
                     <label for="advertiser_id">{{ __('Klantnummer') }}</label>
                     <input type="text" name="advertiser_id" value="{{$advertiser->id}}" disabled>
                     @error('advertiser_id')
@@ -191,86 +203,69 @@
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
-                </div>
-
+                </div> --}}
+            
                 
-                <div class="field field-alt">
+                {{-- <div class="field field-alt">
                     <label for="name">{{ __('Bedrijfsnaam') }}</label>
-                    <input type="text" name="name">
+                    <input type="text" name="name_alt">
                     @error('name')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
-                </div>
-
+                </div> --}}
+            
                 <div class="field field-alt">
                     <label for="po_box">{{ __('Postadres') }}</label>
-                    <input type="text" name="po_box">
+                    <input type="text" name="po_box_alt">
                     @error('po_box')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
                 </div>
-
+            
                 <div class="field field-alt">
                     <label for="postal_code">{{ __('Postcode') }}</label>
-                    <input type="text" name="postal_code">
+                    <input type="text" name="postal_code_alt">
                     @error('postal_code')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
                 </div>
-
+            
                 
                 <div class="field field-alt">
                     <label for="city">{{ __('Woonplaats') }}</label>
-                    <input type="text" name="city">
+                    <input type="text" name="city_alt">
                     @error('city')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
                 </div>
-
+            
                 <div class="field field-alt">
                     <label for="province">{{ __('Provincie') }}</label>
-                    <input type="text" name="province">
+                    <input type="text" name="province_alt">
                     @error('province')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
                 </div>
-
+            
                 <div class="field field-alt">
                     <label for="email">{{ __('E-mailadres') }}</label>
-                    <input type="text" name="email">
+                    <input type="text" name="email_alt">
                     @error('email')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
-                </div>
-
-                <div class="field field-alt">
-                    <label for="contact-alt">{{__('Contactpersoon')}}</label>
-                    <div class="dropdown">
-                        <select class="select2" name="contact-alt" id="">
-                            @if($advertiser->contacts->isEmpty())
-                            <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
-                            @else
-                            @foreach ($advertiser->contacts as $contact)
-                                <option value="{{ $contact->id }}" {{ $contact->role == 1 ? 'selected' : '' }}>
-                                    {{ $contact->salutation }} {{ $contact->initial }} {{ $contact->last_name }}
-                                </option>
-                            @endforeach
-                            @endif
-                    </select>
-                    </div>
-                </div>
+                </div>         
             </fieldset>
 
             {{-- <fieldset class="fields notes">
