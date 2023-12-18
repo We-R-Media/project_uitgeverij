@@ -30,9 +30,9 @@ class ProjectFormatController extends Controller
      */
     public function index(string $project_id)
     {
-        $project = Project::findOrFail($project_id);
-        $formats = Format::where('project_id', $project_id)->latest()->paginate(12);
 
+        $project = Project::findOrFail($project_id);
+        $formats = Format::where('project_id', $project_id)->with('project')->orderBy('size')->paginate(5);
 
         return view('pages.formats.index', compact('project', 'formats'))
             ->with([
@@ -40,7 +40,7 @@ class ProjectFormatController extends Controller
                 'pageTitle' => $project->title,
                 'subpagesData' => $this->getSubpages( $project_id ),
             ]);
-    }
+}
 
     /**
      * Show the form for creating a new resource.
@@ -101,7 +101,6 @@ class ProjectFormatController extends Controller
     public function edit(string $format_id)
     {
         $format = Format::findOrFail($format_id);
-        // dd($format);
 
         return view('pages.formats.edit', compact('format'))
             ->with([

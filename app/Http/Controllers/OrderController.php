@@ -111,7 +111,8 @@ class OrderController extends Controller
     public function create(string $advertiser_id)
     {
         $advertiser = Advertiser::findOrFail($advertiser_id);
-        $projects = Project::where('user_id', Auth::user()->id);
+        $projects = Project::where('user_id', Auth::user()->id)->get();
+
 
         return view('pages.orders.create', compact('advertiser', 'projects'))
             ->with([

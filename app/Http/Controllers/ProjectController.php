@@ -129,7 +129,7 @@ class ProjectController extends Controller
             $tax = Tax::findOrFail($tax_id);
 
             $project = Project::create([
-                'name' => $request->input('release_name'),
+                'name' => $request->input('name'),
                 'layout_id' => $layout_id,
                 'tax_id' => $tax_id,
                 'user_id' => $seller->id,
@@ -209,9 +209,9 @@ class ProjectController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $project_id)
+    public function edit(Request $request, string $project_id)
     {
-        $project = Project::findOrFail($project_id);
+        $project = Project::with('formats')->findOrFail($project_id);
 
         $this->subpages = [
             'Projectgegevens' => 'projects.edit',
@@ -230,6 +230,7 @@ class ProjectController extends Controller
                 'layouts' => $layouts,
             ]);
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -283,6 +284,7 @@ class ProjectController extends Controller
 
             Alert::toast('Het project is successvol bijgewerkt', 'success');
 
+            session()->forget('edited_project_name');
             return redirect()->route('projects.index');
         } catch (\Exception $e) {
             dd($e);

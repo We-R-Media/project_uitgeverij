@@ -20,7 +20,7 @@
 
                     <div class="field field-alt">
                         <label for="name">{{ __('Projectcode') }}</label>
-                        <input id="" type="text" name="name" value="{{ $project->name }}">
+                        <input id="" type="text" name="name" value="{{ old('name', $project->name) }}">
                         @error('name')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
@@ -73,7 +73,7 @@
                 <fieldset class="fields page-details">
                     <h3>{{ __('Paginagegevens') }}</h3>
                     <div class="form__row-alt">
-                        <label>Aantal pagina's</label>
+                        <label>{{__("Aantal pagina's")}}</label>
                         <div class="field__row">
                             <div class="form__row">
                                 <div class="field">

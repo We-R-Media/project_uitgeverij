@@ -126,32 +126,16 @@
                         </div>
                     </div>
 
-                    {{-- <div class="field field-alt">
-                        <label for="project_id">{{__('Projectcode')}}</label>
-                        <select class="select2" name="project_id" id="">
-                            @if($projects->isEmpty())
-                                <option value="nvt" disabled selected>{{ __('Niet beschikbaar ...') }}</option>
-                            @else
-                            @foreach ($projects as $project )
-                                <option value="{{$project->id}}">{{$project->id}} - {{$project->release_name}}</option>
-                            @endforeach
-                            @endif
-                        </select>
-                    </div> --}}
-
-                    @foreach ($projects as $project)
-
-                    {{dd($projects->where('user_id', Auth::user()->id))}}
                     <div class="field field-alt">
                         <label for="release_name">{{__('Uitgeverij')}}</label>
                         <div class="dropdown">
                             <select name="select2" id="" class="select2">
-                                    <option value="{{$project->name}}">{{$project->id}}</option>
+                                @foreach ($projects as $project)
+                                    <option value="{{$project->name}}">{{$project->publisher->name}}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
-
-                    @endforeach
 
 
                 </fieldset>

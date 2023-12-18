@@ -38,7 +38,7 @@
                         </span>
                     @enderror
                 </div>
-{{--
+
                 <div class="field field-alt">
                     <label for="user">{{ __('Verkoper') }}</label>
                     <input id="" type="text" name="user" value="{{$order->user->first_name}} {{$order->user->last_name}}" readonly>
@@ -47,7 +47,7 @@
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
-                </div> --}}
+                </div>
 
                 <div class="field field-alt">
                     <label for="company">{{ __('Bedrijfsnaam') }}</label>
@@ -140,7 +140,7 @@
                 </div>
             </fieldset>
 
-            <fieldset class="fields options">
+            <fieldset class="fields base">
 
                     <h3>{{ __('Opties') }}</h3>
 
@@ -317,10 +317,9 @@
                     </span>
                 @enderror
             </fieldset>
-            {{dd($projects)}}
 
             <fieldset class="fields row">
-                <h3>{{__('Orderregels')}}</h3>
+                {{-- <h3>{{__('Orderregels')}}</h3>
                 <div class="field field-alt">
                     <div class="dropdown">
                         <select name="release_name" id="" class="select2">
@@ -329,7 +328,7 @@
                             @endforeach
                         </select>
                     </div>
-                </div>
+                </div> --}}
             </fieldset>
 
         </div>

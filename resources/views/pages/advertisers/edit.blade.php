@@ -32,6 +32,16 @@
                 </div>
 
                 <div class="field field-alt">
+                    <label for="name">{{ __('Bedrijfsnaam') }}</label>
+                    <input id="" type="text" name="name" value="{{$advertiser->name}}">
+                    @error('name')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
                     <label for="salutation">{{__('Aanhef')}}</label>
                     <div class="dropdown">
                        <select name="salutation" id="" class="select2">
@@ -70,16 +80,6 @@
                     <label for="last_name">{{ __('Achternaam') }}</label>
                     <input id="" type="text" name="last_name" value="{{ $advertiser->last_name }}">
                     @error('last_name')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field field-alt">
-                    <label for="name">{{ __('Bedrijfsnaam') }}</label>
-                    <input id="" type="text" name="name" value="{{ $advertiser->name }}">
-                    @error('name')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>
@@ -126,16 +126,18 @@
                     @enderror
                 </div>
 
+                @if ($advertiser->credit_limit && !$advertiser->credit_limit->isEmpty())
                 <div class="field field-alt">
-                    <label for="credit">{{ __('Kredietlimiet') }}</label>
-                    <input id="" type="text" name="credit" value="{{ $advertiser->credit_limit }} ">
+                        <label for="credit">{{ __('Kredietlimiet') }}</label>
+                        <input id="" type="text" name="credit" value="{{ @money($advertiser->credit_limit) }} ">
 
-                    @error('credit')
-                        <span class="form__message" role="alert">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
+                        @error('credit')
+                            <span class="form__message" role="alert">
+                                <small>{{ $message }}</small>
+                            </span>
+                        @enderror
+                    </div>
+                @endif
 
                 @if ($advertiser->po_box)
                     <div class="field field-alt">
@@ -206,7 +208,7 @@
                 </div> --}}
             
                 
-                {{-- <div class="field field-alt">
+                <div class="field field-alt">
                     <label for="name">{{ __('Bedrijfsnaam') }}</label>
                     <input type="text" name="name_alt">
                     @error('name')
@@ -214,7 +216,7 @@
                             <small>{{ $message }}</small>
                         </span>
                     @enderror
-                </div> --}}
+                </div>
             
                 <div class="field field-alt">
                     <label for="po_box">{{ __('Postadres') }}</label>
