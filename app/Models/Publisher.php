@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Publisher extends Model
 {
+    protected $table = 'publishers';
+
     protected $fillable = [
         'name',
     ];
@@ -23,5 +25,15 @@ class Publisher extends Model
     public function projects(): HasMany
     {
         return $this->hasMany(Project::class);
+    }
+
+    /**
+     * Get all of the orders for the Publisher
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
     }
 }

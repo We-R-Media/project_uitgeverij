@@ -127,11 +127,11 @@
                     </div>
 
                     <div class="field field-alt">
-                        <label for="release_name">{{__('Uitgeverij')}}</label>
+                        <label for="release_name">{{__('Uitgave')}}</label>
                         <div class="dropdown">
-                            <select name="select2" id="" class="select2">
-                                @foreach ($projects as $project)
-                                    <option value="{{$project->name}}">{{$project->publisher->name}}</option>
+                            <select name="publisher" id="" class="select2">
+                                @foreach ($publishers as $publisher)
+                                    <option value="{{$publisher->id}}">{{$publisher->name}}</option>
                                 @endforeach
                             </select>
                         </div>

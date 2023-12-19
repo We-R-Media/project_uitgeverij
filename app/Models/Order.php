@@ -101,6 +101,16 @@ class Order extends BaseModel
     }
 
     /**
+     * Get the publisher that owns the Order
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function publisher(): BelongsTo
+    {
+        return $this->belongsTo(Publisher::class);
+    }
+
+    /**
      * Get the order lines associated with the order.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

@@ -10,6 +10,7 @@ use App\Models\Advertiser;
 use App\Models\Project;
 use App\Models\Contact;
 use App\Models\User;
+use App\Models\Publisher;
 use App\Services\SearchService;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
@@ -111,15 +112,16 @@ class OrderController extends Controller
     public function create(string $advertiser_id)
     {
         $advertiser = Advertiser::findOrFail($advertiser_id);
-        $projects = Project::where('user_id', Auth::user()->id)->get();
-
-
-        return view('pages.orders.create', compact('advertiser', 'projects'))
+        $publishers = Publisher::has('projects', '>', 0)->get();
+    
+        $projects = Project::where('user_id', Auth::user()->id)
+            ->get();
+    
+        return view('pages.orders.create', compact('advertiser', 'projects', 'publishers'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
             ]);
     }
-
     /**
      * Store a newly created resource in storage.
      */
@@ -134,6 +136,9 @@ class OrderController extends Controller
 
                 $contact_id = $request->input('contact');
                 $contact = Contact::findOrFail($contact_id);
+
+                $publisher_id = $request->input('publisher');
+                $publisher = Publisher::findOrFail($publisher_id);
 
                 $user_id = Auth::user()->id;
                 $user = User::findOrFail($user_id);
@@ -156,6 +161,7 @@ class OrderController extends Controller
                 $order->user()->associate($user);
                 $order->contact()->associate($contact);
                 $order->advertiser()->associate($advertiser);
+                $order->publisher()->associate($publisher);
                 $order->save();
             });
 
@@ -176,7 +182,11 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($order_id);
 
-        $projects = Project::where('user_id', $order->user_id)->get();
+
+
+        $projects = Project::where('user_id', $order->user_id)
+            ->where('publisher_id', $order->publisher_id)
+            ->get();
 
         $selectedOrder = Order::with('orderLines.project')->find($order_id);
 

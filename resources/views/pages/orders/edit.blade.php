@@ -23,7 +23,6 @@
         @csrf
         @method('post')
 
-        {{-- {{dd(asset('public/images/uploads/' . $order->order_file))}} --}}
 
     <div class="grid__wrapper">
             <fieldset class="fields base">
@@ -141,7 +140,6 @@
             </fieldset>
 
             <fieldset class="fields base">
-
                     <h3>{{ __('Opties') }}</h3>
 
                     @if (!$selectedOrder->orderLines->isEmpty())
@@ -269,29 +267,6 @@
                     </div>
                 </div>
 
-                <div class="fields__row">
-                    <h3>{{ __('Orderregels') }}</h3>
-                    <div class="field field-alt">
-                        <label for="order_rule">{{ __('Aantal orderregels') }}</label>
-                        <input id="" type="text" name="order_rule" value="{{ $order->orderlines->count() }}" readonly>
-                        @error('order_rule')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="field field-alt">
-                        <label for="order_total">{{ __('Order totaal') }}</label>
-                        <input id="" type="text" name="order_total" value="{{ @money($order->order_total_price) }}" readonly>
-                        @error('order_total')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-                </div>
-
 
 
                 <div class="field field-alt">
@@ -305,12 +280,34 @@
 
 
                 </div>
-
             </fieldset>
 
-            <fieldset class="field notes full-width">
-                <label for="comment_confirmation">{{ __('Opmerkingen') }}</label>
-                <textarea id="" cols="30" rows="10" name="comment_confirmation" @can('isSeller') readonly @endcan placeholder="Vul opmerkingen in...">{{$order->comment_confirmation}}</textarea>
+            <fieldset class="fields row">
+                <h3>{{ __('Orderregels') }}</h3>
+                <div class="field field-alt">
+                    <label for="order_rule">{{ __('Aantal orderregels') }}</label>
+                    <input id="" type="text" name="order_rule" value="{{ $order->orderlines->count() }}" readonly>
+                    @error('order_rule')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+
+                <div class="field field-alt">
+                    <label for="order_total">{{ __('Order totaal') }}</label>
+                    <input id="" type="text" name="order_total" value="{{ @money($order->order_total_price) }}" readonly>
+                    @error('order_total')
+                        <span class="form__message" role="alert">
+                            <small>{{ $message }}</small>
+                        </span>
+                    @enderror
+                </div>
+            </fieldset>
+
+            <fieldset class="fields base">
+                <h3>{{__('Opmerkingen')}}</h3>
+                <textarea id="" cols="30" rows="10" name="comment_confirmation" placeholder="Vul opmerkingen in...">{{$order->comment_confirmation}}</textarea>
                 @error('comment_confirmation')
                     <span class="form__message" role="alert">
                         <small>{{ $message }}</small>
@@ -318,18 +315,7 @@
                 @enderror
             </fieldset>
 
-            <fieldset class="fields row">
-                {{-- <h3>{{__('Orderregels')}}</h3>
-                <div class="field field-alt">
-                    <div class="dropdown">
-                        <select name="release_name" id="" class="select2">
-                            @foreach ($projects as $project )
-                                <option value="{{ $projects->publisher_id }}">{{ $projects->publisher->name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div> --}}
-            </fieldset>
+
 
         </div>
         <div class="ButtonGroup">
@@ -346,6 +332,17 @@
                 @endif
                 <button type="submit" class="button button--action">{{ __('Opslaan') }}</button>
             </div>
+        </div>
+    </form>
+    <form action="{{ route('orderlines.store', $order->id) }}" method="post">
+        @csrf
+        @method('post')
+
+        <div class="grid__wrapper">
+            <fieldset class="fields base">
+                <h3>{{__('Edities')}}</h3>
+                @livewire('set-edition', ['order' => $order, 'projects' => $projects])
+            </fieldset>
         </div>
     </form>
 </div>

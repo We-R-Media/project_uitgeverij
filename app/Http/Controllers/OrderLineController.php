@@ -98,11 +98,12 @@ class OrderLineController extends Controller
             });
 
             Alert::toast('De orderregel is succesvol aangemaakt', 'success');
-            return redirect()->route('orderlines.index', $order_id);
+            return redirect()->route('orders.edit', $order_id);
 
         } catch(Exception $e) {
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
-            return redirect()->route('orderlines.index');
+            return redirect()->route('orders.edit', $order_id);
         }
     }
 
