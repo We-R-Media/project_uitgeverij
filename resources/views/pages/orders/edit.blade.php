@@ -330,20 +330,19 @@
                      <a href="{{ route('orders.seller.approve', $order->id) }}" class="button button--action">{{__('Goedkeuring')}}</a>
                     @endcannot
                 @endif
-                <button type="submit" class="button button--action">{{ __('Opslaan') }}</button>
+                <button type="submit" name="submitType" value="route1" class="button button--action">{{ __('Opslaan') }}</button>
             </div>
         </div>
     </form>
-    <form action="{{ route('orderlines.store', $order->id) }}" method="post">
-        @csrf
-        @method('post')
 
-        <div class="grid__wrapper">
-            <fieldset class="fields base">
-                <h3>{{__('Edities')}}</h3>
-                @livewire('set-edition', ['order' => $order, 'projects' => $projects])
-            </fieldset>
-        </div>
-    </form>
+    <div class="editions-base">
+        <form action="{{ route('orderlines.store', $order->id) }}" method="post" class="edition-form">
+            @csrf
+            @method('post')
+            @livewire('set-edition', ['order' => $order, 'projects' => $projects])
+        </form>
+    </div>
+
+
 </div>
 @endsection

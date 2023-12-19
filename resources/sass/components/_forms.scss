@@ -140,10 +140,85 @@ label{
     font-weight: 300 !important;
 }
 
-.edition__button {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    text-align: center;
+.editions-base {
+    width: 100%;
 
+    .edition-form {
+        display: flex;
+        flex-wrap: wrap;
+        width: 50%;
+        height: 50vh;
+
+        .edition-fields {
+            max-width: calc(50% - 50px);
+            height: 100%;
+            display: flex;
+            align-items: flex-start;
+            justify-content: baseline;
+            flex-wrap: wrap;
+            gap: 20px; /* Increased gap for more distance between labels and inputs */
+            flex-direction: column;
+            text-align: center;
+            cursor: pointer;
+            border: 0;
+
+            h3 {
+                font-size: 18px;
+                font-weight: 500;
+            }
+
+            .edition-field {
+                display: flex;
+                justify-content: flex-start;
+                align-items: baseline; /* Align baselines for perfect alignment */
+                gap: 20px; /* Increased gap for more distance between label and input */
+                padding: 10px;
+                text-align: left;
+                flex-direction: row;
+                min-width: 700px;
+                
+                @include mixin.breakpoint("min", "tablet") {
+                    min-width: 500px;
+                }
+
+                // input:not([type='checkbox']):not([type='radio']),
+                select {
+                    border-bottom: 1px solid color.$primary;
+                    font-size: clamp(1.4rem, 4vw, 1.6rem);
+                    font-weight: 300;
+                    appearance: none;
+                    min-height: 4rem;
+                    transition: background-color .2s linear;
+                    padding: 0 1rem;
+                    width: 100%; /* Set the width to 100% */
+                    box-sizing: border-box; /* Ensure padding is included in the width */
+                    text-align: left;
+                    border-bottom: 1px solid color.$primary;
+
+                }
+
+                label {
+                    font-size: clamp(1.4rem, 4vw, 1.6rem);
+                    color: color.$black;
+                    font-weight: 300;
+                    text-justify: distribute-all-lines;
+                    margin-right: 40px; /* Adjusted margin for more distance between label and input */
+                    width: 180px; /* Fixed width for labels */
+                }
+
+                input,
+                select {
+                    border: unset;
+                    text-align: left;
+                    border-bottom: 1px solid color.$primary;
+                    min-width: 500px;
+
+                }
+            }
+        }
+    }
 }
+
+
+
+
