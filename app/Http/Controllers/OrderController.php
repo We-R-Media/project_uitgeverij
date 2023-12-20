@@ -34,9 +34,8 @@ class OrderController extends Controller
 
         $this->subpages = [
             'Ordergegevens' => 'orders.edit',
-            'Print' => 'orders.print',
-            'Klachten' => 'orders.complaints',
-            'Orderregels' => 'orderlines.index',
+            // 'Print' => 'orders.print',
+            // 'Klachten' => 'orders.complaints',
         ];
     }
 
@@ -180,7 +179,12 @@ class OrderController extends Controller
      */
     public function edit(string $order_id)
     {
-        $order = Order::findOrFail($order_id);
+        // $order = Order::findOrFail($order_id);
+
+        $order = Order::with('orderLines')->findOrFail($order_id);
+        $orderlines = $order->orderLines()
+            ->withTrashed()
+            ->paginate(12);
 
 
 
@@ -192,7 +196,7 @@ class OrderController extends Controller
 
 
 
-        return view('pages.orders.edit', compact('order','selectedOrder', 'projects'))
+        return view('pages.orders.edit', compact('order','selectedOrder', 'projects', 'orderlines'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
                 'pageTitle' => $order->title,
@@ -347,7 +351,7 @@ class OrderController extends Controller
             Alert::toast('De order is verwijderd.', 'info');
         }
 
-        return redirect()->route('orders.index');
+        return redirect()->route('orders.edit', $order_id);
     }
 
     public function print(string $order_id)

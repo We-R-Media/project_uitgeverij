@@ -5,9 +5,10 @@
     <div class="page__wrapper">
         <div class="header__bar">
             <x-search-field name="projects" model="projects" placeholder="Projecten zoeken..." />
-
             <div class="buttons">
-                <a href="{{ route('projects.create') }}" class="button button--action">{{__('Nieuw project')}}</a>
+            @cannot('isSeller')
+              <a href="{{ route('projects.create') }}" class="button button--action">{{__('Nieuw project')}}</a>        
+            @endcannot
             </div>
         </div>
         <div class="items__head">
@@ -16,7 +17,7 @@
                     <div>{{ __('Projectcode') }}</div>
                 </div>
                 <div class="item__summary">
-                    <div>{{ __('Uitgave') }}</div>
+                    <div>{{ __('Naam uitgave') }}</div>
                     <div>{{ __('Editie') }}</div>
                 </div>
             </div>

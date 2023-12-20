@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\TaxRequest;
 use App\Models\Tax;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -57,7 +56,7 @@ class TaxController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(TaxRequest $request)
+    public function store(Request $request)
     {
         DB::transaction(function () use($request) {
             Tax::create([
@@ -98,7 +97,7 @@ class TaxController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(TaxRequest $request, string $tax_id)
+    public function update(Request $request, string $tax_id)
     {
         DB::transaction(function () use($request, $tax_id) {
             Tax::where('id', $tax_id)->update([

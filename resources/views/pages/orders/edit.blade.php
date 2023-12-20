@@ -314,9 +314,6 @@
                     </span>
                 @enderror
             </fieldset>
-
-
-
         </div>
         <div class="ButtonGroup">
             <div class="buttons">
@@ -330,19 +327,76 @@
                      <a href="{{ route('orders.seller.approve', $order->id) }}" class="button button--action">{{__('Goedkeuring')}}</a>
                     @endcannot
                 @endif
-                <button type="submit" name="submitType" value="route1" class="button button--action">{{ __('Opslaan') }}</button>
+                <button type="submit" class="button button--action">{{ __('Opslaan') }}</button>
             </div>
         </div>
     </form>
-
     <div class="editions-base">
         <form action="{{ route('orderlines.store', $order->id) }}" method="post" class="edition-form">
             @csrf
             @method('post')
             @livewire('set-edition', ['order' => $order, 'projects' => $projects])
         </form>
+    <div class="view-wrapper">
+        <h3>{{__('Weergave')}}</h3>
+        <div class="items__head">
+            <div class="item item__head">
+                <div class="item__content">
+                    <div>{{__('Projectcode')}}</div>
+                </div>
+                <div class="item__summary">
+                    <div>{{__('Editie')}}</div>
+                    <div>{{__('Basisprijs')}}</div>
+                    <div>{{__('Korting')}}</div>
+                    <div>{{__('Prijs met korting')}}</div>
+                </div>
+                <div class="item__actions">
+                    <div></div>
+                </div>
+            </div>
+        </div>
+    <ul class="items__view">
+        @if ($orderlines->count() > 0)
+            @foreach ($orderlines as $orderline)
+                <li class="item {{ $orderline->trashed() ? 'item--thrashed' : 'item--default' }}">
+                    <div class="item__content">
+                        {{ $orderline->project->name }}
+                    </div>
+                    <div class="item__summary">
+                        <div class="item__format field">
+                            {{ $orderline->project->edition_name }}
+                        </div>
+                        <div class="item__format field">
+                            {{ @money( $orderline->base_price ) }}
+                        </div>
+                        <div class="item__format field">
+                            {{ $orderline->discount !== 0 && !is_null($orderline->discount) ? "€{$orderline->discount}" : '-' }}
+                        </div>
+                        <div class="item__format field">
+                            {{ @money( $orderline->price_with_discount) }}
+                        </div>
+                    </div>
+                    <div class="item__actions">
+                        <div class="actions__button">
+                            <div class="icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 128 512"><path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z"/></svg>
+                            </div>
+                            <div class="actions__group">
+                                @if ( $orderline->trashed() )
+                                    <a href="{{ route('orderlines.restore', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id] ) }}" class="btn" onclick="return confirm('Are you sure you want to restore this record?')">{{__('Herstellen')}}</a>
+                                @endif
+
+                                    <a href="{{ route('orderlines.destroy', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id]) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">{{__('Verwijderen')}}</a>
+                                    <a href="{{ route('invoices.create', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id]) }}" class="btn">{{__('Factureren')}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            @endforeach
+            {{ $orderlines->links() }}
+        @endif
+        </ul>
+      </div>
     </div>
-
-
 </div>
 @endsection

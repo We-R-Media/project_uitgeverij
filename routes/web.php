@@ -39,7 +39,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->group(function () {
             Route::get('/', 'index')->name('index');
 
-            Route::get('/nieuw', 'create')->name('create');
+            Route::get('/nieuw', 'create')->name('create')->middleware('supervisor.check');
             Route::get('/{project_id}/bewerken', 'edit')->name('edit');
             Route::get('/{project_id}/planning', 'planning')->name('planning');
             Route::get('/inactief', 'inactive')->name('inactive');
@@ -84,8 +84,6 @@ Route::group(['middleware' => ['auth']], function() {
         ->prefix('orders')
         ->controller(OrderLineController::class)
         ->group(function () {
-            Route::get('/{order_id}/orderregels', 'index')->name('index');
-
             Route::get('/{order_id}/orderregels/{regel_id}/verwijderen', 'destroy')->name('destroy');
             Route::get('/{order_id}/orderregels/{regel_id}/herstellen', 'restore')->name('restore');
 
@@ -130,10 +128,11 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{invoice_id}/verwijderen', 'destroy')->name('destroy');
 
             Route::post('/store', 'store')->name('store'); // FIX
-            Route::post('/{invoice_id}/update', 'update')->name('update'); // FIX
+            Route::post('/{invoice_id}/update', 'update')->name('update');
         });
 
     Route::name('settings.')
+        ->middleware('supervisor.check')
         ->prefix('instellingen')
         ->controller(SettingsController::class)
         ->group(function () {
@@ -150,7 +149,7 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::get('/{tax_id}/verwijderen', 'destroy')->name('destroy');
 
                 Route::post('/store', 'store')->name('store');
-                Route::post('/update', 'update')->name('update');
+                Route::post('/{tax_id}/bijwerken', 'update')->name('update');
             });
 
         Route::name('reminders.')

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('measurement')->nullable();
             $table->string('ratio')->nullable();
             $table->double('price');
+            $table->double('price_with_tax');
             $table->softDeletes();
             $table->timestamps();
         });

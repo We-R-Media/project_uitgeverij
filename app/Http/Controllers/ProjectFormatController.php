@@ -62,8 +62,14 @@ class ProjectFormatController extends Controller
     public function store(Request $request, string $project_id)
     {
 
+        $tax = $request->input('tax');
+
+        $price = $request->input('price');
+
+        $price_with_tax = MoneyHelper::taxCalculation($price, $tax);
+
         try {
-            DB::transaction(function () use($request, $project_id) {
+            DB::transaction(function () use($request, $project_id, $price_with_tax, $price) {
             $project = Project::findOrFail($project_id);
 
                $format = Format::create([
@@ -71,7 +77,8 @@ class ProjectFormatController extends Controller
                     'size' => $request->input('size'),
                     'measurement' => $request->input('measurement'),
                     'ratio' => $request->input('ratio'),
-                    'price' => MoneyHelper::convertToNumeric($request->input('price')),
+                    'price_with_tax' => MoneyHelper::convertToNumeric($price_with_tax),
+                    'price' => MoneyHelper::convertToNumeric($price),
                 ]);
 
                 $format->project()->associate($project);
@@ -82,6 +89,7 @@ class ProjectFormatController extends Controller
             return redirect()->route('formats.index', $project_id);
         }
         catch (\Exception $e) {
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('formats.index', $project_id);
         }

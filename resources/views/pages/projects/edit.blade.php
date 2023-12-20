@@ -4,6 +4,12 @@
 
 @section('content')
     <div class="page__wrapper">
+        <div class="header__bar">
+            <div class="buttons">
+                <a href="{{ route('projects.duplicate', $project->id) }}" class="button button--action">{{__('Dupliceren')}}</a>
+            </div>
+        </div>
+
         <form class="formContainer" action="{{route('projects.update', $project->id)}}" method="post">
             @csrf
             @method('post')
@@ -29,7 +35,7 @@
                     </div>
 
                     <div class="field field-alt">
-                        <label for="release_name">{{ __('Uitgave') }}</label>
+                        <label for="release_name">{{ __('Naam uitgave') }}</label>
                        <input id="" type="text" name="release_name" value="{{ $project->release_name }}">
                         @error('release_name')
                             <span class="form__message" role="alert">
@@ -100,7 +106,7 @@
                     </div>
                     <div>
                         <input type="hidden" id="sumInput" name="pages_total" value="{{$project->pages_total}}">
-                        <p name="total_pages" id="sum">Totaal aantal pagina's: {{$project->pages_total}}</p>
+                        <p name="total_pages" id="sum">{{__("Totaal aantal pagina's:")}} {{$project->pages_total}}</p>
                     </div>
                     <div class="form__row-alt">
                         <label>Cover</label>

@@ -35,7 +35,7 @@
                      @enderror
                 </div>
 
-                @if($projects->count() > 0)
+                {{-- @if($projects->count() > 0)
                 <div class="field field-alt">
                     <label>{{__('Dupliceren')}}</label>
                     <div class="dropdown">
@@ -47,7 +47,7 @@
                     </div>
                     <a href="{{ route('projects.duplicate', $project->id) }}" class="button button--action">{{__('Dupliceren')}}</a>
                 </div>
-                @endif
+                @endif --}}
 
 
 
@@ -63,7 +63,7 @@
                 
 
                 <div class="field field-alt">
-                    <label for="release_name">{{ __('Uitgave') }}</label>
+                    <label for="release_name">{{ __('Naam uitgave') }}</label>
                    <input id="" type="text" name="release_name" value="{{ old('release_name') }}">
                     @error('release_name')
                         <span class="form__message" role="alert">
@@ -122,7 +122,6 @@
                         </div>
                     </div>
                 </div>
-                <p name="total_pages" id="sum">{{__("Totaal aantal pagina's:")}}</p>
                 <div class="form__row-alt">
                     <label>Cover</label>
                     <div class="field__row">

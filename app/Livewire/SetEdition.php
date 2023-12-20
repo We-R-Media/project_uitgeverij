@@ -23,23 +23,36 @@ class SetEdition extends Component
     public function mount($order)
     {
         $this->order = $order;
+
+        // Fetch the projects for the order
+        $this->projectCollection = Project::where('publisher_id', $this->order->publisher_id)
+            ->where('deactivated_at', null)
+            ->get();
+
+        if ($this->projectCollection->count() == 1) {
+            $this->selectedProjectId = $this->projectCollection->first()->id;
+            $this->projectVisible = true;
+            $this->updateSelectedProjectId();
+        }
     }
 
     public function displayProjects()
     {
-        $this->projectCollection = Project::where('publisher_id', $this->order->publisher_id)->get();
         $this->projectVisible = true;
+
+        if ($this->projectCollection->count() > 1) {
+            $this->selectedProjectId = $this->projectCollection->first()->id;
+            $this->updateSelectedProjectId();
+        }
     }
 
     public function updateSelectedProjectId()
     {
         $this->currentProject = $this->projectCollection->find($this->selectedProjectId);
 
-        // Select the first format of the current project
         $firstFormat = $this->currentProject->formats->first();
         $this->selectedFormatId = $firstFormat ? $firstFormat->id : null;
 
-        // Load format price
         $this->updateSelectedFormatId();
     }
 

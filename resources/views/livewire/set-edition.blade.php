@@ -1,9 +1,7 @@
 <fieldset class="edition-fields">
     <h3>{{__('Edities')}}</h3>
 
-    <a class="button button--action" wire:click="displayProjects">
-        {{__('Nieuwe regel')}}
-    </a>
+    <a class="edition--button button--action" wire:click="displayProjects">{{__('Nieuwe regel')}}</a>
 
     <div class="edition-field">
         @if ($projectVisible)
@@ -39,7 +37,7 @@
 
     <div class="edition-field">
         <label for="discount">{{__('Korting')}}</label>
-        <input type="text" wire:model.live="discount" name="discount" id="">
+        <input type="text" wire:model.live.debounce.500ms="discount" name="discount" id="">
     </div>
 
     <div class="edition-field">
@@ -49,7 +47,8 @@
     </div>
 
     <div class="edition-field">
-        <button class="button button--action" type="submit">{{ __('Toevoegen') }}</button>
+        {{-- <button class="button button--action" type="submit">{{ __('Toevoegen') }}</button> --}}
+        <button type="submit" name="submitType" value="orderlines" class="button button--action">{{ __('Toevoegen') }}</button>
     </div>
     @endif
 </fieldset>

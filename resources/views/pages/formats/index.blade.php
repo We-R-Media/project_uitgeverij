@@ -67,9 +67,9 @@
                     <label for="tax">{{__('BTW')}}</label>
                     <div class="dropdown">
                         <select name="tax" id="">
-                            <option value="">{{$project->tax->zero}} %</option>
-                            <option value="">{{$project->tax->low}} %</option>
-                            <option value="">{{$project->tax->high}} %</option>
+                            <option value="{{$project->tax->zero}}">{{$project->tax->zero}} %</option>
+                            <option value="{{$project->tax->low}}">{{$project->tax->low}} %</option>
+                            <option value="{{$project->tax->high}}" selected>{{$project->tax->high}} %</option>
                         </select>
                     </div>
                 </div>

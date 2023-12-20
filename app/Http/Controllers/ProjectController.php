@@ -46,7 +46,7 @@ class ProjectController extends Controller
         $searchQuery = $request->input('projects');
 
         if(Gate::allows('isSeller')) {
-            $projects = Project::latest('name')
+            $projects = Project::oldest('name')
                 ->whereNull('deactivated_at')
                 ->when($searchQuery, function ($query) use ($searchQuery) {
                     $this->searchService->search($query, $searchQuery, [
@@ -57,7 +57,7 @@ class ProjectController extends Controller
                 ->paginate(12);
         }
         else {
-            $projects = Project::latest('name')
+            $projects = Project::oldest('name')
                 ->whereNull('deactivated_at')
                 ->when($searchQuery, function ($query) use ($searchQuery) {
                     $this->searchService->search($query, $searchQuery, [
@@ -110,6 +110,9 @@ class ProjectController extends Controller
     try {
         DB::transaction(function () use ($request) {
 
+
+            
+
             $publisherName = $request->input('release_name');
 
             $publisher = Publisher::where('name', $publisherName)->firstOrCreate([
@@ -138,7 +141,7 @@ class ProjectController extends Controller
                 'printer' => $request->input('printer'),
                 'client' => $request->input('client'),
                 'distribution' => $request->input('distribution'),
-                'release_name' => $publisherName, // Use $publisherName here
+                'release_name' => $publisherName,
                 'edition_name' => $request->input('edition_name'),
                 'print_edition' => $request->input('print_edition'),
                 'paper_format' => $request->input('paper_format'),

@@ -6,8 +6,8 @@
 <div class="page__wrapper">
     <div class="header__bar">
         <div class="buttons">
-            @if (!$advertiser->deactivated_at)
-                <a href="{{ route('orders.create', $advertiser->id) }}" class="button button--action">+ {{ __('Nieuwe order') }}</a>
+            @if (!$advertiser->deactivated_at && !$advertiser->blacklisted_at)
+                    <a href="{{ route('orders.create', $advertiser->id) }}" class="button button--action">{{ __('+Nieuwe order') }}</a>
             @endif
         </div>
     </div>
@@ -126,7 +126,7 @@
                     @enderror
                 </div>
 
-                @if ($advertiser->credit_limit && !$advertiser->credit_limit->isEmpty())
+                @if ($advertiser->credit_limit && !is_countable($advertiser->credit_limit))
                 <div class="field field-alt">
                         <label for="credit">{{ __('Kredietlimiet') }}</label>
                         <input id="" type="text" name="credit" value="{{ @money($advertiser->credit_limit) }} ">

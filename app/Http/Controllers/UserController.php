@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Http;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -30,30 +31,33 @@ class UserController extends Controller
      */
     public function index(string $role = null)
     {
-        $users = User::all();
+        if (Gate::allows('isAdmin'))
+        {     
+            $users = User::all();
 
-        $this->subpages = [
-            'Alle gebruikers' => 'users.index',
-            'Admin' => [
-                'name' => 'users.role',
-                'parameters' => ['admin'],
-            ],
-            'Verkoper' => [
-                'name' => 'users.role',
-                'parameters' => ['seller'],
-            ],
-            'Supervisor' => [
-                'name' => 'users.role',
-                'parameters' => ['supervisor'],
-            ],
-        ];
+            $this->subpages = [
+                'Alle gebruikers' => 'users.index',
+                'Admin' => [
+                    'name' => 'users.role',
+                    'parameters' => ['admin'],
+                ],
+                'Verkoper' => [
+                    'name' => 'users.role',
+                    'parameters' => ['seller'],
+                ],
+                'Supervisor' => [
+                    'name' => 'users.role',
+                    'parameters' => ['supervisor'],
+                ],
+            ];
 
-        return view('pages.users.index', compact('users'))
-            ->with([
-                'pageTitleSection' => self::$page_title_plural,
-                'pageTitle' => self::$page_title_singular,
-                'subpagesData' => $this->getSubpages(),
-            ]);
+            return view('pages.users.index', compact('users'))
+                ->with([
+                    'pageTitleSection' => self::$page_title_plural,
+                    'pageTitle' => self::$page_title_singular,
+                    'subpagesData' => $this->getSubpages(),
+                ]);
+        }
     }
 
         /**

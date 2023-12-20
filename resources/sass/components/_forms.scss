@@ -8,10 +8,10 @@
     border: 0;
     padding: 0;
     margin: 0 0;
-    gap: 1rem;
+    gap: 1.5rem;
 
     h3 {
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
     }
 }
 .field {
@@ -122,7 +122,6 @@ label{
     .field {
         input {
             min-width: 15vw;
-
             &:not([type=checkbox]):not([type=radio]) {
                 border: unset;
             }
@@ -142,82 +141,93 @@ label{
 
 .editions-base {
     width: 100%;
-
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+  
     .edition-form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between; // Adjust as needed
+      align-items: flex-start; // Adjust as needed
+      height: 50vh;
+      width: 50%;
+  
+      .edition-fields {
+        flex: 1;
         display: flex;
+        flex-direction: column;
         flex-wrap: wrap;
-        width: 50%;
-        height: 50vh;
+        gap: 20px;
+        border: unset;
 
-        .edition-fields {
-            max-width: calc(50% - 50px);
-            height: 100%;
-            display: flex;
-            align-items: flex-start;
-            justify-content: baseline;
-            flex-wrap: wrap;
-            gap: 20px; /* Increased gap for more distance between labels and inputs */
-            flex-direction: column;
-            text-align: center;
+        h3 {
+            font-size: 18px;
+            font-weight: 500;
+          }
+
+        .edition--button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(1.2rem, 3vw, 1.4rem);
+            letter-spacing: 1px;
+            height: 4rem;
+            max-width: 3rem;
+            padding: 0 2rem;
+            transition: background-color 0.25s linear;
+            border-radius: 4rem;
+            min-width: 15rem;
+            border: 2px solid transparent;
             cursor: pointer;
-            border: 0;
-
-            h3 {
-                font-size: 18px;
-                font-weight: 500;
-            }
-
-            .edition-field {
-                display: flex;
-                justify-content: flex-start;
-                align-items: baseline; /* Align baselines for perfect alignment */
-                gap: 20px; /* Increased gap for more distance between label and input */
-                padding: 10px;
-                text-align: left;
-                flex-direction: row;
-                min-width: 700px;
-                
-                @include mixin.breakpoint("min", "tablet") {
-                    min-width: 500px;
-                }
-
-                // input:not([type='checkbox']):not([type='radio']),
-                select {
-                    border-bottom: 1px solid color.$primary;
-                    font-size: clamp(1.4rem, 4vw, 1.6rem);
-                    font-weight: 300;
-                    appearance: none;
-                    min-height: 4rem;
-                    transition: background-color .2s linear;
-                    padding: 0 1rem;
-                    width: 100%; /* Set the width to 100% */
-                    box-sizing: border-box; /* Ensure padding is included in the width */
-                    text-align: left;
-                    border-bottom: 1px solid color.$primary;
-
-                }
-
-                label {
-                    font-size: clamp(1.4rem, 4vw, 1.6rem);
-                    color: color.$black;
-                    font-weight: 300;
-                    text-justify: distribute-all-lines;
-                    margin-right: 40px; /* Adjusted margin for more distance between label and input */
-                    width: 180px; /* Fixed width for labels */
-                }
-
-                input,
-                select {
-                    border: unset;
-                    text-align: left;
-                    border-bottom: 1px solid color.$primary;
-                    min-width: 500px;
-
-                }
-            }
         }
+  
+        .edition-field {
+          flex: 1;
+          flex-direction: column;
+          max-width: none; // Remove the max-width property
+          width: 100%; // Occupy the entire available width
+  
+          @include mixin.breakpoint("min", "tablet") {
+            min-width: 100%;
+          }
+  
+          input:not([type='checkbox']):not([type='radio']),
+          select {
+            border-bottom: 1px solid color.$primary;
+            font-size: clamp(1.4rem, 4vw, 1.6rem);
+            font-weight: 300;
+            appearance: none;
+            min-height: 4rem;
+            transition: background-color .2s linear;
+            padding: 0 1rem;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: left;
+            border-bottom: 1px solid color.$primary;
+          }
+  
+          label {
+            font-size: clamp(1.4rem, 4vw, 1.6rem);
+            color: color.$black;
+            font-weight: 300;
+            text-justify: distribute-all-lines;
+            margin-right: 30px;
+            width: 180px;
+          }
+  
+          input,
+          select {
+            border: unset;
+            text-align: left;
+            border-bottom: 1px solid color.$primary;
+            min-width: 400px;
+          }
+        }
+      }
     }
-}
+  }
+  
 
 
 
