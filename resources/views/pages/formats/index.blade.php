@@ -91,6 +91,7 @@
                     <div>{{__('Afmetingen')}}</div>
                     <div>{{__('Verhouding')}}</div>
                     <div>{{__('Prijs')}}</div>
+                    <div>{{__('BTW')}}</div>
                  </div>
               </div>
            </div>
@@ -114,6 +115,17 @@
                     </div>
                     <div class="field">
                         {{@money($format->price)}}
+                    </div>
+                    <div class="BTW">
+                        @if ($format->zero)
+                        {{ $format->tax->zero }}%
+                        @elseif ($format->low)
+                        {{ $format->tax->low }}%
+                        @elseif ($format->high)
+                        {{ $format->tax->high }}%
+                        @else
+                        Unknown Tax Type
+                        @endif
                     </div>
                  </div>
                  <div class="item__actions">

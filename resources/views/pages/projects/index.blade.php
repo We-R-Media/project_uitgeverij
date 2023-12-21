@@ -41,6 +41,7 @@
                                 {{$project->edition_name}}
                             </div>
                         </div>
+                        @cannot('isSeller')
                         <div class="item__actions">
                             <div class="actions__button">
                                 <div class="icon">
@@ -53,6 +54,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endcannot
                     </li>
                 @endforeach
             @else

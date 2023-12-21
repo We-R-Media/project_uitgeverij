@@ -140,12 +140,15 @@
     padding-bottom: 100px;
 
     .ButtonGroup {
+        position: relative;
         width: 100%;
         padding: 20px 50px;
         bottom: 50px;
         left: 0px;
         display: flex;
         justify-content: flex-end;
+        // Tijdelijke fix
+        z-index: 9;
 
         @include mixin.breakpoint("min", "tablet") {
             left: 50px;

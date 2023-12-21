@@ -48,4 +48,14 @@ class Tax extends Model
     {
         return $this->hasOne(Project::class);
     }
+
+    /**
+     * Get the tax associated with the Tax
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function format(): HasOne
+    {
+        return $this->hasOne(Format::class);
+    }
 }

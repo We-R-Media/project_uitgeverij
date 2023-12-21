@@ -32,6 +32,7 @@ class OrderController extends Controller
     {
         $this->searchService = $searchService;
 
+
         $this->subpages = [
             'Ordergegevens' => 'orders.edit',
             // 'Print' => 'orders.print',
@@ -45,18 +46,19 @@ class OrderController extends Controller
     public function index(Request $request)
     {
         $searchQuery = $request->input('search');
-        $user_id = Auth::user()->id;
 
         $user_id = Auth::user()->id;
 
         $this->subpages = [
-            'Ter goedkeuring (verkoper)' => 'orders.index',
-            'Akkoord (verkoper)' => 'orders.seller.certified',
-            'Akkoord (klant)' => 'orders.advertiser.certified',
+            'Openstaand' => 'orders.index',
+            'Goedgekeurd' => 'orders.seller.certified',
+            'Akkoord' => 'orders.advertiser.certified',
             'Geannuleerd' => 'orders.deactivated',
         ];
 
         if (Gate::allows('isSeller')) {
+            unset($this->subpages['Akkoord']);
+
             $orders = Order::query()
                 ->latest()
                 ->where('user_id', $user_id)
@@ -65,7 +67,10 @@ class OrderController extends Controller
                 ->whereNull('seller_approved_at')
                 ->when($searchQuery, function ($query) use ($searchQuery) {
                     $this->searchService->search($query, $searchQuery, [
-                        'title'
+                        'id',
+                        'advertiser.name',
+                        'advertiser.city',
+                        'advertiser.email',
                     ]);
                 })
                 ->paginate(12);
@@ -74,6 +79,14 @@ class OrderController extends Controller
                 ->whereNull('deactivated_at')
                 ->whereNull('administration_approved_at')
                 ->whereNull('seller_approved_at')
+                ->when($searchQuery, function ($query) use ($searchQuery) {
+                    $this->searchService->search($query, $searchQuery, [
+                        'id',
+                        'advertiser.name',
+                        'advertiser.city',
+                        'advertiser.email',
+                    ]);
+                })
                 ->paginate(12);
         }
 
@@ -87,16 +100,26 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function deactivated()
+    public function deactivated(Request $request)
     {
-        $orders = Order::whereNotNull('deactivated_at')->paginate(12);
+        $searchQuery = $request->input('search');
+
+        $orders = Order::whereNotNull('deactivated_at')
+            ->paginate(12);    
+
+        
+
 
         $this->subpages = [
-            'Ter goedkeuring (verkoper)' => 'orders.index',
-            'Akkoord (verkoper)' => 'orders.seller.certified',
-            'Akkoord (klant)' => 'orders.advertiser.certified',
+            'Openstaand' => 'orders.index',
+            'Goedgekeurd' => 'orders.seller.certified',
+            'Akkoord' => 'orders.advertiser.certified',
             'Geannuleerd' => 'orders.deactivated',
         ];
+
+        if (Gate::allows('isSeller')) {
+            unset($this->subpages['Akkoord']);
+        }
 
         return view('pages.orders.index', compact('orders'))
             ->with([
@@ -168,7 +191,6 @@ class OrderController extends Controller
 
             return redirect()->route('orders.edit', $order_id);
         } catch (\Exception $e){
-            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('orders.index');
         }
@@ -327,7 +349,9 @@ class OrderController extends Controller
     }
     
     public function approved__page() {
-        $orders = Order::whereNotNull('seller_approved_at')->paginate(12)->latest();
+        $orders = Order::whereNotNull('seller_approved_at')  
+            ->paginate(12)
+            ->latest();
 
         return view('orders.index', compact('orders'))
             ->with([
@@ -394,11 +418,15 @@ class OrderController extends Controller
             ->paginate(12);
 
         $this->subpages = [
-            'Ter goedkeuring (verkoper)' => 'orders.index',
-            'Akkoord (verkoper)' => 'orders.seller.certified',
-            'Akkoord (klant)' => 'orders.advertiser.certified',
+            'Openstaand' => 'orders.index',
+            'Goedgekeurd' => 'orders.seller.certified',
+            'Akkoord' => 'orders.advertiser.certified',
             'Geannuleerd' => 'orders.deactivated',
         ];
+
+        if (Gate::allows('isSeller')) {
+            unset($this->subpages ['Akkoord']);
+        }
 
         return view('pages.orders.index', compact('orders'))->with([
             'pageTitleSection' => self::$page_title_section,
@@ -412,9 +440,9 @@ class OrderController extends Controller
             ->whereNotNull('seller_approved_at')
             ->paginate(12);
             $this->subpages = [
-                'Ter goedkeuring (verkoper)' => 'orders.index',
-                'Akkoord (verkoper)' => 'orders.seller.certified',
-                'Akkoord (klant)' => 'orders.advertiser.certified',
+                'Openstaand' => 'orders.index',
+                'Goedgekeurd' => 'orders.seller.certified',
+                'Akkoord' => 'orders.advertiser.certified',
                 'Geannuleerd' => 'orders.deactivated',
             ];
 

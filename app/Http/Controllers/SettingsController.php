@@ -25,16 +25,23 @@ class SettingsController extends Controller
         ];
     }
 
+    public function filterRole()
+    {
+        if (Gate::allows('isSupervisor') || Gate::allows('isSeller')) {
+            unset($this->subpages['Gebruikers']);
+        }
+    }
+
     public function index() {
-
-
-        if(Gate::allows('isSupervisor') || Gate::allows('isAdmin'))
-        {
+        $this->filterRole();
+    
+        if(Gate::allows('isSupervisor') || Gate::allows('isAdmin')) {
             return view('pages.settings')
-            ->with([
-                'pageTitleSection' => self::$page_title_section,
-                'subpagesData' => $this->getSubpages(),
-            ]);
+                ->with([
+                    'pageTitleSection' => self::$page_title_section,
+                    'subpagesData' => $this->getSubpages(),
+                ]);
         }
-        }
+    }
+    
     }

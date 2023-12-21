@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Format;
 use App\Models\Project;
+use App\Models\Tax;
 use App\AppHelpers\MoneyHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -72,6 +73,9 @@ class ProjectFormatController extends Controller
             DB::transaction(function () use($request, $project_id, $price_with_tax, $price) {
             $project = Project::findOrFail($project_id);
 
+            $tax_id = $project->tax->id;
+            $tax = Tax::findOrFail($tax_id);
+
                $format = Format::create([
                     'format_title' => $request->input('format_title'),
                     'size' => $request->input('size'),
@@ -82,8 +86,10 @@ class ProjectFormatController extends Controller
                 ]);
 
                 $format->project()->associate($project);
+                $format->tax()->associate($tax);
                 $format->save();
             });
+
 
             Alert::toast('Het formaat is succesvol aangemaakt', 'success');
             return redirect()->route('formats.index', $project_id);

@@ -14,6 +14,7 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Gate;
 
 
 class AdvertiserController extends Controller
@@ -44,6 +45,10 @@ class AdvertiserController extends Controller
             ->when($searchQuery, function ($query) use ($searchQuery) {
                 $this->searchService->search($query, $searchQuery, [
                     'name',
+                    'po_box',
+                    'postal_code',
+                    'city',
+                    'email'
                 ]);
             })
             ->whereNull('deactivated_at')
@@ -55,6 +60,11 @@ class AdvertiserController extends Controller
             'Inactief' => 'advertisers.inactive',
             'Zwarte lijst' => 'advertisers.blacklist',
         ];
+
+        if(Gate::allows('isSeller')) {
+            unset($this->subpages['Inactief']);
+            unset($this->subpages['Zwarte lijst']);
+        }
 
         return view('pages.advertisers.index', compact('advertisers'))
             ->with([
@@ -157,7 +167,6 @@ class AdvertiserController extends Controller
             Alert::toast('De relatie is successvol aangemaakt', 'success');
             return redirect()->route('advertisers.edit', $advertiser_id);
         } catch (\Exception $e) {
-            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('advertisers.index');
         }
@@ -361,9 +370,7 @@ class AdvertiserController extends Controller
         $advertiser = Advertiser::findOrFail($advertiser_id);
         $user_id = Auth::user()->id;
 
-        // $seller = $advertiser->orders->where('user_id', Auth::user()->id)->orWhere('role', 'seller');
 
-        // dd($seller);
 
         return view('pages.advertisers.orders', compact('advertiser'))->with([
             'pageTitleSection' => self::$page_title_section,

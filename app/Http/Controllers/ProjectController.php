@@ -43,25 +43,33 @@ class ProjectController extends Controller
     {
         $user_id = Auth::user()->id;
 
-        $searchQuery = $request->input('projects');
+        $searchQuery = $request->input('search');
 
         if(Gate::allows('isSeller')) {
-            $projects = Project::oldest('name')
+
+            unset($this->subpages['Inactief']);
+
+            $projects = Project::latest('name')
                 ->whereNull('deactivated_at')
                 ->when($searchQuery, function ($query) use ($searchQuery) {
                     $this->searchService->search($query, $searchQuery, [
+                        'name',
                         'title',
+                        'edition_name',
                     ]);
                 })
                 ->where('user_id', $user_id)
                 ->paginate(12);
         }
+        
         else {
-            $projects = Project::oldest('name')
+            $projects = Project::latest('name')
                 ->whereNull('deactivated_at')
                 ->when($searchQuery, function ($query) use ($searchQuery) {
                     $this->searchService->search($query, $searchQuery, [
+                        'name',
                         'title',
+                        'edition_name',
                     ]);
                 })
                 ->paginate(12);
@@ -161,7 +169,6 @@ class ProjectController extends Controller
             ]);
 
 
-            // Associate relationships
             $project->layout()->associate($layout);
             $project->user()->associate($seller);
             $project->tax()->associate($tax);
@@ -221,6 +228,12 @@ class ProjectController extends Controller
             'Planning' => 'projects.planning',
             'Formaten' => 'formats.index',
         ];
+
+        if(Gate::allows('isSeller')) {
+
+            unset($this->subpages['Formaten']);
+            unset($this->subpages['Planning']);
+        }
 
         $layouts = Layout::all();
         $taxes = Tax::all();
@@ -290,7 +303,6 @@ class ProjectController extends Controller
             session()->forget('edited_project_name');
             return redirect()->route('projects.index');
         } catch (\Exception $e) {
-            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('projects.index');
         }
@@ -339,9 +351,6 @@ class ProjectController extends Controller
 
                 $project = Project::findOrFail($project_id);
 
-                dd(DateHelper::formatReadableDate($request->input('sale_start')));
-
-
                 $planning = ProjectPlanning::create([
                     'project_id' => $project_id,
                     'sale_start' => $request->input('sale_start') ?? now(),
@@ -364,7 +373,6 @@ class ProjectController extends Controller
             return redirect()->route('projects.planning', $project_id);
 
         } catch (\Exception $e) {
-            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('projects.planning', $project_id);
         }
@@ -393,7 +401,6 @@ class ProjectController extends Controller
             return redirect()->route('projects.planning', $project_id);
 
         } catch (\Exception $e) {
-            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('projects.planning', $project_id);
         }

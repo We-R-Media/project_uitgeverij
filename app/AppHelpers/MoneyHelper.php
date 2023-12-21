@@ -14,8 +14,14 @@ class MoneyHelper {
     }
 
     public static function taxCalculation($value, $tax) {
-            $value_with_tax = $value * (1 + ($tax / 100));
-
-            return $value_with_tax;
+        $numericValue = self::convertToNumeric($value);
+    
+        if ($numericValue === null) {
+            return null;
         }
+    
+        $valueWithTax = $numericValue + ($numericValue * ($tax / 100));
+    
+        return $valueWithTax;
+    }
     }

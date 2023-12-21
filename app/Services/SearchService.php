@@ -20,11 +20,19 @@ class SearchService
         if ($searchQuery) {
             $query->where(function ($query) use ($columns, $searchQuery) {
                 foreach ($columns as $column) {
-                    $query->orWhere($column, 'like', '%' . $searchQuery . '%');
+                    if (str_contains($column, '.')) {
+                        [$relation, $field] = explode('.', $column);
+                        $query->orWhereHas($relation, function ($query) use ($field, $searchQuery) {
+                            $query->where($field, 'like', '%' . $searchQuery . '%');
+                        });
+                    } else {
+                        $query->orWhere($column, 'like', '%' . $searchQuery . '%');
+                    }
                 }
             });
         }
-
+    
         return $query;
     }
+    
 }

@@ -46,4 +46,14 @@ class Format extends BaseModel
     {
         return $this->hasOne(OrderLine::class);
     }
+
+    /**
+     * Get the tax that owns the Format
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function tax(): BelongsTo
+    {
+        return $this->belongsTo(Tax::class);
+    }
 }

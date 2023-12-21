@@ -1,3 +1,5 @@
+<!-- set-edition.blade.php -->
+
 <fieldset class="edition-fields">
     <h3>{{__('Edities')}}</h3>
 
@@ -7,8 +9,7 @@
         @if ($projectVisible)
         <label for="project">{{__('Project')}}</label>
         <div class="dropdown">
-            <select wire:model="selectedProjectId" name="project_id" class="select2"
-                wire:change="updateSelectedProjectId">
+            <select wire:model="selectedProjectId" name="project_id" class="select2" wire:change="updateSelectedProjectId">
                 @foreach ($projectCollection as $project)
                 <option value="{{ $project->id }}">{{ $project->name }} {{ $project->edition_name }}</option>
                 @endforeach
@@ -21,8 +22,7 @@
     <div class="edition-field">
         <label for="format">{{__('Formaat')}}</label>
         <div class="dropdown">
-            <select wire:model="selectedFormatId" name="format_id" class="select2"
-                wire:change="updateSelectedFormatId">
+            <select wire:model="selectedFormatId" name="format_id" class="select2" wire:change="updateSelectedFormatId">
                 @foreach ($currentProject->formats as $format)
                 <option value="{{ $format->id }}">{{ $format->size }}</option>
                 @endforeach
@@ -42,12 +42,10 @@
 
     <div class="edition-field">
         <label for="price_with_discount">{{__('Bedrag met korting')}}</label>
-        <input type="text" value="{{ @money($price_with_discount, 'EUR') }}" name="price_with_discount"
-            id="" readonly>
+        <input type="text" value="{{ @money($price_with_discount, 'EUR') }}" name="price_with_discount" id="" readonly>
     </div>
 
     <div class="edition-field">
-        {{-- <button class="button button--action" type="submit">{{ __('Toevoegen') }}</button> --}}
         <button type="submit" name="submitType" value="orderlines" class="button button--action">{{ __('Toevoegen') }}</button>
     </div>
     @endif
