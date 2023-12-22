@@ -58,5 +58,6 @@
                 </li>
             @endif
         </ul>
+        {{ $users->links() }}
     </div>
 @endsection

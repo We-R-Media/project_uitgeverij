@@ -33,7 +33,7 @@ class UserController extends Controller
     {
         if (Gate::allows('isAdmin'))
         {     
-            $users = User::all();
+            $users = User::paginate(12);
 
             $this->subpages = [
                 'Alle gebruikers' => 'users.index',
@@ -65,7 +65,7 @@ class UserController extends Controller
      */
     public function role(string $role = null)
     {
-        $users = User::where('role', $role)->get();
+        $users = User::where('role', $role)->paginate(12);
 
         $this->subpages = [
             'Alle gebruikers' => 'users.index',

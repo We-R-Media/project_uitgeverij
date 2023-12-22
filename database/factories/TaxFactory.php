@@ -17,10 +17,13 @@ class TaxFactory extends Factory
     public function definition(): array
     {
         return [
-            'country' => fake()->country(),
-            'zero' => fake()->numberBetween(1, 10),
-            'low' => fake()->numberBetween(1, 10),
-            'high' => fake()->numberBetween(1, 10),
+            'country' => fake()->randomElement([
+                'Nederland',
+                'Duitsland'
+            ]),
+            'zero' => fake()->number(0),
+            'low' => fake()->number(7),
+            'high' => fake()->number(21),
         ];
     }
 }

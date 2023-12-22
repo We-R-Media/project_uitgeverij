@@ -6,6 +6,7 @@ use App\Models\Advertiser;
 use App\Models\Client;
 use App\Models\Designer;
 use App\Models\Distributor;
+use App\Models\Publisher;
 use App\Models\Format;
 use App\Models\Invoice;
 use App\Models\Order;
@@ -33,12 +34,16 @@ class ProjectSeeder extends Seeder
              ->has(Order::factory()
                 ->has(OrderLine::factory()->count(2))
                 ->afterCreating(function (Order $order) {
-                    $advertiser = Advertiser::inRandomOrder()->first();
-                    $order->advertiser()->associate($advertiser)->save();
+                    $order->advertiser()->associate($advertiser);
+                    $order->save();
                 })
              )
              ->count($randomNumberSmall)
              ->create();
 
-     }
-}
+             $advertiser = Advertiser::factory();       
+
+         $publisher = Publisher::factory()->make();
+         
+        }
+    }

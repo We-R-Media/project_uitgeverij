@@ -258,7 +258,6 @@ class ProjectController extends Controller
 
                 $project = Project::findOrFail($project_id);
 
-                // dd($request->input('revenue_goals'));
 
                 $layout_id = $request->input('layout');
                 $layout = Layout::findOrFail($layout_id);

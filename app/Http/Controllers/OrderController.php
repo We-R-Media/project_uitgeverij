@@ -296,7 +296,6 @@ class OrderController extends Controller
         // // $notifications = Auth::user()->unreadNotifications;
 
         // foreach($notifications as $notification) {
-        //     dd($notification->data['message']);
         // }
 
         $order = Order::findOrFail($order_id);

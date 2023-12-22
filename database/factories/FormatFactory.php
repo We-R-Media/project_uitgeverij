@@ -18,10 +18,32 @@ class FormatFactory extends Factory
     public function definition(): array
     {
         return [
-            'paper_type' => fake()->randomElement(['A5','A4','A3']),
-            'size' => fake()->randomElement(['1/1 pagina', '1/2 pagina', '1/3 pagina', '1/4 pagina']),
+            'project_id' => Project::factory(),
+            'format_title' => fake()->randomElement([
+                'Crossmediapakket 1',
+                'Crossmediapakket 2',
+                'Crossmediapakket 3',
+                'Crossmediapakket 4',
+                'Crossmediapakket 5',
+                'Crossmediapakket 6',
+            ]),
+            'size' => fake()->randomElement([
+                 '1/1 pagina',
+                 '1/2 pagina', 
+                 '1/3 pagina', 
+                 '1/4 pagina',
+                 '1/5 pagina',
+                 '1/6 pagina',
+            ]),
             'measurement' => fake()->word(),
-            'ratio' => fake()->randomFloat(2, 10, 100),
+            'ratio' => fake()->randomElement([
+                '1.0',
+                '0.75',
+                '0.5',
+                '0.33',
+                '0.15',
+                '0.10',
+            ]),
             'price' => fake()->randomFloat(2, 10, 1000),
         ];
     }
