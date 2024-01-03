@@ -129,7 +129,7 @@
                 @if ($advertiser->credit_limit && !is_countable($advertiser->credit_limit))
                 <div class="field field-alt">
                         <label for="credit">{{ __('Kredietlimiet') }}</label>
-                        <input id="" type="text" name="credit" value="{{ @money($advertiser->credit_limit) }} ">
+                        <input id="" type="text" name="credit" value="{{ money($advertiser->credit_limit) }} ">
 
                         @error('credit')
                             <span class="form__message" role="alert">

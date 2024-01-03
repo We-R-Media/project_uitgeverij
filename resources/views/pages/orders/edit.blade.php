@@ -313,7 +313,7 @@
 
                 <div class="field field-alt">
                     <label for="order_total">{{ __('Order totaal') }}</label>
-                    <input id="" type="text" name="order_total" value="{{ @money($order->order_total_price) }}" readonly>
+                    <input id="" type="text" name="order_total" value="{{ money($order->order_total_price) }}" readonly>
                     @error('order_total')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
@@ -386,14 +386,14 @@
                             {{ $orderline->project->edition_name }}
                         </div>
                         <div class="item__format field">
-                            {{ @money( $orderline->base_price ) }}
+                            {{ money( $orderline->base_price ) }}
                         </div>
                         <div class="item__format field">
-                            {{-- {{ $orderline->discount !== 0 && !is_null(@money($orderline->discount)) ? "€ {$orderline->discount}" : '-' }} --}}
-                            {{ @money($orderline->discount )}}
+                            {{-- {{ $orderline->discount !== 0 && !is_null(money($orderline->discount)) ? "€ {$orderline->discount}" : '-' }} --}}
+                            {{ money($orderline->discount )}}
                         </div>
                         <div class="item__format field">
-                            {{ @money( $orderline->price_with_discount) }}
+                            {{ money( $orderline->price_with_discount) }}
                         </div>
                     </div>
                     <div class="item__actions">

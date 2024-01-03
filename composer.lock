@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "09a0902b60ca531f29e6b05c3d781f14",
+    "content-hash": "573276a7bee113bb147f19754351fcf9",
     "packages": [
         {
             "name": "akaunting/laravel-money",
-            "version": "5.1.3",
+            "version": "5.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/akaunting/laravel-money.git",
-                "reference": "3e3a4326b252c1a9ecaf0e43ff75e7262d6f28d5"
+                "reference": "193fcc98e9ab829952e4a1b075a8845e89d15e8d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/akaunting/laravel-money/zipball/3e3a4326b252c1a9ecaf0e43ff75e7262d6f28d5",
-                "reference": "3e3a4326b252c1a9ecaf0e43ff75e7262d6f28d5",
+                "url": "https://api.github.com/repos/akaunting/laravel-money/zipball/193fcc98e9ab829952e4a1b075a8845e89d15e8d",
+                "reference": "193fcc98e9ab829952e4a1b075a8845e89d15e8d",
                 "shasum": ""
             },
             "require": {
@@ -71,9 +71,9 @@
             ],
             "support": {
                 "issues": "https://github.com/akaunting/laravel-money/issues",
-                "source": "https://github.com/akaunting/laravel-money/tree/5.1.3"
+                "source": "https://github.com/akaunting/laravel-money/tree/5.1.2"
             },
-            "time": "2023-12-10T14:47:48+00:00"
+            "time": "2023-07-28T06:57:28+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",

@@ -47,7 +47,7 @@
 
     <div class="edition-field">
         <label for="base_price">{{__('Basisbedrag')}}</label>
-        <input type="text" value="{{ @money($formatPrice, 'EUR') }}" name="base_price" id="" readonly>
+        <input type="text" value="{{ money($formatPrice, 'EUR') }}" name="base_price" id="" readonly>
     </div>
 
     <div class="edition-field">
@@ -57,7 +57,7 @@
 
     <div class="edition-field">
         <label for="price_with_discount">{{__('Bedrag met korting')}}</label>
-        <input type="text" value="{{ @money($price_with_discount, 'EUR') }}" name="price_with_discount" id="" readonly>
+        <input type="text" value="{{ money($price_with_discount, 'EUR') }}" name="price_with_discount" id="" readonly>
     </div>
 
     <div class="edition-field">

@@ -114,7 +114,7 @@
                         {{$format->ratio}}
                     </div>
                     <div class="field">
-                        {{@money($format->price)}}
+                        {{money($format->price)}}
                     </div>
                     <div class="BTW">
                         @if ($format->zero)
