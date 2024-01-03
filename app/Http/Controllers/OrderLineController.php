@@ -169,4 +169,9 @@ class OrderLineController extends Controller
 
         return redirect()->route('orderlines.index', $order_id);
     }
+
+    public function complaint(string $orderline_id)
+    {
+        
+    }
 }

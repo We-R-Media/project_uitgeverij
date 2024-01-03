@@ -20,6 +20,8 @@ class SetEdition extends Component
     public $formatPrice;
     public $discount = 0;
     public $price_with_discount = 0;
+    public $tax_true;
+    public $tax_false;
 
     public function mount($order)
     {

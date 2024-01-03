@@ -35,8 +35,8 @@ class OrderController extends Controller
 
         $this->subpages = [
             'Ordergegevens' => 'orders.edit',
-            // 'Print' => 'orders.print',
-            // 'Klachten' => 'orders.complaints',
+            'Print' => 'orders.print',
+            'Klachten' => 'orders.complaints',
         ];
     }
 
@@ -374,7 +374,7 @@ class OrderController extends Controller
             Alert::toast('De order is verwijderd.', 'info');
         }
 
-        return redirect()->route('orders.edit', $order_id);
+        return redirect()->route('orders.index', $order_id);
     }
 
     public function print(string $order_id)

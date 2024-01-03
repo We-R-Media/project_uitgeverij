@@ -153,6 +153,16 @@ class Order extends BaseModel
     }
 
     /**
+     * Get all of the complaints for the Order
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function complaints(): HasMany
+    {
+        return $this->hasMany(Complaint::class);
+    }
+
+    /**
      * Update the total price of the order based on the associated order lines.
      *
      * This method calculates the total price by summing up the prices of all order lines

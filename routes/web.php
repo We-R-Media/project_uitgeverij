@@ -86,6 +86,7 @@ Route::group(['middleware' => ['auth']], function() {
         ->group(function () {
             Route::get('/{order_id}/orderregels/{regel_id}/verwijderen', 'destroy')->name('destroy');
             Route::get('/{order_id}/orderregels/{regel_id}/herstellen', 'restore')->name('restore');
+            Route::get('/{orderline_id}/klacht/nieuw', 'complaint')->name('complaint');
 
             Route::get('/{order_id}/orderregels/nieuw', 'create')->name('create');
 

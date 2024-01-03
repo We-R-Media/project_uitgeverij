@@ -3,6 +3,9 @@
 <fieldset class="edition-fields">
     <h3>{{__('Edities')}}</h3>
 
+    @if($order->notification_sent_at && !$order->seller_approved_at)
+        <p>Pech knul.</p>
+    @else
     <a class="edition--button button--action" wire:click="displayProjects">{{__('Nieuwe regel')}}</a>
 
     <div class="edition-field">
@@ -19,6 +22,18 @@
     </div>
 
     @if ($currentProject ?? false)
+
+    
+    {{-- <div class="field field-alt">
+        <label for="tax">{{__('BTW')}}</label>
+        <div class="radio__group">
+            <input wire:model="tax_true" type="radio" id="tax_true"  name="active" value="1">
+            <label for="tax_true">{{__('Ja')}}</label>
+            <input wire:model="tax_false" type="radio" id="tax_false"  name="active" value="0">
+            <label for="tax_true">{{__('Nee')}}</label>
+        </div>
+    </div> --}}
+
     <div class="edition-field">
         <label for="format">{{__('Formaat')}}</label>
         <div class="dropdown">
@@ -48,5 +63,6 @@
     <div class="edition-field">
         <button type="submit" name="submitType" value="orderlines" class="button button--action">{{ __('Toevoegen') }}</button>
     </div>
+    @endif
     @endif
 </fieldset>

@@ -25,7 +25,17 @@
             </select>
         </div>
     </div>
-@endif
+    @endif
+
+    <div class="field field-alt">
+        <label for="tax">{{__('BTW')}}</label>
+        <div class="radio__group">
+            <input type="radio" id="tax_true">
+            <label for="tax_true">{{__('Ja')}}</label>
+            <input type="radio" id="tax_false">
+            <label for="tax_true">{{__('Nee')}}</label>
+        </div>
+    </div>
 
 
 
