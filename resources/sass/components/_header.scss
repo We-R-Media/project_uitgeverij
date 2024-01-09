@@ -1,0 +1,11 @@
+@use "../mixins" as mixin;
+@use "../base/colors" as color;
+
+.header__bar {
+    @include mixin.flex($justify-content: space-between);
+    margin-bottom: 1rem;
+
+    .bar__buttons {
+        margin-left: auto;
+    }
+}

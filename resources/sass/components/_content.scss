@@ -1,0 +1,12 @@
+@use "../mixins/" as mixin;
+@use "../base/colors" as color;
+
+.content__main {
+    position: relative;
+    height: 100%;
+    padding: 1.5rem;
+
+    @include mixin.breakpoint("min", "tablet") {
+        padding: 3rem;
+    }
+}

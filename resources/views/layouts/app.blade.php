@@ -23,11 +23,10 @@
     @livewireStyles
 </head>
 <body>
-    <div id="app">
-
+    <main id="app" class="main">
         @livewire('dashboard-sidebar')
 
-        <main class="pageContainer">
+        <div class="dashboard__content">
             @livewire('top-bar', [
                 'pageTitleSection' => $pageTitleSection ?? 'RON',
                 'pageTitle' => $pageTitle ?? false,
@@ -35,11 +34,11 @@
                 'id' => isset($subpagesData['id']) ? $subpagesData['id'] : null,
             ])
 
-            <div class="mainContent">
+            <div class="content__main">
                 @yield('content')
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
 
     @include('sweetalert::alert')
     @livewireScripts

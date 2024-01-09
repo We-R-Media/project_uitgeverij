@@ -60,9 +60,7 @@ class ProjectController extends Controller
                 })
                 ->where('user_id', $user_id)
                 ->paginate(12);
-        }
-        
-        else {
+        } else {
             $projects = Project::latest('name')
                 ->whereNull('deactivated_at')
                 ->when($searchQuery, function ($query) use ($searchQuery) {
@@ -84,7 +82,6 @@ class ProjectController extends Controller
     }
 
     public function inactive() {
-
         $projects = Project::whereNotNull('deactivated_at')->paginate(12);
 
         return view('pages.projects.index', compact('projects'))
@@ -104,7 +101,6 @@ class ProjectController extends Controller
         $taxes = Tax::all();
         $users = User::where('role', 'seller')->get();
 
-        
         return view('pages.projects.create', compact('layouts', 'taxes','users', 'projects'))->with([
             'pageTitleSection' => self::$page_title_section,
         ]);
@@ -117,18 +113,14 @@ class ProjectController extends Controller
 {
     try {
         DB::transaction(function () use ($request) {
-
-
-            
-
             $publisherName = $request->input('release_name');
 
             $publisher = Publisher::where('name', $publisherName)->firstOrCreate([
                 'name' => $publisherName,
             ]);
 
-            $layout_id = $request->input('layout');
-            $layout = Layout::findOrFail($layout_id);
+            // $layout_id = $request->input('layout');
+            // $layout = Layout::findOrFail($layout_id);
 
             $seller_id = $request->input('seller');
             $seller = User::findOrFail($seller_id);
@@ -136,13 +128,13 @@ class ProjectController extends Controller
             $seller->save();
 
 
-            $tax_id = $request->input('taxes');
-            $tax = Tax::findOrFail($tax_id);
+            // $tax_id = $request->input('taxes');
+            // $tax = Tax::findOrFail($tax_id);
 
             $project = Project::create([
                 'name' => $request->input('name'),
-                'layout_id' => $layout_id,
-                'tax_id' => $tax_id,
+                // 'layout_id' => $layout_id,
+                // 'tax_id' => $tax_id,
                 'user_id' => $seller->id,
                 'publisher_id' => $publisher->id,
                 'designer' => $request->input('designer'),
@@ -169,10 +161,10 @@ class ProjectController extends Controller
             ]);
 
 
-            $project->layout()->associate($layout);
-            $project->user()->associate($seller);
-            $project->tax()->associate($tax);
-            $project->publisher()->associate($publisher);
+            // $project->layout()->associate($layout);
+            // $project->user()->associate($seller);
+            // $project->tax()->associate($tax);
+            // $project->publisher()->associate($publisher);
             $project->save();
 
         });
@@ -191,7 +183,7 @@ class ProjectController extends Controller
     {
         try {
 
-            
+
         $originalProject = Project::findOrFail($project_id);
 
         $newProject = $originalProject->replicate();
@@ -344,7 +336,7 @@ class ProjectController extends Controller
 
     public function planning__store(Request $request, string $project_id)
     {
-        try 
+        try
         {
             DB::transaction(function () use($project_id, $request) {
 
@@ -379,7 +371,7 @@ class ProjectController extends Controller
 
     public function planning__update(Request $request, string $project_id)
     {
-        try 
+        try
         {
             DB::transaction(function () use($request, $project_id) {
                 ProjectPlanning::where('project_id', $project_id)->update([

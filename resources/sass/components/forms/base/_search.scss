@@ -1,0 +1,19 @@
+@use "../../../mixins" as mixin;
+@use "../../../base/colors" as color;
+
+.search__bar {
+    background-color: color.$secondary;
+    border-radius: .4rem;
+    overflow: hidden;
+
+    .field {
+        input {
+            min-width: 10vw;
+
+            &:not([type=checkbox]):not([type=radio]) {
+                border: unset;
+            }
+        }
+    }
+}
+

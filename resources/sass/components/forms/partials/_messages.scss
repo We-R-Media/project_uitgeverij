@@ -1,0 +1,7 @@
+@use "../../../mixins" as mixin;
+
+.swal2-popup.swal2-toast.swal2-show,
+.swal2-popup.swal2-toast.swal2-hide {
+    height: 45px !important;
+    padding: 0;
+}

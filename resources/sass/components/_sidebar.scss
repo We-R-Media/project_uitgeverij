@@ -1,0 +1,143 @@
+@use "../mixins" as mixin;
+@use "../base/colors" as color;
+
+.sidebar {
+    @include mixin.flex($align-items: center);
+    position: fixed;
+    left: 0;
+    background: color.$accent;
+    transition: max-width .4s ease;
+    z-index: 10;
+
+
+    .sidebar__menu {
+        @include mixin.flex;
+        flex: 1;
+
+        .navigation__link {
+            @include mixin.flex($align-items: center);
+            position: relative;
+
+            &:hover,
+            &:focus,
+            &:active {
+                background-color: color.$primary;
+
+                span {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+            .navigation__icon {
+                @include mixin.flex($align-items: center, $justify-content: center);
+                width: 4.8rem;
+                height: 4.8rem;
+            }
+            .nav__icon {
+                width: 2.4rem;
+                height: 2.4rem;
+
+                svg {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
+
+            span {
+                @include mixin.flex($align-items: center);
+                position: absolute;
+                left: 6rem;
+                padding: .5rem 1rem;
+                background-color: color.$white;
+                box-shadow: 0 0 .5rem rgba(color.$black, .3);
+                border-radius: .6rem;
+                opacity: 0;
+                visibility: hidden;
+            }
+        }
+
+
+        @include mixin.breakpoint('min', 'tablet') {
+            flex-direction: column;
+        }
+    }
+    .sidebar__profile {
+        @include mixin.flex($align-items: center);
+        height: 4.8rem;
+        width: 4.8rem;
+
+        &:hover,
+        &:focus,
+        &:active {
+            .profile__details {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+
+        .profile__thumbnail {
+            @include mixin.flex($justify-content: center);
+            position:relative;
+            transition: all 0.4s ease;
+            flex: 1;
+
+            .icon {
+                border-radius: 50%;
+                overflow: hidden;
+                width: 3rem;
+                height: 3rem;
+            }
+        }
+        .profile__details {
+            position:absolute;
+            bottom: 4rem;
+            right: 1.5rem;
+            background-color: color.$white;
+            box-shadow: 0 0 .5rem rgba(color.$black, .3);
+            padding: .5rem 1rem;
+            border-radius: .6rem;
+            width: max-content;
+            opacity: 0;
+            visibility: hidden;
+            transition:all 0.4s ease;
+
+            @include mixin.breakpoint('min', 'tablet') {
+                bottom: 0;
+                left: 5rem;
+            }
+
+            .user__details {
+                @include mixin.flex($flex-direction: column);
+                margin-bottom: 1rem;
+                font-size: clamp(1rem, 2vw, 1.3rem);
+            }
+            .profile__logout {
+                font-size: clamp(1rem, 2vw, 1.2rem);
+                color: color.$gray;
+            }
+        }
+
+        &:hover {
+            .profile__details {
+                opacity: 1;
+                visibility: visible;
+            }
+        }
+    }
+
+    @include mixin.breakpoint('max', 'tablet') {
+        bottom: 0;
+        width: 100%;
+    }
+    @include mixin.breakpoint('min', 'tablet') {
+        top: 0;
+        width: 4.8rem;
+        height: 100vh;
+        flex-direction: column;
+    }
+}
+
+.phpdebugbar {
+    display: none !important;
+}

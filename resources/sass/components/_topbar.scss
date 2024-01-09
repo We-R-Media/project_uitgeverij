@@ -1,0 +1,59 @@
+@use "../mixins/" as mixin;
+@use "../base/colors" as color;
+
+.topbar__wrapper {
+    @include mixin.flex($justify-content: space-between);
+    background: color.$tertiary;
+    padding: 0 1.5rem;
+
+    @include mixin.breakpoint('max', 'tablet') {
+        flex-direction: column;
+    }
+    @include mixin.breakpoint('min', 'tablet') {
+        padding: 0 3rem;
+    }
+}
+.topbar__titles {
+    @include mixin.flex($align-items: flex-end);
+    gap: 1rem;
+    padding-bottom: 1rem;
+
+    @include mixin.breakpoint('max', 'tablet') {
+        padding-top: 1rem;
+    }
+    @include mixin.breakpoint('min', 'tablet') {
+        height: 4.8rem;
+    }
+}
+.page__section {
+    font-size: clamp(1.6rem, 2vw, 2.2rem);
+    font-weight: 400;
+}
+.page__title {
+    font-size: clamp(1.6rem, 3vw, 1.8rem);
+    color: color.$primary;
+}
+.topbar__pages {
+    @include mixin.flex;
+    gap: 1.5rem;
+
+    a {
+        padding: 1rem 0;
+        display: inline-block;
+        line-height: 1;
+        border-bottom: .2rem solid transparent;
+        font-weight: 300;
+
+        &.subpage--active {
+            border-color:color.$primary;
+        }
+        &:hover {
+            border-color:color.$primary;
+        }
+    }
+
+    @include mixin.breakpoint('min', 'tablet') {
+        align-self: flex-end;
+        gap: 2rem;
+    }
+}

@@ -1,4 +1,4 @@
-@use "../../../mixins/" as mixin;
+@use "../../../mixins" as mixin;
 @use "../../../base/colors" as color;
 
 .field__checkbox {
@@ -33,7 +33,34 @@
 }
 
 .radio__group {
+    @include mixin.flex;
+    overflow: hidden;
+    bo
+
     input {
-        all:revert;
+        position: absolute !important;
+        width: 1px;
+        border: 0;
+        overflow: hidden;
+    }
+    label {
+        background-color: color.$tertiary;
+        color: rgba(0, 0, 0, 0.6);
+        padding: 0 1rem;
+    }
+    label:hover {
+        cursor: pointer;
+    }
+    input:checked + label {
+        background-color: color.$primary;
+        box-shadow: none;
+    }
+    label:first-of-type {
+        border-radius: .4rem 0 0 .4rem;
+    }
+    label:last-of-type {
+        border-radius: 0 .4rem .4rem 0;
     }
 }
+
+

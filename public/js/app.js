@@ -14922,7 +14922,7 @@ jQuery.event = {
 			postDispatch: function( event ) {
 
 				// Support: Firefox 20+
-				// Firefox doesn't alert if the returnValue field is not set.
+				// Firefox doesn't alert if the returnValue fieldis not set.
 				if ( event.result !== undefined && event.originalEvent ) {
 					event.originalEvent.returnValue = event.result;
 				}
@@ -19826,7 +19826,7 @@ jQuery.fn.load = function( url, params, callback ) {
 			url: url,
 
 			// If "type" variable is undefined, then "GET" method will be used.
-			// Make value of this field explicit since
+			// Make value of this fieldexplicit since
 			// user can override it through ajaxSetup method
 			type: type || "GET",
 			dataType: "html",
@@ -28841,7 +28841,7 @@ function buildURL(url, params, options) {
   if (!params) {
     return url;
   }
-  
+
   const _encode = options && options.encode || encode;
 
   const serializeFn = options && options.serialize;
@@ -30971,7 +30971,7 @@ let $4ca367182776f80b$var$defaultOptions = {
    * Set this to `true` if you don't want previews to be shown.
    */ disablePreviews: false,
     /**
-   * This is the element the hidden input field (which is used when clicking on the
+   * This is the element the hidden input field(which is used when clicking on the
    * dropzone to trigger file selection) will be appended to. This might
    * be important in case you use frameworks to switch the content of your page.
    *
@@ -31101,7 +31101,7 @@ let $4ca367182776f80b$var$defaultOptions = {
    */ binaryBody: false,
     /**
    * Gets called when the browser is not supported.
-   * The default implementation shows the fallback input field and adds
+   * The default implementation shows the fallback input fieldand adds
    * a text.
    */ fallback () {
         // This code should pass in IE7... :(
@@ -31389,7 +31389,7 @@ class $3ed269f2f0fb224b$export$2e2bcd8739ae039 extends $4040acfd8584338d$export$
             "reset",
             "maxfilesexceeded",
             "maxfilesreached",
-            "queuecomplete", 
+            "queuecomplete",
         ];
         this.prototype._thumbnailQueue = [];
         this.prototype._processingThumbnail = false;
@@ -31534,7 +31534,7 @@ class $3ed269f2f0fb224b$export$2e2bcd8739ae039 extends $4040acfd8584338d$export$
                         return this.emit("dragend", e);
                     }
                 }
-            }, 
+            },
         ];
         this.clickableElements.forEach((clickableElement)=>{
             return this.listeners.push({
@@ -31590,7 +31590,7 @@ class $3ed269f2f0fb224b$export$2e2bcd8739ae039 extends $4040acfd8584338d$export$
     }
     // Returns a form that can be used as fallback if the browser does not support DragnDrop
     //
-    // If the dropzone is already a form, only the input field and button are returned. Otherwise a complete form element is provided.
+    // If the dropzone is already a form, only the input fieldand button are returned. Otherwise a complete form element is provided.
     // This code has to pass in IE7 :(
     getFallbackForm() {
         let existingFallback, form;
@@ -32476,7 +32476,7 @@ $3ed269f2f0fb224b$export$2e2bcd8739ae039.discover = function() {
 // incorrectly **
 $3ed269f2f0fb224b$export$2e2bcd8739ae039.blockedBrowsers = [
     // The mac os and windows phone version of opera 12 seems to have a problem with the File drag'n'drop API.
-    /opera.*(Macintosh|Windows Phone).*version\/12/i, 
+    /opera.*(Macintosh|Windows Phone).*version\/12/i,
 ];
 // Checks if the browser is supported
 $3ed269f2f0fb224b$export$2e2bcd8739ae039.isBrowserSupported = function() {
@@ -32835,7 +32835,7 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -32849,14 +32849,14 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /******/ 			// no module.loaded needed
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
@@ -32869,7 +32869,7 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
 /******/ 		// define getter functions for harmony exports
@@ -32881,7 +32881,7 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -32893,12 +32893,12 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /******/ 			}
 /******/ 		})();
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -32909,7 +32909,7 @@ function $3ed269f2f0fb224b$var$__guardMethod__(obj, methodName, transform) {
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
 var __webpack_exports__ = {};
 // This entry need to be wrapped in an IIFE because it need to be in strict mode.

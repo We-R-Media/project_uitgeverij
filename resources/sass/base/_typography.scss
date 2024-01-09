@@ -2,11 +2,12 @@
 @use '../base/colors' as color;
 
 body {
-    font-size: clamp(1.4rem, 2vw, 1.6rem);
+    font-size: clamp(1.2rem, 2vw, 1.4rem);
+    letter-spacing: .5px;
 
     * {
         font-size: inherit;
-        line-height: 2;
+        line-height: 1.4;
     }
 }
 

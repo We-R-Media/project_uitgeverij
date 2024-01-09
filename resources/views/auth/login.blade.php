@@ -14,7 +14,7 @@
         <div class="form__box">
             <form method="POST" action="{{ route('login') }}">
                 @csrf
-                <fieldset class="fields">
+                <fieldset class="form__section">
                     @if(count($errors) > 0)
                         @foreach( $errors->all() as $message )
                             <div class="form__message">
@@ -23,14 +23,14 @@
                         @endforeach
                     @endif
                     <div class="form__row">
-                        <div class="field">
-                            <label for="email">{{ __('E-mailadres') }}</label>
+                        <div class="field field--column">
+                            <label class="field__label" for="email">{{ __('E-mailadres') }}</label>
                             <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
                         </div>
                     </div>
                     <div class="form__row">
-                        <div class="field">
-                            <label for="password" >{{ __('Wachtwoord') }}</label>
+                        <div class="field field--column">
+                            <label class="field__label" for="password" >{{ __('Wachtwoord') }}</label>
                             <input id="password" type="password" name="password" required autocomplete="current-password">
                         </div>
                     </div>

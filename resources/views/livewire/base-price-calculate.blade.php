@@ -1,7 +1,7 @@
-<div class="fields base">
-    <div class="field field-alt">
-        <label for="base_price">{{__('Basisbedrag')}}</label>
-        <input type="text" name="base_price" id="" wire:model="base_price" readonly>
+<div class="form__section">
+    <div class="field">
+        <label class="field__label" for="base_price">{{__('Basisbedrag')}}</label>
+        <input type="text" name="base_price" wire:model="base_price" readonly>
         @error('base_price')
             <span class="form__message" role="alert">
                 <small>{{ $message }}</small>

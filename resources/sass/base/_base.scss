@@ -18,7 +18,6 @@ html {
 
 body {
     margin: 0 0;
-    letter-spacing: .5px;
 
     &.preload {
         animation: none;
@@ -33,7 +32,7 @@ body {
 
 main {
     @include mixin.breakpoint('min', 'laptop') {
-        padding: 0 0 5rem;
+        padding: 0 0 4rem;
     }
 }
 
@@ -83,4 +82,23 @@ ol {
 ::selection {
     color: color.$black;
     background: rgba(color.$black, .1);
+}
+
+.main {
+    @include mixin.flex;
+
+    .sidebar {
+        @include mixin.breakpoint('min', 'laptop') {
+            flex: 0 0 4rem;
+        }
+    }
+    .dashboard__content {
+        flex: 1;
+    }
+}
+
+.page__wrapper {
+    &:not(:last-child) {
+        margin-bottom: 3rem;
+    }
 }

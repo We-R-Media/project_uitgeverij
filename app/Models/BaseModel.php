@@ -52,7 +52,7 @@ class BaseModel extends Model
         $title = '';
 
         foreach ($this->searchableFields as $field) {
-            $title .= $this->$field . ' ';
+            $title .= $this->$field. ' ';
         }
 
         $data['title'] = rtrim($title);

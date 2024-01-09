@@ -14,10 +14,10 @@
         <div class="form__box">
             <form method="POST" action="{{ route('password.confirm') }}">
                 @csrf
-                <fieldset class="fields">
+                <fieldset class="form__section">
                     <div class="form__row">
                         <div class="field">
-                            <label for="password">{{ __('Password') }}</label>
+                            <label class="field__label" for="password">{{ __('Password') }}</label>
                             <input id="password" type="password" class="@error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
 
                             @error('password')

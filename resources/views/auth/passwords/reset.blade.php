@@ -14,12 +14,12 @@
             <form method="POST" action="{{ route('password.update') }}">
                 @csrf
 
-                <fieldset class="fields">
+                <fieldset class="form__section">
                     <input type="hidden" name="token" value="{{ $request->route('token') }}">
 
                     <div class="form__row">
                         <div class="field">
-                            <label for="email">{{ __('E-mailadres') }}</label>
+                            <label class="field__label" for="email">{{ __('E-mailadres') }}</label>
                             <input id="email" type="email" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
 
                             @error('email')
@@ -32,7 +32,7 @@
 
                     <div class="form__row">
                         <div class="field">
-                            <label for="password" >{{ __('Nieuw wachtwoord') }}</label>
+                            <label class="field__label" for="password" >{{ __('Nieuw wachtwoord') }}</label>
                             <input id="password" type="password" name="password" required autocomplete="new-password">
 
                             @error('password')
@@ -45,7 +45,7 @@
 
                     <div class="form__row">
                         <div class="field">
-                            <label for="password-confirm" >{{ __('Nieuwe wachtwoord bevestigen') }}</label>
+                            <label class="field__label" for="password-confirm" >{{ __('Nieuwe wachtwoord bevestigen') }}</label>
                             <input id="password-confirm" type="password" name="password_confirmation" required autocomplete="new-password">
                         </div>
                     </div>
