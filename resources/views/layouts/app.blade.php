@@ -43,5 +43,6 @@
 
     @include('sweetalert::alert')
     @livewireScripts
+    @livewire('livewire-ui-modal')
 </body>
 </html>

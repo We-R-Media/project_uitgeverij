@@ -19,3 +19,4 @@ use App\Http\Controllers\AdvertiserController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+

@@ -4,7 +4,7 @@
     <h3>{{__('Edities')}}</h3>
 
     @if($order->notification_sent_at && !$order->seller_approved_at)
-        <p>Pech knul.</p>
+        <p>{{__('Niet beschikbaar.')}}</p>
     @else
     <a class="edition--button button--action" wire:click="displayProjects">{{__('Nieuwe regel')}}</a>
 

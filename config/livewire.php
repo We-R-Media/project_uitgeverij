@@ -39,9 +39,10 @@ return [
     */
 
     'layout' => 'components.layouts.app',
+    'layout' => 'layouts.app', 
 
     /*
-    |---------------------------------------------------------------------------
+|---------------------------------------------------------------------------
     | Lazy Loading Placeholder
     |---------------------------------------------------------------------------
     | Livewire allows you to lazy load components that would otherwise slow down
@@ -128,6 +129,7 @@ return [
 
     'navigate' => [
         'show_progress_bar' => true,
+        'progress_bar_color' => '#2299dd',
     ],
 
     /*

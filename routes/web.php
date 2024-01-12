@@ -17,6 +17,9 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectFormatController;
+
+use App\Http\Livewire\CreateComplaint;
+
 use Illuminate\Support\Facades\Redirect;
 
 /*
@@ -210,19 +213,21 @@ Route::group(['middleware' => ['auth']], function() {
                 Route::post('/{format_id}/{project_id}/bijwerken', 'update')->name('update');
             });
 
-    Route::name('email.')
-        ->prefix('emails')
-        ->controller(EmailController::class)
-        ->group(function () {
-            Route::get('/{order_id}/akkoord', 'approval')->name('approval');
-        });
+            Route::name('email.')
+                ->prefix('emails')
+                ->controller(EmailController::class)
+                ->group(function () {
+                    Route::get('/{order_id}/akkoord', 'approval')->name('approval');
+                });
+
+            Route::get('/klacht', [CreateComplaint::class])->name('complaint');
 
 
-    Route::get('/search', [ SearchController::class, 'search'])->name('search');
+            Route::get('/search', [ SearchController::class, 'search'])->name('search');
 });
 
-Route::get('/akkoord_order/{order_id}/{order_token}', [OrderApproveController::class, 'approve'])->name('orders.approve');
+            Route::get('/akkoord_order/{order_id}/{order_token}', [OrderApproveController::class, 'approve'])->name('orders.approve');
 
-Route::fallback(function () {
-    abort(404);
+            Route::fallback(function () {
+                abort(404);
 });
