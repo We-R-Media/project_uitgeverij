@@ -24,31 +24,26 @@
             <div class="item--cell">
                 {{__('E-mailadres')}}
             </div>
-            <div class="item--action">
-                {{-- Spacer for actions --}}
-            </div>
         </div>
         @forelse ($advertiser->orders as $order )
             <div class="items__row row--data">
-                @if ($order->count() > 0)
-                    <div class="item">
-                        <div class="item--cell">
-                            <a href="{{ route('orders.edit', $order->id) }}">
-                                {{$order->id}}
-                            </a>
-                        </div>
-                        <div class="item--cell">
-                            <label class="cell__label">{{__('Prijs')}}</label>
-                            {{ $order->advertiser->name }}
-                        </div>
-                        <div class="item--cell">
-                            {{$order->advertiser->city }}
-                        </div>
-                        <div class="item--cell">
-                            {{$order->advertiser->email}}
-                        </div>
-                    </div>
-                @endif
+                <div class="item--cell">
+                    <a href="{{ route('orders.edit', $order->id) }}">
+                        {{$order->id}}
+                    </a>
+                </div>
+                <div class="item--cell">
+                    <label class="cell__label">{{__('Naam')}}</label>
+                    {{ $order->advertiser->name }}
+                </div>
+                <div class="item--cell">
+                    <label class="cell__label">{{__('Plaats')}}</label>
+                    {{$order->advertiser->city }}
+                </div>
+                <div class="item--cell">
+                    <label class="cell__label">{{__('E-mailadres')}}</label>
+                    {{$order->advertiser->email}}
+                </div>
             </div>
         @empty
             <div class="items__row row--data">

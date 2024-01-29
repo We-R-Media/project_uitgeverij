@@ -13,11 +13,11 @@
     <div class="notification__wrapper">
 
 
-@can('isSupervisor')   
+@can('isSupervisor')
 @foreach (auth()->user()->unreadNotifications as $notification )
         <div class="notification__card">
             <label>{{$notification->data['message']}}</label>
-            <a href="{{ route('orders.edit', $notification->data['order_id']) }}" class="button button--action">{{__('Order bekijken')}}</a>
+            <a href="{{ route('orders.edit', $notification->data['order_id']) }}" class="button button__solid--primary">{{__('Order bekijken')}}</a>
         </div>
 @endforeach
     </div>

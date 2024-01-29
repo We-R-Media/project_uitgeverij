@@ -49,3 +49,17 @@
     height: 4rem;
     padding: 0 3rem;
 }
+
+.button--info {
+    height: 4rem;
+    padding: 0 1rem;
+    cursor: default;
+}
+
+.button__box {
+    @include mixin.flex($justify-content: flex-end);
+
+    .buttons--right {
+        justify-self: flex-end;
+    }
+}

@@ -24,15 +24,15 @@
 </head>
 <body>
     <main id="app" class="main">
-        @livewire('dashboard-sidebar')
+        <x-sidebar />
 
         <div class="dashboard__content">
-            @livewire('top-bar', [
-                'pageTitleSection' => $pageTitleSection ?? 'RON',
-                'pageTitle' => $pageTitle ?? false,
-                'subpages' => isset($subpagesData['subpages']) ? $subpagesData['subpages'] : [],
-                'id' => isset($subpagesData['id']) ? $subpagesData['id'] : null,
-            ])
+            <x-topbar
+                :page-title-section="$pageTitleSection"
+                :page-title="$pageTitle ?? null"
+                :subpages="isset($subpagesData['subpages']) ? $subpagesData['subpages'] : []"
+                :id="isset($subpagesData['id']) ? $subpagesData['id'] : null"
+            />
 
             <div class="content__main">
                 @yield('content')

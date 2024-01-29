@@ -30,6 +30,7 @@
             @forelse ($taxes as $tax)
                 <div class="items__row row--data">
                     <div class="item--cell">
+                        <label class="cell__label">{{__('Land')}}</label>
                         <a href=" {{ route('tax.edit', $tax->id) }} ">
                             {{$tax->country}}
                         </a>

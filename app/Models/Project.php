@@ -67,7 +67,9 @@ class Project extends BaseModel
      * @var array<string>
      */
     protected $titleGenerationAttributes = [
+        'name',
         'release_name',
+        'edition_name'
     ];
 
     /**
@@ -192,7 +194,7 @@ class Project extends BaseModel
         return $this->belongsTo(Publisher::class);
     }
 
-        /**
+    /**
      * Get the name of the index associated with the model.
      */
     public function searchableAs()

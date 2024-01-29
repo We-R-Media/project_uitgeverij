@@ -27,7 +27,7 @@ class LayoutController extends Controller
      */
     public function index()
     {
-        $layouts = Layout::latest()->paginate(12);
+        $layouts = Layout::latest()->paginate(15);
 
         return view('pages.layouts.index', compact('layouts'))
             ->with([
@@ -62,7 +62,7 @@ class LayoutController extends Controller
 
         DB::transaction(function () use($request, $file) {
 
-            
+
             $image_name = time() . '-' . '.' . $file->extension();
             $file->move(public_path('images/uploads/layouts'), $image_name);
 
@@ -103,7 +103,7 @@ class LayoutController extends Controller
      */
     public function update(Request $request, $layout_id)
     {
-        
+
         DB::transaction(function () use($request, $layout_id) {
             Layout::where('id', $layout_id)->update([
                 'layout_name' => $request->input('layout_name'),

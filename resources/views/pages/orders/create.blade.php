@@ -12,87 +12,15 @@
             <div class="form__wrapper">
                 <fieldset class="form__section">
                     <div class="section__block">
-                        <div class="field">
-                            <label class="field__label" for="advertiser_id">{{ __('Klantnummer') }}</label>
-                            <input type="text" name="advertiser_id" value="{{$advertiser->id}}" readonly>
-                            @error('advertiser_id')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="name">{{ __('Bedrijfsnaam') }}</label>
-                            <input type="text" name="name" value="{{$advertiser->name}}" readonly>
-                            @error('name')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="po_box">{{ __('Postadres') }}</label>
-                            <input type="text" name="po_box" value="{{$advertiser->po_box}}" readonly>
-                            @error('po_box')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="postal_code">{{ __('Postcode') }}</label>
-                            <input type="text" name="postal_code" value="{{$advertiser->postal_code}}" readonly>
-                            @error('postal_code')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="city">{{ __('Woonplaats') }}</label>
-                            <input type="text" name="city" value="{{$advertiser->city}}" readonly>
-                            @error('city')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="province">{{ __('Provincie') }}</label>
-                            <input type="text" name="province" value="{{$advertiser->province}}" readonly>
-                            @error('province')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="phone">{{ __('Telefoon') }}</label>
-                            <input type="text" name="phone" value="{{$advertiser->phone}}" readonly>
-                            @error('phone')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="phone_mobile">{{ __('Mobiel') }}</label>
-                            <input type="text" name="phone_mobile" value="{{$advertiser->phone_mobile}}" readonly>
-                            @error('phone_mobile')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="email">{{ __('E-mailadres') }}</label>
-                            <input type="text" name="email" value="{{$advertiser->email}}" readonly>
-                            @error('email')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
+                        <x-form.input type="text" name="advertiser_id" label="Klantnummer" :value="$advertiser->id" :extraAttributes="'readonly'" />
+                        <x-form.input type="text" name="name" label="Bedrijfsnaam" :value="$advertiser->name" :extraAttributes="'readonly'" />
+                        <x-form.input type="text" name="po_box" label="Postbus" :value="$advertiser->po_box" :extraAttributes="'readonly'" />
+                        <x-form.input type="text" name="postal_code" label="Postcode" :value="$advertiser->postal_code" :extraAttributes="'readonly'" />
+                        <x-form.input type="text" name="city" label="Woonplaats" :value="$advertiser->city" :extraAttributes="'readonly'" />
+                        <x-form.input type="text" name="province" label="Provincie" :value="$advertiser->province" :extraAttributes="'readonly'" />
+                        <x-form.input type="text" name="phone" label="Telefoon" :value="$advertiser->phone" :extraAttributes="'readonly'" />
+                        <x-form.input type="text" name="phone_mobile" label="Mobiel" :value="$advertiser->phone_mobile" :extraAttributes="'readonly'" />
+                        <x-form.input type="email" name="email" label="E-mailadres" :value="$advertiser->email" />
                     </div>
                 </fieldset>
                 <fieldset class="form__section">

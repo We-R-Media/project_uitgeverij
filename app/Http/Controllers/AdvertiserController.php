@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\AppHelpers\PostalCodeHelper;
 use App\AppHelpers\MoneyHelper;
+use App\Http\Requests\AdvertiserRequest;
 use App\Models\Advertiser;
 use App\Models\Contact;
 use App\Services\SearchService;
@@ -12,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Gate;
@@ -53,7 +55,7 @@ class AdvertiserController extends Controller
             })
             ->whereNull('deactivated_at')
             ->withTrashed()
-            ->paginate(12);
+            ->paginate(15);
 
         $this->subpages = [
             'Actueel' => 'advertisers.index',
@@ -78,7 +80,7 @@ class AdvertiserController extends Controller
      */
     public function blacklist()
     {
-        $advertisers = Advertiser::whereNotNull('blacklisted_at')->paginate(12);
+        $advertisers = Advertiser::whereNotNull('blacklisted_at')->paginate(15);
 
         $this->subpages = [
             'Actueel' => 'advertisers.index',
@@ -95,7 +97,7 @@ class AdvertiserController extends Controller
 
     public function inactive()
     {
-        $advertisers = Advertiser::whereNotNull('deactivated_at')->paginate(12);
+        $advertisers = Advertiser::whereNotNull('deactivated_at')->paginate(15);
 
         $this->subpages = [
             'Actueel' => 'advertisers.index',
@@ -123,47 +125,33 @@ class AdvertiserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AdvertiserRequest $request)
     {
         $advertiser_id = null;
-    
+
+        $validatedData = $request->validated();
+
         try {
-            DB::transaction(function () use ($request, &$advertiser_id) {
-                $advertiser = Advertiser::create([
-                    'first_name' => $request->input('first_name'),
-                    'last_name' => $request->input('last_name'),
-                    'salutation' => $request->input('salutation'),
-                    'initial' => $request->input('initial'),
-                    'name' => $request->input('name'),
-                    'email' => $request->input('email'),
-                    'address' => $request->input('address'),
-                    'po_box' => $request->input('address'),
-                    'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
-                    'city' => $request->input('city'),
-                    'credit_limit' => MoneyHelper::convertToNumeric($request->input('credit')),
-                    'province' => $request->input('province'),
-                    'phone_mobile' => $request->input('phone_mobile'),
-                    'phone' => $request->input('phone'),
-                    'comments' => $request->input('comments'),
-                ]);
-    
+            DB::transaction(function () use ($validatedData, &$advertiser_id) {
+                $advertiser = Advertiser::create($validatedData);
+
                 $advertiser_id = $advertiser->id;
-    
                 $contact = Contact::firstOrNew([
                     'advertiser_id' => $advertiser_id,
-                    'salutation' => $request->input('salutation'),
-                    'initial' => $request->input('initial'),
+                    'salutation' => $validatedData->salutation,
+                    'initial' => $validatedData->initial,
                     'role' => 1,
-                    'email' => $request->input('email'),
-                    'first_name' => $request->input('first_name'),
-                    'last_name' => $request->input('last_name'),
-                    'phone' => $request->input('phone'),
+                    'email' => $validatedData->email,
+                    'first_name' => $validatedData->first_name,
+                    'last_name' => $validatedData->last_name,
+                    'phone' => $validatedData->phone,
                 ]);
-    
+
                 $advertiser->contacts()->save($contact);
+
                 $contact->save();
             });
-    
+
             Alert::toast('De relatie is successvol aangemaakt', 'success');
             return redirect()->route('advertisers.edit', $advertiser_id);
         } catch (\Exception $e) {
@@ -171,7 +159,7 @@ class AdvertiserController extends Controller
             return redirect()->route('advertisers.index');
         }
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -196,39 +184,29 @@ class AdvertiserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $advertiser_id)
+    public function update(AdvertiserRequest $request, string $advertiser_id)
     {
+        $validatedData = $request->validated();
+
         try{
-            DB::transaction(function () use($request, $advertiser_id) {
-                Advertiser::where('id', $advertiser_id)->update([
-                    'first_name' => $request->input('first_name'),
-                    'last_name' => $request->input('last_name'),
-                    'salutation' => $request->input('salutation'),
-                    'initial' => $request->input('initial'),
-                    'name' => $request->input('name'),
-                    'po_box' => $request->input('po_box'),
-                    'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
-                    'credit_limit' => MoneyHelper::convertToNumeric($request->input('credit')),
-                    'city' => $request->input('city'),
-                    'province' => $request->input('province'),
-                    'phone' => $request->input('phone'),
-                    'phone_mobile' => $request->input('phone_mobile'),
-                    'email' => $request->input('email'),
-                    'blacklisted_at' => $request->input('blacklisted') == 1 ? now() : null,
-                    'deactivated_at' => $request->input('active') == 0 ? now() : null,
+            DB::transaction(function () use($validatedData, $advertiser_id) {
+                Advertiser::where('id', $advertiser_id)->update(
+                    $validatedData, [
+                    'blacklisted_at' => $validatedData->input('blacklisted') == 1 ? now() : null,
+                    'deactivated_at' => $validatedData->input('active') == 0 ? now() : null,
                 ]);
 
                 Contact::where('id', $advertiser_id)
-                    ->orWhere('email', $request->input('email'))
+                    ->orWhere('email', $validatedData->email)
                     ->first()
                     ->update([
-                        'salutation' => $request->input('salutation'),
-                        'initial' => $request->input('initial'),
+                        'salutation' => $validatedData->salutation,
+                        'initial' => $validatedData->initial,
                         'role' => 1,
-                        'email' => $request->input('email'),
-                        'first_name' => $request->input('first_name'),
-                        'last_name' => $request->input('last_name'),
-                        'phone' => $request->input('phone'),
+                        'email' => $validatedData->email,
+                        'first_name' => $validatedData->first_name,
+                        'last_name' => $validatedData->last_name,
+                        'phone' => $validatedData->phone,
                     ]);
 
             });
@@ -365,12 +343,8 @@ class AdvertiserController extends Controller
 
     public function orders(string $advertiser_id)
     {
-
-
         $advertiser = Advertiser::findOrFail($advertiser_id);
         $user_id = Auth::user()->id;
-
-
 
         return view('pages.advertisers.orders', compact('advertiser'))->with([
             'pageTitleSection' => self::$page_title_section,

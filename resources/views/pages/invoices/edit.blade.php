@@ -13,203 +13,37 @@
                     {{__('Klantgegevens')}}
                     <a href="{{ route('advertisers.edit', $invoice->advertiser->id ) }}" class="link">Klant bekijken</a>
                 </h3>
+                <x-form.input type="text" name="order_id" label="Ordernummer" :value="$order->id" :extraAttributes="'disabled'" />
+                <x-form.input type="text" name="project_id" label="Projectcode" :value="$order->project->id" :extraAttributes="'disabled'" />
+                <x-form.input type="text" name="advertiser_id" label="Klantnummer" :value="$invoice->advertiser->id" :extraAttributes="'disabled'" />
 
-                <div class="field">
-                    <label class="field__label" for="advertiser_id">{{__('Klantnummer')}}</label>
-                    <input type="text" name="advertiser_id" value="{{$invoice->advertiser->id}}" id="advertiser_id" disabled>
-                    @error('advertiser_id')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
+                <x-form.input type="text" name="name" label="Bedrijfsnaam" :value="$invoice->advertiser->name" :extraAttributes="'disabled'" />
+                <x-form.input type="text" name="contact" label="Contactpersoon" :value="$invoice->advertiser->contact" />
 
-                <div class="field">
-                    <label class="field__label" for="name">{{__('Bedrijfsnaam')}}</label>
-                    <input type="text" name="name" value="{{$invoice->advertiser->name}}" id="name" disabled>
-                    @error('name')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
+                <x-form.input type="text" name="po_box" label="Postbus" :value="$invoice->advertiser->po_box" :extraAttributes="'disabled'" />
+                <x-form.input type="text" name="postal_code" label="Postcode" :value="$invoice->advertiser->postal_code" :extraAttributes="'disabled'" />
+                <x-form.input type="text" name="city" label="Woonplaats" :value="$invoice->advertiser->city" :extraAttributes="'disabled'" />
 
-                <div class="field">
-                    <label class="field__label" for="contact">{{__('Contactpersoon')}}</label>
-                    <input type="text" name="contact" value="{{$invoice->advertiser->contact}}" id="contact">
-                    @error('contact')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field">
-                    <label class="field__label" for="po_box">{{__('Postadres')}}</label>
-                    <input type="text" name="po_box" value="{{$invoice->advertiser->po_box}}" id="po_box" disabled>
-                    @error('po_box')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-
-                <div class="field">
-                    <label class="field__label" for="postal_code">{{__('Postadres')}}</label>
-                    <input type="text" name="postal_code" value="{{$invoice->advertiser->postal_code}}" id="postal_code" disabled>
-                    @error('postal_code')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-
-                <div class="field">
-                    <label class="field__label" for="city">{{__('Postadres')}}</label>
-                    <input type="text" name="city" value="{{$invoice->advertiser->city}}" id="city" disabled>
-                    @error('city')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field">
-                    <label class="field__label" for="phone_number">{{__('Telefoonnumer')}}</label>
-                    <input type="text" name="phone_number" value="{{$invoice->advertiser->phone}}" id="phone_number" disabled>
-                    @error('phone_number')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field">
-                    <label class="field__label" for="phone_mobile">{{__('Mobiel')}}</label>
-                    <input type="text" name="phone_mobile" value="{{$invoice->advertiser->phone_mobile}}" id="phone_mobile" disabled>
-                    @error('phone_mobile')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
+                <x-form.input type="text" name="phone_number" label="Telefoonnumer" :value="$invoice->advertiser->phone" :extraAttributes="'disabled'" />
+                <x-form.input type="text" name="phone_mobile" label="Mobiel" :value="$invoice->advertiser->phone_mobile" :extraAttributes="'disabled'" />
             </fieldset>
-
             <fieldset class="form__section form__section-base">
-
                 <h3>{{__('Factuurgegevens')}}</h3>
 
-                <div class="field">
-                    <label class="field__label" for="invoice_id">{{__('Factuurnummer')}}</label>
-                    <input type="number" name="invoice_id" value="{{$invoice->id}}" id="invoice_id" disabled>
-                    @error('invoice_id')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field">
-                    <label class="field__label" for="invoice_date">{{__('Factuurdatum')}}</label>
-                    <input type="text" name="invoice_date" value="{{$invoice->created_at->format('d-m-Y')}}" id="invoice_date">
-                    @error('invoice_date')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-
-
-                <div class="field">
-                    <label class="field__label" for="post_method">{{__('Verzonden per')}}</label>
-                    <input type="text" name="post_method" value="{{$invoice->post_method}}" id="post_method">
-                    @error('post_method')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field">
-                    <label class="field__label" for="first_reminder">{{__('Eerste herinnering')}}</label>
-                    <input type="text" name="first_reminder" value="{{$invoice->first_reminder}}" id="first_reminder">
-                    @error('first_reminder')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field">
-                    <label class="field__label" for="second_reminder">{{__('Tweede herinnering')}}</label>
-                    <input type="text" name="second_reminder" value="{{$invoice->second_reminder}}" id="second_reminder">
-                    @error('second_reminder')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-
-                <div class="field">
-                    <label class="field__label" for="third_reminder">{{__('Aanmaning')}}</label>
-                    <input type="text" name="third_reminder" value="{{$invoice->third_reminder}}" id="third_reminder">
-                    @error('third_reminder')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field">
-                    <label class="field__label" for="seller">{{__('Verkoper')}}</label>
-                    <input type="text" name="seller" value="{{Auth::user()->first_name}} {{Auth::user()->last_name}}" disabled>
-                    @error('seller')
-                        <span class="form__message">
-                            <small>{{ $message }}</small>
-                        </span>
-                    @enderror
-                </div>
+                <x-form.input type="text" name="invoice_id" label="Factuurnummer" :value="$invoice->id" :extraAttributes="'disabled'" />
+                <x-form.input type="text" name="invoice_date" label="Factuurdatum" :value="$invoice->created_at->format('d-m-Y')" />
+                <x-form.input type="text" name="post_method" label="Verzonden per" :value="$invoice->post_method" />
+                <x-form.input type="text" name="first_reminder" label="Eerste herinnering" :value="$invoice->first_reminder" />
+                <x-form.input type="text" name="second_reminder" label="Tweede herinnering" :value="$invoice->second_reminder" />
+                <x-form.input type="text" name="third_reminder" label="Aanmaning" :value="$invoice->third_reminder" />
+                <x-form.input type="text" name="seller" label="Verkoper" :extraAttributes="'disabled'" />
             </fieldset>
-
             <fieldset class="form__section">
-
                 <h3>{{__('Incasso')}}</h3>
 
-                <div class="field">
-                    <label class="field__label" for="date_of_action">{{__('Datum actie')}}</label>
-                    <input type="date" name="date_of_action">
-                    @error('date_of_action')
-                        <span class="form__message">
-                            <small>{{$message}}</small>
-                        </span>
-                    @enderror
-                </div>
-
-                <div class="field">
-                    <label class="field__label" for="collection_agency">{{__('Incassobureau')}}</label>
-                    <input type="text" name="collection_agency">
-                    @error('collection_agency')
-                    <span class="form__message">
-                        <small>{{$message}}</small>
-                    </span>
-                @enderror
-                </div>
-
-                <div class="field">
-                    <label class="field__label" for="collection_date">{{__('Datum incassobureau')}}</label>
-                    <input type="date" name="collection_date">
-                    @error('collection_date')
-                    <span class="form__message">
-                        <small>{{$message}}</small>
-                    </span>
-                @enderror
-                </div>
-
+                <x-form.input type="text" name="date_of_action" label="Datum actie" />
+                <x-form.input type="text" name="collection_agency" label="Incassobureau" />
+                <x-form.input type="text" name="collection_date" label="Datum incassobureau" />
             </fieldset>
 
             <fieldset class="form__section notes full-width">

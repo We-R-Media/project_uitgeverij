@@ -34,13 +34,13 @@
             @forelse ($advertisers as $advertiser)
                 <div class="items__row row--data {{ $advertiser->trashed() ? 'item--thrashed' : 'item--default' }}">
                     <div class="item--cell">
-                        <Label class="cell__label">{{__('Bedrijfsnaam')}}</label>
+                        <label class="cell__label">{{__('Bedrijfsnaam')}}</label>
                         <a href="{{ route('advertisers.edit', $advertiser->id) }}" class="">
                             {{ $advertiser->name }}
                         </a>
                     </div>
                     <div class="item--cell">
-                        <Label class="cell__label">{{__('Postadres')}}</label>
+                        <label class="cell__label">{{__('Postadres')}}</label>
                         {{$advertiser->po_box}}
                     </div>
                     <div class="item--cell">

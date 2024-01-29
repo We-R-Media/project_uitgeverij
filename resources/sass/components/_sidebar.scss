@@ -30,8 +30,8 @@
             }
             .navigation__icon {
                 @include mixin.flex($align-items: center, $justify-content: center);
-                width: 4.8rem;
-                height: 4.8rem;
+                width: 5.2rem;
+                height: 5.2rem;
             }
             .nav__icon {
                 width: 2.4rem;
@@ -64,8 +64,8 @@
     }
     .sidebar__profile {
         @include mixin.flex($align-items: center);
-        height: 4.8rem;
-        width: 4.8rem;
+        height: 5.2rem;
+        width: 5.2rem;
 
         &:hover,
         &:focus,
@@ -132,7 +132,7 @@
     }
     @include mixin.breakpoint('min', 'tablet') {
         top: 0;
-        width: 4.8rem;
+        width: 5.2rem;
         height: 100vh;
         flex-direction: column;
     }

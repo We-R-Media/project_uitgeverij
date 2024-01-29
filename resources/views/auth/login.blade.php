@@ -15,13 +15,6 @@
             <form method="POST" action="{{ route('login') }}">
                 @csrf
                 <fieldset class="form__section">
-                    @if(count($errors) > 0)
-                        @foreach( $errors->all() as $message )
-                            <div class="form__message">
-                                <span>{{ $message }}</span>
-                            </div>
-                        @endforeach
-                    @endif
                     <div class="form__row">
                         <div class="field field--column">
                             <label class="field__label" for="email">{{ __('E-mailadres') }}</label>
@@ -44,7 +37,7 @@
                     </div>
 
                     <div class="form__row form__row--spacer-top form__row--centered">
-                        <button type="submit" class="button button--action">
+                        <button type="submit" class="button button__solid--primary">
                             {{ __('Inloggen') }}
                         </button>
                     </div>

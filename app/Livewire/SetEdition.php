@@ -23,20 +23,33 @@ class SetEdition extends Component
     public $tax_true;
     public $tax_false;
 
+    /**
+     * Mount the Livewire component with the provided order.
+     *
+     * @param  mixed  $order
+     * @return void
+     */
     public function mount($order)
     {
         $this->order = $order;
     }
 
+    /**
+     * Display the projects and make the project selection visible.
+     *
+     * @return void
+     */
     public function displayProjects()
     {
-        $this->projectCollection = Project::where('publisher_id', $this->order->publisher_id)
-            ->get();
-        $this->projectVisible = true;
+        $this->projectVisible = !$this->projectVisible;
 
-        // Select the first project by default
-        $this->selectedProjectId = $this->projectCollection->first()->id;
-        $this->updateSelectedProjectId();
+        if($this->projectVisible) {
+            $this->projectCollection = Project::where('publisher_id', $this->order->publisher_id)->get();
+            $this->projectVisible = true;
+
+            $this->selectedProjectId = $this->projectCollection->first()->id;
+            $this->updateSelectedProjectId();
+        }
     }
 
     public function updateSelectedProjectId()
@@ -46,7 +59,6 @@ class SetEdition extends Component
         $firstFormat = $this->currentProject->formats->first();
         $this->selectedFormatId = $firstFormat ? $firstFormat->id : null;
 
-        // Load format price
         $this->updateSelectedFormatId();
     }
 

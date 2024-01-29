@@ -12,26 +12,8 @@
             <fieldset class="form__section">
                 <h3>{{ __('Algemeen') }}</h3>
 
-                <div class="field">
-                    <label class="field__label" for="layout_name">{{__('Layout naam')}}</label>
-                    <input type="text" value="{{$layout->layout_name}}" name="layout_name">
-                    @error('layout_name')
-                    <span class="form__message" role="alert">
-                        <small>{{ $message }}</small>
-                    </span>
-                    @enderror
-                </div>
-
-                <div class="field">
-                    <label class="field__label" for="city_name">{{__('Plaatsnaam')}}</label>
-                    <input type="text" value="{{$layout->city_name}}" name="city_name">
-                    @error('city_name')
-                    <span class="form__message" role="alert">
-                        <small>{{ $message }}</small>
-                    </span>
-                    @enderror
-                </div>
-
+                <x-form.input type="text" name="layout_name" label="Layout naam" :value="$layout->layout_name" />
+                <x-form.input type="text" name="city_name" label="Plaatsnaam" :value="$layout->city_name" />
             </fieldset>
             <fieldset class="form__section">
                 <h3>{{ __('Uiterlijk') }}</h3>
@@ -45,11 +27,8 @@
                             <img src="{{asset('/images/uploads/' . $layout->logo)}}">
                         </div>
                     @endif
-
                 </div>
-
                 <div class="dropzone" id="UploadImageDrop"></div>
-
             </fieldset>
         </div>
         <div class="form__actions">

@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Traits\SearchableModelTrait;
 use App\AppHelpers\MoneyHelper;
-use App\AppHelpers\DateHelper;
+use App\Http\Requests\ProjectRequest;
 use App\Models\Layout;
 use App\Models\Tax;
 use App\Models\Project;
 use App\Models\ProjectPlanning;
 use App\Models\User;
 use App\Models\Publisher;
-use App\Http\Requests\ProjectRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Services\SearchService;
 use Illuminate\Http\Request;
@@ -19,6 +17,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use RealRashid\SweetAlert\Facades\Alert;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class ProjectController extends Controller
 {
@@ -29,7 +28,6 @@ class ProjectController extends Controller
     public function __construct(SearchService $searchService)
     {
         $this->searchService = $searchService;
-
         $this->subpages = [
             'Actueel' => 'projects.index',
             'Inactief' => 'projects.inactive',
@@ -39,14 +37,13 @@ class ProjectController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request) : View
+    public function index(Request $request): View
     {
         $user_id = Auth::user()->id;
 
         $searchQuery = $request->input('search');
 
-        if(Gate::allows('isSeller')) {
-
+        if (Gate::allows('isSeller')) {
             unset($this->subpages['Inactief']);
 
             $projects = Project::latest('name')
@@ -59,7 +56,7 @@ class ProjectController extends Controller
                     ]);
                 })
                 ->where('user_id', $user_id)
-                ->paginate(12);
+                ->paginate(15);
         } else {
             $projects = Project::latest('name')
                 ->whereNull('deactivated_at')
@@ -70,7 +67,7 @@ class ProjectController extends Controller
                         'edition_name',
                     ]);
                 })
-                ->paginate(12);
+                ->paginate(15);
         }
 
 
@@ -81,8 +78,9 @@ class ProjectController extends Controller
             ]);
     }
 
-    public function inactive() {
-        $projects = Project::whereNotNull('deactivated_at')->paginate(12);
+    public function inactive()
+    {
+        $projects = Project::whereNotNull('deactivated_at')->paginate(15);
 
         return view('pages.projects.index', compact('projects'))
             ->with([
@@ -101,7 +99,7 @@ class ProjectController extends Controller
         $taxes = Tax::all();
         $users = User::where('role', 'seller')->get();
 
-        return view('pages.projects.create', compact('layouts', 'taxes','users', 'projects'))->with([
+        return view('pages.projects.create', compact('layouts', 'taxes', 'users', 'projects'))->with([
             'pageTitleSection' => self::$page_title_section,
         ]);
     }
@@ -109,104 +107,89 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-  public function store(Request $request)
-{
-    try {
-        DB::transaction(function () use ($request) {
-            $publisherName = $request->input('release_name');
+    public function store(Request $request)
+    {
+        try {
+            DB::transaction(function () use ($request) {
+                $publisherName = $request->input('release_name');
 
-            $publisher = Publisher::where('name', $publisherName)->firstOrCreate([
-                'name' => $publisherName,
-            ]);
+                $publisher = Publisher::where('name', $publisherName)->firstOrCreate([
+                    'name' => $publisherName,
+                ]);
 
-            // $layout_id = $request->input('layout');
-            // $layout = Layout::findOrFail($layout_id);
+                $layout = Layout::find($request->input('layout'));
+                $seller = User::find($request->input('seller'));
+                $tax = Tax::find($request->input('taxes'));
 
-            $seller_id = $request->input('seller');
-            $seller = User::findOrFail($seller_id);
+                $project = Project::create([
+                    'name' => $request->input('name'),
+                    'layout_id' => $layout->id,
+                    'tax_id' => $tax->id,
+                    'user_id' => $seller->id,
+                    'publisher_id' => $publisher->id,
+                    'designer' => $request->input('designer'),
+                    'printer' => $request->input('printer'),
+                    'client' => $request->input('client'),
+                    'distribution' => $request->input('distribution'),
+                    'release_name' => $publisherName,
+                    'edition_name' => $request->input('edition_name'),
+                    'print_edition' => $request->input('print_edition'),
+                    'paper_format' => $request->input('paper_format'),
+                    'pages_redaction' => $request->input('pages_redaction'),
+                    'pages_adverts' => $request->input('pages_adverts'),
+                    'pages_total' => $request->input('pages_total'),
+                    'paper_type_cover' => $request->input('paper_type_cover'),
+                    'paper_type_interior' => $request->input('paper_type_interior'),
+                    'color_cover' => $request->input('color_cover'),
+                    'color_interior' => $request->input('color_interior'),
+                    'ledger' => $request->input('ledger'),
+                    'journal' => $request->input('journal'),
+                    'department' => $request->input('department'),
+                    'year' => $request->input('year'),
+                    'revenue_goals' => MoneyHelper::convertToNumeric($request->input('revenue_goals')),
+                    'comments' => $request->input('comments'),
+                ]);
 
-            $seller->save();
+                $project->layout()->associate($layout);
+                $project->tax()->associate($tax);
+                $project->user()->associate($seller);
 
+                $project->save();
+            });
 
-            // $tax_id = $request->input('taxes');
-            // $tax = Tax::findOrFail($tax_id);
-
-            $project = Project::create([
-                'name' => $request->input('name'),
-                // 'layout_id' => $layout_id,
-                // 'tax_id' => $tax_id,
-                'user_id' => $seller->id,
-                'publisher_id' => $publisher->id,
-                'designer' => $request->input('designer'),
-                'printer' => $request->input('printer'),
-                'client' => $request->input('client'),
-                'distribution' => $request->input('distribution'),
-                'release_name' => $publisherName,
-                'edition_name' => $request->input('edition_name'),
-                'print_edition' => $request->input('print_edition'),
-                'paper_format' => $request->input('paper_format'),
-                'pages_redaction' => $request->input('pages_redaction'),
-                'pages_adverts' => $request->input('pages_adverts'),
-                'pages_total' => $request->input('pages_total'),
-                'paper_type_cover' => $request->input('paper_type_cover'),
-                'paper_type_interior' => $request->input('paper_type_interior'),
-                'color_cover' => $request->input('color_cover'),
-                'color_interior' => $request->input('color_interior'),
-                'ledger' => $request->input('ledger'),
-                'journal' => $request->input('journal'),
-                'department' => $request->input('department'),
-                'year' => $request->input('year'),
-                'revenue_goals' => MoneyHelper::convertToNumeric($request->input('revenue_goals')),
-                'comments' => $request->input('comments'),
-            ]);
-
-
-            // $project->layout()->associate($layout);
-            // $project->user()->associate($seller);
-            // $project->tax()->associate($tax);
-            // $project->publisher()->associate($publisher);
-            $project->save();
-
-        });
-
-        Alert::toast('Het project is succesvol aangemaakt', 'success');
-
-        return redirect()->route('projects.index');
-
-    } catch (\Exception $e) {
-        Alert::toast('Er is iets fout gegaan', 'error');
-        return redirect()->route('projects.index');
+            Alert::toast('Het project is succesvol aangemaakt', 'success');
+            return redirect()->route('projects.index');
+        } catch (\Exception $e) {
+            dd($e);
+            Alert::toast('Er is iets fout gegaan', 'error');
+            return redirect()->route('projects.index');
+        }
     }
-}
 
     public function duplicate($project_id)
     {
         try {
+            $originalProject = Project::findOrFail($project_id);
 
+            $newProject = $originalProject->replicate();
+            $newProject->name = $this->generateReleaseName($originalProject->name);
+            $newProject->save();
 
-        $originalProject = Project::findOrFail($project_id);
+            $originalFormats = $originalProject->formats;
 
-        $newProject = $originalProject->replicate();
-        $newProject->save();
+            foreach ($originalFormats as $originalFormat) {
+                $newFormat = $originalFormat->replicate();
+                $newProject->formats()->save($newFormat);
+            }
 
-        $originalFormats = $originalProject->formats;
+            Alert::toast('Project' . ' ' . $newProject->name . ' ' . 'succesvol overgenomen', 'success');
 
-        foreach ($originalFormats as $originalFormat) {
-            $newFormat = $originalFormat->replicate();
-            $newProject->formats()->save($newFormat);
-        }
-
-        Alert::toast('Project' . ' ' . $newProject->name . ' ' . 'succesvol overgenomen', 'success');
-
-        return redirect()->route('projects.edit', $project_id);
-
+            return redirect()->route('projects.edit', $newProject->id);
         } catch (\Exception $e) {
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('projects.edit', $project_id);
         }
     }
-
-
 
     /**
      * Show the form for editing the specified resource.
@@ -221,7 +204,7 @@ class ProjectController extends Controller
             'Formaten' => 'formats.index',
         ];
 
-        if(Gate::allows('isSeller')) {
+        if (Gate::allows('isSeller')) {
 
             unset($this->subpages['Formaten']);
             unset($this->subpages['Planning']);
@@ -230,11 +213,11 @@ class ProjectController extends Controller
         $layouts = Layout::all();
         $taxes = Tax::all();
 
-        return view('pages.projects.edit', compact('project', 'layouts','taxes'))
+        return view('pages.projects.edit', compact('project', 'layouts', 'taxes'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
-                'pageTitle' => $project->title,
-                'subpagesData' => $this->getSubpages( $project_id ),
+                'pageTitle' => $project->release_name,
+                'subpagesData' => $this->getSubpages($project_id),
                 'layouts' => $layouts,
             ]);
     }
@@ -246,7 +229,7 @@ class ProjectController extends Controller
     public function update(Request $request, string $project_id)
     {
         try {
-            DB::transaction(function () use($request, $project_id) {
+            DB::transaction(function () use ($request, $project_id) {
 
                 $project = Project::findOrFail($project_id);
 
@@ -299,14 +282,14 @@ class ProjectController extends Controller
         }
     }
 
-     /**
+    /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $project_id)
     {
         $project = Project::findOrFail($project_id);
 
-        if( $project ) {
+        if ($project) {
             $project->delete();
 
             Alert::toast('Het project is verwijderd.', 'info');
@@ -330,15 +313,14 @@ class ProjectController extends Controller
         return view('pages.projects.planning', compact('project'))->with([
             'pageTitleSection' => self::$page_title_section,
             'pageTitle' => $project->title,
-            'subpagesData' => $this->getSubpages( $project_id ),
+            'subpagesData' => $this->getSubpages($project_id),
         ]);
     }
 
     public function planning__store(Request $request, string $project_id)
     {
-        try
-        {
-            DB::transaction(function () use($project_id, $request) {
+        try {
+            DB::transaction(function () use ($project_id, $request) {
 
                 $project = Project::findOrFail($project_id);
 
@@ -362,7 +344,6 @@ class ProjectController extends Controller
 
             Alert::toast('Planning is succesvol aangemaakt', 'success');
             return redirect()->route('projects.planning', $project_id);
-
         } catch (\Exception $e) {
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('projects.planning', $project_id);
@@ -371,11 +352,10 @@ class ProjectController extends Controller
 
     public function planning__update(Request $request, string $project_id)
     {
-        try
-        {
-            DB::transaction(function () use($request, $project_id) {
+        try {
+            DB::transaction(function () use ($request, $project_id) {
                 ProjectPlanning::where('project_id', $project_id)->update([
-                    'sale_start' =>$request->input('sale_start') ?? now(),
+                    'sale_start' => $request->input('sale_start') ?? now(),
                     'redaction_date' => $request->input('redaction_date') ?? now(),
                     'adverts_date' => $request->input('adverts_date') ?? now(),
                     'printer_date' => $request->input('printer_date') ?? now(),
@@ -390,10 +370,15 @@ class ProjectController extends Controller
 
             Alert::toast('Planning is succesvol bijgewerkt', 'success');
             return redirect()->route('projects.planning', $project_id);
-
         } catch (\Exception $e) {
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('projects.planning', $project_id);
         }
+    }
+
+    private function generateReleaseName($baseName)
+    {
+        $copyCount = Project::where('name', 'like', $baseName . ' (Kopie%)')->count();
+        return $baseName . ($copyCount > 0 ? ' (Kopie ' . $copyCount . ')' : ' (Kopie)');
     }
 }

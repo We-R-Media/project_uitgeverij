@@ -10,3 +10,18 @@
         padding: 3rem;
     }
 }
+.content--splitted {
+    @include mixin.flex;
+    gap: 5rem;
+
+    .content--default {
+        flex: 1;
+    }
+    .content--big {
+        flex: 2;
+    }
+
+    @include mixin.breakpoint("min", "tablet") {
+        gap: 10rem;
+    }
+}

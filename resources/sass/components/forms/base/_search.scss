@@ -10,7 +10,7 @@
         input {
             min-width: 10vw;
 
-            &:not([type=checkbox]):not([type=radio]) {
+            &:not([type=checkbox]):not([type=radio]):not([type=file]) {
                 border: unset;
             }
         }

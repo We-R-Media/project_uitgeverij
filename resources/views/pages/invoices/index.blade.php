@@ -27,26 +27,27 @@
             @forelse ($invoices as $invoice)
                 <div class="items__row row--data">
                     <div class="item--cell">
+                        <label class="cell__label">{{__('Factuurnummer')}}</label>
                         <a href="{{ route('invoices.edit', $invoice->id) }}">
                             {{ $invoice->invoice_number }}
                         </a>
                     </div>
                     <div class="item--cell">
                         <div class="field">
-                            <label>{{__('Factuurnummer')}}</label>
+                            <label class="cell__label">{{__('Factuurnummer')}}</label>
                             {{$invoice->id}}
                         </div>
                         <div class="field">
-                            <label>{{__('Factuurdatum')}}</label>
+                            <label class="cell__label">{{__('Factuurdatum')}}</label>
                             {{$invoice->invoice_date}}
                         </div>
                         @if ( !is_null($invoice->advertiser) && $invoice->advertiser->count() > 0)
                             <div class="item__format field">
-                                <label>{{__('Bedrijfsnaam')}}</label>
+                                <label class="cell__label">{{__('Bedrijfsnaam')}}</label>
                                 {{$invoice->advertiser->name}}
                             </div>
                             <div class="item__format field">
-                                <label>{{__('Projectcode')}}</label>
+                                <label class="cell__label">{{__('Projectcode')}}</label>
                                 {{$invoice->project->name}}
                             </div>
                         @endif

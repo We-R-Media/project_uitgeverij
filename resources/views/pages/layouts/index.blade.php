@@ -26,21 +26,20 @@
             @forelse ($layouts as $layout)
                 <div class="items__row row--data">
                     <div class="item--cell">
+                        <label class="cell__label">{{__('Naam')}}</label>
                         <a href="{{route('layouts.edit', $layout->id)}}">
                             {{ $layout->layout_name}}
                         </a>
                     </div>
                     <div class="item--cell">
-                        <div class="field">
-                            <label>{{__('Plaatsnaam')}}</label>
-                            {{$layout->city_name}}
-                        </div>
-                        <div class="field">
-                            <label>{{__('Logo')}}</label>
-                            @if (!empty($layout->logo))
-                                <div class="logo__preview"><a href="{{asset($layout->logo)}}" target="_blank">{{__('Bekijk afbeelding')}}</a></div>
-                            @endif
-                        </div>
+                        <label class="cell__label">{{__('Plaatsnaam')}}</label>
+                        {{$layout->city_name}}
+                    </div>
+                    <div class="item--cell">
+                        <label class="cell__label">{{__('Logo')}}</label>
+                        @if (!empty($layout->logo))
+                            <div class="logo__preview"><a href="{{asset($layout->logo)}}" target="_blank">{{__('Bekijk afbeelding')}}</a></div>
+                        @endif
                     </div>
                     <div class="item--actions">
                         <div class="actions__button">

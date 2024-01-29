@@ -23,6 +23,7 @@
             @forelse($users as $user)
                 <div class="items__row row--data">
                     <div class="item--cell">
+                        <label class="cell__label">{{__('Naam')}}</label>
                         <a href="{{route('users.edit', $user->id)}}">
                             {{ $user->first_name}} {{$user->last_name}}
                         </a>

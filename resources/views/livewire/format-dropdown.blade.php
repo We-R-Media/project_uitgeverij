@@ -42,7 +42,7 @@
     @if ($currentFormat)
         <div class="field">
             <label class="field__label" for="price">{{__('Basisbedrag')}}</label>
-            <input name="base_price" type="text" value={{@money($currentFormat->price)}} readonly>
+            <input name="base_price" type="text" value={{money($currentFormat->price)}} readonly>
         </div>
     @endif
 </div>

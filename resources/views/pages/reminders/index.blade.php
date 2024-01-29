@@ -14,7 +14,6 @@
                 <div class="item--cell">
                     {{__('Land')}}
                 </div>
-
                 <div class="item--action">
                     {{-- Spacer for actions --}}
                 </div>

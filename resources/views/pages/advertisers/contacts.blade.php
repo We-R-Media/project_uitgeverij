@@ -26,42 +26,14 @@
                                 </span>
                             @enderror
                         </div>
-                        <div class="field">
-                            <label class="field__label" for="initial">{{__('Voorletter')}}</label>
-                            <input type="text" name="initial">
-                            @error('initial')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="preposition">{{__('Tussenvoegsel')}}</label>
-                            <input type="text" name="preposition">
-                            @error('preposition')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="first_name">{{__('Voornaam')}}</label>
-                            <input type="text" name="first_name">
-                            @error('first_name')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="last_name">{{__('Achternaam')}}</label>
-                            <input type="text" name="last_name">
-                            @error('last_name')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
+
+                        <x-form.input type="text" name="initial" label="Voorletter" />
+                        <x-form.input type="text" name="preposition" label="Tussenvoegsel" />
+                        <x-form.input type="text" name="first_name" label="Voornaam" />
+                        <x-form.input type="text" name="last_name" label="Achternaam" />
+                        <x-form.input type="text" name="phone" label="Telefoonnummer" />
+                        <x-form.input type="text" name="email" label="E-mailadres" />
+
                         @if (!$advertiser->contacts->where('role', 1)->count() == 1)
                             <div class="field">
                                 <label class="field__label" for="role">{{__('Rol')}}</label>
@@ -71,31 +43,18 @@
                                 </div>
                             </div>
                         @endif
-                        <div class="field">
-                            <label class="field__label" for="phone">{{__('Telefoonnummer')}}</label>
-                            <input type="text" name="phone">
-                            @error('phone')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
+                    </div>
+                    <div class="section__block">
+                        <div class="field field--column">
+                            <label class="field__label" for="role">{{__('Opmerkingen')}}</label>
+                            <textarea name="comments" cols="30" rows="10" placeholder="{{__('Vul opmerkingen in...')}}"></textarea>
                         </div>
-                        <div class="field">
-                            <label class="field__label" for="email">{{__('E-mailadres')}}</label>
-                            <input type="email" name="email">
-                            @error('email')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="section__block">
-                            <div class="field field--column">
-                                <label class="field__label" for="role">{{__('Opmerkingen')}}</label>
-                                <textarea name="comments" cols="30" rows="10" placeholder="{{__('Vul opmerkingen in...')}}"></textarea>
+
+                        <div class="form__actions">
+                            <div class="buttons">
+                                <button type="submit" class="button button--big button--primary">{{__('Nieuwe toevoegen')}}</button>
                             </div>
                         </div>
-                        <button type="submit" class="button button--primary">{{__('Nieuwe toevoegen')}}</button>
                     </div>
                 </fieldset>
                 <fieldset class="form__section">
@@ -119,23 +78,18 @@
                             @forelse ($advertiser->contacts as $contact )
                                 <div class="items__row row--data {{ $contact->trashed() ? 'item--thrashed' : 'item--default' }}">
                                     <div class="item--cell">
-                                        <div class="field">
-                                            {{$contact->initial}} {{$contact->last_name}}
-                                        </div>
+                                        <label class="cell__label">{{__('Naam')}}</label>
+                                        {{$contact->initial}} {{$contact->last_name}}
                                     </div>
                                     <div class="item--cell">
-                                        <div class="field">
-                                            {{$contact->email}}
-                                        </div>
+                                        <label class="cell__label">{{__('E-mailadres')}}</label>
+                                        {{$contact->email}}
                                     </div>
                                     <div class="item--cell">
-                                        <div class="field">
-                                            @if ($contact->role == 1)
-                                                {{$aliases[$contact->role]}}
-                                            @else
-                                                {{__('')}}
-                                            @endif
-                                        </div>
+                                        <label class="cell__label">{{__('Rol')}}</label>
+                                        @if ($contact->role == 1)
+                                            {{$aliases[$contact->role]}}
+                                        @endif
                                     </div>
                                     <div class="item--actions">
                                         <div class="actions__button">

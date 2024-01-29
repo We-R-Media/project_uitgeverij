@@ -9,52 +9,11 @@
             @method('post')
             <div class="form__wrapper">
                 <fieldset class="form__section">
-
-                    <div class="field">
-                        <label class="field__label" for="format_title">{{__('Titel')}}</label>
-                        <input type="text" value="{{$project->name}}" name="format_title">
-                    </div>
-
-                    <div class="field">
-                        <label class="field__label" for="size">{{__('Grootte')}}</label>
-                        <input type="text" name="size">
-                        @error('size')
-                            <span class="form__message">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="field">
-                        <label class="field__label" for="measurement">{{__('Afmeting')}}</label>
-                        <input type="text" name="measurement">
-                        @error('measurement')
-                            <span class="form__message">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="field">
-                        <label class="field__label" for="ratio">{{__('Verhouding')}}</label>
-                        <input type="text" name="ratio">
-                        @error('ratio')
-                            <span class="form__message">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="field">
-                        <label class="field__label" for="price">{{__('Prijs')}}</label>
-                        <input type="number" name="price">
-                        @error('price')
-                            <span class="form__message">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
+                    <x-form.input type="text" name="format_title" label="Titel" :value="$project->name" />
+                    <x-form.input type="text" name="size" label="Grootte" />
+                    <x-form.input type="text" name="measurement" label="Afmeting" />
+                    <x-form.input type="text" name="ratio" label="Verhouding" />
+                    <x-form.input type="number" name="price" label="Prijs" />
                 </fieldset>
             </div>
 

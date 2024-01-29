@@ -87,22 +87,22 @@
                     <h4>{{$orderline->project->release_name}}</h4>
                     <p>{{$orderline->project->edition_name}}</p>
                     <p>{{$orderline->format->size}} {{$orderline->format->measurement}}</p>
-                    <p>{{@money($orderline->price_with_discount)}}</p>
+                    <p>{{money($orderline->price_with_discount)}}</p>
                 </li>
             @endforeach
         </ul>
         <ul class="price__content list">
             <li class="item">
                 <h4>{{__('Totaalprijs excl. BTW')}}</h4>
-                <p>{{@money($order->order_total_price)}}</p>
+                <p>{{money($order->order_total_price)}}</p>
             </li>
             <li class="item">
                 <h4>{{__('BTW')}}</h4>
-                <p>{{@money($order->order_total_price / 100 * 21)}}</p>
+                <p>{{money($order->order_total_price / 100 * 21)}}</p>
             </li>
             <li class="item">
                 <h4>{{__('Totaalprijs incl. BTW')}}</h4>
-                <p>{{@money($order->order_total_price / 100 * 121)}}</p>
+                <p>{{money($order->order_total_price / 100 * 121)}}</p>
             </li>
         </ul>
     </div>

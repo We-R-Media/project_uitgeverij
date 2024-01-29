@@ -7,7 +7,7 @@
     <div class="header__bar">
         <div class="bar__buttons">
             @if (!$advertiser->deactivated_at && !$advertiser->blacklisted_at)
-                <a href="{{ route('orders.create', $advertiser->id) }}" class="button button--secondary">{{ __('+Nieuwe order') }}</a>
+                <a href="{{ route('orders.create', $advertiser->id) }}" class="button button--secondary">{{ __('Nieuwe order') }}</a>
             @endif
         </div>
     </div>
@@ -18,19 +18,9 @@
         <div class="form__wrapper">
             <fieldset class="form__section">
                 <div class="section__block">
-                    <div class="field">
-                        <label class="field__label" for="advertiser_id">{{ __('Klantnummer') }}</label>
-                        <input type="text" name="advertiser_id" value="{{$advertiser->id}}" readonly>
-                    </div>
-                    <div class="field">
-                        <label class="field__label" for="name">{{ __('Bedrijfsnaam') }}</label>
-                        <input type="text" name="name" value="{{$advertiser->name}}">
-                        @error('name')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
+                    <x-form.input type="text" name="advertiser_id" label="Klantnummer" :value="$advertiser->id" :extraAttributes="'readonly'" />
+                    <x-form.input type="text" name="name" label="Bedrijfsnaam" :value="$advertiser->name" />
+
                     <div class="field">
                         <label class="field__label" for="salutation">{{__('Aanhef')}}</label>
                         <div class="dropdown">
@@ -45,84 +35,21 @@
                             </span>
                         @enderror
                     </div>
-                    <div class="field">
-                        <label class="field__label" for="initial">{{ __('Voorletter') }}</label>
-                        <input type="text" name="initial" value="{{ $advertiser->initial }}">
-                        @error('initial')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="field">
-                        <label class="field__label" for="first_name">{{ __('Voornaam') }}</label>
-                        <input type="text" name="first_name" value="{{ $advertiser->first_name }}">
-                        @error('first_name')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="field">
-                        <label class="field__label" for="last_name">{{ __('Achternaam') }}</label>
-                        <input type="text" name="last_name" value="{{ $advertiser->last_name }}">
-                        @error('last_name')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
+
+                    <x-form.input type="text" name="initial" label="Voorletter" :value="$advertiser->initial" />
+                    <x-form.input type="text" name="first_name" label="Voornaam" :value="$advertiser->first_name" />
+                    <x-form.input type="text" name="last_name" label="Achternaam" :value="$advertiser->last_name" />
+                    <x-form.input type="text" name="email" label="E-mailadres" :value="$advertiser->phone_mobile" />
+                    <x-form.input type="text" name="phone" label="Telefoonnummer" :value="$advertiser->phone" />
+                    <x-form.input type="text" name="phone_mobile" label="Mobiel" :value="$advertiser->phone_mobile" />
+
                     @if ($advertiser->credit_limit && !is_countable($advertiser->credit_limit))
-                        <div class="field">
-                            <label class="field__label" for="credit">{{ __('Kredietlimiet') }}</label>
-                            <input type="text" name="credit" value="">
-                            @error('credit')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
+                        <x-form.input type="text" name="credit" label="Kredietlimiet" />
                     @endif
 
                     @if ($advertiser->po_box)
-                        <div class="field">
-                            <label class="field__label" for="po_box">{{ __('Postbus') }}</label>
-                            <input type="text" name="po_box" value="{{ $advertiser->po_box }}">
-                            @error('po_box')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
+                        <x-form.input type="text" name="po_box" label="Postbus" :value="$advertiser->po_box" />
                     @endif
-                    <div class="field">
-                        <label class="field__label" for="phone">{{ __('Telefoonnummer') }}</label>
-                        <input type="text" name="phone" value="{{ $advertiser->phone }}">
-                        @error('phone')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="field">
-                        <label class="field__label" for="phone_mobile">{{ __('Mobiel') }}</label>
-                        <input type="text" name="phone_mobile" value="{{ $advertiser->phone_mobile }}">
-                        @error('phone_mobile')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="field">
-                        <label class="field__label" for="email">{{ __('E-mailadres') }}</label>
-                        <input type="email" name="email" value="{{ $advertiser->email }}">
-                        @error('email')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
                 </div>
             </fieldset>
             <fieldset class="form__section">
@@ -165,61 +92,13 @@
                             <label class="field__label" for="alt_invoice_false">{{__('Nee')}}</label>
                         </div>
                     </div>
-                    <div class="field">
-                        <label class="field__label" for="name">{{ __('Bedrijfsnaam') }}</label>
-                        <input type="text" name="name_alt">
-                        @error('name')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="field">
-                        <label class="field__label" for="po_box">{{ __('Postadres') }}</label>
-                        <input type="text" name="po_box_alt">
-                        @error('po_box')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
 
-                    <div class="field">
-                        <label class="field__label" for="postal_code">{{ __('Postcode') }}</label>
-                        <input type="text" name="postal_code_alt">
-                        @error('postal_code')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="field">
-                        <label class="field__label" for="city">{{ __('Woonplaats') }}</label>
-                        <input type="text" name="city_alt">
-                        @error('city')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="field">
-                        <label class="field__label" for="province">{{ __('Provincie') }}</label>
-                        <input type="text" name="province_alt">
-                        @error('province')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="field">
-                        <label class="field__label" for="email">{{ __('E-mailadres') }}</label>
-                        <input type="text" name="email_alt">
-                        @error('email')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
+                    <x-form.input type="text" name="name" label="Bedrijfsnaam" />
+                    <x-form.input type="text" name="po_box" label="Postadres" />
+                    <x-form.input type="text" name="postal_code" label="Postcode" />
+                    <x-form.input type="text" name="city" label="Woonplaats" />
+                    <x-form.input type="text" name="province" label="Provincie" />
+                    <x-form.input type="email" name="email" label="E-mailadres" />
                 </div>
             </fieldset>
         </div>

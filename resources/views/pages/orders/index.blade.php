@@ -38,10 +38,14 @@
                             <label>{{__('Bedrijfsnaam')}}</label>
                             {{ $order->advertiser->name }}
                         </div>
+                    </div>
+                    <div class="item--cell">
                         <div class="item__created field">
                             <label>{{__('Plaatsnaam')}}</label>
                             {{$order->advertiser->city}}
                         </div>
+                    </div>
+                    <div class="item--cell">
                         <div class="item__format field">
                             {{$order->advertiser->email}}
                         </div>

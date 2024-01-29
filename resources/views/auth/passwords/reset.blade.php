@@ -51,7 +51,7 @@
                     </div>
 
                     <div class="form__row form__row--spacer-top form__row--centered">
-                        <button type="submit" class="button button--action">
+                        <button type="submit" class="button button__solid--primary">
                             {{ __('Opnieuw instellen') }}
                         </button>
                     </div>

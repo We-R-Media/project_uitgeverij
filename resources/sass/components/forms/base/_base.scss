@@ -4,6 +4,10 @@
 .form__wrapper {
     @include mixin.flex($dynamic-direction-breakpoint: 'tablet');
     gap: 3rem;
+
+    &:not(:last-child) {
+        margin-bottom: 5rem;
+    }
 }
 .form__section {
     @include mixin.flex($flex-direction: column);
@@ -12,6 +16,10 @@
     margin: 0 0;
     flex: 1;
     gap: 3rem;
+
+    &.section--big {
+        flex: 2;
+    }
 }
 .section__block {
     @include mixin.flex($flex-direction: column);
@@ -27,10 +35,22 @@
 .form__actions {
     @include mixin.flex;
     position: relative;
+    background-color: color.$tertiary;
     width: 100%;
-    padding: 1rem 0;
     z-index: 9;
     margin-top: 3rem;
+
+    .buttons {
+        @include mixin.flex;
+        gap: 1rem;
+    }
+
+    @include mixin.breakpoint('min', 'laptop') {
+        position: fixed;
+        left: 5.2rem;
+        bottom: 0;
+        padding: 1rem 3rem;
+    }
 }
 
 .form__row {
@@ -47,7 +67,10 @@
         flex: 1;
     }
 }
-
+.field--multiple {
+    @include mixin.flex;
+    gap: 1rem;
+}
 .field__row {
     @include mixin.flex;
     gap: 2rem;
@@ -72,18 +95,18 @@
     color: color.$error;
 }
 
-// .form__row--centered {
-//     @include mixin.flex($flex-direction: column);
-//     gap: 1rem;
-//     justify-content: center;
-// }
-// .form__row--spacer-top {
-//     margin-top: 2rem;
-// }
+.message__box {
+    text-align: center;
+    padding: 2rem;
+    background-color: color.$gray-light;
+    border-radius: .4rem;
+    width: 100%;
+    font-size: clamp(1.4rem, 4vw, 1.6rem);
+}
 
 .form__instruction {
     font-size: clamp(1rem, 4vw, 1.2rem);
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .search__bar {
@@ -128,196 +151,3 @@
     font-size: 20px !important;
     font-weight: 300 !important;
 }
-
-// .editions-base {
-//     width: 100%;
-//     display: flex;
-//     flex: 1;
-//     flex-direction: row;
-
-//     .edition-form {
-//       display: flex;
-//       flex-wrap: wrap;
-//       justify-content: space-between;
-//       align-items: flex-start;
-//       height: 50vh;
-//       width: 50%;
-
-//       .edition-fields {
-//         flex: 1;
-//         display: flex;
-//         flex-direction: column;
-//         flex-wrap: wrap;
-//         gap: 20px;
-//         border: unset;
-
-//         h3 {
-//             font-size: 18px;
-//             font-weight: 500;
-//           }
-
-//         .edition--button {
-//             display: inline-flex;
-//             align-items: center;
-//             justify-content: center;
-//             font-size: clamp(1.2rem, 3vw, 1.4rem);
-//             letter-spacing: 1px;
-//             height: 4rem;
-//             max-width: 3rem;
-//             padding: 0 2rem;
-//             transition: background-color 0.25s linear;
-//             border-radius: 4rem;
-//             min-width: 15rem;
-//             border: 2px solid transparent;
-//             cursor: pointer;
-//         }
-
-//         .edition-field{
-//           flex: 1;
-//           flex-direction: column;
-//           max-width: none; // Remove the max-width property
-//           width: 100%; // Occupy the entire available width
-
-//           @include mixin.breakpoint("min", "tablet") {
-//             min-width: 100%;
-//           }
-
-//           input:not([type='checkbox']):not([type='radio']),
-//           select {
-//             border-bottom: 1px solid color.$primary;
-//             font-size: clamp(1.2rem, 2vw, 1.4rem);
-//             font-weight: 300;
-//             appearance: none;
-//             min-height: 3rem;
-//             transition: background-color .2s linear;
-//             padding: 0 1rem;
-//             width: 100%;
-//             box-sizing: border-box;
-//             text-align: left;
-//             border-bottom: 1px solid color.$primary;
-//           }
-
-//           label {
-//             font-size: clamp(1.2rem, 2vw, 1.4rem);
-//             color: color.$black;
-//             font-weight: 300;
-//             text-justify: distribute-all-lines;
-//             margin-right: 30px;
-//             width: 180px;
-//           }
-
-//           input,
-//           select {
-//             border: unset;
-//             text-align: left;
-//             border-bottom: 1px solid color.$primary;
-//             min-width: 400px;
-//           }
-//         }
-//       }
-//     }
-//   }
-
-// .form__wrapper {
-//     display: flex;
-//     flex-wrap: wrap;
-//     margin: 0 -1.5rem;
-//     gap: 5rem;
-//     width: 100%;
-
-//     fieldset, .edition-fields {
-//         flex: 0 0 calc(50% - 5rem);
-//         max-width: calc(50% - 5rem);
-//         padding: 0 1.5rem;
-
-//         .form__row {
-//             display: flex;
-//             flex-direction: unset;
-//             gap: unset;
-//             margin: 0px -1.5rem;
-
-//             .field{
-//                 flex: 0 0 50%;
-//                 max-width: 50%;
-//                 padding: 0px 1.5rem;
-//             }
-//         }
-//         .dropdown {
-//             position: relative;
-
-//             select {
-//                 width: 100%;
-//                 border: 0px;
-//                 padding-right: 2.5rem;
-//             }
-//         }
-//         &.notes {
-//             border: 0px;
-
-//             textarea {
-//                 border: 0;
-//                 margin-top: 2rem;
-//                 background: color.$gray-lighter;
-//                 padding: 1rem;
-//             }
-//         }
-//         &.full-width {
-//             flex: 0 0 calc(100% - 5rem);
-//             max-width: calc(100% - 5rem);
-//         }
-//         @include mixin.breakpoint("min", "tablet") {
-//             .,
-//             .form__row--alt {
-//                 display: flex;
-//                 flex-direction: row;
-//                 flex-wrap: wrap;
-
-//                 > label {
-//                     flex: 0 0 25%;
-//                     font-weight: 400;
-//                     font-size: 15px;
-//                     color: #000;
-//                 }
-//                 > input,
-//                 > .field__row,
-//                 > .dropdown {
-//                     flex: 0 0 75%;
-//                     padding: 0 !important;
-//                     margin: 0 !important;
-//                 }
-//             }
-//             &.notes {
-//                 label {
-//                     font-weight: 400;
-//                     font-size: 15px;
-//                     color: color.$black;
-//                 }
-//             }
-//         }
-//         * {
-//             box-sizing: border-box;
-//         }
-//         .current__logo {
-//             max-width: 200px;
-//             height: auto;
-//             margin-bottom: 50px;
-//             border: 1px solid #000;
-//             padding: 25px;
-//             img {
-//                 width: 100%;
-//                 height: auto;
-//             }
-//         }
-//
-//     }
-//     @include mixin.breakpoint("max", "laptop") {
-//         gap: 0;
-
-//         fieldset,
-//         fieldset.full-width {
-//             flex: 0 0 100%;
-//             max-width: 100%;
-//         }
-//     }
-// }
-

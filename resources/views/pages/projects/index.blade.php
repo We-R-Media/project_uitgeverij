@@ -22,9 +22,13 @@
                 <div class="item--cell">
                     {{ __('Editie') }}
                 </div>
+                <div class="item--action">
+                    {{-- Spacer for actions --}}
+                </div>
             </div>
             @forelse ( $projects as $project )
                 <div class="items__row row--data">
+                    <label class="cell__label">{{__('Projectcode')}}</label>
                     <div class="item--cell">
                         <a href="{{ route('projects.edit', $project->id) }}" class="">
                             {{ $project->name }}
@@ -59,6 +63,7 @@
                 </div>
             @endforelse
         </div>
+
         {{ $projects->links() }}
     </div>
 @endsection
