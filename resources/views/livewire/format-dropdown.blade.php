@@ -1,4 +1,5 @@
 <div class="form__section">
+
     <div class="field">
         <label class="field__label" for="project">{{__('Project')}}</label>
         <div class="dropdown">
@@ -11,20 +12,20 @@
     </div>
 
     @if ($currentProject && !$currentProject->formats->isEmpty())
-    <div class="field">
-        <label class="field__label" for="format">{{__('Formaat')}}</label>
-        <div class="dropdown">
-            <select wire:model.change="selectedFormat" name="format_id">
-                @if ($currentProject->formats->isEmpty())
-                    <option value="nvt" disabled selected>{{__('Niet beschikbaar...')}}</option>
-                @else
-                    @foreach ($currentProject->formats as $format)
-                        <option value="{{ $format->id }}">{{ $format->size }}</option>
-                    @endforeach
-                @endif
-            </select>
+        <div class="field">
+            <label class="field__label" for="format">{{__('Formaat')}}</label>
+            <div class="dropdown">
+                <select wire:model.change="selectedFormat" name="format_id">
+                    @if ($currentProject->formats->isEmpty())
+                        <option value="nvt" disabled selected>{{__('Niet beschikbaar...')}}</option>
+                    @else
+                        @foreach ($currentProject->formats as $format)
+                            <option value="{{ $format->id }}">{{ $format->size }}</option>
+                        @endforeach
+                    @endif
+                </select>
+            </div>
         </div>
-    </div>
     @endif
 
     <div class="field">

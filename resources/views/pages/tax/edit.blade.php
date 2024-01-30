@@ -10,6 +10,7 @@
             <div class="form__wrapper">
                 <fieldset class="form__section">
                     <div class="section__block">
+
                         <div class="field">
                             <label class="field__label" for="country">{{__('Land')}}</label>
                             <input type="text" name="country" value="{{$tax->country}}">
@@ -19,6 +20,7 @@
                                 </span>
                             @enderror
                         </div>
+
                         <div class="field">
                             <label class="field__label" for="zero">{{__('Btw 0')}}</label>
                             <input type="text" name="zero" value="{{$tax->zero}}">
@@ -28,6 +30,7 @@
                                 </span>
                             @enderror
                         </div>
+
                         <div class="field">
                             <label class="field__label" for="low">{{__('Btw laag')}}</label>
                             <input type="text" name="low" value="{{$tax->low}}">
@@ -37,6 +40,7 @@
                                 </span>
                             @enderror
                         </div>
+
                         <div class="field">
                             <label class="field__label" for="high">{{__('Btw hoog')}}</label>
                             <input type="text" name="high" value="{{$tax->high}}">
@@ -46,14 +50,15 @@
                                 </span>
                             @enderror
                         </div>
+
                     </div>
                 </fieldset>
+                <fieldset class="form__section">
+                    {{-- --}}
+                </fieldset>
             </div>
-            <div class="form__actions">
-                <div class="buttons">
-                    <button type="submit" class="button button--big button--primary">{{__('Opslaan')}}</button>
-                </div>
-            </div>
+
+            <x-form.submit />
         </form>
     </div>
 @endsection

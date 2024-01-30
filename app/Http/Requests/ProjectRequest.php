@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\AppHelpers\MoneyHelper;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ProjectRequest extends FormRequest
@@ -22,29 +23,23 @@ class ProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'project_code' => 'required|string',
+            'name' => 'required|string',
             'release_name' => 'required|string',
             'edition_name' => 'required|string',
-            'print_edition' => 'required',
-            'pages_redaction' => 'required',
-            'pages_adverts' => 'required',
-            'total_pages' => 'required',
-            'paper_type_cover' => 'required',
-            'paper_type_interior' => 'required',
-            'color_cover' => 'required',
-            'color_interior' => 'required',
-            'ledger' => 'required|integer',
-            'journal' => 'required|integer',
-            'department' => 'required',
-            'year' => 'required',
-            'revenue_goals' => 'required|integer',
-            'comments' => 'nullable',
+            'print_edition' => 'required|string',
+            'pages_total' => 'required',
             'paper_format' => 'required',
+            'cost_place' => 'required',
             'layout' => 'required',
-            'designer' => 'required',
-            'client' => 'required',
-            'printer' => 'required',
-            'distribution' => 'required',
+            'revenue_goals' => [
+                function ($attribute, $value, $fail) {
+                    $numericValue = MoneyHelper::convertToNumeric($value);
+
+                    if (!is_numeric($numericValue)) {
+                        $fail('The '.$attribute.' must be a valid numeric value.');
+                    }
+                },
+            ]
         ];
     }
 }

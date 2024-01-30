@@ -37,7 +37,7 @@ return new class extends Migration
             $table->string('color_interior')->nullable();
             $table->integer('ledger')->nullable();
             $table->integer('journal')->nullable();
-            $table->integer('department');
+            $table->integer('cost_place');
             $table->string('year')->nullable();
             $table->double('revenue_goals');
             $table->longText('comments')->nullable();

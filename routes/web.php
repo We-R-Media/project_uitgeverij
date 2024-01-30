@@ -160,11 +160,11 @@ Route::group(['middleware' => ['auth']], function () {
         ->group(function () {
             Route::get('/', 'index')->name('index');
             Route::get('/nieuw', 'create')->name('create');
+            Route::get('/{reminder_id}/bewerken', 'edit')->name('edit');
             Route::get('/{reminder_id}/verwijderen', 'destroy')->name('destroy');
 
-            Route::get('/{reminder_id}/bewerken', 'edit')->name('edit');
-            Route::post('/{reminder_id}/bijwerken', 'update')->name('update');
             Route::post('/opslaan', 'store')->name('store');
+            Route::post('/{reminder_id}/bijwerken', 'update')->name('update');
         });
 
     Route::name('users.')
@@ -172,11 +172,10 @@ Route::group(['middleware' => ['auth']], function () {
         ->controller(UserController::class)
         ->group(function () {
             Route::get('/', 'index')->name('index');
-            Route::get('/rol/{role?}', 'role')->name('role');
-
             Route::get('/nieuw', 'create')->name('create');
             Route::get('/{user_id}/bewerken', 'edit')->name('edit');
             Route::get('/{user_id}/verwijderen', 'destroy')->name('destroy');
+            Route::get('/rol/{role?}', 'role')->name('role');
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{user_id}/bijwerken', 'update')->name('update');
@@ -192,8 +191,7 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/{layout_id}/verwijderen', 'destroy')->name('destroy');
 
             Route::post('/store', 'store')->name('store');
-            Route::post('/{layout_id}/update', 'update')->name('update');
-            Route::post('/upload', 'upload')->name('upload');
+            Route::post('/{layout_id}/bijwerken', 'update')->name('update');
         });
 
     Route::name('formats.')

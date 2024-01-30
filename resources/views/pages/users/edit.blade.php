@@ -10,45 +10,11 @@
             <div class="form__wrapper">
                 <fieldset class="form__section">
                     <div class="section__block">
-                        <div class="field">
-                            <label class="field__label" for="initial">{{__('Initiaal')}}</label>
-                            <input value="{{ $user->initial }}" type="text" name="initial">
+                        <x-form.input type="text" name="initial" label="Initiaal" :value="$user->initial" />
+                        <x-form.input type="text" name="first_name" label="Voornaam" :value="$user->first_name" />
+                        <x-form.input type="text" name="preposition" label="Tussenvoegsel" :value="$user->preposition" />
+                        <x-form.input type="text" name="last_name" label="Achternaam" :value="$user->last_name" />
 
-                            @error('initial')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="first_name">{{__('Voornaam')}}</label>
-                            <input value="{{ $user->first_name }}" type="text" name="first_name">
-
-                            @error('first_name')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="preposition">{{__('Tussenvoegsel')}}</label>
-                            <input value="{{ $user->preposition }}" type="text" name="preposition">
-
-                            @error('preposition')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="last_name">{{__('Achternaam')}}</label>
-                            <input value="{{ $user->last_name }}" type="text" name="last_name">
-                            @error('last_name')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                            @enderror
-                        </div>
                         <div class="field">
                             <label class="field__label" for="gender">{{__('Gender')}}</label>
                             <div class="dropdown">
@@ -69,43 +35,13 @@
                 </fieldset>
                 <fieldset class="form__section">
                     <div class="section__block">
-                        <div class="field">
-                            <label class="field__label" for="email">{{__('E-mailadres')}}</label>
-                            <input value="{{ $user->email }}" type="email" name="email">
-                            @error('email')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="password">{{__('Wachtwoord')}}</label>
-                            <input  type="password" name="password" value="">
-                            @error('password')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="id">{{__('ID')}}</label>
-                            <input value="{{ $user->id }}" type="text" name="id" readonly>
-
-                            @error('id')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
+                        <x-form.input type="email" name="email" label="E-mailadres" :value="$user->email" />
+                        <x-form.input type="text" name="id" label="ID" :value="$user->id" :extraAttributes="'readonly'" />
                     </div>
-
                 </fieldset>
             </div>
-            <div class="form__actions">
-                <div class="buttons">
-                    <button type="submit" class="button button--big button--primary">{{ __('Opslaan') }}</button>
-                </div>
-            </div>
+
+            <x-form.submit />
         </form>
     </div>
 @endsection

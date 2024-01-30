@@ -19,28 +19,18 @@
                     <x-form.input type="text" name="city" label="Woonplaats" />
                     <x-form.input type="text" name="po_box" label="Postbus" />
                     <x-form.input type="text" name="province" label="Provincie"/>
-                    <x-form.input type="text" name="credit" label="Kredietlimiet" />
+                    <x-form.input type="number" name="credit" label="Kredietlimiet" />
                 </div>
             </fieldset>
             <fieldset class="form__section">
                 <div class="section__block">
                     <h3>{{__('Contactgegevens')}}</h3>
 
-                    <div class="field">
-                        <label class="field__label" for="salutation">{{__('Aanhef')}}</label>
-                        <div class="dropdown">
-                            <select name="salutation">
-                                <option class="list__option" value="Dhr.">{{__('Dhr.')}}</option>
-                                <option class="list__option" value="Mw.">{{__('Mw.')}}</option>
-                            </select>
-                        </div>
-                        @error('salutation')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
+                    <x-form.select
+                        name="salutation"
+                        label="Aanhef"
+                        :options="['Dhr.' => __('Dhr.'), 'Mw.' => __('Mw.')]"
+                    />
                     <x-form.input type="text" name="initial" label="Voorletter" />
                     <x-form.input type="text" name="first_name" label="Voornaam" />
                     <x-form.input type="text" name="last_name" label="Achternaam" />
@@ -50,11 +40,7 @@
             </fieldset>
         </div>
 
-        <div class="form__actions">
-            <div class="buttons">
-                <button type="submit" class="button button--big button--primary">{{ __('Opslaan') }}</button>
-            </div>
-        </div>
+        <x-form.submit />
     </form>
 </div>
 @endsection

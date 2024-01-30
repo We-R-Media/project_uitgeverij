@@ -107,13 +107,17 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(ProjectRequest $request)
     {
+        dd($request);
+
         try {
             DB::transaction(function () use ($request) {
+                $validateData = $request->validated();
+
                 $publisherName = $request->input('release_name');
 
-                $publisher = Publisher::where('name', $publisherName)->firstOrCreate([
+                Publisher::where('name', $publisherName)->firstOrCreate([
                     'name' => $publisherName,
                 ]);
 
@@ -121,38 +125,18 @@ class ProjectController extends Controller
                 $seller = User::find($request->input('seller'));
                 $tax = Tax::find($request->input('taxes'));
 
-                $project = Project::create([
-                    'name' => $request->input('name'),
-                    'layout_id' => $layout->id,
-                    'tax_id' => $tax->id,
-                    'user_id' => $seller->id,
-                    'publisher_id' => $publisher->id,
-                    'designer' => $request->input('designer'),
-                    'printer' => $request->input('printer'),
-                    'client' => $request->input('client'),
-                    'distribution' => $request->input('distribution'),
-                    'release_name' => $publisherName,
-                    'edition_name' => $request->input('edition_name'),
-                    'print_edition' => $request->input('print_edition'),
-                    'paper_format' => $request->input('paper_format'),
-                    'pages_redaction' => $request->input('pages_redaction'),
-                    'pages_adverts' => $request->input('pages_adverts'),
-                    'pages_total' => $request->input('pages_total'),
-                    'paper_type_cover' => $request->input('paper_type_cover'),
-                    'paper_type_interior' => $request->input('paper_type_interior'),
-                    'color_cover' => $request->input('color_cover'),
-                    'color_interior' => $request->input('color_interior'),
-                    'ledger' => $request->input('ledger'),
-                    'journal' => $request->input('journal'),
-                    'department' => $request->input('department'),
-                    'year' => $request->input('year'),
-                    'revenue_goals' => MoneyHelper::convertToNumeric($request->input('revenue_goals')),
-                    'comments' => $request->input('comments'),
-                ]);
+                $project = Project::create($validateData);
 
+                $layout = Layout::find($request->input('layout'));
                 $project->layout()->associate($layout);
+
+                $tax = Tax::find($request->input('taxes'));
                 $project->tax()->associate($tax);
+
+                $seller = User::find($request->input('seller'));
                 $project->user()->associate($seller);
+
+                dd($project);
 
                 $project->save();
             });
@@ -261,7 +245,7 @@ class ProjectController extends Controller
                     'color_interior' => $request->input('color_interior'),
                     'ledger' => $request->input('ledger'),
                     'journal' => $request->input('journal'),
-                    'department' => $request->input('department'),
+                    'cost_place' => $request->input('cost_place'),
                     // 'year' => $request->input('year'),
                     'revenue_goals' => MoneyHelper::convertToNumeric($request->input('revenue_goals')),
                     'comments' => $request->input('comments'),

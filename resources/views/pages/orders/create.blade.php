@@ -25,16 +25,11 @@
                 </fieldset>
                 <fieldset class="form__section">
                     <div class="section__block">
-                        <div class="field">
-                            <label class="field__label" for="release_name">{{__('Uitgave')}}</label>
-                            <div class="dropdown">
-                                <select name="publisher">
-                                    @foreach ($publishers as $publisher)
-                                        <option value="{{$publisher->id}}">{{$publisher->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                        <x-form.select
+                            name="release_name"
+                            label="Uitgave"
+                            :options="$publishers->pluck('name', 'id')"
+                        />
 
                         <div class="field">
                             <label class="field__label" for="contact">{{__('Contactpersoon')}}</label>
@@ -62,12 +57,7 @@
                 </fieldset>
             </div>
 
-            <div class="form__actions">
-                <div class="buttons">
-                    <button type="submit" class="button button--big button--primary">{{__('Opslaan')}}</button>
-                </div>
-            </div>
-
+            <x-form.submit />
         </form>
     </div>
 @endsection

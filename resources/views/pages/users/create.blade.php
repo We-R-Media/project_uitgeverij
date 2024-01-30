@@ -20,42 +20,10 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="field">
-                            <label class="field__label" for="initial">{{__('Initiaal')}}</label>
-                            <input type="text" name="initial">
-                            @error('initial')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="first_name">{{__('Voornaam')}}</label>
-                            <input type="text" name="first_name">
-                            @error('first_name')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="preposition">{{__('Tussenvoegsel')}}</label>
-                            <input type="text" name="preposition">
-                            @error('preposition')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="last_name">{{__('Achternaam')}}</label>
-                            <input type="text" name="last_name">
-                            @error('last_name')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
+                        <x-form.input type="text" name="initial" label="Initiaal" />
+                        <x-form.input type="text" name="first_name" label="Voornaam" />
+                        <x-form.input type="text" name="preposition" label="Tussenvoegsel" />
+                        <x-form.input type="text" name="last_name" label="Achternaam" />
                     </div>
                 </fieldset>
                 <fieldset class="form__section">
@@ -70,32 +38,12 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="field">
-                            <label class="field__label" for="email">{{__('E-mailadres')}}</label>
-                            <input type="email" name="email">
-                            @error('email')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="password">{{__('Wachtwoord')}}</label>
-                            <input type="password" name="password">
-                            @error('password')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
+                        <x-form.input type="email" name="email" label="E-mailadres" />
+                        <x-form.input type="text" name="password" label="Wachtwoord" />
                     </div>
                 </fieldset>
             </div>
-            <div class="form__actions">
-                <div class="buttons">
-                    <button type="submit" class="button button--big button--primary">{{ __('Opslaan') }}</button>
-                </div>
-            </div>
+            <x-form.submit />
         </form>
     </div>
 @endsection

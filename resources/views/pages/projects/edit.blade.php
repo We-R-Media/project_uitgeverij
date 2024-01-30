@@ -120,9 +120,9 @@
                             @enderror
                         </div>
                         <div class="field">
-                            <label class="field__label" for="department">{{ __('Kostenplaats') }}</label>
-                            <input type="text" name="department" value="{{$project->department}}" @can('isSeller') readonly @endcan>
-                            @error('department')
+                            <label class="field__label" for="cost_place">{{ __('Kostenplaats') }}</label>
+                            <input type="text" name="cost_place" value="{{$project->cost_place}}" @can('isSeller') readonly @endcan>
+                            @error('cost_place')
                                 <span class="form__message" role="alert">
                                     <small>{{ $message }}</small>
                                 </span>
@@ -156,137 +156,35 @@
                             <label class="field__label">{{__("Aantal pagina's")}}</label>
 
                             <div class="field__row">
-                                <div class="field field--column">
-                                    <label class="field__label" for="pages_redaction">{{ __('Redactie') }}</label>
-                                    <input id="pages_redaction" type="number" name="pages_redaction" value="{{ old('pages_redaction', $project->pages_redaction) }}" @can('isSeller') readonly @endcan>
-                                    @error('pages_redaction')
-                                        <span class="form__message" role="alert">
-                                            <small>{{ $message }}</small>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="field field--column">
-                                    <label class="field__label" for="pages_adverts">{{ __('Advertenties') }}</label>
-                                    <input id="pages_adverts" type="number" name="pages_adverts" value="{{ old('pages_adverts', $project->pages_adverts) }}" @can('isSeller') readonly @endcan>
-                                    @error('pages_adverts')
-                                        <span class="form__message" role="alert">
-                                            <small>{{ $message }}</small>
-                                        </span>
-                                    @enderror
-                                </div>
+                                <x-form.input type="text" name="pages_redaction" label="Redactie" :value="$project->pages_redaction" column="true" /> {{-- @can('isSeller') readonly @endcan --}}
+                                <x-form.input type="text" name="pages_adverts" label="Advertenties" :value="$project->pages_adverts" column="true" /> {{-- @can('isSeller') readonly @endcan --}}
                             </div>
+                            {{--  --}}
                         </div>
                         <div class="field">
                             <label class="field__label">Cover</label>
 
                             <div class="field__row">
-                                <div class="field field--column">
-                                    <label class="field__label" for="paper_type_cover">{{ __('Papier cover') }}</label>
-                                    <input type="text" name="paper_type_cover" value="{{ old('paper_type_cover', $project->paper_type_cover) }}" @can('isSeller') readonly @endcan>
-                                    @error('paper_type_cover')
-                                        <span class="form__message" role="alert">
-                                            <small>{{ $message }}</small>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="field field--column">
-                                    <label class="field__label" for="color_cover">{{ __('Kleurgebruik cover') }}</label>
-                                    <input type="text" name="color_cover" value="{{ old('color_cover', $project->color_cover) }}" @can('isSeller') readonly @endcan>
-                                    @error('color_cover')
-                                        <span class="form__message" role="alert">
-                                            <small>{{ $message }}</small>
-                                        </span>
-                                    @enderror
-                                </div>
+                                <x-form.input type="text" name="paper_type_cover" label="Papier cover" :value="$project->paper_type_cover" column="true" /> {{-- @can('isSeller') readonly @endcan --}}
+                                <x-form.input type="text" name="color_cover" label="Kleurgebruik cover" :value="$project->color_cover" column="true" /> {{-- @can('isSeller') readonly @endcan --}}
                             </div>
                         </div>
                         <div class="field">
                             <label class="field__label">{{__('Binnenwerk')}}</label>
 
                             <div class="field__row">
-                                <div class="field field--column">
-                                    <label class="field__label" for="paper_type_interior">{{ __('Papier binnenkant') }}</label>
-                                    <input type="text" name="paper_type_interior" value="{{ old('paper_type_interior', $project->paper_type_interior) }}">
-                                    @error('paper_type_interior')
-                                        <span class="form__message" role="alert">
-                                            <small>{{ $message }}</small>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="field field--column">
-                                    <label class="field__label" for="color_interior">{{ __('Kleurgebruik binnenkant') }}</label>
-                                    <input type="text" name="color_interior" value="{{ old('paper_type_interior', $project->color_interior) }}">
-                                    @error('color_interior')
-                                        <span class="form__message" role="alert">
-                                            <small>{{ $message }}</small>
-                                        </span>
-                                    @enderror
-                                </div>
+                                <x-form.input type="text" name="paper_type_interior" label="Papier binnenkant" :value="$project->paper_type_interior" column="true" /> {{-- @can('isSeller') readonly @endcan --}}
+                                <x-form.input type="text" name="color_interior" label="Kleurgebruik binnenkant" :value="$project->color_interior" column="true" />
                             </div>
                         </div>
-                        {{-- <div class="field">
-                            <label>{{__('Binnenwerk')}}</label>
-                            <div class="field__row">
-                                <div class="field field--column">
-                                    <label class="field__label" for="paper_type_interior">{{ __('Papier binnenkant') }}</label>
-                                    <input type="text" name="paper_type_interior" value="{{$project->paper_type_interior}}" @can('isSeller') readonly @endcan>
-                                    @error('paper_type_interior')
-                                        <span class="form__message" role="alert">
-                                            <small>{{ $message }}</small>
-                                        </span>
-                                    @enderror
-                                </div>
-                                <div class="field field--column">
-                                    <label class="field__label" for="color_interior">{{ __('Kleurgebruik binnenkant') }}</label>
-                                    <input type="text" name="color_interior" value="{{$project->color_interior}}" @can('isSeller') readonly @endcan>
-                                    @error('color_interior')
-                                        <span class="form__message" role="alert">
-                                            <small>{{ $message }}</small>
-                                        </span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
                     <div class="section__block">
                         <h3>{{ __('Vormgeving / drukker') }}</h3>
 
-                        <div class="field">
-                            <label class="field__label" for="designer">{{ __('Vormgever') }}</label>
-                            <input type="text" name="designer" value="{{$project->designer}}" @can('isSeller') readonly @endcan>
-                            @error('designer')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="printer">{{ __('Drukker') }}</label>
-                            <input type="text" name="printer" value="{{$project->printer}}" @can('isSeller') readonly @endcan>
-                            @error('printer')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="client">{{ __('Opdrachtgever') }}</label>
-                            <input type="text" name="client" value="{{$project->client}}" @can('isSeller') readonly @endcan>
-                            @error('client')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-                        <div class="field">
-                            <label class="field__label" for="distribution">{{ __('Verspreider') }}</label>
-                            <input type="text" name="distribution" value="{{$project->distribution}}" @can('isSeller') readonly @endcan>
-                            @error('distribution')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
+                        <x-form.input type="text" name="designer" label="Vormgever" :value="$project->designer" /> {{-- @can('isSeller') readonly @endcan --}}
+                        <x-form.input type="text" name="printer" label="Drukker" :value="$project->printer" /> {{-- @can('isSeller') readonly @endcan --}}
+                        <x-form.input type="text" name="client" label="Opdrachtgever" :value="$project->client" /> {{-- @can('isSeller') readonly @endcan --}}
+                        <x-form.input type="text" name="distribution" label="Verspreider" :value="$project->distribution" /> {{-- @can('isSeller') readonly @endcan --}}
                     </div>
                 </fieldset>
                 <fieldset class="form__section">
@@ -317,15 +215,9 @@
                 </fieldset>
             </div>
 
-            <div class="form__actions">
-                <div class="buttons">
-                    @cannot('isSeller')
-                        <button type="submit" class="button button--big button--primary">
-                            {{ __('Opslaan') }}
-                        </button>
-                    @endcannot
-                </div>
-            </div>
+            @cannot('isSeller')
+                <x-form.submit />
+            @endcannot
         </form>
     </div>
 

@@ -22,9 +22,9 @@ class LayoutRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'layout_name' => 'required|unique:layouts|string|max:25',
-            'city_name' => 'required|unique:layouts|string|max:25',
-            'logo' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'layout_name' => 'required|string|max:25',
+            'city_name' => 'required|string|max:25',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ];
     }
 }

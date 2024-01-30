@@ -19,14 +19,12 @@
                     <x-form.input type="text" name="postal_code" label="Postcode" :value="$order->advertiser->postal_code" />
                     <x-form.input type="text" name="city" label="Woonplaats" :value="$order->advertiser->city" />
                 </fieldset>
+                <fieldset class="form__section">
+                    {{--  --}}
+                </fieldset>
             </div>
 
-
-            <div class="form__actions">
-                <div class="buttons">
-                    <button type="submit" class="button button--big button--primary">Opslaan</button>
-                </div>
-            </div>
+            <x-form.submit />
         </form>
     </div>
 

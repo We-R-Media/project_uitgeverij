@@ -21,20 +21,11 @@
                     <x-form.input type="text" name="advertiser_id" label="Klantnummer" :value="$advertiser->id" :extraAttributes="'readonly'" />
                     <x-form.input type="text" name="name" label="Bedrijfsnaam" :value="$advertiser->name" />
 
-                    <div class="field">
-                        <label class="field__label" for="salutation">{{__('Aanhef')}}</label>
-                        <div class="dropdown">
-                            <select name="salutation">
-                                <option class="list__option" value="Dhr.">{{__('Dhr.')}}</option>
-                                <option class="list__option" value="Mw.">{{__('Mw.')}}</option>
-                            </select>
-                        </div>
-                        @error('salutation')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
+                    <x-form.select
+                        name="salutation"
+                        label="Aanhef"
+                        :options="['Dhr.' => __('Dhr.'), 'Mw.' => __('Mw.')]"
+                    />
 
                     <x-form.input type="text" name="initial" label="Voorletter" :value="$advertiser->initial" />
                     <x-form.input type="text" name="first_name" label="Voornaam" :value="$advertiser->first_name" />

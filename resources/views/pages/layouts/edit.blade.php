@@ -5,9 +5,10 @@
 @section('content')
 
 <div class="page__wrapper">
-    <form action="{{ route('layouts.update', $layout->id) }}" method="post">
+    <form action="{{ route('layouts.update', $layout->id ) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('post')
+
         <div class="form__wrapper">
             <fieldset class="form__section">
                 <h3>{{ __('Algemeen') }}</h3>
@@ -18,17 +19,16 @@
             <fieldset class="form__section">
                 <h3>{{ __('Uiterlijk') }}</h3>
 
-                <div class="field">
+                <div class="field field--column">
                     <label class="field__label" for="logo">{{__('Logo')}}</label>
-                    <input type="hidden" name="logo" id="logo" value="{{$layout->logo}}">
+                    <input type="file" name="image" id="image">
 
-                    @if(!empty($layout->logo))
+                    @if(!empty($layout->image))
                         <div class="current__logo">
-                            <img src="{{asset('/images/uploads/' . $layout->logo)}}">
+                            <img class="image--cover" src="{{asset('storage/'.$layout->image)}}">
                         </div>
                     @endif
                 </div>
-                <div class="dropzone" id="UploadImageDrop"></div>
             </fieldset>
         </div>
         <div class="form__actions">

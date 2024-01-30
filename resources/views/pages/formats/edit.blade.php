@@ -14,12 +14,12 @@
                     <x-form.input type="text" name="ratio" label="Verhouding" :value="$format->ratio" />
                     <x-form.input type="number" name="price" label="Prijs" :value="money($format->price, 'EUR') " />
                 </fieldset>
+                <fieldset class="form__section">
+                    {{--  --}}
+                </fieldset>
             </div>
-            <div class="form__actions">
-                <div class="buttons">
-                    <button type="submit" class="button button--big button--primary">{{__('Opslaan')}}</button>
-                </div>
-            </div>
+
+            <x-form.submit />
         </form>
     </div>
 @endsection

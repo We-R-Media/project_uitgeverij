@@ -116,11 +116,14 @@
                                         </select>
                                     </div>
                                 </div> --}}
-
-                                <button type="submit" class="button button__solid--primary formats__submit">{{__('Toevoegen')}}</button>
                             </div>
                         </fieldset>
+                        <fieldset class="form__section">
+                            {{--  --}}
+                        </fieldset>
                     </div>
+
+                    <x-form.submit />
                 </form>
             </div>
         </div>

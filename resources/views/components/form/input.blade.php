@@ -4,9 +4,10 @@
     'label',
     'value' => null,
     'extraAttributes' => '',
+    'column' => false
 ])
 
-<div class="field">
+<div class="field {{ $column ? 'field--column' : '' }}">
     <x-form.label :text="$label" />
     <input
         type="{{ $type }}"

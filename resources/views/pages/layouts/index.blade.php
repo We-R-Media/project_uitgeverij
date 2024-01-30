@@ -37,8 +37,8 @@
                     </div>
                     <div class="item--cell">
                         <label class="cell__label">{{__('Logo')}}</label>
-                        @if (!empty($layout->logo))
-                            <div class="logo__preview"><a href="{{asset($layout->logo)}}" target="_blank">{{__('Bekijk afbeelding')}}</a></div>
+                        @if (!empty($layout->image))
+                            <div class="logo__preview"><a href="{{asset('storage/'.$layout->image)}}" target="_blank">{{__('Bekijk afbeelding')}}</a></div>
                         @endif
                     </div>
                     <div class="item--actions">

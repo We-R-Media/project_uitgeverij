@@ -54,7 +54,7 @@ class Project extends BaseModel
         'color_interior',
         'ledger',
         'journal',
-        'department',
+        'cost_place',
         'year',
         'revenue_goals',
         'deactivated_at',

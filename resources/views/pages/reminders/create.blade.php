@@ -75,11 +75,8 @@
                     </div>
                 </fieldset>
             </div>
-            <div class="form__actions">
-                <div class="buttons">
-                    <button type="submit" class="button button--big button--primary">Opslaan</button>
-                </div>
-            </div>
+
+            <x-form.submit />
         </form>
     </div>
 @endsection

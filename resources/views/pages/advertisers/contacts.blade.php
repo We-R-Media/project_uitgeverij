@@ -12,21 +12,11 @@
                     <div class="section__block">
                         <h3>{{__('Contactpersoon toevoegen')}}</h3>
 
-                        <div class="field">
-                            <label class="field__label" for="salutation">{{__('Aanhef')}}</label>
-                            <div class="dropdown">
-                                <select name="salutation">
-                                    <option class="list__option" value="Dhr.">{{__('Dhr.')}}</option>
-                                    <option class="list__option" value="Mw.">{{__('Mw.')}}</option>
-                                </select>
-                            </div>
-                            @error('salutation')
-                                <span class="form__message" role="alert">
-                                    <small>{{ $message }}</small>
-                                </span>
-                            @enderror
-                        </div>
-
+                        <x-form.select
+                            name="salutation"
+                            label="Aanhef"
+                            :options="['Dhr.' => __('Dhr.'), 'Mw.' => __('Mw.')]"
+                        />
                         <x-form.input type="text" name="initial" label="Voorletter" />
                         <x-form.input type="text" name="preposition" label="Tussenvoegsel" />
                         <x-form.input type="text" name="first_name" label="Voornaam" />

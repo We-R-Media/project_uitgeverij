@@ -16,7 +16,7 @@ return new class extends Migration
              $table->string('title')->nullable();
             $table->string('layout_name')->unique();
             $table->string('city_name');
-            $table->string('logo')->nullable();
+            $table->string('image')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
