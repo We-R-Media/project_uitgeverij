@@ -8,6 +8,7 @@
         <div class="buttons">
             @if (!$advertiser->deactivated_at && !$advertiser->blacklisted_at)
                     <a href="{{ route('orders.create', $advertiser->id) }}" class="button button--action">{{ __('+Nieuwe order') }}</a>
+
             @endif
         </div>
     </div>
@@ -45,8 +46,12 @@
                     <label for="salutation">{{__('Aanhef')}}</label>
                     <div class="dropdown">
                        <select name="salutation" id="" class="select2">
-                          <option value="Dhr.">{{__('Dhr.')}}</option>
-                          <option value="Mw.">{{__('Mw.')}}</option>
+                          <option value="Dhr." {{ $advertiser->salutation == 'Dhr.' ? 'selected' : '' }}>
+                            {{__('Dhr.')}}
+                        </option>
+                        <option value="Mw." {{ $advertiser->salutation == 'Mw.' ? 'selected' : '' }}>
+                            {{__('Mw.')}}
+                        </option>
                        </select>
                     </div>
                     @error('salutation')

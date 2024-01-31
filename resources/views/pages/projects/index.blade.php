@@ -3,11 +3,17 @@
 @section('seo_title', $pageTitleSection)
 @section('content')
     <div class="page__wrapper">
+        <form action="{{ route('projects.export') }}" class="export-form" id="export-form" style="display: none;" method="post">
+            @csrf
+            @method('post')
+        </form>
         <div class="header__bar">
             <x-search-field name="projects" model="projects" placeholder="Projecten zoeken..." />
             <div class="buttons">
             @cannot('isSeller')
-              <a href="{{ route('projects.create') }}" class="button button--action">{{__('Nieuw project')}}</a>        
+            <a href="" class="button button--action" onclick="event.preventDefault(); document.getElementById('export-form').submit();">{{__('Exporteren')}}</a>
+            <a href="{{ route('projects.create') }}" class="button button--action">{{__('Nieuw project')}}</a>
+
             @endcannot
             </div>
         </div>
@@ -27,6 +33,7 @@
                 @foreach ( $projects as $project )
                     <li class="item">
                         <div class="item__content">
+                            <input type="checkbox" name="selected_values[]" value="{{$project->id}}" class="export--checkbox">
                             <a href="{{ route('projects.edit', $project->id) }}" class="">
                                 <h3>{{ $project->name }}</h3>
                             </a>

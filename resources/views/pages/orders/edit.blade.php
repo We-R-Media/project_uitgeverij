@@ -287,6 +287,8 @@
                 </div>
 
 
+
+                {{-- Moet nog een databaseveld voor aangemaakt worden --}}
                 <div class="field field-alt radio">
                     <label for="incasso">{{ __('Incasso') }}</label>
                     <div class="radio__group">

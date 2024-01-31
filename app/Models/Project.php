@@ -192,6 +192,16 @@ class Project extends BaseModel
         return $this->belongsTo(Publisher::class);
     }
 
+    /**
+     * Get all of the orderlines for the Project
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function orderlines(): HasMany
+    {
+        return $this->hasMany(OrderLine::class);
+    }
+
         /**
      * Get the name of the index associated with the model.
      */

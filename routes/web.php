@@ -17,6 +17,7 @@ use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProjectFormatController;
+use App\Http\Controllers\WebhookController;
 
 use App\Http\Livewire\CreateComplaint;
 
@@ -36,6 +37,8 @@ Route::group(['middleware' => ['auth']], function() {
         HomeController::class, 'index'
     ] )->name('home');
 
+/* --- Groutes grouped by following structure: name->prefix->controller --- */
+
     Route::name('projects.')
         ->prefix('projecten')
         ->controller(ProjectController::class)
@@ -53,6 +56,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::post('/{project_id}/planning/opslaan', 'planning__store')->name('planning.store');
             Route::post('/{project_id}/planning/bijwerken', 'planning__update')->name('planning.update');
             Route::post('/{project_id}/bijwerken', 'update')->name('update');
+            Route::post('/exporteren', 'export')->name('export');
     });
 
     Route::name('orders.')
@@ -94,6 +98,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{order_id}/orderregels/nieuw', 'create')->name('create');
 
             Route::post('/{order_id}/orderregels/opslaan', 'store')->name('store');
+            Route::post('/orderregels/exporteren', 'exporteren')->name('export');
         });
 
     Route::name('advertisers.')
@@ -119,6 +124,9 @@ Route::group(['middleware' => ['auth']], function() {
 
             Route::post('/store', 'store')->name('store');
             Route::post('/{advertiser_id}/update', 'update')->name('update');
+
+            Route::post('/export', 'export')->name('export');
+            Route::get('/import', 'import')->name('import');
         });
 
     Route::name('invoices.')
@@ -227,6 +235,9 @@ Route::group(['middleware' => ['auth']], function() {
 });
 
             Route::get('/akkoord_order/{order_id}/{order_token}', [OrderApproveController::class, 'approve'])->name('orders.approve');
+
+            Route::post('webhook/post', [WebhookController::class, 'webhook__handler'])->name('webhook.handler');
+            Route::get('webhook/handler', [WebhookController::class, 'webhook__get'])->name('webhook.get');
 
             Route::fallback(function () {
                 abort(404);

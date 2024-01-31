@@ -115,6 +115,7 @@ class OrderLineController extends Controller
      */
     public function destroy(string $order_id, string $regel_id)
     {
+        $order = Order::findOrFail($order_id);
         $orderline = OrderLine::findOrFail($regel_id);
 
         try {
@@ -125,18 +126,26 @@ class OrderLineController extends Controller
 
                 Log::info('Orderregel succesvol verwijderd: ' . $orderline->order->id);
                 Alert::toast('Orderregel succesvol verwijderd', 'success');
+
+                return redirect()->route('orders.edit', $order->id);
             }
 
         } catch (ModelNotFoundException $e) {
             Log::error('Orderregel niet gevonden: ' . $regel_id);
             Alert::toast('Orderregel niet gevonden', 'error');
 
+            return redirect()->route('orders.edit', $order->id);
+
+
         } catch (QueryException $e) {
             Log::error('Databasefout bij verwijderen orderregel: ' . $e->getMessage());
             Alert::toast('Er is een fout opgetreden bij het verwijderen van de orderregel', 'error');
+
+            return redirect()->route('orders.edit', $order->id);
+
         }
 
-        return redirect()->route('orderlines.index', $order_id);
+        return redirect()->route('orderlines.index', $order->id);
     }
 
     /**
@@ -171,6 +180,11 @@ class OrderLineController extends Controller
     }
 
     public function complaint(string $orderline_id)
+    {
+        
+    }
+
+    public function export(Request $request)
     {
         
     }

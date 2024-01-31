@@ -53,23 +53,22 @@ class LayoutController extends Controller
      */
     public function store(Request $request)
     {
-
         $file = $request->file('logo');
-        $file->getClientOriginalName();
-
-
-
 
         DB::transaction(function () use($request, $file) {
 
-            
-            $image_name = time() . '-' . '.' . $file->extension();
-            $file->move(public_path('images/uploads/layouts'), $image_name);
+            $image_name = null;
+
+            if($file != null) {
+                $file->getClientOriginalName();
+                $image_name = time() . '-' . '.' . $file->extension();
+                $file->move(public_path('images/uploads/layouts'), $image_name);
+            }
 
             Layout::create([
                 'layout_name' => $request->input('layout_name'),
                 'city_name' => $request->input('city_name'),
-                'logo' => $image_name,
+                'logo' => $image_name ? $image_name : null,
             ]);
         });
         return redirect()->route('layouts.index');

@@ -24,10 +24,17 @@
     @endcan
 </div>
 
+<a href="{{ route('advertisers.import') }}">{{__('Importeren')}}</a>
+
 
 
 @if( Gate::allows( 'isAdmin' ) )
     <a href="/admin-panel">Admin Panel</a>
+    <form action="{{ route('webhook.handler') }}" method="post">
+        @csrf
+        @method('post')
+        <input type="submit" value="Verzenden">
+    </form>
 @endif
 
 @if( Gate::allows( 'isSupervisor' ) )

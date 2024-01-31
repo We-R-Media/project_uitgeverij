@@ -271,9 +271,9 @@
                 </div>
 
                 <div class="field field-alt">
-                    <label for="department">{{ __('Kostenplaats') }}</label>
-                    <input id="" type="text" name="department" value="{{ old('department') }}">
-                    @error('department')
+                    <label for="cost_place">{{ __('Kostenplaats') }}</label>
+                    <input id="" type="text" name="cost_place" value="{{ old('cost_place') }}">
+                    @error('cost_place')
                         <span class="form__message" role="alert">
                             <small>{{ $message }}</small>
                         </span>

@@ -1,6 +1,7 @@
 @use "../mixins" as mixin;
 @use "../base/colors" as color;
 
+
 .button {
     @include mixin.flex($flex: inline-flex, $align-items: center, $justify-content: center);
     font-size: 1rem;

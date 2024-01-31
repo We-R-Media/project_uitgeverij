@@ -111,7 +111,7 @@
                         <p name="total_pages" id="sum">{{__("Totaal aantal pagina's:")}} {{$project->pages_total}}</p>
                     </div>
                     <div class="form__row-alt">
-                        <label>Cover</label>
+                        <label>{{__('Cover')}}</label>
                         <div class="field__row">
                             <div class="form__row">
                                 <div class="field">
@@ -259,9 +259,9 @@
                     </div>
 
                     <div class="field field-alt">
-                        <label for="department">{{ __('Kostenplaats') }}</label>
-                        <input id="" type="text" name="department" value="{{$project->department}}" @can('isSeller') readonly @endcan>
-                        @error('department')
+                        <label for="cost_place">{{ __('Kostenplaats') }}</label>
+                        <input id="" type="text" name="cost_place" value="{{$project->department}}" @can('isSeller') readonly @endcan>
+                        @error('cost_place')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>
                             </span>
@@ -280,7 +280,7 @@
 
                     <div class="field field-alt">
                         <label for="revenue_goals">{{ __('Omzetdoelstelling') }}</label>
-                        <input id="" type="text" name="revenue_goals" value="{{money($project->revenue_goals)}}" @can('isSeller') readonly @endcan>
+                        <input id="" type="text" name="revenue_goals" value="@if($project->revenue_goals){{money($project->revenue_goals)}} @endif" @can('isSeller') readonly @endcan>
                         @error('revenue_goals')
                             <span class="form__message" role="alert">
                                 <small>{{ $message }}</small>

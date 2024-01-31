@@ -2,12 +2,22 @@
 
 @section('seo_title',  $pageTitleSection)
 @section('content')
+    <form action="{{ route('advertisers.export') }}" class="export-form" id="advertisers-export" method="post">
+        @csrf
+        @method('post')
+    </form>
+    <form action="{{ route('advertisers.import') }}" id="advertisers-import" method="get">
+        @csrf
+        @method('get')
+    </form>
     <div class="page__wrapper">
         <div class="header__bar">
             <x-search-field model="advertisers" placeholder="Relatie zoeken..." />
 
             <div class="buttons">
-                <a href="{{ route('advertisers.create') }}" class="button button--action">{{__('Nieuwe relatie')}}</a>
+                <a  class="button button--action" href="{{ route('advertisers.create') }}">{{__('Nieuwe relatie')}}</a>
+                <a  class="button button--action" href="" onclick="event.preventDefault(); document.getElementById('advertisers-export').submit();">{{__('Exporteren')}}</a>
+                <a  class="button button--action" href="" onclick="event.preventDefault(); document.getElementById('advertisers-import').submit();">{{__('Importeren')}}</a>
             </div>
         </div>
         <div class="items__head">
@@ -31,6 +41,7 @@
                 @foreach ($advertisers as $advertiser)
                     <li class="item {{ $advertiser->trashed() ? 'item--thrashed' : 'item--default' }}">
                         <div class="item__content">
+                            <input type="checkbox" name="selected_values[]" value="{{$advertiser->id}}" class="export--checkbox">
                             <a href="{{ route('advertisers.edit', $advertiser->id) }}" class="">
                                 <h3>{{ $advertiser->name }}</h3>
                             </a>
@@ -53,6 +64,7 @@
                                 {{$advertiser->email}}
                             </div>
                         </div>
+                        <input type="checkbox" name="" id="">
                         <div class="item__actions">
                             <div class="actions__button">
                                 <div class="icon">

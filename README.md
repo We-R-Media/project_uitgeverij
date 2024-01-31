@@ -64,3 +64,10 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+## Maatwebsite Excel sources
+
+https://docs.laravel-excel.com/2.1/reference-guide/formatting.html
+https://docs.laravel-excel.com/3.0/exports/
+https://docs.laravel-excel.com/3.1/imports/collection.html

@@ -374,7 +374,7 @@ class OrderController extends Controller
             Alert::toast('De order is verwijderd.', 'info');
         }
 
-        return redirect()->route('orders.index', $order_id);
+        return redirect()->route('orders.edit', $order_id);
     }
 
     public function print(string $order_id)

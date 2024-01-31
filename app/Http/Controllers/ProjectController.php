@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Exports\ProjectExport;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Http\Resources\ProjectResource;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ProjectController extends Controller
 {
@@ -162,7 +166,7 @@ class ProjectController extends Controller
                 'color_interior' => $request->input('color_interior'),
                 'ledger' => $request->input('ledger'),
                 'journal' => $request->input('journal'),
-                'department' => $request->input('department'),
+                'department' => $request->input('cost_place'),
                 'year' => $request->input('year'),
                 'revenue_goals' => MoneyHelper::convertToNumeric($request->input('revenue_goals')),
                 'comments' => $request->input('comments'),
@@ -182,6 +186,7 @@ class ProjectController extends Controller
         return redirect()->route('projects.index');
 
     } catch (\Exception $e) {
+        dd($e);
         Alert::toast('Er is iets fout gegaan', 'error');
         return redirect()->route('projects.index');
     }
@@ -286,7 +291,7 @@ class ProjectController extends Controller
                     'color_interior' => $request->input('color_interior'),
                     'ledger' => $request->input('ledger'),
                     'journal' => $request->input('journal'),
-                    'department' => $request->input('department'),
+                    'department' => $request->input('cost_place'),
                     // 'year' => $request->input('year'),
                     'revenue_goals' => MoneyHelper::convertToNumeric($request->input('revenue_goals')),
                     'comments' => $request->input('comments'),
@@ -302,6 +307,7 @@ class ProjectController extends Controller
             session()->forget('edited_project_name');
             return redirect()->route('projects.index');
         } catch (\Exception $e) {
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('projects.index');
         }
@@ -403,5 +409,12 @@ class ProjectController extends Controller
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('projects.planning', $project_id);
         }
+    }
+
+    public function export(Request $request)
+    {
+        $selectedProjectIds = $request->input('selected_values', []);
+        return Excel::download(new ProjectExport($selectedProjectIds), 'projects.xlsx');
+        // return Excel::stream(new ProjectExport($selectedProjectIds), 'projects.xlsx', \Maatwebsite\Excel\Excel::XLSX);
     }
 }

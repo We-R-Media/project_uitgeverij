@@ -3,7 +3,10 @@
 @section('seo_title',  $pageTitleSection)
 @section('content')
     <div class="page__wrapper">
-
+        <form action="{{ route('orderlines.export') }}" class="export-form" id="export-form" style="display: none;" method="post">
+            @csrf
+            @method('post')
+        </form>
         <div class="header__bar">
             <x-search-field model="orders" placeholder="Order zoeken..." />
         </div>
@@ -11,7 +14,7 @@
         <div class="items__head">
             <div class="item item__head">
                 <div class="item__content">
-                    <div>{{__('Ordernummer')}}</div>
+                    <div>{{__('Uitgave')}}</div>
                 </div>
                 <div class="item__summary">
                     <div>{{__('Bedrijfsnaam')}}</div>
@@ -31,7 +34,7 @@
                         <div class="item__content">
                             @if ( $order->advertiser )
                                 <a href="{{ route('orders.edit', $order->id) }}" class="">
-                                    <h3>{{ $order->id }}</h3>
+                                    <h3>{{ $order->publisher->name }}</h3>
                                 </a>
                             @endif
                         </div>

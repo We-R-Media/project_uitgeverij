@@ -33,7 +33,7 @@ class ProjectFormatController extends Controller
     {
 
         $project = Project::findOrFail($project_id);
-        $formats = Format::where('project_id', $project_id)->with('project')->orderBy('size')->paginate(5);
+        $formats = Format::where('project_id', $project_id)->with('project')->orderBy('ratio')->paginate(5);
 
         return view('pages.formats.index', compact('project', 'formats'))
             ->with([

@@ -59,7 +59,9 @@ img {
 textarea,
 input,
 button {
-    all: unset;
+    &:not(.export--checkbox) {
+        all: unset;
+    }
 }
 textarea:focus,
 input:focus,
@@ -83,4 +85,8 @@ ol {
 ::selection {
     color: color.$black;
     background: rgba(color.$black, .1);
+}
+
+.export--checkbox {
+    position: relative;
 }

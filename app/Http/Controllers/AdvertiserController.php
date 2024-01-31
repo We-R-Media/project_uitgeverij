@@ -4,28 +4,43 @@ namespace App\Http\Controllers;
 
 use App\AppHelpers\PostalCodeHelper;
 use App\AppHelpers\MoneyHelper;
+
 use App\Models\Advertiser;
 use App\Models\Contact;
+
 use App\Services\SearchService;
+use App\Services\AdvertiserService;
+
 use Illuminate\Contracts\View\View;
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\DB;
+
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\AdvertiserExport;
+use App\Imports\AdvertiserImport;
+
+use App\Http\Resources\AdvertiserResource;
+
 
 
 class AdvertiserController extends Controller
 {
     protected $searchService;
+    protected $advertiserService;
 
     private static $page_title_section = 'Relaties';
 
-    public function __construct(SearchService $searchService)
+    public function __construct(SearchService $searchService, AdvertiserService $advertiserService)
     {
         $this->searchService = $searchService;
+        $this->advertiserService = $advertiserService;
 
         $this->subpages = [
             'Adverteerder' => 'advertisers.edit',
@@ -125,49 +140,11 @@ class AdvertiserController extends Controller
      */
     public function store(Request $request)
     {
-        $advertiser_id = null;
-    
-        try {
-            DB::transaction(function () use ($request, &$advertiser_id) {
-                $advertiser = Advertiser::create([
-                    'first_name' => $request->input('first_name'),
-                    'last_name' => $request->input('last_name'),
-                    'salutation' => $request->input('salutation'),
-                    'initial' => $request->input('initial'),
-                    'name' => $request->input('name'),
-                    'email' => $request->input('email'),
-                    'address' => $request->input('address'),
-                    'po_box' => $request->input('address'),
-                    'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
-                    'city' => $request->input('city'),
-                    'credit_limit' => MoneyHelper::convertToNumeric($request->input('credit')),
-                    'province' => $request->input('province'),
-                    'phone_mobile' => $request->input('phone_mobile'),
-                    'phone' => $request->input('phone'),
-                    'comments' => $request->input('comments'),
-                ]);
-    
-                $advertiser_id = $advertiser->id;
-    
-                $contact = Contact::firstOrNew([
-                    'advertiser_id' => $advertiser_id,
-                    'salutation' => $request->input('salutation'),
-                    'initial' => $request->input('initial'),
-                    'role' => 1,
-                    'email' => $request->input('email'),
-                    'first_name' => $request->input('first_name'),
-                    'last_name' => $request->input('last_name'),
-                    'phone' => $request->input('phone'),
-                ]);
-    
-                $advertiser->contacts()->save($contact);
-                $contact->save();
-            });
-    
-            Alert::toast('De relatie is successvol aangemaakt', 'success');
+        $advertiser_id = $this->advertiserService->storeAdvertiser($request);
+
+        if ($advertiser_id !== null) {
             return redirect()->route('advertisers.edit', $advertiser_id);
-        } catch (\Exception $e) {
-            Alert::toast('Er is iets fout gegaan', 'error');
+        } else {
             return redirect()->route('advertisers.index');
         }
     }
@@ -198,64 +175,26 @@ class AdvertiserController extends Controller
      */
     public function update(Request $request, string $advertiser_id)
     {
-        try{
-            DB::transaction(function () use($request, $advertiser_id) {
-                Advertiser::where('id', $advertiser_id)->update([
-                    'first_name' => $request->input('first_name'),
-                    'last_name' => $request->input('last_name'),
-                    'salutation' => $request->input('salutation'),
-                    'initial' => $request->input('initial'),
-                    'name' => $request->input('name'),
-                    'po_box' => $request->input('po_box'),
-                    'postal_code' => PostalCodeHelper::formatPostalCode($request->input('postal_code')),
-                    'credit_limit' => MoneyHelper::convertToNumeric($request->input('credit')),
-                    'city' => $request->input('city'),
-                    'province' => $request->input('province'),
-                    'phone' => $request->input('phone'),
-                    'phone_mobile' => $request->input('phone_mobile'),
-                    'email' => $request->input('email'),
-                    'blacklisted_at' => $request->input('blacklisted') == 1 ? now() : null,
-                    'deactivated_at' => $request->input('active') == 0 ? now() : null,
-                ]);
+        $advertiser_id = $this->advertiserService->updateAdvertiser($request, $advertiser_id);
 
-                Contact::where('id', $advertiser_id)
-                    ->orWhere('email', $request->input('email'))
-                    ->first()
-                    ->update([
-                        'salutation' => $request->input('salutation'),
-                        'initial' => $request->input('initial'),
-                        'role' => 1,
-                        'email' => $request->input('email'),
-                        'first_name' => $request->input('first_name'),
-                        'last_name' => $request->input('last_name'),
-                        'phone' => $request->input('phone'),
-                    ]);
-
-            });
-
-            Alert::toast('De relatie is succesvol bijgewerkt', 'success');
-
-            return redirect()->route('advertisers.index');
-        } catch (\Exception $e){
-            Alert::toast('Er is iets fout gegaan', 'error');
-
+        if ($advertiser_id !== null) {
+            return redirect()->route('advertisers.edit', $advertiser_id);
+        } else {
             return redirect()->route('advertisers.index');
         }
     }
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $advertiser_id)
     {
-        $advertiser = Advertiser::findOrFail($advertiser_id);
+        $advertiser_id = $this->advertiserService->deleteAdvertiser($advertiser_id);
 
-        if($advertiser) {
-            $advertiser->delete();
-
-            Alert::toast('De relatie is verwijderd.', 'info');
+        if($advertiser_id !== null) {
+            return redirect()->route('advertisers.index');
         }
-        return redirect()->route('advertisers.index');
     }
 
         /**
@@ -266,21 +205,11 @@ class AdvertiserController extends Controller
      */
     public function restore(string $advertiser_id)
     {
-        try
-        {
-            $advertiser = Advertiser::onlyTrashed()->findOrFail($advertiser_id);
-            $advertiser->restore();
+        $advertiser_id = $this->advertiserService->restoreAdvertiser($advertiser_id);
 
-            Log::info('Relatie succesvol hersteld:' . $advertiser->id);
-            Alert::toast('Relatie succesvol hersteld' , 'success');
-        } catch (ModelNotFoundException $e) {
-            Log::error('Relatie niet gevonden:' . $advertiser_id);
-            Alert::toast('Relatie niet gevonden', 'error');
-        } catch (QueryException $e) {
-            Log::error('Databasefout bij herstellen relatie: ' . $e->getMessage());
-            Alert::toast('Er is een fout opgetreden bij het herstellen van de relatie', 'error');
+        if($advertiser_id !== null) {
+            return redirect()->route('advertisers.index');
         }
-        return redirect()->route('advertisers.index');
     }
 
     public function contacts(string $advertiser_id)
@@ -377,5 +306,33 @@ class AdvertiserController extends Controller
             'pageTitle' => $advertiser->title,
             'subpagesData' => $this->getSubpages( $advertiser_id ),
         ]);
+    }
+
+    public function export(Request $request)
+    {
+        $selectedAdvertisers = $request->input('selected_values', []); 
+        return Excel::download(new AdvertiserExport($selectedAdvertisers), 'advertisers.xlsx');
+    }
+
+    public function import(Request $request)
+    {
+        // Assuming you have a 'file_name' field in your form or request.
+        $fileName = $request->input('file_name');
+        
+        // Specify the directory within the public path where the file is located.
+        $directory = public_path('excel\\advertisers.xlsx'); // Use double backslashes for the directory separator on Windows.
+
+    
+        // Check if the file exists before attempting to import.
+        if (file_exists($directory . $fileName)) {
+            // Import the data from the specified Excel file.
+            Excel::import(new AdvertiserImport, $directory);
+            // Excel::import(new ContactImport, $directory);
+
+            return redirect()->route('advertisers.index')->with('success', 'Import successful!');
+        } else {
+            // Redirect with an error message if the file does not exist.
+            return redirect()->route('advertisers.index')->with('error', 'File not found!');
+        }
     }
 }

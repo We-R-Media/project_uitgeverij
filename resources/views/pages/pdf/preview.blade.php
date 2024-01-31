@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -93,6 +93,18 @@
         </ul>
         <ul class="price__content list">
             <li class="item">
+<<<<<<< HEAD
+                <h4>{{__('Totaalprijs excl. BTW')}}</h4>
+                <p>{{money($order->order_total_price)}}</p>
+            </li>
+            <li class="item">
+                <h4>{{__('BTW')}}</h4>
+                <p>{{money($order->order_total_price / 100 * 21)}}</p>
+            </li>
+            <li class="item">
+                <h4>{{__('Totaalprijs incl. BTW')}}</h4>
+                <p>{{money($order->order_total_price / 100 * 121)}}</p>
+=======
                 <h4>{{__('Totaalprijs excl. BTW')}}</h4>    
                 <p>{{money($order->order_total_price)}}</p>
             </li>
@@ -103,6 +115,7 @@
             <li class="item">
                 <h4>{{__('Totaalprijs incl. BTW')}}</h4>    
                 <p>{{money($order->order_total_price / 100 * 121)}}</p>
+>>>>>>> parent of cb82735 (major improvements)
             </li>
         </ul>
     </div>
