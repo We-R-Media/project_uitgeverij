@@ -32,10 +32,11 @@ use Illuminate\Support\Facades\Redirect;
 | routes are loaded by the RouteServiceProvider and all of them will
 | be assigned to the "web" middleware group. Make something great!
 */
-Route::group(['middleware' => ['auth']], function() {
+
+Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [
         HomeController::class, 'index'
-    ] )->name('home');
+    ])->name('home');
 
 /* --- Groutes grouped by following structure: name->prefix->controller --- */
 
@@ -48,9 +49,9 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/nieuw', 'create')->name('create')->middleware('supervisor.check');
             Route::get('/{project_id}/bewerken', 'edit')->name('edit');
             Route::get('/{project_id}/planning', 'planning')->name('planning');
-            Route::get('/inactief', 'inactive')->name('inactive');
             Route::get('/{project_id}/verwijderen', 'destroy')->name('destroy');
             Route::get('/{project_id}/dupliceren', 'duplicate')->name('duplicate');
+            Route::get('/inactief', 'inactive')->name('inactive');
 
             Route::post('/opslaan', 'store')->name('store');
             Route::post('/{project_id}/planning/opslaan', 'planning__store')->name('planning.store');
@@ -76,7 +77,7 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/{order_id}/klachten', 'complaints')->name('complaints');
 
             Route::get('/{order_id}/voorbeeld', 'preview')->name('preview');
-            
+
             Route::get('/{order_id}/goedkeuren', 'seller__approve')->name('seller.approve');
             Route::post('/{order_id}/goedgekeurd', 'seller__approved')->name('seller.approved');
 
@@ -151,75 +152,73 @@ Route::group(['middleware' => ['auth']], function() {
             Route::get('/', 'index')->name('index');
         });
 
-        Route::name('tax.')
-            ->prefix('btw')
-            ->controller(TaxController::class)
-            ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/nieuw', 'create')->name('create');
-                Route::get('/{tax_id}/bewerken', 'edit')->name('edit');
-                Route::get('/{tax_id}/verwijderen', 'destroy')->name('destroy');
+    Route::name('tax.')
+        ->prefix('btw')
+        ->controller(TaxController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/nieuw', 'create')->name('create');
+            Route::get('/{tax_id}/bewerken', 'edit')->name('edit');
+            Route::get('/{tax_id}/verwijderen', 'destroy')->name('destroy');
 
-                Route::post('/store', 'store')->name('store');
-                Route::post('/{tax_id}/bijwerken', 'update')->name('update');
-            });
+            Route::post('/store', 'store')->name('store');
+            Route::post('/{tax_id}/bijwerken', 'update')->name('update');
+        });
 
-        Route::name('reminders.')
-            ->prefix('aanmaningen')
-            ->controller(ReminderController::class)
-            ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/nieuw', 'create')->name('create');
-                Route::get('/{reminder_id}/verwijderen', 'destroy')->name('destroy');
+    Route::name('reminders.')
+        ->prefix('aanmaningen')
+        ->controller(ReminderController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/nieuw', 'create')->name('create');
+            Route::get('/{reminder_id}/bewerken', 'edit')->name('edit');
+            Route::get('/{reminder_id}/verwijderen', 'destroy')->name('destroy');
 
-                Route::get('/{reminder_id}/bewerken', 'edit')->name('edit');
-                Route::post('/{reminder_id}/bijwerken', 'update')->name('update');
-                Route::post('/opslaan', 'store')->name('store');
-            });
+            Route::post('/opslaan', 'store')->name('store');
+            Route::post('/{reminder_id}/bijwerken', 'update')->name('update');
+        });
 
-        Route::name('users.')
-            ->prefix('gebruikers')
-            ->controller(UserController::class)
-            ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/rol/{role?}', 'role')->name('role');
+    Route::name('users.')
+        ->prefix('gebruikers')
+        ->controller(UserController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/nieuw', 'create')->name('create');
+            Route::get('/{user_id}/bewerken', 'edit')->name('edit');
+            Route::get('/{user_id}/verwijderen', 'destroy')->name('destroy');
+            Route::get('/rol/{role?}', 'role')->name('role');
 
-                Route::get('/nieuw', 'create')->name('create');
-                Route::get('/{user_id}/bewerken', 'edit')->name('edit');
-                Route::get('/{user_id}/verwijderen', 'destroy')->name('destroy');
+            Route::post('/opslaan', 'store')->name('store');
+            Route::post('/{user_id}/bijwerken', 'update')->name('update');
+        });
 
-                Route::post('/opslaan', 'store')->name('store');
-                Route::post('/{user_id}/bijwerken', 'update')->name('update');
-            });
+    Route::name('layouts.')
+        ->prefix('layouts')
+        ->controller(LayoutController::class)
+        ->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/nieuw', 'create')->name('create');
+            Route::get('/{layout_id}/bewerken', 'edit')->name('edit');
+            Route::get('/{layout_id}/verwijderen', 'destroy')->name('destroy');
 
-        Route::name('layouts.')
-            ->prefix('layouts')
-            ->controller(LayoutController::class)
-            ->group(function () {
-                Route::get('/', 'index')->name('index');
-                Route::get('/nieuw', 'create')->name('create');
-                Route::get('/{layout_id}/bewerken', 'edit')->name('edit');
-                Route::get('/{layout_id}/verwijderen', 'destroy')->name('destroy');
+            Route::post('/store', 'store')->name('store');
+            Route::post('/{layout_id}/bijwerken', 'update')->name('update');
+        });
 
-                Route::post('/store', 'store')->name('store');
-                Route::post('/{layout_id}/update', 'update')->name('update');
-                Route::post('/upload', 'upload')->name('upload');
-            });
+    Route::name('formats.')
+        ->prefix('formaten')
+        ->controller(ProjectFormatController::class)
+        ->group(function () {
+            Route::get('/{project_id}', 'index')->name('index');
+            Route::get('/{project_id}/nieuw', 'create')->name('create');
+            Route::get('/{format_id}/bewerken', 'edit')->name('edit');
+            Route::get('/{format_id}/{project_id}/verwijderen', 'destroy')->name('destroy');
+            Route::get('/{format_id}/herstellen', 'restore')->name('restore');
+            Route::get('/{project_id}/dupliceren', 'duplicate')->name('duplicate');
 
-            Route::name('formats.')
-            ->prefix('formaten')
-            ->controller(ProjectFormatController::class)
-            ->group(function () {
-                Route::get('/{project_id}', 'index')->name('index');
-                Route::get('/{project_id}/nieuw', 'create')->name('create');
-                Route::get('/{format_id}/bewerken', 'edit')->name('edit');
-                Route::get('/{format_id}/{project_id}/verwijderen', 'destroy')->name('destroy');
-                Route::get('/{format_id}/herstellen', 'restore')->name('restore');
-                Route::get('/{project_id}/dupliceren', 'duplicate')->name('duplicate');
-
-                Route::post('/{project_id}/opslaan', 'store')->name('store');
-                Route::post('/{format_id}/{project_id}/bijwerken', 'update')->name('update');
-            });
+            Route::post('/{project_id}/opslaan', 'store')->name('store');
+            Route::post('/{format_id}/{project_id}/bijwerken', 'update')->name('update');
+        });
 
             Route::name('email.')
                 ->prefix('emails')
@@ -232,7 +231,7 @@ Route::group(['middleware' => ['auth']], function() {
 
 
             Route::get('/search', [ SearchController::class, 'search'])->name('search');
-});
+        });
 
             Route::get('/akkoord_order/{order_id}/{order_token}', [OrderApproveController::class, 'approve'])->name('orders.approve');
 

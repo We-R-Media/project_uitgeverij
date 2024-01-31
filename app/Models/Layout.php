@@ -20,7 +20,7 @@ class Layout extends BaseModel
     protected $fillable = [
         'layout_name',
         'city_name',
-        'logo',
+        'image',
         'project_id'
     ];
 

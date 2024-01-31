@@ -2,14 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LayoutRequest;
 use App\Models\Layout;
-use Illuminate\Support\Facades\DB;
+use App\Traits\ImageHandling;
 use Illuminate\Http\Request;
-use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\DB;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class LayoutController extends Controller
 {
+    use ImageHandling;
+
     private static $page_title_section = 'Layouts';
 
     public function __construct()
@@ -27,7 +30,7 @@ class LayoutController extends Controller
      */
     public function index()
     {
-        $layouts = Layout::latest()->paginate(12);
+        $layouts = Layout::latest()->paginate(15);
 
         return view('pages.layouts.index', compact('layouts'))
             ->with([
@@ -51,26 +54,21 @@ class LayoutController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(LayoutRequest $request)
     {
-        $file = $request->file('logo');
+        $validatedData = $request->validated();
+        $imagePath = $this->processImage($request);
 
-        DB::transaction(function () use($request, $file) {
-
-            $image_name = null;
-
-            if($file != null) {
-                $file->getClientOriginalName();
-                $image_name = time() . '-' . '.' . $file->extension();
-                $file->move(public_path('images/uploads/layouts'), $image_name);
-            }
-
+        DB::transaction(function () use ($validatedData, $imagePath) {
             Layout::create([
-                'layout_name' => $request->input('layout_name'),
-                'city_name' => $request->input('city_name'),
-                'logo' => $image_name ? $image_name : null,
+                'layout_name' => $validatedData['layout_name'],
+                'city_name' => $validatedData['city_name'],
+                'logo' => $imagePath,
             ]);
         });
+
+        Alert::toast('De layout is aangemaakt.', 'success');
+
         return redirect()->route('layouts.index');
     }
 
@@ -100,31 +98,23 @@ class LayoutController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $layout_id)
+    public function update(LayoutRequest $request, string $layout_id)
     {
-        
-        DB::transaction(function () use($request, $layout_id) {
-            Layout::where('id', $layout_id)->update([
-                'layout_name' => $request->input('layout_name'),
-                'city_name' => $request->input('city_name'),
-                'logo' => $image_name,
+        $layout = Layout::findOrFail($layout_id);
+        $validatedData = $request->validated();
+
+        DB::transaction(function () use ($layout, $validatedData, $request) {
+            $this->updateImage($layout, $request);
+
+            $layout->update([
+                'layout_name' => $validatedData['layout_name'],
+                'city_name' => $validatedData['city_name']
             ]);
         });
 
-        return redirect()->route('layouts.index');
-    }
+        Alert::toast('De layout is bijgewerkt.', 'success');
 
-     /**
-     * Upload the logo in the public folder
-     */
-    public function upload(Request $request ) :  JsonResponse
-    {
-        $image = $request->file('file');
-
-        $imageName = time().'.'.$image->extension();
-        $image->move(public_path('images/uploads'),$imageName);
-
-        return response()->json(['success'=> 'images/uploads/'.$imageName]);
+        return redirect()->route('layouts.edit', $layout_id);
     }
 
     /**

@@ -31,7 +31,7 @@ class FormatController extends Controller
      */
     public function index()
     {
-        $formats = Format::latest()->withTrashed()->paginate(12);
+        $formats = Format::latest()->withTrashed()->paginate(15);
 
         return view('pages.formats.index', compact('formats'))
             ->with([
@@ -108,7 +108,7 @@ class FormatController extends Controller
                 ]);
             });
 
-            Alert::toast('Het formaat is aangepast.', 'success');            
+            Alert::toast('Het formaat is aangepast.', 'success');
         } catch (\Exception $e){
             Alert::toast('Er is iets fout gegaaan.', 'error');
 

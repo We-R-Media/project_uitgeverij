@@ -41,9 +41,9 @@ class ProjectSeeder extends Seeder
              ->count($randomNumberSmall)
              ->create();
 
-             $advertiser = Advertiser::factory();       
+             $advertiser = Advertiser::factory();
 
-         $publisher = Publisher::factory()->make();
-         
+        //  $publisher = Publisher::factory()->make();
+
         }
     }

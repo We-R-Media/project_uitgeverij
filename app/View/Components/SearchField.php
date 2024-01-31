@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class SearchField extends Component
+class Searchfield extends Component
 {
     public $model;
     public $placeholder;

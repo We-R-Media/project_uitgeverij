@@ -38,7 +38,7 @@ class OrderLineController extends Controller
         $order = Order::with('orderLines')->findOrFail($order_id);
         $orderlines = $order->orderLines()
             ->withTrashed()
-            ->paginate(12);
+            ->paginate(15);
 
         // $trashed = $orderlines->trashed();
 
@@ -181,7 +181,7 @@ class OrderLineController extends Controller
 
     public function complaint(string $orderline_id)
     {
-        
+
     }
 
     public function export(Request $request)

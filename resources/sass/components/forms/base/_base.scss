@@ -1,0 +1,153 @@
+@use "../../../mixins" as mixin;
+@use "../../../base/colors" as color;
+
+.form__wrapper {
+    @include mixin.flex($dynamic-direction-breakpoint: 'tablet');
+    gap: 3rem;
+
+    &:not(:last-child) {
+        margin-bottom: 5rem;
+    }
+}
+.form__section {
+    @include mixin.flex($flex-direction: column);
+    border: 0;
+    padding: 0;
+    margin: 0 0;
+    flex: 1;
+    gap: 3rem;
+
+    &.section--big {
+        flex: 2;
+    }
+}
+.section__block {
+    @include mixin.flex($flex-direction: column);
+    width: 100%;
+
+    h3 {
+        font-size: clamp(1.4rem, 3vw, 1.6rem);
+        margin-bottom: 1rem;
+        font-weight: 500;
+    }
+}
+
+.form__actions {
+    @include mixin.flex;
+    position: relative;
+    background-color: color.$tertiary;
+    width: 100%;
+    z-index: 9;
+    margin-top: 3rem;
+
+    .buttons {
+        @include mixin.flex;
+        gap: 1rem;
+    }
+
+    @include mixin.breakpoint('min', 'laptop') {
+        position: fixed;
+        left: 5.2rem;
+        bottom: 0;
+        padding: 1rem 3rem;
+    }
+}
+
+.form__row {
+    @include mixin.flex($flex-direction: column);
+    flex-wrap: wrap;
+    gap: .5rem;
+
+    & > label {
+        flex: 0 0 25%;
+        font-size: 1.4rem;
+        color: color.$black;
+    }
+    & > input {
+        flex: 1;
+    }
+}
+.field--multiple {
+    @include mixin.flex;
+    gap: 1rem;
+}
+.field__row {
+    @include mixin.flex;
+    gap: 2rem;
+    flex: 1;
+
+    .field--column {
+        .field__label {
+            flex: 1;
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: color.$gray;
+            margin-bottom: .5rem;
+        }
+    }
+}
+
+.form__message {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    color: color.$error;
+}
+
+.message__box {
+    text-align: center;
+    padding: 2rem;
+    background-color: color.$gray-light;
+    border-radius: .4rem;
+    width: 100%;
+    font-size: clamp(1.4rem, 4vw, 1.6rem);
+}
+
+.form__instruction {
+    font-size: clamp(1rem, 4vw, 1.2rem);
+    margin-bottom: 1rem;
+}
+
+.search__bar {
+    background-color: color.$secondary;
+    border-radius: .4rem;
+    overflow: hidden;
+
+    .button__submit {
+        @include mixin.flex($align-items: center, $justify-content: center);
+        width: 3rem;
+        height: 3rem;
+        cursor: pointer;
+
+        &:hover,
+        &:focus,
+        &:active {
+            background-color: color.$accent;
+        }
+
+        .button__icon {
+            width: 1.4rem;
+            height: 1.4rem;
+        }
+    }
+    .field{
+        input {
+            min-width: 10vw;
+
+            &:not([type=checkbox]):not([type=radio]) {
+                border: unset;
+            }
+        }
+    }
+}
+
+.formats__submit {
+    margin-top: 1rem;
+    min-width: 300px !important;
+}
+
+.formats__title {
+    font-size: 20px !important;
+    font-weight: 300 !important;
+}
+
+.row--gap {
+    margin-bottom: 1rem;
+}

@@ -22,19 +22,19 @@ class AdvertiserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|unique:advertisers|string|max:25',
-            'email' => 'required|unique:advertisers|string|max:25',
-            'po_box' => 'required|unique:advertisers|string|max:25',
+            'name' => 'required|string|unique:advertisers|max:25',
+            'email' => 'required|string|unique:advertisers|max:25',
+            'po_box' => 'required|string|max:25',
             'postal_code' => [
-                'required|unique:advertisers|string|max:25',
-                'regex:/^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)([A-Z]{2}$|[a-z]{2}$)/'
+                'required',
+                'regex:/^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)[A-Z]{2}$/i',
             ],
-            'city' => 'required|unique:advertisers|string|max:25',
-            'province' => 'required|unique:advertisers|string|max:25',
-            'phone_mobile' => 'required|unique:advertisers|string',
-            'phone' => 'required|unique:advertisers|string',
-            'contact_id' => 'unique:advertisers|integer',
-            'comments' => 'required|unique:advertisers|string|max:25',
+            'city' => 'required|string|max:25',
+            'province' => 'required|string|max:25',
+            'phone_mobile' => 'string|required|unique:advertisers',
+            'phone' => 'string|required|unique:advertisers',
+            'contact_id' => 'integer|unique:advertisers',
+            'comments' => 'required|string|max:25',
         ];
     }
 }

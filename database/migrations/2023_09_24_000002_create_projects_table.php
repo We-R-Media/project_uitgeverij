@@ -31,13 +31,14 @@ return new class extends Migration
             $table->integer('pages_redaction')->nullable();
             $table->integer('pages_adverts')->nullable();
             $table->integer('pages_total')->nullable();
+            $table->integer('pages_sold')->nullable();
             $table->string('paper_type_cover')->nullable();
             $table->string('paper_type_interior')->nullable();
             $table->string('color_cover')->nullable();
             $table->string('color_interior')->nullable();
             $table->integer('ledger')->nullable();
             $table->integer('journal')->nullable();
-            $table->integer('cost_place');
+            $table->integer('department');
             $table->string('year')->nullable();
             $table->double('revenue_goals')->nullable();
             $table->longText('comments')->nullable();

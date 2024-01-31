@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Akaunting\Money\Money;
+use Akaunting\money\money;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -210,7 +210,7 @@ class Order extends BaseModel
      */
     public function getInitialCredit()
     {
-        return Money::EUR($this->advertiser->credit_limit, true) ?? '-';
+        return money::EUR($this->advertiser->credit_limit, true) ?? '-';
     }
 
     /**
@@ -221,7 +221,7 @@ class Order extends BaseModel
      * attribute in the database. If the remaining credit is negative, it means the order exceeds the
      * credit limit, and an exception is thrown.
      *
-     * @return \Money\Money The remaining credit in EUR.
+     * @return \money\money The remaining credit in EUR.
      * @throws \Exception If the update operation fails or if the remaining credit is negative.
      */
     public function calculateTotalCredit()
@@ -242,7 +242,7 @@ class Order extends BaseModel
 
             $remainingCredit = ($advertiserCreditLimit - $orderTotals);
 
-            return Money::EUR($remainingCredit, true);
+            return money::EUR($remainingCredit, true);
         } catch (\Exception $e) {
             error_log("Failed to calculate total credit: " . $e->getMessage());
             throw new Log("Failed to calculate total credit: " . $e->getMessage());

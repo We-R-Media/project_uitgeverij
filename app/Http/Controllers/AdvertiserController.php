@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\AppHelpers\PostalCodeHelper;
 use App\AppHelpers\MoneyHelper;
-
+use App\Http\Requests\AdvertiserRequest;
 use App\Models\Advertiser;
 use App\Models\Contact;
 
@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 
 use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Gate;
@@ -68,7 +69,7 @@ class AdvertiserController extends Controller
             })
             ->whereNull('deactivated_at')
             ->withTrashed()
-            ->paginate(12);
+            ->paginate(15);
 
         $this->subpages = [
             'Actueel' => 'advertisers.index',
@@ -93,7 +94,7 @@ class AdvertiserController extends Controller
      */
     public function blacklist()
     {
-        $advertisers = Advertiser::whereNotNull('blacklisted_at')->paginate(12);
+        $advertisers = Advertiser::whereNotNull('blacklisted_at')->paginate(15);
 
         $this->subpages = [
             'Actueel' => 'advertisers.index',
@@ -110,7 +111,7 @@ class AdvertiserController extends Controller
 
     public function inactive()
     {
-        $advertisers = Advertiser::whereNotNull('deactivated_at')->paginate(12);
+        $advertisers = Advertiser::whereNotNull('deactivated_at')->paginate(15);
 
         $this->subpages = [
             'Actueel' => 'advertisers.index',
@@ -138,7 +139,7 @@ class AdvertiserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(AdvertiserRequest $request)
     {
         $advertiser_id = $this->advertiserService->storeAdvertiser($request);
 
@@ -148,7 +149,7 @@ class AdvertiserController extends Controller
             return redirect()->route('advertisers.index');
         }
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -173,9 +174,43 @@ class AdvertiserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $advertiser_id)
+    public function update(AdvertiserRequest $request, string $advertiser_id)
     {
         $advertiser_id = $this->advertiserService->updateAdvertiser($request, $advertiser_id);
+
+
+        // Apart zetten in service bestand
+
+        $validatedData = $request->validated();
+
+        try{
+            DB::transaction(function () use($validatedData, $advertiser_id) {
+                Advertiser::where('id', $advertiser_id)->update(
+                    $validatedData, [
+                    'blacklisted_at' => $validatedData->input('blacklisted') == 1 ? now() : null,
+                    'deactivated_at' => $validatedData->input('active') == 0 ? now() : null,
+                ]);
+
+                Contact::where('id', $advertiser_id)
+                    ->orWhere('email', $validatedData->email)
+                    ->first()
+                    ->update([
+                        'salutation' => $validatedData->salutation,
+                        'initial' => $validatedData->initial,
+                        'role' => 1,
+                        'email' => $validatedData->email,
+                        'first_name' => $validatedData->first_name,
+                        'last_name' => $validatedData->last_name,
+                        'phone' => $validatedData->phone,
+                    ]);
+
+            });
+
+            Alert::toast('De relatie is succesvol bijgewerkt', 'success');
+
+            return redirect()->route('advertisers.index');
+        } catch (\Exception $e){
+            Alert::toast('Er is iets fout gegaan', 'error');
 
         if ($advertiser_id !== null) {
             return redirect()->route('advertisers.edit', $advertiser_id);
@@ -183,6 +218,7 @@ class AdvertiserController extends Controller
             return redirect()->route('advertisers.index');
         }
     }
+}
 
 
     /**
@@ -294,12 +330,8 @@ class AdvertiserController extends Controller
 
     public function orders(string $advertiser_id)
     {
-
-
         $advertiser = Advertiser::findOrFail($advertiser_id);
         $user_id = Auth::user()->id;
-
-
 
         return view('pages.advertisers.orders', compact('advertiser'))->with([
             'pageTitleSection' => self::$page_title_section,

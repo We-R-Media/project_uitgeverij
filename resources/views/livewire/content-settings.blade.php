@@ -1,5 +1,5 @@
 <section class="settingsContainer">
-    <div class="buttonGroup">
+    <div class="form__actions">
         <a class="button" href="{{route('formats.index')}}">Formaten</a>
         <a class="button" href="{{route('tax.index')}}">BTW</a>
         <a class="button" href="{{route('contacts.index')}}">Contactpersonen</a>

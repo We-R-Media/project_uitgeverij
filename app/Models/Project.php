@@ -54,7 +54,7 @@ class Project extends BaseModel
         'color_interior',
         'ledger',
         'journal',
-        'department',
+        'cost_place',
         'year',
         'revenue_goals',
         'deactivated_at',
@@ -67,7 +67,9 @@ class Project extends BaseModel
      * @var array<string>
      */
     protected $titleGenerationAttributes = [
+        'name',
         'release_name',
+        'edition_name'
     ];
 
     /**

@@ -349,9 +349,9 @@
                   <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                     <tr>
                       <td>
-                        {{-- <label for="order_id">{{__('Opdrachtnummer:')}}</label>
+                        {{-- <label class="field__label" for="order_id">{{__('Opdrachtnummer:')}}</label>
                         {{$order->id}}
-                        <label for="name">{{__('Bedrijfsnaam:')}}</label>
+                        <label class="field__label" for="name">{{__('Bedrijfsnaam:')}}</label>
                         {{$order->advertiser->name}} --}}
 
                         {{-- <p>{{__('Geachte heer/mevrouw,')}}</p> --}}

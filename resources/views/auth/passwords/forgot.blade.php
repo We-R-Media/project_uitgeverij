@@ -23,10 +23,10 @@
 
             <form method="POST" action="{{ route('password.email') }}">
                 @csrf
-                <fieldset class="fields">
+                <fieldset class="form__section">
                     <div class="form__row">
                         <div class="field">
-                            <label for="email">{{ __('E-mailadres') }}</label>
+                            <label class="field__label" for="email">{{ __('E-mailadres') }}</label>
                             <input type="email" name="email" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus />
 
                             @error('email')
@@ -38,7 +38,7 @@
                     </div>
 
                     <div class="form__row form__row--spacer-top form__row--centered">
-                        <button type="submit" class="button button--action">
+                        <button type="submit" class="button button-big button--primary">
                             {{ __('Aanvraag versturen') }}
                         </button>
                     </div>

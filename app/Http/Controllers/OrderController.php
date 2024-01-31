@@ -73,7 +73,7 @@ class OrderController extends Controller
                         'advertiser.email',
                     ]);
                 })
-                ->paginate(12);
+                ->paginate(15);
         } else {
             $orders = Order::latest()
                 ->whereNull('deactivated_at')
@@ -87,7 +87,7 @@ class OrderController extends Controller
                         'advertiser.email',
                     ]);
                 })
-                ->paginate(12);
+                ->paginate(15);
         }
 
         return view('pages.orders.index', compact('orders'))
@@ -105,9 +105,9 @@ class OrderController extends Controller
         $searchQuery = $request->input('search');
 
         $orders = Order::whereNotNull('deactivated_at')
-            ->paginate(12);    
+            ->paginate(15);
 
-        
+
 
 
         $this->subpages = [
@@ -135,10 +135,10 @@ class OrderController extends Controller
     {
         $advertiser = Advertiser::findOrFail($advertiser_id);
         $publishers = Publisher::has('projects', '>', 0)->get();
-    
+
         $projects = Project::where('user_id', Auth::user()->id)
             ->get();
-    
+
         return view('pages.orders.create', compact('advertiser', 'projects', 'publishers'))
             ->with([
                 'pageTitleSection' => self::$page_title_section,
@@ -206,7 +206,7 @@ class OrderController extends Controller
         $order = Order::with('orderLines')->findOrFail($order_id);
         $orderlines = $order->orderLines()
             ->withTrashed()
-            ->paginate(12);
+            ->paginate(15);
 
 
 
@@ -291,7 +291,7 @@ class OrderController extends Controller
         }
     }
 
-    public function seller__approve(string $order_id) 
+    public function seller__approve(string $order_id)
     {
         // // $notifications = Auth::user()->unreadNotifications;
 
@@ -308,11 +308,11 @@ class OrderController extends Controller
 
         Alert::toast('Notificatie verzonden', 'success');
         Log::info('OrderCreated event dispatched', ['order_id' => $order_id]);
-        
+
         return redirect()->route('orders.index');
     }
 
-    public function preview(string $order_id) 
+    public function preview(string $order_id)
     {
         $order = Order::findOrFail($order_id);
 
@@ -337,7 +337,7 @@ class OrderController extends Controller
                 $notification->markAsRead();
             }
 
-            
+
             Alert::toast('Order is goedgekeurd', 'success');
             return redirect()->route('orders.index');
         } catch (\Exception $e) {
@@ -346,10 +346,10 @@ class OrderController extends Controller
             return redirect()->route('orders.index');
         }
     }
-    
+
     public function approved__page() {
-        $orders = Order::whereNotNull('seller_approved_at')  
-            ->paginate(12)
+        $orders = Order::whereNotNull('seller_approved_at')
+            ->paginate(15)
             ->latest();
 
         return view('orders.index', compact('orders'))
@@ -414,7 +414,7 @@ class OrderController extends Controller
         $orders = Order::whereNotNull('seller_approved_at')
             ->latest()
             ->whereNull('administration_approved_at')
-            ->paginate(12);
+            ->paginate(15);
 
         $this->subpages = [
             'Openstaand' => 'orders.index',
@@ -437,7 +437,7 @@ class OrderController extends Controller
         $orders = Order::whereNotNull('administration_approved_at')
             ->latest()
             ->whereNotNull('seller_approved_at')
-            ->paginate(12);
+            ->paginate(15);
             $this->subpages = [
                 'Openstaand' => 'orders.index',
                 'Goedgekeurd' => 'orders.seller.certified',

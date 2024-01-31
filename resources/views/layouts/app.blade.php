@@ -24,23 +24,22 @@
     @livewireStyles
 </head>
 <body>
-    <div id="app">
+    <main id="app" class="main">
+        <x-sidebar />
 
-        @livewire('dashboard-sidebar')
+        <div class="dashboard__content">
+            <x-topbar
+                :page-title-section="$pageTitleSection"
+                :page-title="$pageTitle ?? null"
+                :subpages="isset($subpagesData['subpages']) ? $subpagesData['subpages'] : []"
+                :id="isset($subpagesData['id']) ? $subpagesData['id'] : null"
+            />
 
-        <main class="pageContainer">
-            @livewire('top-bar', [
-                'pageTitleSection' => $pageTitleSection ?? 'RON',
-                'pageTitle' => $pageTitle ?? false,
-                'subpages' => isset($subpagesData['subpages']) ? $subpagesData['subpages'] : [],
-                'id' => isset($subpagesData['id']) ? $subpagesData['id'] : null,
-            ])
-
-            <div class="mainContent">
+            <div class="content__main">
                 @yield('content')
             </div>
-        </main>
-    </div>
+        </div>
+    </main>
 
     @include('sweetalert::alert')
     @livewireScripts

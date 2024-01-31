@@ -66,15 +66,15 @@
 
             <ul class="order__content list">
                 <li class="item">
-                    <label for="item">{{__('Opdrachtnummer')}}</label>
+                    <label class="field__label" for="item">{{__('Opdrachtnummer')}}</label>
                     {{$order->id}}
                 </li>
                 <li class="item">
-                    <label for="item">{{__('Datum')}}</label>
+                    <label class="field__label" for="item">{{__('Datum')}}</label>
                     {{$order->order_date}}
                 </li>
                 <li class="item">
-                    <label for="item">{{__('Debiteurnummer')}}</label>
+                    <label class="field__label" for="item">{{__('Debiteurnummer')}}</label>
                     {{$order->advertiser->id}}
                 </li>
             </ul>
@@ -82,7 +82,7 @@
         <h4>{{__('Omschrijving')}}</h4>
         <div class="description__wrapper">
             <ul class="orderline__content list">
-            @foreach ($order->orderlines as $orderline)                
+            @foreach ($order->orderlines as $orderline)
                 <li class="item">
                     <h4>{{$orderline->project->release_name}}</h4>
                     <p>{{$orderline->project->edition_name}}</p>
@@ -93,29 +93,12 @@
         </ul>
         <ul class="price__content list">
             <li class="item">
-<<<<<<< HEAD
                 <h4>{{__('Totaalprijs excl. BTW')}}</h4>
                 <p>{{money($order->order_total_price)}}</p>
             </li>
             <li class="item">
-                <h4>{{__('BTW')}}</h4>
-                <p>{{money($order->order_total_price / 100 * 21)}}</p>
-            </li>
-            <li class="item">
                 <h4>{{__('Totaalprijs incl. BTW')}}</h4>
                 <p>{{money($order->order_total_price / 100 * 121)}}</p>
-=======
-                <h4>{{__('Totaalprijs excl. BTW')}}</h4>    
-                <p>{{money($order->order_total_price)}}</p>
-            </li>
-            <li class="item">
-                <h4>{{__('BTW')}}</h4>    
-                <p>{{money($order->order_total_price / 100 * 21)}}</p>
-            </li>
-            <li class="item">
-                <h4>{{__('Totaalprijs incl. BTW')}}</h4>    
-                <p>{{money($order->order_total_price / 100 * 121)}}</p>
->>>>>>> parent of cb82735 (major improvements)
             </li>
         </ul>
     </div>

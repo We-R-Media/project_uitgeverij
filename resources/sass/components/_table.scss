@@ -1,0 +1,140 @@
+@use "../mixins" as mixin;
+@use "../base/colors" as color;
+
+%default__cell--action {
+    @include mixin.breakpoint('min', 'tablet') {
+        flex: 0 0 5%;
+        max-width: 5%;
+    }
+}
+
+.items__table {
+    .items__row {
+        @include mixin.flex($dynamic-direction-breakpoint: 'tablet');
+        position: relative;
+        width: 100%;
+        border-radius: .4rem;
+        overflow: hidden;
+        padding: 1rem;
+
+        &.row--head {
+            background-color: color.$secondary;
+            padding: 1rem;
+
+            @include mixin.breakpoint('max', 'tablet') {
+                display: none;
+            }
+        }
+        &.row--data {
+            font-weight: 300;
+
+            &:nth-of-type(odd) {
+                background: color.$tertiary;
+            }
+        }
+
+        @include mixin.breakpoint('min', 'tablet') {
+            align-items: center;
+            padding: .5rem 1rem;
+        }
+    }
+
+    .item--actions {
+        @extend %default__cell--action;
+        text-align: center;
+        position: relative;
+        height: 3rem;
+
+        .actions__button {
+            @include mixin.flex($flex-direction: row-reverse);
+            position: absolute;
+            margin: 0 auto;
+            top: 0;
+            right: 0;
+
+            .icon {
+                @include mixin.flex($align-items: center, $justify-content: center);
+                position: relative;
+                width: 3rem;
+                height: 3rem;
+                border-radius: 50%;
+                transition: all 0.4s ease;
+                cursor: pointer;
+            }
+
+            .advertisers__menu {
+                min-width: max-content;
+            }
+
+            .actions__group {
+                @include mixin.flex($dynamic-direction-breakpoint: 'tablet', $align-items: center);
+                position: relative;
+                bottom: 0;
+                right: 0;
+                padding: .5rem;
+                background: color.$accent;
+                visibility: hidden;
+                opacity: 0;
+                transition: all 0.4s ease;
+                transform: translateX(10%);
+
+                a {
+                    font-size: 1rem;
+                    padding: .5rem;
+
+                    &:hover,
+                    &:focus,
+                    &:active {
+                        color: color.$primary;
+                    }
+                }
+
+                @include mixin.breakpoint('min', 'tablet') {
+                    height: 3rem;
+                    border-radius: 3rem;
+                    top: 0;
+                    bottom: unset;
+                    right: 1rem;
+                    padding: 1rem;
+                }
+            }
+            &:hover,
+            &:focus,
+            &:active {
+                .icon {
+                    background: color.$primary;
+                }
+                .actions__group {
+                    visibility: visible;
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+        }
+
+        @include mixin.breakpoint('max', 'tablet') {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+        }
+    }
+}
+.item--cell {
+    flex: 1;
+
+    @include mixin.breakpoint('max', 'tablet') {
+        @include mixin.flex;
+        gap: 1rem;
+    }
+}
+.item--action {
+    @extend %default__cell--action;
+}
+
+.cell__label {
+    flex: 0 0 33%;
+
+    @include mixin.breakpoint('min', 'tablet') {
+        display: none;
+    }
+}

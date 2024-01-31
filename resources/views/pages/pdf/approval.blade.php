@@ -39,7 +39,7 @@
 </head>
 <body>
     <div class="pdf__container">
-        <fieldset class="fields">
+        <fieldset class="form__section">
             <h3>{{__('Klantgegevens')}}</h3>
             <div class="field">
                 <p>{{$order->advertiser->name}}</p>
@@ -51,7 +51,7 @@
                 <p>{{$order->advertiser->postal_code}} {{$order->advertiser->city}}</p>
             </div>
         </fieldset>
-        <fieldset class="fields">
+        <fieldset class="form__section">
             <h3>{{__('Opdrachtgegevens')}}</h3>
             <div class="field">
                 <label>{{__('Opdrachtnummer:')}}</label>

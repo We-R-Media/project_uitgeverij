@@ -3,60 +3,33 @@
 @section('seo_title', $pageTitleSection)
 @section('content')
     <div class="page__wrapper">
-        <form action="{{ route('tax.store') }}" method="post" class="formContainer">
+        <form action="{{ route('tax.store') }}" method="post">
             @csrf
             @method('post')
-            <div class="grid__wrapper">
-                <fieldset class="fields base">
 
-                    <div class="field field-alt">
-                        <label for="country">{{__('Land')}}</label>
-                        <input type="text" name="country" id="">
-                        @error('country')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
+            <div class="form__wrapper">
+                <fieldset class="form__section">
+                    <div class="section__block">
+
+                        <x-form.select
+                            name="country"
+                            label="Land"
+                            :options="[
+                                'Nederland',
+                                'Duitsland',
+                            ]"
+                        />
+                        <x-form.input type="number" name="zero" label="BTW 0" />
+                        <x-form.input type="number" name="low" label="BTW laag" />
+                        <x-form.input type="number" name="high" label="BTW hoog" />
                     </div>
-
-                    <div class="field field-alt">
-                        <label for="zero">{{__('BTW 0')}}</label>
-                        <input type="number" name="zero" id="">
-                        @error('zero')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="field field-alt">
-                        <label for="low">{{__('BTW laag')}}</label>
-                        <input type="number" name="low" id="">
-                        @error('low')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="field field-alt">
-                        <label for="high">{{__('BTW hoog')}}</label>
-                        <input type="number" name="high" id="">
-                        @error('high')
-                            <span class="form__message" role="alert">
-                                <small>{{ $message }}</small>
-                            </span>
-                        @enderror
-                    </div>
-
+                </fieldset>
+                <fieldset class="form__section">
+                    {{-- --}}
                 </fieldset>
             </div>
 
-            <div class="ButtonGroup">
-                <div class="buttons">
-                    <button type="submit" class="button button--action">{{__('Opslaan')}}</button>
-                </div>
-            </div>
+            <x-form.submit />
         </form>
     </div>
 @endsection

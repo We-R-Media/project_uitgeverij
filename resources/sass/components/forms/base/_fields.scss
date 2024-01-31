@@ -1,0 +1,65 @@
+@use "../../../mixins" as mixin;
+@use "../../../base/colors" as color;
+
+.field__label {
+    font-size: clamp(1.2rem, 2vw, 1.4rem);
+    color: color.$black;
+    font-weight: 400;
+}
+
+.field {
+    @include mixin.flex;
+
+    &:not(:last-of-type()) {
+        margin-bottom: .5rem;
+    }
+
+    &.field--spacer {
+        margin-top: 3rem;
+    }
+    .input--clean {
+        font-size: clamp(1rem, 2vw, 1.2rem) !important;
+        min-height: initial !important;
+    }
+
+
+    &:not(.field--column) {
+        align-items: center;
+
+        & > .field__label {
+            flex: 0 0 15rem;
+        }
+    }
+
+    input:not([type='checkbox']):not([type='radio']):not([type=file]),
+    select,
+    textarea {
+        flex: 1;
+        border-bottom: 1px solid color.$primary;
+        font-size: clamp(1.2rem, 2vw, 1.4rem);
+        font-weight: 300;
+        appearance: none;
+        min-height: 2.2rem;
+        transition: background-color .2s linear;
+        padding: 0 1rem;
+    }
+    input:not([type="radio"]):not([type='checkbox']):not([type=file]) {
+        &:read-only {
+            cursor: not-allowed;
+            border-color: color.$gray-light !important;
+        }
+    }
+    input:not([type='checkbox']):not([type='radio']):not([type=file]),
+    select {
+        min-height: 2.2rem;
+    }
+    textarea {
+        min-height: 4rem;
+        background-color: color.$tertiary;
+        padding: .5rem;
+        border: 0;
+    }
+}
+.field--column {
+    @include mixin.flex($flex-direction: column);
+}
