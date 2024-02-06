@@ -15,5 +15,8 @@
         value="{{ old($name, $value) }}"
         {{ $extraAttributes }}
     />
+{{-- {{dump( old($name, $value) )}} --}}
+    {{-- {{dump($name)}}
+    {{dump($value)}} --}}
     <x-form.message :field-name="$name" />
 </div>

@@ -36,6 +36,12 @@
                     <x-form.input type="text" name="last_name" label="Achternaam" />
                     <x-form.input type="text" name="phone" label="Telefoonnummer" />
                     <x-form.input type="text" name="phone_mobile" label="Mobiel" />
+                    <x-form.input type="email" name="email" label="E-mailadres" />
+                </div>
+
+                <div class="section__block">
+                    <h3>{{__('Opmerkingen')}}</h3>
+                    <x-form.textarea name="comments" label="Opmerkingen" rows="10" cols="30" :extraAttributes="['maxlength' => 100]"></x-form.textarea>
                 </div>
             </fieldset>
         </div>

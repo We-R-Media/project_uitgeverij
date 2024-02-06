@@ -17,10 +17,10 @@
                             :options="$users->pluck('first_name', 'id')"
                         />
                         <x-form.input type="text" name="name" label="Projectcode" />
-                        <x-form.input type="text" name="format" label="Formaat" />
+                        <x-form.input type="text" name="paper_format" label="Formaat" />
                         <x-form.input type="text" name="release_name" label="Naam uitgave" />
                         <x-form.input type="text" name="edition_name" label="Editie" />
-                        <x-form.input type="number" name="print_edition" label="Oplage" />
+                        <x-form.input type="number" name="edition_amount" label="Oplage" />
                     </div>
                     <div class="section__block">
                         <h3>{{ __('Financieel') }}</h3>

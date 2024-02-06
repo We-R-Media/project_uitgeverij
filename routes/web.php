@@ -115,16 +115,17 @@ Route::group(['middleware' => ['auth']], function () {
             Route::get('/{advertiser_id}/verwijderen', 'destroy')->name('destroy');
             Route::get('/{advertiser_id}/herstellen', 'contacts__restore')->name('restore');
 
-            Route::get('{advertiser_id}/contacten/{contact_id}/verwijderen', 'contacts__destroy')->name('contacts.destroy');
+            Route::get('/{advertiser_id}/contacten/{contact_id}/verwijderen', 'contacts__destroy')->name('contacts.destroy');
             Route::get('/{advertiser_id}/herstellen', 'restore')->name('restore');
 
             Route::get('/{advertiser_id}/contacten', 'contacts')->name('contacts');
-            Route::post('{advertiser_id}/contacten/opslaan', 'contacts__store')->name('contacts.store');
+            Route::post('/{advertiser_id}/contacten/opslaan', 'contacts__store')->name ('contacts.store');
+            Route::post('/{advertiser_id}/contacten/{contact_id}/primair', 'contacts__primary')->name('contacts.primary');
 
             Route::get('/{advertiser_id}/orders', 'orders')->name('orders');
 
             Route::post('/store', 'store')->name('store');
-            Route::post('/{advertiser_id}/update', 'update')->name('update');
+            Route::put('/{advertiser_id}/update', 'update')->name('update');
 
             Route::post('/export', 'export')->name('export');
             Route::get('/import', 'import')->name('import');

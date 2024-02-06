@@ -61,9 +61,9 @@
                             @enderror
                         </div>
                         <div class="field">
-                            <label class="field__label" for="print_edition">{{ __('Oplage') }}</label>
-                           <input type="text" name="print_edition" value="{{ $project->print_edition }}" @can('isSeller') readonly @endcan>
-                            @error('print_edition')
+                            <label class="field__label" for="edition_amount">{{ __('Oplage') }}</label>
+                           <input type="text" name="edition_amount" value="{{ $project->edition_amount }}" @can('isSeller') readonly @endcan>
+                            @error('edition_amount')
                                 <span class="form__message" role="alert">
                                     <small>{{ $message }}</small>
                                 </span>

@@ -43,6 +43,7 @@ class Project extends BaseModel
         'distribution',
         'release_name',
         'edition_name',
+        'edition_amount',
         'print_edition',
         'paper_format',
         'pages_redaction',

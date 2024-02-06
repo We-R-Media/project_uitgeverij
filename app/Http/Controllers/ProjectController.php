@@ -110,13 +110,15 @@ class ProjectController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
     public function store(ProjectRequest $request)
     {
-        dd($request);
 
         try {
             DB::transaction(function () use ($request) {
+                
                 $validateData = $request->validated();
+                Project::create($validateData);
 
                 $publisherName = $request->input('release_name');
 
@@ -130,61 +132,22 @@ class ProjectController extends Controller
 
                 $project = Project::create($validateData);
 
-                $layout = Layout::find($request->input('layout'));
+                // $layout = Layout::find($request->input('layout'));
                 $project->layout()->associate($layout);
 
-                $tax = Tax::find($request->input('taxes'));
+                // $tax = Tax::find($request->input('taxes'));
                 $project->tax()->associate($tax);
 
-                $seller = User::find($request->input('seller'));
+                // $seller = User::find($request->input('seller'));
                 $project->user()->associate($seller);
 
-                dd($project);
 
-            $project = Project::create([
-                'name' => $request->input('name'),
-                'layout_id' => $layout_id,
-                'tax_id' => $tax_id,
-                'user_id' => $seller->id,
-                'publisher_id' => $publisher->id,
-                'designer' => $request->input('designer'),
-                'printer' => $request->input('printer'),
-                'client' => $request->input('client'),
-                'distribution' => $request->input('distribution'),
-                'release_name' => $publisherName,
-                'edition_name' => $request->input('edition_name'),
-                'print_edition' => $request->input('print_edition'),
-                'paper_format' => $request->input('paper_format'),
-                'pages_redaction' => $request->input('pages_redaction'),
-                'pages_adverts' => $request->input('pages_adverts'),
-                'pages_total' => $request->input('pages_total'),
-                'paper_type_cover' => $request->input('paper_type_cover'),
-                'paper_type_interior' => $request->input('paper_type_interior'),
-                'color_cover' => $request->input('color_cover'),
-                'color_interior' => $request->input('color_interior'),
-                'ledger' => $request->input('ledger'),
-                'journal' => $request->input('journal'),
-                'department' => $request->input('cost_place'),
-                'year' => $request->input('year'),
-                'revenue_goals' => MoneyHelper::convertToNumeric($request->input('revenue_goals')),
-                'comments' => $request->input('comments'),
-            ]);
+                $project->save();
+            });
 
-
-            $project->layout()->associate($layout);
-            $project->user()->associate($seller);
-            $project->tax()->associate($tax);
-            $project->publisher()->associate($publisher);
-            $project->save();
-
-        });
-
-        Alert::toast('Het project is succesvol aangemaakt', 'success');
-
-        return redirect()->route('projects.index');
-
+            Alert::toast('Het project is succesvol aangemaakt', 'success');
+            return redirect()->route('projects.index');
         } catch (\Exception $e) {
-            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('projects.index');
         }
@@ -197,6 +160,8 @@ class ProjectController extends Controller
 
             $newProject = $originalProject->replicate();
             $newProject->name = $this->generateReleaseName($originalProject->name);
+
+
             $newProject->save();
 
             $originalFormats = $originalProject->formats;
@@ -210,6 +175,7 @@ class ProjectController extends Controller
 
             return redirect()->route('projects.edit', $newProject->id);
         } catch (\Exception $e) {
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('projects.edit', $project_id);
         }
@@ -250,13 +216,13 @@ class ProjectController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $project_id)
+    public function update(ProjectRequest $request, string $project_id)
     {
+
         try {
-            DB::transaction(function () use ($request, $project_id) {
-
+            DB::transaction(function () use($project_id, $request) {
                 $project = Project::findOrFail($project_id);
-
+                $validatedData = $request->validated();
 
                 $layout_id = $request->input('layout');
                 $layout = Layout::findOrFail($layout_id);
@@ -264,47 +230,76 @@ class ProjectController extends Controller
                 $tax_id = $request->input('taxes');
                 $tax = Tax::findOrFail($tax_id);
 
-                Project::where('id', $project_id)->update([
-                    'name' => $request->input('name'),
-                    'layout_id' => $layout_id,
-                    'tax_id' => $tax_id,
-                    'designer' => $request->input('designer'),
-                    'printer' => $request->input('printer'),
-                    'client' => $request->input('client'),
-                    'distribution' => $request->input('distribution'),
-                    'release_name' => $request->input('release_name'),
-                    'edition_name' => $request->input('edition_name'),
-                    'print_edition' => $request->input('print_edition'),
-                    'paper_format' => $request->input('format'),
-                    'pages_redaction' => $request->input('pages_redaction'),
-                    'pages_adverts' => $request->input('pages_adverts'),
-                    'pages_total' => $request->input('pages_total'),
-                    'paper_type_cover' => $request->input('paper_type_cover'),
-                    'paper_type_interior' => $request->input('paper_type_interior'),
-                    'color_cover' => $request->input('color_cover'),
-                    'color_interior' => $request->input('color_interior'),
-                    'ledger' => $request->input('ledger'),
-                    'journal' => $request->input('journal'),
-                    'cost_place' => $request->input('cost_place'),
-                    // 'year' => $request->input('year'),
-                    'revenue_goals' => MoneyHelper::convertToNumeric($request->input('revenue_goals')),
-                    'comments' => $request->input('comments'),
-                    'deactivated_at' => $request->input('active') == 0 ? now() : null,
-                ]);
+                $project->update($validatedData);
+
                 $project->layout()->associate($layout);
                 $project->tax()->associate($tax);
+
                 $project->save();
             });
 
-            Alert::toast('Het project is successvol bijgewerkt', 'success');
-
-            session()->forget('edited_project_name');
+            Alert::toast('Het project is succesvol bijgewerkt', 'success');
             return redirect()->route('projects.index');
+
         } catch (\Exception $e) {
             dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
-            return redirect()->route('projects.index');
+            return redirect()->route('projects.edit', $project_id);
         }
+
+        // try {
+        //     DB::transaction(function () use ($request, $project_id) {
+
+        //         $project = Project::findOrFail($project_id);
+
+
+        //         $layout_id = $request->input('layout');
+        //         $layout = Layout::findOrFail($layout_id);
+
+        //         $tax_id = $request->input('taxes');
+        //         $tax = Tax::findOrFail($tax_id);
+
+        //         Project::where('id', $project_id)->update([
+        //             'name' => $request->input('name'),
+        //             'layout_id' => $layout_id,
+        //             'tax_id' => $tax_id,
+        //             'designer' => $request->input('designer'),
+        //             'printer' => $request->input('printer'),
+        //             'client' => $request->input('client'),
+        //             'distribution' => $request->input('distribution'),
+        //             'release_name' => $request->input('release_name'),
+        //             'edition_name' => $request->input('edition_name'),
+        //             'edition_amount' => $request->input('edition_amount'),
+        //             'paper_format' => $request->input('format'),
+        //             'pages_redaction' => $request->input('pages_redaction'),
+        //             'pages_adverts' => $request->input('pages_adverts'),
+        //             'pages_total' => $request->input('pages_total'),
+        //             'paper_type_cover' => $request->input('paper_type_cover'),
+        //             'paper_type_interior' => $request->input('paper_type_interior'),
+        //             'color_cover' => $request->input('color_cover'),
+        //             'color_interior' => $request->input('color_interior'),
+        //             'ledger' => $request->input('ledger'),
+        //             'journal' => $request->input('journal'),
+        //             'cost_place' => $request->input('cost_place'),
+        //             // 'year' => $request->input('year'),
+        //             'revenue_goals' => MoneyHelper::convertToNumeric($request->input('revenue_goals')),
+        //             'comments' => $request->input('comments'),
+                    // 'deactivated_at' => $request->input('active') == 0 ? now() : null,
+        //         ]);
+        //         $project->layout()->associate($layout);
+        //         $project->tax()->associate($tax);
+        //         $project->save();
+        //     });
+
+        //     Alert::toast('Het project is successvol bijgewerkt', 'success');
+
+        //     session()->forget('edited_project_name');
+        //     return redirect()->route('projects.index');
+        // } catch (\Exception $e) {
+        //     dd($e);
+        //     Alert::toast('Er is iets fout gegaan', 'error');
+        //     return redirect()->route('projects.index');
+        // }
     }
 
     /**
@@ -406,5 +401,11 @@ class ProjectController extends Controller
         $selectedProjectIds = $request->input('selected_values', []);
         return Excel::download(new ProjectExport($selectedProjectIds), 'projects.xlsx');
         // return Excel::stream(new ProjectExport($selectedProjectIds), 'projects.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+    }
+
+    private function generateReleaseName($baseName)
+    {
+        $copyCount = Project::where('name', 'like', $baseName . ' (Kopie%)')->count();
+        return $baseName . ($copyCount > 0 ? ' (Kopie ' . $copyCount . ')' : ' (Kopie)');
     }
 }

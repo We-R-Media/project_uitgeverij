@@ -4,8 +4,13 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+use App\AppHelpers\MoneyHelper;
+use App\AppHelpers\PostalCodeHelper;
+
+
 class AdvertiserRequest extends FormRequest
 {
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -21,20 +26,41 @@ class AdvertiserRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required|string|unique:advertisers|max:25',
-            'email' => 'required|string|unique:advertisers|max:25',
-            'po_box' => 'required|string|max:25',
-            'postal_code' => [
-                'required',
-                'regex:/^[1-9][0-9]{3} ?(?!sa|sd|ss|SA|SD|SS)[A-Z]{2}$/i',
+        $alt_invoice = ($this->input('alt_invoice'));
+
+        dd($alt_invoice);
+        // Efficienter maken fix fix fix
+        return  [
+            'first_name' => 'nullable|string|max:25',
+            'last_name' => 'required|string|max:25',
+            'salutation' => 'required|string|max:25',
+            'initial' => 'required|string|max:25',
+            'name' => 'required|unique:advertisers|string|max:25',
+            'email' => 'required|unique:advertisers|string|max:25',
+            'address' => 'required|string|max:25',
+            'postal_code' => 'required|string|regex:/^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/',                      
+            'po_box' => 'nullable|string|max:100',
+            'comments' => 'nullable|max:255',
+            'city' => 'nullable|string|max:50',
+            'province' => 'nullable|string|max:50',
+            'phone_mobile' => 'nullable|unique:advertisers|string',
+            'phone' => 'nullable|unique:advertisers|string',
+            'comments' => 'nullable|string|max:255',
+            'credit_limit' => [
+                function ($attribute, $value, $fail) {
+                    $numericValue = MoneyHelper::convertToNumeric($value);
+
+                    if (!is_numeric($numericValue)) {
+                        $fail('The '.$attribute.' must be a valid numeric value.');
+                    }
+                },
             ],
-            'city' => 'required|string|max:25',
-            'province' => 'required|string|max:25',
-            'phone_mobile' => 'string|required|unique:advertisers',
-            'phone' => 'string|required|unique:advertisers',
-            'contact_id' => 'integer|unique:advertisers',
-            'comments' => 'required|string|max:25',
+            'alt_name' => 'required_if:alt_invoice,1|string|max:25',
+            'alt_email' => 'required_if:alt_invoice,1|string|max:25',
+            'alt_city' => 'required_if:alt_invoice,1|string|max:25',
+            'alt_postal_code' => 'required_if:alt_invoice,1|string|regex:/^[1-9][0-9]{3}\s?[a-zA-Z]{2}$/',                      
+            'alt_province' => 'required_if:alt_invoice,1|string|max:25',
+            'alt_po_box' => 'required_if:alt_invoice,1|string|max:100',
         ];
     }
 }

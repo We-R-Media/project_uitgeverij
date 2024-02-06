@@ -17,7 +17,6 @@ class Contact extends BaseModel
      * @var array<int, string>
      */
     protected $fillable = [
-        'id',
         'salutation',
         'first_name',
         'last_name',
@@ -27,6 +26,7 @@ class Contact extends BaseModel
         'phone',
         'email',
         'role',
+        'comments'
     ];
 
     /**

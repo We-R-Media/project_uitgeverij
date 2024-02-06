@@ -191,6 +191,7 @@ class OrderController extends Controller
 
             return redirect()->route('orders.edit', $order_id);
         } catch (\Exception $e){
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('orders.index');
         }

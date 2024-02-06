@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('title')->nullable();
             $table->string('first_name')->nullable();
             $table->string('last_name');
+            $table->string('full_name')->nullable();
             $table->enum('salutation', ['Dhr.', 'Mw.'])->nullable();
             $table->char('initial')->nullable();
             $table->string('name');
@@ -29,6 +30,16 @@ return new class extends Migration
             $table->double('credit_limit')->nullable()->default(null);
             $table->string('province')->nullable();
             $table->longText('comments')->nullable();
+
+            $table->string('alt_name')->nullable()->default(null);
+            $table->string('alt_email')->nullable()->default(null);
+            $table->string('alt_city')->nullable()->default(null);
+            $table->string('alt_postal_code')->nullable()->default(null);
+            $table->string('alt_province')->nullable()->default(null);
+            $table->string('alt_po_box')->nullable()->default(null);
+
+            $table->dateTime('alt_address_at')->nullable()->default(null);
+        
             $table->date('deactivated_at')->nullable()->default(null);
             $table->date('blacklisted_at')->nullable()->default(null);
             $table->softDeletes();

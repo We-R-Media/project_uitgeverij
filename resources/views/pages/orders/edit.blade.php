@@ -24,7 +24,7 @@
                 @if( $order->notification_sent_at && !$order->seller_approved_at )
                     <div class="section__block">
                         <div class="message__box">
-                            <p>Order wacht op goedkeuring</p>
+                            <p>{{__('Order wacht op goedkeuring')}}</p>
                         </div>
                     </div>
                 @endif

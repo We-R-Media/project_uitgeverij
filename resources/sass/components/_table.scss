@@ -78,7 +78,8 @@
                 transition: all 0.4s ease;
                 transform: translateX(10%);
 
-                a {
+                a, 
+                button {
                     font-size: 1rem;
                     padding: .5rem;
 
@@ -86,6 +87,7 @@
                     &:focus,
                     &:active {
                         color: color.$primary;
+                        cursor: pointer;
                     }
                 }
 

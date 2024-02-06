@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\AppHelpers\PostalCodeHelper;
 use App\AppHelpers\MoneyHelper;
 use App\Http\Requests\AdvertiserRequest;
+use App\Http\Requests\ContactRequest;
 use App\Models\Advertiser;
 use App\Models\Contact;
+use Carbon\Carbon;
 
 use App\Services\SearchService;
-use App\Services\AdvertiserService;
 
 use Illuminate\Contracts\View\View;
 
@@ -34,14 +35,12 @@ use App\Http\Resources\AdvertiserResource;
 class AdvertiserController extends Controller
 {
     protected $searchService;
-    protected $advertiserService;
 
     private static $page_title_section = 'Relaties';
 
-    public function __construct(SearchService $searchService, AdvertiserService $advertiserService)
+    public function __construct(SearchService $searchService)
     {
         $this->searchService = $searchService;
-        $this->advertiserService = $advertiserService;
 
         $this->subpages = [
             'Adverteerder' => 'advertisers.edit',
@@ -141,13 +140,54 @@ class AdvertiserController extends Controller
      */
     public function store(AdvertiserRequest $request)
     {
-        $advertiser_id = $this->advertiserService->storeAdvertiser($request);
+        try {
 
-        if ($advertiser_id !== null) {
-            return redirect()->route('advertisers.edit', $advertiser_id);
-        } else {
+            $advertiser_id = null;
+
+
+            DB::transaction(function () use ($request, &$advertiser_id) {
+                
+                // Validation for advertisers create form
+                $validatedData = $request->validated();
+
+                // Checks if the postal code passed the regex and converts this to the proper format
+                if($validatedData['postal_code']) {
+                    $formattedPostalCode = PostalCodeHelper::formatPostalCode($validatedData['postal_code']);
+                }
+
+                // Sets the formatted field as postal code
+
+                // Rest of the query
+                $advertiser = Advertiser::create($validatedData);
+
+                $advertiser->postal_code = $formattedPostalCode;
+    
+                // Saves the advertiser and retrieves it's id.
+                $advertiser->save();
+
+                $advertiser_id = $advertiser->id;
+
+
+                $contact = Contact::firstOrNew([
+                    'salutation' => $advertiser->salutation,
+                    'initial' => $advertiser->initial,
+                    'role' => 1,
+                    'email' => $advertiser->email,
+                    'first_name' => $advertiser->first_name,
+                    'last_name' => $advertiser->last_name,
+                    'phone' => $advertiser->phone,
+                ]);
+
+                $advertiser->contacts()->save($contact);
+            
+            Alert::toast('Relatie is succesvol aangemaakt', 'success');
+            });
+        } catch (\Exception $e) {
+            dd($e);
+            Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('advertisers.index');
         }
+            return redirect()->route('advertisers.edit', $advertiser_id);
     }
 
     /**
@@ -176,40 +216,76 @@ class AdvertiserController extends Controller
      */
     public function update(AdvertiserRequest $request, string $advertiser_id)
     {
-        $advertiser_id = $this->advertiserService->updateAdvertiser($request, $advertiser_id);
-
-
-        // Apart zetten in service bestand
-
-        $validatedData = $request->validated();
-
-        try{
-            DB::transaction(function () use($validatedData, $advertiser_id) {
-                Advertiser::where('id', $advertiser_id)->update(
-                    $validatedData, [
-                    'blacklisted_at' => $validatedData->input('blacklisted') == 1 ? now() : null,
-                    'deactivated_at' => $validatedData->input('active') == 0 ? now() : null,
+        try {
+            DB::transaction(function () use($advertiser_id, $request) {
+             $advertiser = Advertiser::findOrFail($advertiser_id);
+            
+            if ($alt_invoice == 1) {
+                $advertiser->update(['alt_address_at' => Carbon::now()]);
+            } else if ($alt_invoice == 0) {
+                $advertiser->update([
+                    'alt_address_at' => null,
+                    'alt_name' => null,
+                    'alt_po_box' => null,
+                    'alt_postal_code' => null,
+                    'alt_city' => null,
+                    'alt_province' => null,
+                    'alt_email' => null,
                 ]);
+            }
 
-                Contact::where('id', $advertiser_id)
-                    ->orWhere('email', $validatedData->email)
-                    ->first()
-                    ->update([
-                        'salutation' => $validatedData->salutation,
-                        'initial' => $validatedData->initial,
-                        'role' => 1,
-                        'email' => $validatedData->email,
-                        'first_name' => $validatedData->first_name,
-                        'last_name' => $validatedData->last_name,
-                        'phone' => $validatedData->phone,
-                    ]);
+            $validatedData = $request->validated();
 
-            });
+            if ($validatedData['postal_code']) {
+                $formattedPostalCode = PostalCodeHelper::formatPostalCode($validatedData['postal_code']);
+            }
+
+            if ($validatedData['alt_postal_code']) {
+                $formattedAltPostalCode = PostalCodeHelper::formatPostalCode($validatedData['alt_postal_code']);
+            }
+
+            $validatedData['alt_postal_code'] = $formattedAltPostalCode;
+            $validatedData['postal_code'] = $formattedPostalCode;
+
+            $advertiser->update($validatedData);
+
+
+
+
+
+
+            Contact::where('id', $advertiser_id)
+            ->orWhere('email', $validatedData['email'])
+            ->first()
+            ->update([
+                'salutation' => $validatedData['salutation'],
+                'initial' => $validatedData['initial'],
+                'email' => $validatedData['email'],
+                'first_name' => $validatedData['first_name'],
+                'last_name' => $validatedData['last_name'],
+                'phone' => $validatedData['phone'],
+            ]);
+        });
+
+
+
+        // try{
+
+        //     DB::transaction(function () use($validatedData, $advertiser_id) {
+        //         Advertiser::where('id', $advertiser_id)->update(
+        //             $validatedData, [
+        //             'blacklisted_at' => $validatedData->input('blacklisted') == 1 ? now() : null,
+        //             'deactivated_at' => $validatedData->input('active') == 0 ? now() : null,
+        //         ]);
+
+
+        //     });
 
             Alert::toast('De relatie is succesvol bijgewerkt', 'success');
 
             return redirect()->route('advertisers.index');
         } catch (\Exception $e){
+            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
 
         if ($advertiser_id !== null) {
@@ -226,11 +302,14 @@ class AdvertiserController extends Controller
      */
     public function destroy(string $advertiser_id)
     {
-        $advertiser_id = $this->advertiserService->deleteAdvertiser($advertiser_id);
+        $advertiser = Advertiser::findOrFail($advertiser_id);
 
-        if($advertiser_id !== null) {
-            return redirect()->route('advertisers.index');
+        if($advertiser) {
+            $advertiser->delete();
+
+            Alert::toast('De relatie is verwijderd.', 'info');
         }
+        return redirect()->route('advertisers.index');
     }
 
         /**
@@ -241,7 +320,8 @@ class AdvertiserController extends Controller
      */
     public function restore(string $advertiser_id)
     {
-        $advertiser_id = $this->advertiserService->restoreAdvertiser($advertiser_id);
+        $advertiser = Advertiser::onlyTrashed()->findOrFail($advertiser_id);
+        $advertiser->restore();
 
         if($advertiser_id !== null) {
             return redirect()->route('advertisers.index');
@@ -263,32 +343,26 @@ class AdvertiserController extends Controller
         ]);
     }
 
-    public function contacts__store(Request $request, string $advertiser_id)
+
+
+    public function contacts__store(ContactRequest $request, string $advertiser_id)
     {
         try {
             DB::transaction(function () use ($request, $advertiser_id) {
                 $advertiser = Advertiser::findOrFail($advertiser_id);
 
-                $contact = new Contact([
-                    'salutation' => $request->input('salutation'),
-                    'initial' => $request->input('initial'),
-                    'preposition' => $request->input('preposition'),
-                    'first_name' => $request->input('first_name'),
-                    'last_name' => $request->input('last_name'),
-                    'phone' => $request->input('phone'),
-                    'email' => $request->input('email'),
-                    'comments' => $request->input('comments'),
-                    'role' => $request->input('role'),
-                ]);
-
+                // $validatedData = $request->validated();
+                $validatedData = $request->validated();
+                $contact = Contact::create($validatedData);
                 $advertiser->contacts()->save($contact);
             });
 
-            Alert::toast('De relatie is succesvol bijgewerkt', 'success');
+            Alert::toast('Contact is succesvol aangemaakt', 'success');
 
             return redirect()->route('advertisers.contacts', $advertiser_id);
         } catch (\Exception $e){
-            Alert::toast('Er is iets fout gegaan', 'error');
+            dd($e);
+            Alert::toast('Er is iets fout gegaan' . $e, 'error');
 
             return redirect()->route('advertisers.index');
         }
@@ -305,6 +379,41 @@ class AdvertiserController extends Controller
             Alert::toast('De contactpersoon is verwijderd', 'info');
         }
         return redirect()->route('advertisers.contacts', $advertiser->id);
+    }
+
+    /**
+     * Assign primary role to contact
+     *
+     * @param string $contact_id
+     * @return void
+     */    
+    public function contacts__primary(string $advertiser_id, string $contact_id)
+    {
+        $advertiser = Advertiser::findOrFail($advertiser_id);
+        $contact = Contact::findOrFail($contact_id);
+
+
+        try {
+            
+            $contact->where('role', 1)->update([
+                'role' => 0,
+            ]);
+
+            DB::transaction(function () use ($advertiser, $contact) {
+                Contact::where('advertiser_id', $advertiser->id)
+                    ->where('role', 1)
+                    ->update(['role' => null]);
+    
+                $contact->update(['role' => 1]);
+            });
+
+            Alert::toast('De contactpersoon is primair gemaakt', 'info');
+            return redirect()->route('advertisers.contacts', $advertiser->id);
+
+        } catch (\Exception $e) {
+            Alert::toast('Er is iets fout gegaan', 'error');
+            return redirect()->route('advertisers.contacts', $advertiser->id);
+        }
     }
 
             /**

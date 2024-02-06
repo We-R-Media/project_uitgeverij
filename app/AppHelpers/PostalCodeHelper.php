@@ -26,12 +26,13 @@ class PostalCodeHelper {
      */
     public static function formatPostalCode($postalCode)
     {
-        if (strpos($postalCode, ' ') == false) {
+        // Ensure that the postal code is not empty
+        if (!empty($postalCode) && strpos($postalCode, ' ') === false) {
             $numbers = substr($postalCode, 0, 4);
             $letters = substr($postalCode, 4, 2);
             return $numbers . ' ' . strtoupper($letters);
         }
-
+    
         return $postalCode;
     }
 }

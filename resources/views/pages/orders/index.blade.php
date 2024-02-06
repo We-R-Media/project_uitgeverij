@@ -14,7 +14,7 @@
         <div class="items__table">
             <div class="items__row row--head">
                 <div class="item--cell">
-                    {{__('Ordernummer')}}
+                    {{__('Uitgave')}}
                 </div>
                 <div class="item--cell">
                     {{__('Bedrijfsnaam')}}
@@ -34,7 +34,7 @@
                     <div class="item--cell">
                         @if ( $order->advertiser )
                             <a href="{{ route('orders.edit', $order->id) }}" class="">
-                                {{ $order->id }}
+                                {{ $order->publisher->name }}
                             </a>
                         @endif
                     </div>

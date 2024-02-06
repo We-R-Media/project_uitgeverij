@@ -71,7 +71,7 @@
             </div>
         </div> --}}
 
-        <div class="edition-field">
+        {{-- <div class="edition-field">
             <label for="format">{{__('Formaat')}}</label>
             <div class="dropdown">
                 <select wire:model="selectedFormatId" name="format_id" class="select2" wire:change="updateSelectedFormatId">
@@ -99,6 +99,7 @@
 
         <div class="edition-field">
             <button type="submit" name="submitType" value="orderlines" class="button button--primary">{{ __('Toevoegen') }}</button>
-        </div>
+
+        </div> --}}
     @endif
 </fieldset>

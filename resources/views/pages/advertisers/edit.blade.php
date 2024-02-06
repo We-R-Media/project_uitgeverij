@@ -13,11 +13,12 @@
     </div>
     <form action="{{ route('advertisers.update', $advertiser->id) }}" method="post">
         @csrf
-        @method('post')
+        @method('put')
 
         <div class="form__wrapper">
             <fieldset class="form__section">
                 <div class="section__block">
+                    <h3>{{__('Relatiegegevens')}}</h3>
                     <x-form.input type="text" name="advertiser_id" label="Klantnummer" :value="$advertiser->id" :extraAttributes="'readonly'" />
                     <x-form.input type="text" name="name" label="Bedrijfsnaam" :value="$advertiser->name" />
 
@@ -30,9 +31,13 @@
                     <x-form.input type="text" name="initial" label="Voorletter" :value="$advertiser->initial" />
                     <x-form.input type="text" name="first_name" label="Voornaam" :value="$advertiser->first_name" />
                     <x-form.input type="text" name="last_name" label="Achternaam" :value="$advertiser->last_name" />
-                    <x-form.input type="text" name="email" label="E-mailadres" :value="$advertiser->phone_mobile" />
+                    <x-form.input type="text" name="email" label="E-mailadres" :value="$advertiser->email" />
                     <x-form.input type="text" name="phone" label="Telefoonnummer" :value="$advertiser->phone" />
                     <x-form.input type="text" name="phone_mobile" label="Mobiel" :value="$advertiser->phone_mobile" />
+                    <x-form.input type="text" name="postal_code" label="Postcode" :value="$advertiser->postal_code" />
+                        <x-form.input type="text" name="address" label="Adres" :value="$advertiser->address" />
+                    <x-form.input type="text" name="city" label="Woonplaats" :value="$advertiser->city" />
+                    <x-form.input type="text" name="province" label="Provincie" :value="$advertiser->province" />
 
                     @if ($advertiser->credit_limit && !is_countable($advertiser->credit_limit))
                         <x-form.input type="text" name="credit" label="Kredietlimiet" />
@@ -77,19 +82,25 @@
                     <div class="field">
                         <label class="field__label">{{__('Afwijkend factuuradres')}}</label>
                         <div class="radio__group">
-                            <input type="radio" value="0" name="alt_invoice" id="alt_invoice_true" onclick="toggleFormDisplay(0)" @if($advertiser->alt_invoice) checked @endif>
+                            <input type="radio" value="1" name="alt_invoice" id="alt_invoice_true" onclick="toggleFormDisplay(1)" @if($advertiser->alt_invoice == 1 || $advertiser->alt_address_at !== null) checked @endif>
                             <label class="field__label" for="alt_invoice_true">{{__('Ja')}}</label>
-                            <input type="radio" value="1" name="alt_invoice" id="alt_invoice_false" onclick="toggleFormDisplay(1)" @if($advertiser->alt_invoice) checked @endif>
-                            <label class="field__label" for="alt_invoice_false">{{__('Nee')}}</label>
+                                                                
+                            <input type="radio" value="0" name="alt_invoice" id="alt_invoice_false" onclick="toggleFormDisplay(0)" @if($advertiser->alt_invoice == 0 && $advertiser->alt_address_at === null) checked @endif>
+                            <label class="field__label" for="alt_invoice_false">{{__('Nee')}}</label>                            
                         </div>
-                    </div>
+                    </div>                    
 
-                    <x-form.input type="text" name="name" label="Bedrijfsnaam" />
-                    <x-form.input type="text" name="po_box" label="Postadres" />
-                    <x-form.input type="text" name="postal_code" label="Postcode" />
-                    <x-form.input type="text" name="city" label="Woonplaats" />
-                    <x-form.input type="text" name="province" label="Provincie" />
-                    <x-form.input type="email" name="email" label="E-mailadres" />
+                    <x-form.input type="text" name="alt_name" :value="($advertiser->alt_address_at === null || $advertiser->alt_address_at === 0) ? null : $advertiser->alt_name" label="Bedrijfsnaam" />
+                    <x-form.input type="text" name="alt_po_box" :value="($advertiser->alt_address_at === null || $advertiser->alt_address_at === 0) ? null : $advertiser->alt_po_box" label="Postadres" />
+                    <x-form.input type="text" name="alt_postal_code" :value="($advertiser->alt_address_at === null || $advertiser->alt_address_at === 0) ? null : $advertiser->alt_postal_code" label="Postcode" />
+                    <x-form.input type="text" name="alt_city" :value="($advertiser->alt_address_at === null || $advertiser->alt_address_at === 0) ? null : $advertiser->alt_city" label="Woonplaats" />
+                    <x-form.input type="text" name="alt_province" :value="($advertiser->alt_address_at === null || $advertiser->alt_address_at === 0) ? null : $advertiser->alt_province" label="Provincie" />
+                    <x-form.input type="email" name="alt_email" :value="($advertiser->alt_address_at === null || $advertiser->alt_address_at === 0) ? null : $advertiser->alt_email" label="E-mailadres" />           
+                </div>
+
+                <div class="section__block">
+                    <h3>{{__('Opmerkingen')}}</h3>
+                    <x-form.textarea name="comments" value=" {{ old('comments') }}" label="Opmerkingen" rows="10" cols="30" :extraAttributes="['maxlength' => 100]"></x-form.textarea>
                 </div>
             </fieldset>
         </div>

@@ -26,7 +26,7 @@ return new class extends Migration
             $table->string('distribution')->nullable();
             $table->string('release_name');
             $table->string('edition_name');
-            $table->string('print_edition');
+            $table->string('edition_amount');
             $table->string('paper_format');
             $table->integer('pages_redaction')->nullable();
             $table->integer('pages_adverts')->nullable();
@@ -38,7 +38,7 @@ return new class extends Migration
             $table->string('color_interior')->nullable();
             $table->integer('ledger')->nullable();
             $table->integer('journal')->nullable();
-            $table->integer('department');
+            $table->integer('cost_place');
             $table->string('year')->nullable();
             $table->double('revenue_goals')->nullable();
             $table->longText('comments')->nullable();
