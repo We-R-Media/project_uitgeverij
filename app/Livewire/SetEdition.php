@@ -44,7 +44,7 @@ class SetEdition extends Component
         $this->projectVisible = !$this->projectVisible;
 
         if($this->projectVisible) {
-            $this->projectCollection = Project::where('publisher_id', $this->order->publisher_id)->get();
+            $this->projectCollection = Project::where('publisher_id', $this->order->publisher_id)->orderBy('name')->get();
             $this->projectVisible = true;
 
             $this->selectedProjectId = $this->projectCollection->first()->id;

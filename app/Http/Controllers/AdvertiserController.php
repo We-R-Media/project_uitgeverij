@@ -183,7 +183,6 @@ class AdvertiserController extends Controller
             Alert::toast('Relatie is succesvol aangemaakt', 'success');
             });
         } catch (\Exception $e) {
-            dd($e);
             Alert::toast('Er is iets fout gegaan', 'error');
             return redirect()->route('advertisers.index');
         }
@@ -219,32 +218,17 @@ class AdvertiserController extends Controller
         try {
             DB::transaction(function () use($advertiser_id, $request) {
              $advertiser = Advertiser::findOrFail($advertiser_id);
-            
-            if ($alt_invoice == 1) {
-                $advertiser->update(['alt_address_at' => Carbon::now()]);
-            } else if ($alt_invoice == 0) {
-                $advertiser->update([
-                    'alt_address_at' => null,
-                    'alt_name' => null,
-                    'alt_po_box' => null,
-                    'alt_postal_code' => null,
-                    'alt_city' => null,
-                    'alt_province' => null,
-                    'alt_email' => null,
-                ]);
-            }
 
+            $request->merge(['advertiser_id' => $advertiser->id]); // Pass the advertiser ID to the request
             $validatedData = $request->validated();
+
+            // dd($validatedData);
 
             if ($validatedData['postal_code']) {
                 $formattedPostalCode = PostalCodeHelper::formatPostalCode($validatedData['postal_code']);
             }
 
-            if ($validatedData['alt_postal_code']) {
-                $formattedAltPostalCode = PostalCodeHelper::formatPostalCode($validatedData['alt_postal_code']);
-            }
-
-            $validatedData['alt_postal_code'] = $formattedAltPostalCode;
+            // $validatedData['alt_postal_code'] = $formattedAltPostalCode;
             $validatedData['postal_code'] = $formattedPostalCode;
 
             $advertiser->update($validatedData);
@@ -265,21 +249,13 @@ class AdvertiserController extends Controller
                 'last_name' => $validatedData['last_name'],
                 'phone' => $validatedData['phone'],
             ]);
+
+            Advertiser::where('id', $advertiser_id)->update([
+                'blacklisted_at' => $request->input('blacklisted') == 1 ? now() : null,
+                'deactivated_at' => $request->input('active') == 0 ? now() : null,
+            ]);
+            
         });
-
-
-
-        // try{
-
-        //     DB::transaction(function () use($validatedData, $advertiser_id) {
-        //         Advertiser::where('id', $advertiser_id)->update(
-        //             $validatedData, [
-        //             'blacklisted_at' => $validatedData->input('blacklisted') == 1 ? now() : null,
-        //             'deactivated_at' => $validatedData->input('active') == 0 ? now() : null,
-        //         ]);
-
-
-        //     });
 
             Alert::toast('De relatie is succesvol bijgewerkt', 'success');
 

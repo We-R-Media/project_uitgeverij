@@ -18,8 +18,8 @@
 
     <!-- Scripts -->
     @vite(['resources/sass/main.scss', 'resources/js/app.js'])
-    <script src="{{ asset('js/alt_address_toggle.js') }}"></script>
-    <script src="{{ asset('js/checkbox_data.js') }}"></script>
+    <script src="{{ asset('js/alt_address_toggle.js') }}" defer></script>
+    <script src="{{ asset('js/checkbox_data.js') }}" defer></script>
 
     @livewireStyles
 </head>

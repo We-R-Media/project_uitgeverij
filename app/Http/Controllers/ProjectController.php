@@ -116,32 +116,24 @@ class ProjectController extends Controller
 
         try {
             DB::transaction(function () use ($request) {
-                
                 $validateData = $request->validated();
-                Project::create($validateData);
-
+    
                 $publisherName = $request->input('release_name');
-
+    
                 Publisher::where('name', $publisherName)->firstOrCreate([
                     'name' => $publisherName,
                 ]);
-
+    
                 $layout = Layout::find($request->input('layout'));
                 $seller = User::find($request->input('seller'));
                 $tax = Tax::find($request->input('taxes'));
-
-                $project = Project::create($validateData);
-
-                // $layout = Layout::find($request->input('layout'));
+    
+                $project = new Project($validateData);
+    
                 $project->layout()->associate($layout);
-
-                // $tax = Tax::find($request->input('taxes'));
                 $project->tax()->associate($tax);
-
-                // $seller = User::find($request->input('seller'));
                 $project->user()->associate($seller);
-
-
+    
                 $project->save();
             });
 

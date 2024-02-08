@@ -14,7 +14,7 @@
                         <x-form.select
                             name="seller"
                             label="Verkoper"
-                            :options="$users->pluck('first_name', 'id')"
+                            :options="$users->pluck('full_name', 'id')"
                         />
                         <x-form.input type="text" name="name" label="Projectcode" />
                         <x-form.input type="text" name="paper_format" label="Formaat" />

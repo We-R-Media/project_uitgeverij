@@ -31,6 +31,7 @@ return new class extends Migration
             $table->string('province')->nullable();
             $table->longText('comments')->nullable();
 
+            $table->string('alt_address_at')->nullable()->default(null);
             $table->string('alt_name')->nullable()->default(null);
             $table->string('alt_email')->nullable()->default(null);
             $table->string('alt_city')->nullable()->default(null);
@@ -38,7 +39,7 @@ return new class extends Migration
             $table->string('alt_province')->nullable()->default(null);
             $table->string('alt_po_box')->nullable()->default(null);
 
-            $table->dateTime('alt_address_at')->nullable()->default(null);
+            // $table->dateTime('alt_address_at')->nullable()->default(null);
         
             $table->date('deactivated_at')->nullable()->default(null);
             $table->date('blacklisted_at')->nullable()->default(null);

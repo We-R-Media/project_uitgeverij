@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('size');
             $table->string('measurement')->nullable();
             $table->string('ratio')->nullable();
-            $table->double('price');
+            $table->double('price')->nullable();
             $table->double('price_with_tax');
             $table->softDeletes();
             $table->timestamps();

@@ -40,13 +40,14 @@ class Advertiser extends BaseModel
         'contact_id',
         'deactivated_at',
         'blacklisted_at',
+
+        'alt_address_at',
         'alt_name',
         'alt_email',
         'alt_city',
         'alt_postal_code',
         'alt_province',
         'alt_po_box',
-        'alt_address_at',
     ];
 
 

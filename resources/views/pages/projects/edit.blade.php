@@ -22,7 +22,7 @@
 
                         <div class="field">
                             <label class="field__label">{{ __('Verkoper') }}</label>
-                            <input type="text" value="{{$project->user->first_name}} {{$project->user->last_name}}" readonly>
+                            <input type="text" :value="{{$project->user->first_name}} {{$project->user->last_name}}" readonly>
                         </div>
                         <div class="field">
                             <label class="field__label" for="name">{{ __('Projectcode') }}</label>

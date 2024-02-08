@@ -1,4 +1,5 @@
 @props([
+    'model' => null,
     'type' => 'text',
     'name',
     'label',
@@ -10,13 +11,11 @@
 <div class="field {{ $column ? 'field--column' : '' }}">
     <x-form.label :text="$label" />
     <input
+        wire:model="{{ $model }}"
         type="{{ $type }}"
         name="{{ $name }}"
         value="{{ old($name, $value) }}"
         {{ $extraAttributes }}
     />
-{{-- {{dump( old($name, $value) )}} --}}
-    {{-- {{dump($name)}}
-    {{dump($value)}} --}}
     <x-form.message :field-name="$name" />
 </div>

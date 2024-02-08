@@ -159,8 +159,9 @@ class OrderController extends Controller
                 $contact_id = $request->input('contact');
                 $contact = Contact::findOrFail($contact_id);
 
-                $publisher_id = $request->input('publisher');
+                $publisher_id = $request->input('release_name');
                 $publisher = Publisher::findOrFail($publisher_id);
+
 
                 $user_id = Auth::user()->id;
                 $user = User::findOrFail($user_id);
@@ -170,8 +171,6 @@ class OrderController extends Controller
                 $token = Str::random(60);
 
                 $order = Order::create([
-                    'advertiser_id' => $advertiser_id,
-                    'user_id' => $user_id,
                     'order_date' => now(),
                     'order_total_price' => 0.0,
                     'validation_token' => $token,

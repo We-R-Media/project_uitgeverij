@@ -23,7 +23,7 @@ class ProjectRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|unique:projects|string',
             'designer' => 'nullable|string',
             'printer' => 'nullable|string',
             'client' => 'nullable|string',

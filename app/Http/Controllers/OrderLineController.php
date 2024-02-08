@@ -125,7 +125,7 @@ class OrderLineController extends Controller
                 $orderline->order->updateOrderTotalPrice();
 
                 Log::info('Orderregel succesvol verwijderd: ' . $orderline->order->id);
-                Alert::toast('Orderregel succesvol verwijderd', 'success');
+                Alert::toast('Orderregel succesvol verwijderd', 'info');
 
                 return redirect()->route('orders.edit', $order->id);
             }

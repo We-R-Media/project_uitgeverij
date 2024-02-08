@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('title');
             $table->dateTime('order_date');
             $table->foreignId('user_id')->nullable();
-            // $table->foreignId('project_id')->nullable();
             $table->foreignId('advertiser_id')->nullable();
             $table->foreignId('contact_id')->nullable();
             $table->foreignId('publisher_id')->nullable();
