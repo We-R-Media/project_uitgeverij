@@ -29,6 +29,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //         Route::post('/', 'send__data')->name('api-retrieve');
 //     });
 
+// Route::name('invoices.')
+//     ->name('facturen')
+//     ->controller(InvoiceController::class)
+//     ->group(function () {
+//         Route::get('/', 'get__data')->name('api-retrieve');
+//     });
+
 Route::post('relaties/send', [AdvertiserController::class, 'send__data']);
 Route::get('relaties/get', [AdvertiserController::class, 'get__data']);
 
@@ -36,10 +43,5 @@ Route::get('/get', [APIController::class, 'get__data'])->name('api.get');
 Route::get('/token', [APIController::class, 'get__token'])->name('token.get');
 Route::get('/httpbin', [APIController::class, 'http__bin'])->name('http.bin');
 
-// Route::name('invoices.')
-//     ->name('facturen')
-//     ->controller(InvoiceController::class)
-//     ->group(function () {
-//         Route::get('/', 'get__data')->name('api-retrieve');
-//     });
+
 

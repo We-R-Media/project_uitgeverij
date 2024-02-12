@@ -5,6 +5,7 @@
     'cols' => 30, 
     'extraAttributes' => [],
     'value' => null,
+    'model' => null // Set $model to null by default
 ])
 
 <div class="field field field--column">
@@ -14,6 +15,7 @@
         id="{{ $name }}"
         cols="{{ $cols }}"
         rows="{{ $rows }}"
+        @if ($model) wire:model="{{ $model }}" @endif {{-- Check if $model is set --}}
         value="{{ $value }}"
         {{ $attributes->merge(['class' => 'field__textarea', 'placeholder' => __('Vul opmerkingen in...')]) }}
         {!! implode(' ', array_map(fn ($key, $value) => $key . '="' . $value . '"', array_keys($extraAttributes), $extraAttributes)) !!}

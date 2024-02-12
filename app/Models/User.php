@@ -88,6 +88,20 @@ class User extends Authenticatable implements MustVerifyEmail
         });
     }
 
+    /* --- 
+
+    Hier worden de relaties die bij de gebruiker horen opgebouwd met eloquent relationships.
+    
+    Let op:
+    - belongsTo staat geregistreerd bij de tabel met de foreignId.
+    - 2 soorten relaties: hasOne/hasMany
+    
+    Bron:
+    https://laravel.com/docs/10.x/eloquent-relationships
+
+    --- */
+
+
     /**
      * Get all of the orders for the User
      *

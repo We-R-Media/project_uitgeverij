@@ -13,8 +13,13 @@ return new class extends Migration
     {
         Schema::create('complaints', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->string('type');
+            $table->foreignId('order_line_id')->nullable()->default(null);
+            $table->foreignId('order_id')->nullable()->default(null);
             $table->text('description');
+            $table->dateTime('solved_at')->nullable()->default(null);
+            $table->dateTime('complaint_date')->nullable()->default(null);
             $table->softDeletes();
             $table->timestamps();
         });

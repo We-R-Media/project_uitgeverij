@@ -48,6 +48,13 @@ class OrderLine extends BaseModel
         return $this->belongsTo(Format::class);
     }
 
-    
-    
+    /**
+     * Get the complaint associated with the OrderLine
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function complaint(): HasOne
+    {
+        return $this->hasOne(Complaint::class);
+    }
 }

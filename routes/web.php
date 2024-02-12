@@ -13,6 +13,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ReminderController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\OrderApproveController;
+use App\Http\Controllers\ComplaintController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserController;
@@ -33,12 +34,29 @@ use Illuminate\Support\Facades\Redirect;
 | be assigned to the "web" middleware group. Make something great!
 */
 
+/* ---
+
+Routes gegroepeerd onder volgende criteria:
+    - Namespace (name)
+    - URL (prefix)
+    - Controller (controller)
+
+    Bij importeren van controller bovenin bestand het volgende invoeren: 
+    
+    - use Illuminate\Http\Controllers\YourController
+
+    Bij sommige routes wordt er gecheckt op de rol van een gebruiker via de middleware.
+
+    Let op:
+    Bij meegeven id's in routes is het belangrijk dat de naamgeving overeenkomt met de parameter in de controller.
+    id's worden meegegeven vanuit de view (bijvoorbeeld bij formulieren).
+
+ --- */
+
 Route::group(['middleware' => ['auth']], function () {
     Route::get('/', [
         HomeController::class, 'index'
     ])->name('home');
-
-/* --- Groutes grouped by following structure: name->prefix->controller --- */
 
     Route::name('projects.')
         ->prefix('projecten')
@@ -100,6 +118,14 @@ Route::group(['middleware' => ['auth']], function () {
 
             Route::post('/{order_id}/orderregels/opslaan', 'store')->name('store');
             Route::post('/orderregels/exporteren', 'exporteren')->name('export');
+        });
+
+    Route::name('complaints.')
+        ->prefix('klachten')
+        ->controller(ComplaintController::class)
+        ->group(function () {
+            Route::get('/{order_id}', 'index')->name('index');
+            Route::post('/{order_id}/opslaan/{orderline_id}', 'store')->name('store');
         });
 
     Route::name('advertisers.')

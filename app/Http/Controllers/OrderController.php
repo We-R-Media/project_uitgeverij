@@ -36,7 +36,7 @@ class OrderController extends Controller
         $this->subpages = [
             'Ordergegevens' => 'orders.edit',
             'Print' => 'orders.print',
-            'Klachten' => 'orders.complaints',
+            'Klachten' => 'complaints.index',
         ];
     }
 

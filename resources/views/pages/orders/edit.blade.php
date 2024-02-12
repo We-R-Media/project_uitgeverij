@@ -166,10 +166,9 @@
                                             @if ( $orderline->trashed() )
                                                 <a href="{{ route('orderlines.restore', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id] ) }}" class="btn" onclick="return confirm('Are you sure you want to restore this record?')">{{__('Herstellen')}}</a>
                                             @endif
-
                                             <a href="{{ route('orderlines.destroy', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id]) }}" class="btn" onclick="return confirm('Are you sure you want to delete this record?')">{{__('Verwijderen')}}</a>
                                             <a href="{{ route('invoices.create', ['order_id' => $orderline->order->id, 'regel_id' => $orderline->id]) }}" class="btn">{{__('Factureren')}}</a>
-                                            <a href="{{ route('orderlines.complaint', ['orderline_id' => $orderline->id]) }}}" class="btn">{{__('Klacht')}}</a>
+                                            <a class="btn showComplaintButton" wire:click.prevent="showComplaint" id="showComplaintButton"class="btn">{{__('Klacht')}}</a>
                                         </div>
                                     </div>
                                 </div>
@@ -185,5 +184,16 @@
             </div>
         </fieldset>
     </div>
+        @livewire('order-complaint', ['orderline' => $orderline, 'order' => $order], key($orderline->id))
 </div>
+@livewireScripts
+<script>
+    const showComplaintButton = document.querySelectorAll('.showComplaintButton');
+    showComplaintButton.forEach(button => {
+        button.addEventListener('click', function () {
+            Livewire.dispatch('showComplaint');
+        });
+    });
+</script>
 @endsection
+

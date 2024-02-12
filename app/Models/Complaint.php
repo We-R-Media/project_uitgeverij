@@ -10,14 +10,22 @@ class Complaint extends BaseModel
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = [
+        'title',
+        'type',
+        'description',
+        'solved',
+        'complaint_date',
+    ];
 
-        /**
-     * Get the order that owns the Complaint
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function order(): BelongsTo
+
+    public function order()
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function orderLine()
+    {
+        return $this->belongsTo(OrderLine::class);
     }
 }

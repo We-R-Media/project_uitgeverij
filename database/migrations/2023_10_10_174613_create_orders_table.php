@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('advertiser_id')->nullable();
             $table->foreignId('contact_id')->nullable();
             $table->foreignId('publisher_id')->nullable();
+            $table->foreignId('project_id')->nullable()->default(null);
             $table->double('order_total_price');
             $table->string('validation_token')->unique();
             $table->string('order_method_approval')->nullable()->default(null);
